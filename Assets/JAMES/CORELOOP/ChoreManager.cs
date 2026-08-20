@@ -5,7 +5,6 @@ namespace HouseChoresGame
 {
     public class ChoreManager : MonoBehaviour
     {
-        // ✅ Singleton
         public static ChoreManager Instance { get; private set; }
 
         private void Awake()
@@ -22,7 +21,24 @@ namespace HouseChoresGame
         private List<ChoreData> activeChores = new List<ChoreData>();
         private Dictionary<ChoreData, float> choreTimers = new Dictionary<ChoreData, float>();
 
-        // Assign a new chore
+        [Header("Day1 Setup")]
+        public ChoreData sweepChore;
+        public ChoreData mopChore;
+        public ChoreData dishesChore;
+
+        private void Start()
+        {
+            AssignDay1Chores();
+        }
+
+        public void AssignDay1Chores()
+        {
+            AssignChore(sweepChore);
+            AssignChore(mopChore);
+            AssignChore(dishesChore);
+            Debug.Log("📋 Day1 chores assigned: Sweep, Mop, Dishes");
+        }
+
         public void AssignChore(ChoreData chore)
         {
             if (chore == null) return;
@@ -36,7 +52,6 @@ namespace HouseChoresGame
 
         private void Update()
         {
-            // ✅ Countdown timers
             List<ChoreData> toMiss = new List<ChoreData>();
             foreach (var chore in activeChores)
             {
@@ -52,7 +67,6 @@ namespace HouseChoresGame
                 MissChore(missed);
         }
 
-        // ✅ Complete chore
         public void CompleteChore(ChoreData chore)
         {
             if (!activeChores.Contains(chore)) return;
@@ -66,7 +80,6 @@ namespace HouseChoresGame
             Debug.Log($"✅ Completed chore: {chore.choreName}");
         }
 
-        // ✅ Miss chore
         public void MissChore(ChoreData chore)
         {
             if (!activeChores.Contains(chore)) return;
@@ -78,19 +91,9 @@ namespace HouseChoresGame
             Debug.Log($"❌ Missed chore: {chore.choreName}");
         }
 
-        // ✅ Utility methods
         public bool AllChoresDone() => activeChores.Count == 0;
-
-        public List<ChoreData> GetActiveChores()
-        {
-            return activeChores;
-        }
-
-        public float GetRemainingTime(ChoreData chore)
-        {
-            return choreTimers.ContainsKey(chore) ? choreTimers[chore] : 0f;
-        }
-
+        public List<ChoreData> GetActiveChores() => activeChores;
+        public float GetRemainingTime(ChoreData chore) => choreTimers.ContainsKey(chore) ? choreTimers[chore] : 0f;
         public void ResetChoresForNewDay()
         {
             activeChores.Clear();

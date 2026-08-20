@@ -1,39 +1,27 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // new system
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     private Rigidbody2D rb;
     private Vector2 movement;
 
-    private PlayerControls controls;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        controls = new PlayerControls();
-    }
-
-    private void OnEnable()
-    {
-        controls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        controls.Disable();
     }
 
     private void Start()
     {
-        rb.gravityScale = 0f;
+        rb.gravityScale = 0f; // disable gravity for top-down
     }
 
     private void Update()
     {
-        // Read movement vector from Input System
-        movement = controls.Player.Move.ReadValue<Vector2>();
+        // ✅ Legacy Input System
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
     }
 
     private void FixedUpdate()

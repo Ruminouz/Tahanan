@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88088f27f5bed34bbfaba5cf393a111, type: 3}
+  m_Name: MopFloor
+  m_EditorClassIdentifier: Assembly-CSharp::HouseChoresGame.ChoreData
+  choreName: Mopping
+  timeLimit: 30
+  choreUIPrefab: {fileID: 2045424490475007875, guid: 0fec9854fe705fb47a1d3f451efe5c70, type: 3}
