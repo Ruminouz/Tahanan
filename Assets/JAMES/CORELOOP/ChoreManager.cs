@@ -23,7 +23,7 @@ namespace HouseChoresGame
 
         [Header("Day1 Setup")]
         public ChoreData sweepChore;
-        public ChoreData mopChore;
+        
         public ChoreData dishesChore;
 
         private void Start()
@@ -34,7 +34,7 @@ namespace HouseChoresGame
         public void AssignDay1Chores()
         {
             AssignChore(sweepChore);
-            AssignChore(mopChore);
+            
             AssignChore(dishesChore);
             Debug.Log("📋 Day1 chores assigned: Sweep, Mop, Dishes");
         }

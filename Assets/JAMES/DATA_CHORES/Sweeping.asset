@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Sweeping
   m_EditorClassIdentifier: Assembly-CSharp::HouseChoresGame.ChoreData
   choreName: Sweeping
-  timeLimit: 30
+  timeLimit: 100
   choreUIPrefab: {fileID: 1869260093368565083, guid: 9f8d6ddc0598edb4389941fd7f4c3731, type: 3}

@@ -1,63 +1,37 @@
 using UnityEngine;
-using HouseChoresGame;
 
-public class MiniGameTrigger : MonoBehaviour
+namespace HouseChoresGame
 {
-    [Header("Chore Reference")]
-    public ChoreData choreData;
-
-    [Header("Canvas Reference")]
-    public Canvas miniGameCanvas; // assign your MiniGameCanvas in Inspector
-
-    [Header("UI Panel Prefab")]
-    public GameObject choreUIPanelPrefab; // drag prefab here
-
-    private GameObject spawnedPanel;
-    private bool playerInside = false;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class MiniGameTrigger : MonoBehaviour
     {
-        Debug.Log($"[Trigger Enter] Collider: {other.name}, Tag: {other.tag}");
+        public ChoreData choreData;          // assign the chore ScriptableObject (Sweeping OR Dishwashing)
+        public GameObject miniGamePrefab;    // assign the panel prefab (SweepingPanel OR DishwashingPanel)
+        public Transform canvasTransform;    // assign your MiniGameCanvas
 
-        if (other.CompareTag("Player"))
+        private void OnTriggerStay2D(Collider2D other)
         {
-            playerInside = true;
-            Debug.Log($"✅ Player entered {choreData.choreName} zone. Press E to start.");
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        Debug.Log($"[Trigger Exit] Collider: {other.name}, Tag: {other.tag}");
-
-        if (other.CompareTag("Player"))
-        {
-            playerInside = false;
-            Debug.Log($"⛔ Player left {choreData.choreName} zone.");
-        }
-    }
-
-    private void Update()
-    {
-        if (playerInside && Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log($"🟢 E pressed inside {choreData.choreName} zone.");
-
-            if (spawnedPanel == null)
+            if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
             {
-                // Instantiate panel under Canvas
-                spawnedPanel = Instantiate(choreUIPanelPrefab, miniGameCanvas.transform, false);
-                MiniGameOverlayManager.Instance.RegisterMiniGame(choreData, spawnedPanel);
-                Debug.Log($"📋 Spawned {choreData.choreName} panel under {miniGameCanvas.name}");
-            }
-            else if (!spawnedPanel.activeSelf)
-            {
-                MiniGameOverlayManager.Instance.RestoreMiniGame(choreData);
-                Debug.Log($"🔄 Restored {choreData.choreName} panel.");
-            }
-            else
-            {
-                Debug.Log($"Panel already active for {choreData.choreName}.");
+                // Spawn panel
+                GameObject panel = Instantiate(miniGamePrefab, canvasTransform);
+
+                // Initialize depending on which script is attached
+                Sweeping sweeping = panel.GetComponent<Sweeping>();
+                if (sweeping != null)
+                {
+                    sweeping.Initialize(GameManager.Instance, choreData);
+                }
+
+                Dishwashing dishwashing = panel.GetComponent<Dishwashing>();
+                if (dishwashing != null)
+                {
+                    dishwashing.Initialize(GameManager.Instance, choreData);
+                }
+
+                // Register with OverlayManager
+                MiniGameOverlayManager.Instance.RegisterMiniGame(choreData, panel);
+
+                Debug.Log($"Mini-game {choreData.choreName} launched and registered.");
             }
         }
     }

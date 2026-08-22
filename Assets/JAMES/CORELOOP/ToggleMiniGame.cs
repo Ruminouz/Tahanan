@@ -47,7 +47,21 @@ namespace HouseChoresGame
                 Debug.Log($"Opened {chore.choreName} mini-game.");
             }
         }
+        public void CloseMiniGame(ChoreData chore)
+{
+    if (chorePanels.ContainsKey(chore))
+    {
+        GameObject panel = chorePanels[chore];
+        if (panel != null)
+        {
+            panel.SetActive(false);   // ✅ hide instead of destroy
+            Debug.Log($"Closed {chore.choreName} mini-game.");
+        }
 
+        chorePanels.Remove(chore);
+        minimizedChores.Remove(chore);
+    }
+}
         public void RestoreMiniGame(ChoreData chore)
         {
             if (minimizedChores.Contains(chore) && chorePanels.ContainsKey(chore))

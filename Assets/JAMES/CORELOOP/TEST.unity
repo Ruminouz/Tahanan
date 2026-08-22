@@ -430,8 +430,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameTrigger
   choreData: {fileID: 11400000, guid: 44bd520cc3c941545ab9ef9888776d43, type: 2}
-  miniGameCanvas: {fileID: 277783309}
-  choreUIPanelPrefab: {fileID: 6008232137240884870, guid: d131acb57632cfe4faaa26ba5aadf765, type: 3}
+  miniGamePrefab: {fileID: 6008232137240884870, guid: d131acb57632cfe4faaa26ba5aadf765, type: 3}
+  canvasTransform: {fileID: 277783310}
 --- !u!61 &517134740
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HouseChoresGame.DayManager
   currentDay: 1
   maxDay: 7
-  dayLength: 120
+  dayLength: 200
 --- !u!4 &716103626
 Transform:
   m_ObjectHideFlags: 0
@@ -695,8 +695,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameTrigger
   choreData: {fileID: 11400000, guid: 722ac0079cfb64f4d993d97c5956ea31, type: 2}
-  miniGameCanvas: {fileID: 277783309}
-  choreUIPanelPrefab: {fileID: 1869260093368565083, guid: 9f8d6ddc0598edb4389941fd7f4c3731, type: 3}
+  miniGamePrefab: {fileID: 1869260093368565083, guid: 9f8d6ddc0598edb4389941fd7f4c3731, type: 3}
+  canvasTransform: {fileID: 277783310}
 --- !u!70 &1182429555
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -823,7 +823,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HouseChoresGame.ChoreManager
   sweepChore: {fileID: 11400000, guid: 722ac0079cfb64f4d993d97c5956ea31, type: 2}
-  mopChore: {fileID: 11400000, guid: 1830e70a3df81f84997aded120d0a694, type: 2}
   dishesChore: {fileID: 11400000, guid: 44bd520cc3c941545ab9ef9888776d43, type: 2}
 --- !u!4 &1322128368
 Transform:
@@ -1250,8 +1249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameTrigger
   choreData: {fileID: 11400000, guid: 1830e70a3df81f84997aded120d0a694, type: 2}
-  miniGameCanvas: {fileID: 277783309}
-  choreUIPanelPrefab: {fileID: 2045424490475007875, guid: 0fec9854fe705fb47a1d3f451efe5c70, type: 3}
+  miniGamePrefab: {fileID: 0}
+  canvasTransform: {fileID: 0}
 --- !u!212 &2079769308
 SpriteRenderer:
   serializedVersion: 2
