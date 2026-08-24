@@ -1,0 +1,26 @@
+using UnityEngine;
+
+public class DishwashingChore : Chore
+{
+    [SerializeField] private DishwashingMiniGame miniGame;
+
+    public override void Interact()
+    {
+        if (IsCompleted)
+        {
+            Debug.Log("Wash Dishes is already completed.");
+            return;
+        }
+
+        Debug.Log("Starting Dishwashing Mini-Game!");
+
+        if (miniGame != null)
+        {
+            miniGame.StartGame(this);
+        }
+        else
+        {
+            Debug.LogWarning("Dishwashing Mini-Game is not assigned!");
+        }
+    }
+}

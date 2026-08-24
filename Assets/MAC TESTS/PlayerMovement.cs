@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 {
     rb.linearVelocity = moveInput * moveSpeed;
 
-    Debug.Log($"Position: {rb.position} | Velocity: {rb.linearVelocity}");
+   
 }
 
     public void Move(InputAction.CallbackContext context)
