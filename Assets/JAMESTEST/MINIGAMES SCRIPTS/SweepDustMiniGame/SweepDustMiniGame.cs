@@ -1,15 +1,16 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class DishwashingMiniGame : MonoBehaviour
+public class SweepDustMiniGame : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
-    [SerializeField] private WashableDish[] dishes;
+    [SerializeField] private GameObject[] dustSpots;
     [SerializeField] private ChoreTutorial tutorial;
 
     private Chore currentChore;
     private TutorialManager tutorialManager;
 
-    private bool washingStarted = false;
+    private bool sweepingStarted = false;
 
     private void Start()
     {
@@ -19,11 +20,11 @@ public class DishwashingMiniGame : MonoBehaviour
     public void StartGame(Chore chore)
     {
         currentChore = chore;
-        washingStarted = false;
+        sweepingStarted = false;
 
         panel.SetActive(true);
 
-        ResetDishes();
+        ResetDust();
 
         bool alreadyLearned = false;
 
@@ -34,7 +35,7 @@ public class DishwashingMiniGame : MonoBehaviour
 
         if (alreadyLearned)
         {
-            StartWashing();
+            StartSweeping();
         }
         else
         {
@@ -45,10 +46,10 @@ public class DishwashingMiniGame : MonoBehaviour
     private void ShowTutorial()
     {
         tutorial.ShowTutorial(
-            "WASHING DISHES",
+            "SWEEPING",
             "1. Hold Left Mouse Button.\n" +
-            "2. Move your mouse across the dirty dish.\n" +
-            "3. Keep scrubbing until the dish is clean.",
+            "2. Move your mouse over the dust.\n" +
+            "3. Clear all the dust.",
             FinishTutorial
         );
     }
@@ -60,32 +61,42 @@ public class DishwashingMiniGame : MonoBehaviour
             tutorialManager.MarkAsLearned(currentChore.ChoreName);
         }
 
-        StartWashing();
+        StartSweeping();
     }
 
-    private void StartWashing()
+    private void StartSweeping()
     {
-        washingStarted = true;
+        sweepingStarted = true;
 
-        Debug.Log("Dishwashing started!");
+        Debug.Log("Sweeping started!");
     }
 
-    private void Update()
+    public void CleanDust(GameObject dust)
     {
-        if (!panel.activeSelf)
+        if (!sweepingStarted)
             return;
 
-        if (!washingStarted)
+        if (Mouse.current == null)
             return;
 
-        CheckDishes();
+        if (!Mouse.current.leftButton.isPressed)
+            return;
+
+        if (!dust.activeSelf)
+            return;
+
+        dust.SetActive(false);
+
+        Debug.Log("Dust swept!");
+
+        CheckCompletion();
     }
 
-    private void CheckDishes()
+    private void CheckCompletion()
     {
-        foreach (WashableDish dish in dishes)
+        foreach (GameObject dust in dustSpots)
         {
-            if (dish == null || !dish.IsClean)
+            if (dust != null && dust.activeSelf)
                 return;
         }
 
@@ -94,7 +105,7 @@ public class DishwashingMiniGame : MonoBehaviour
 
     private void CompleteGame()
     {
-        Debug.Log("Dishwashing complete!");
+        Debug.Log("Sweeping complete!");
 
         if (currentChore != null)
         {
@@ -104,16 +115,16 @@ public class DishwashingMiniGame : MonoBehaviour
         panel.SetActive(false);
 
         currentChore = null;
-        washingStarted = false;
+        sweepingStarted = false;
     }
 
-    private void ResetDishes()
+    private void ResetDust()
     {
-        foreach (WashableDish dish in dishes)
+        foreach (GameObject dust in dustSpots)
         {
-            if (dish != null)
+            if (dust != null)
             {
-                dish.ResetDish();
+                dust.SetActive(true);
             }
         }
     }
