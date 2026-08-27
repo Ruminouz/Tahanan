@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - DirtySpot
+  - RinsingArea
+  - DryingRack
   layers:
   - Default
   - TransparentFX
