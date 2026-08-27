@@ -827,7 +827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &73746496
 RectTransform:
   m_ObjectHideFlags: 0
@@ -934,7 +934,7 @@ MonoBehaviour:
   currentDay: 1
   washDishes: {fileID: 1155848423}
   mopFloor: {fileID: 328731341}
-  sweepDust: {fileID: 1557358002}
+  sweepDust: {fileID: 1557358005}
   feedDog: {fileID: 1431119066}
   cleanLeaves: {fileID: 1994558956}
   throwTrash: {fileID: 999395032}
@@ -15913,7 +15913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1557358004}
   - component: {fileID: 1557358003}
-  - component: {fileID: 1557358002}
+  - component: {fileID: 1557358005}
   m_Layer: 0
   m_Name: BroomObject
   m_TagString: Untagged
@@ -15921,20 +15921,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1557358002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557358001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf32e6d587c0ea8459043f89d00ee3f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Chore
-  choreName: WalisTambo
-  points: 1
 --- !u!61 &1557358003
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15996,6 +15982,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1557358005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557358001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2874db87ddd445d40891b98a1a0ede90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SweepDustChore
+  choreName: TAMBO
+  points: 1
+  miniGame: {fileID: 73746497}
 --- !u!1 &1564440732
 GameObject:
   m_ObjectHideFlags: 0

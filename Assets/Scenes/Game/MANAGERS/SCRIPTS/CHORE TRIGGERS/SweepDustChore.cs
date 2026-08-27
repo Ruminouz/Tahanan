@@ -12,7 +12,7 @@ public class SweepDustChore : Chore
             return;
         }
 
-        Debug.Log("Starting Sweeping Mini-Game!");
+        Debug.Log("Starting Sweep Dust!");
 
         if (miniGame != null)
         {
@@ -20,7 +20,7 @@ public class SweepDustChore : Chore
         }
         else
         {
-            Debug.LogWarning("Sweep Dust Mini-Game is not assigned!");
+            Debug.LogWarning("SweepDustMiniGame is NOT assigned!");
         }
     }
 }

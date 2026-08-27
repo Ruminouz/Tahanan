@@ -1,16 +1,15 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class SweepDustMiniGame : MonoBehaviour
+public class ThrowTrashMiniGame : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
-    [SerializeField] private GameObject[] dustSpots;
+    [SerializeField] private GameObject[] trashItems;
     [SerializeField] private ChoreTutorial tutorial;
 
     private Chore currentChore;
     private TutorialManager tutorialManager;
 
-    private bool sweepingStarted = false;
+    private bool throwingStarted = false;
 
     private void Start()
     {
@@ -20,11 +19,11 @@ public class SweepDustMiniGame : MonoBehaviour
     public void StartGame(Chore chore)
     {
         currentChore = chore;
-        sweepingStarted = false;
+        throwingStarted = false;
 
         panel.SetActive(true);
 
-        ResetDust();
+        ResetTrash();
 
         bool alreadyLearned = false;
 
@@ -33,12 +32,9 @@ public class SweepDustMiniGame : MonoBehaviour
             alreadyLearned = tutorialManager.HasLearned(chore.ChoreName);
         }
 
-        Debug.Log("Sweep Dust - Chore Name: " + chore.ChoreName);
-        Debug.Log("Sweep Dust - Already Learned: " + alreadyLearned);
-
         if (alreadyLearned)
         {
-            StartSweeping();
+            StartThrowing();
         }
         else
         {
@@ -48,62 +44,52 @@ public class SweepDustMiniGame : MonoBehaviour
 
     private void ShowTutorial()
     {
-        Debug.Log("Showing Sweep Dust Tutorial.");
-
         tutorial.ShowTutorial(
-            "SWEEPING",
-            "1. Hold Left Mouse Button.\n" +
-            "2. Move your mouse over the dust.\n" +
-            "3. Clear all the dust.",
+            "THROW TRASH",
+            "1. Click the trash.\n" +
+            "2. Put all the trash in the bin.\n" +
+            "3. Clear all the trash.",
             FinishTutorial
         );
     }
 
     private void FinishTutorial()
     {
-        Debug.Log("Sweep Dust Tutorial Finished.");
-
         if (tutorialManager != null)
         {
             tutorialManager.MarkAsLearned(currentChore.ChoreName);
         }
 
-        StartSweeping();
+        StartThrowing();
     }
 
-    private void StartSweeping()
+    private void StartThrowing()
     {
-        sweepingStarted = true;
+        throwingStarted = true;
 
-        Debug.Log("Sweeping started!");
+        Debug.Log("Throwing trash started!");
     }
 
-    public void CleanDust(GameObject dust)
+    public void ThrowTrash(GameObject trash)
     {
-        if (!sweepingStarted)
+        if (!throwingStarted)
             return;
 
-        if (Mouse.current == null)
+        if (!trash.activeSelf)
             return;
 
-        if (!Mouse.current.leftButton.isPressed)
-            return;
+        trash.SetActive(false);
 
-        if (!dust.activeSelf)
-            return;
-
-        dust.SetActive(false);
-
-        Debug.Log("Dust swept!");
+        Debug.Log("Trash thrown away!");
 
         CheckCompletion();
     }
 
     private void CheckCompletion()
     {
-        foreach (GameObject dust in dustSpots)
+        foreach (GameObject trash in trashItems)
         {
-            if (dust != null && dust.activeSelf)
+            if (trash != null && trash.activeSelf)
                 return;
         }
 
@@ -112,7 +98,7 @@ public class SweepDustMiniGame : MonoBehaviour
 
     private void CompleteGame()
     {
-        Debug.Log("Sweeping complete!");
+        Debug.Log("Throw Trash complete!");
 
         if (currentChore != null)
         {
@@ -122,16 +108,16 @@ public class SweepDustMiniGame : MonoBehaviour
         panel.SetActive(false);
 
         currentChore = null;
-        sweepingStarted = false;
+        throwingStarted = false;
     }
 
-    private void ResetDust()
+    private void ResetTrash()
     {
-        foreach (GameObject dust in dustSpots)
+        foreach (GameObject trash in trashItems)
         {
-            if (dust != null)
+            if (trash != null)
             {
-                dust.SetActive(true);
+                trash.SetActive(true);
             }
         }
     }

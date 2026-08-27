@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SweepDustMiniGame : MonoBehaviour
+public class CleanLeavesMiniGame : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
-    [SerializeField] private GameObject[] dustSpots;
+    [SerializeField] private GameObject[] leafSpots;
     [SerializeField] private ChoreTutorial tutorial;
 
     private Chore currentChore;
     private TutorialManager tutorialManager;
 
-    private bool sweepingStarted = false;
+    private bool cleaningStarted = false;
 
     private void Start()
     {
@@ -20,11 +20,11 @@ public class SweepDustMiniGame : MonoBehaviour
     public void StartGame(Chore chore)
     {
         currentChore = chore;
-        sweepingStarted = false;
+        cleaningStarted = false;
 
         panel.SetActive(true);
 
-        ResetDust();
+        ResetLeaves();
 
         bool alreadyLearned = false;
 
@@ -33,12 +33,9 @@ public class SweepDustMiniGame : MonoBehaviour
             alreadyLearned = tutorialManager.HasLearned(chore.ChoreName);
         }
 
-        Debug.Log("Sweep Dust - Chore Name: " + chore.ChoreName);
-        Debug.Log("Sweep Dust - Already Learned: " + alreadyLearned);
-
         if (alreadyLearned)
         {
-            StartSweeping();
+            StartCleaning();
         }
         else
         {
@@ -48,39 +45,35 @@ public class SweepDustMiniGame : MonoBehaviour
 
     private void ShowTutorial()
     {
-        Debug.Log("Showing Sweep Dust Tutorial.");
-
         tutorial.ShowTutorial(
-            "SWEEPING",
+            "CLEAN LEAVES",
             "1. Hold Left Mouse Button.\n" +
-            "2. Move your mouse over the dust.\n" +
-            "3. Clear all the dust.",
+            "2. Move your mouse over the leaves.\n" +
+            "3. Clear all the leaves.",
             FinishTutorial
         );
     }
 
     private void FinishTutorial()
     {
-        Debug.Log("Sweep Dust Tutorial Finished.");
-
         if (tutorialManager != null)
         {
             tutorialManager.MarkAsLearned(currentChore.ChoreName);
         }
 
-        StartSweeping();
+        StartCleaning();
     }
 
-    private void StartSweeping()
+    private void StartCleaning()
     {
-        sweepingStarted = true;
+        cleaningStarted = true;
 
-        Debug.Log("Sweeping started!");
+        Debug.Log("Cleaning leaves started!");
     }
 
-    public void CleanDust(GameObject dust)
+    public void CleanLeaves(GameObject leaf)
     {
-        if (!sweepingStarted)
+        if (!cleaningStarted)
             return;
 
         if (Mouse.current == null)
@@ -89,21 +82,21 @@ public class SweepDustMiniGame : MonoBehaviour
         if (!Mouse.current.leftButton.isPressed)
             return;
 
-        if (!dust.activeSelf)
+        if (!leaf.activeSelf)
             return;
 
-        dust.SetActive(false);
+        leaf.SetActive(false);
 
-        Debug.Log("Dust swept!");
+        Debug.Log("Leaves cleaned!");
 
         CheckCompletion();
     }
 
     private void CheckCompletion()
     {
-        foreach (GameObject dust in dustSpots)
+        foreach (GameObject leaf in leafSpots)
         {
-            if (dust != null && dust.activeSelf)
+            if (leaf != null && leaf.activeSelf)
                 return;
         }
 
@@ -112,7 +105,7 @@ public class SweepDustMiniGame : MonoBehaviour
 
     private void CompleteGame()
     {
-        Debug.Log("Sweeping complete!");
+        Debug.Log("Clean Leaves complete!");
 
         if (currentChore != null)
         {
@@ -122,16 +115,16 @@ public class SweepDustMiniGame : MonoBehaviour
         panel.SetActive(false);
 
         currentChore = null;
-        sweepingStarted = false;
+        cleaningStarted = false;
     }
 
-    private void ResetDust()
+    private void ResetLeaves()
     {
-        foreach (GameObject dust in dustSpots)
+        foreach (GameObject leaf in leafSpots)
         {
-            if (dust != null)
+            if (leaf != null)
             {
-                dust.SetActive(true);
+                leaf.SetActive(true);
             }
         }
     }

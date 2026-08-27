@@ -1,15 +1,15 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SweepDustSpot : MonoBehaviour, IPointerEnterHandler
+public class CleanLeafSpot : MonoBehaviour, IPointerEnterHandler
 {
-    [SerializeField] private SweepDustMiniGame miniGame;
+    [SerializeField] private CleanLeavesMiniGame miniGame;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (miniGame != null)
         {
-            miniGame.CleanDust(gameObject);
+            miniGame.CleanLeaves(gameObject);
         }
     }
 }

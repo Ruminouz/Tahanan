@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &58586580 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7044862694397183355, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+  m_PrefabInstance: {fileID: 6215878004242929653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &297262481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147,6 +158,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -10.25
       objectReference: {fileID: 0}
+    - target: {fileID: 2239029968107294515, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+      propertyPath: miniGame
+      value: 
+      objectReference: {fileID: 746422886}
     - target: {fileID: 3589155525597412948, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.21
@@ -431,6 +446,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6691896892925268721, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
+      propertyPath: stepsText
+      value: 
+      objectReference: {fileID: 1831262513}
+    - target: {fileID: 6691896892925268721, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
+      propertyPath: titleText
+      value: 
+      objectReference: {fileID: 1923319118}
+    - target: {fileID: 6691896892925268721, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
+      propertyPath: tutorialPanel
+      value: 
+      objectReference: {fileID: 1737751031}
+    - target: {fileID: 6691896892925268721, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
+      propertyPath: continueButton
+      value: 
+      objectReference: {fileID: 58586580}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -616,6 +647,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a55eddbfd9182244e842d569a549494b, type: 3}
+--- !u!114 &746422886 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1667077215348623178, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+  m_PrefabInstance: {fileID: 6215878004242929653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3afe271c519ea9042b0af8a08fe64754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DishwashingMiniGame
 --- !u!1001 &823459562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -673,6 +715,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4bae0a0bc6d6a428d1f4e997ef63f2, type: 3}
+--- !u!114 &1016962422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6691896892925268721, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
+  m_PrefabInstance: {fileID: 562381898}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f6d2b3852625a428ddf62cce91ef96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChoreTutorial
+--- !u!1 &1248275650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7509236334997600112, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
+  m_PrefabInstance: {fileID: 1591657217}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1339724663
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,13 +895,56 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7509236334997600112, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1635143928}
   m_SourcePrefab: {fileID: 100100000, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
 --- !u!4 &1635143921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3372556679785361106, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
   m_PrefabInstance: {fileID: 1591657217}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1635143928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248275650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a559a37ba0d5c94e888534740341b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  interactRange: 1.5
+--- !u!1 &1737751031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1078212359506323553, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+  m_PrefabInstance: {fileID: 6215878004242929653}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1831262513 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2165374287285803685, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+  m_PrefabInstance: {fileID: 6215878004242929653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!114 &1923319118 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2455882799902079371, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+  m_PrefabInstance: {fileID: 6215878004242929653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
 --- !u!1001 &6215878004242929653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -872,6 +973,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 230.82
       objectReference: {fileID: 0}
+    - target: {fileID: 1667077215348623178, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+      propertyPath: tutorial
+      value: 
+      objectReference: {fileID: 1016962422}
     - target: {fileID: 1866923448249907259, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_FontData.m_MinSize
       value: 2
