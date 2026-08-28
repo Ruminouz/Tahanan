@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e236d55e708ed3a44b78dba2401e20f8, type: 3}
+  m_Name: TatayDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
+  npcName: Tatay
+  npcPortrait: {fileID: 655666607, guid: 72143ab2aa9ca084fb44f34a55500642, type: 3}
+  dialogueLines:
+  - Kilala mo ba si Rene?
+  - Bayani ng Pilipinas yon nak
+  - Bayani ng Pilipinas yon nak
+  autoProgressLines: 010100
+  autoProgressDelay: 1.5
+  typingSpeed: 0.05
+  voiceSound: {fileID: 8300000, guid: b24cb45d643e31b4aaf43c015afb9382, type: 3}
+  voicePitch: 1

@@ -18,9 +18,14 @@ public class PlayerMovement : MonoBehaviour
 
   private void FixedUpdate()
 {
+    if(PauseController.IsGamePaused)
+        {
+            rb.linearVelocity = Vector2.zero;
+            animator.SetBool("isWalking", false);
+            return;
+        }
     rb.linearVelocity = moveInput * moveSpeed;
-
-   
+    animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
 }
 
     public void Move(InputAction.CallbackContext context)
@@ -31,8 +36,6 @@ public class PlayerMovement : MonoBehaviour
         if (context.performed)
         {
             moveInput = input;
-            animator.SetBool("isWalking", true);
-
             // Update direction vectors while moving
             animator.SetFloat("InputX", moveInput.x);
             animator.SetFloat("InputY", moveInput.y);
