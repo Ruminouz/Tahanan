@@ -17,8 +17,7 @@ MonoBehaviour:
   dialogueLines:
   - Kilala mo ba si Rene?
   - Bayani ng Pilipinas yon nak
-  - Bayani ng Pilipinas yon nak
-  autoProgressLines: 010100
+  autoProgressLines: 0100
   autoProgressDelay: 1.5
   typingSpeed: 0.05
   voiceSound: {fileID: 8300000, guid: b24cb45d643e31b4aaf43c015afb9382, type: 3}

@@ -12,12 +12,12 @@ public class InteractionDetector : MonoBehaviour
     }
 
     public void OnInteract(InputAction.CallbackContext context)
+{
+    if (context.started)
     {
-        if (context.performed)
-        {
-            interactableInRange?.Interact();
-        }
+        interactableInRange?.Interact();
     }
+}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
