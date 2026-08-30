@@ -23,6 +23,9 @@ public class DayManager : MonoBehaviour
 
     public int CurrentDay => currentDay;
 
+    // Allows other scripts to access the existing Mop Floor chore.
+    public Chore MopFloorChore => mopFloor;
+
     private void Start()
     {
         choreManager = FindFirstObjectByType<ChoreManager>();

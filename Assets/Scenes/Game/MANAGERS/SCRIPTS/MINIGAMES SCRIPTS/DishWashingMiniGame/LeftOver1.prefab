@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 5}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 16.0556, y: -10.4051}
+  m_SizeDelta: {x: 161.4335, y: 158.9443}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &347624640130726033
 CanvasRenderer:
@@ -101,4 +101,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8fc33c93b0f57e43adc412b99b65f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishLeftover
-  miniGame: {fileID: 7197522869203747017, guid: a6b72c62c079a52409b7f6656165710e, type: 3}

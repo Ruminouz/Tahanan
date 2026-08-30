@@ -5,10 +5,22 @@ using UnityEngine.InputSystem;
 
 public class WashableDish : MonoBehaviour, IPointerEnterHandler
 {
+    [Header("Dish Visual")]
     [SerializeField] private Image dishImage;
-    [SerializeField] private Slider progressBar;
+    [SerializeField] private Color dirtyColor = Color.gray;
+    [SerializeField] private Color cleanColor = Color.white;
 
+    [Header("Scrubbing")]
+    [SerializeField] private Slider progressBar;
     [SerializeField] private float scrubAmount = 0.05f;
+
+    [Header("Scrub Feedback")]
+    [SerializeField] private GameObject scrubFoam;
+    [SerializeField] private ParticleSystem scrubParticles;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip scrubSound;
+    [SerializeField] private AudioClip cleanSound;
 
     private float progress = 0f;
 
@@ -19,12 +31,35 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
     private DishwashingMiniGame miniGame;
     private DishRinsePlate rinsePlate;
 
-    public bool IsClean => isClean;
+    private AudioSource audioSource;
 
+    public bool IsClean => isClean;
+    private bool IsTopPlate()
+{
+    if (transform.parent == null)
+        return true;
+
+    Transform parent = transform.parent;
+
+    // The last sibling is visually on top.
+    return transform.GetSiblingIndex() ==
+           parent.childCount - 1;
+}
     private void Start()
     {
         miniGame = FindFirstObjectByType<DishwashingMiniGame>();
         rinsePlate = GetComponent<DishRinsePlate>();
+
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        audioSource.playOnAwake = false;
+
+        ResetDish();
     }
 
     public void EnableScrubbing()
@@ -37,6 +72,11 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
             rinsePlate.DisableRinsing();
         }
 
+        if (scrubFoam != null)
+        {
+            scrubFoam.SetActive(false);
+        }
+
         Debug.Log("Dish is ready to scrub!");
     }
 
@@ -44,6 +84,11 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
     {
         canScrub = false;
         canRinse = true;
+
+        if (scrubFoam != null)
+        {
+            scrubFoam.SetActive(false);
+        }
 
         if (rinsePlate != null)
         {
@@ -54,29 +99,62 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
     }
 
     public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (!canScrub)
-            return;
+{
+    if (!canScrub)
+        return;
 
-        if (isClean)
-            return;
+    if (isClean)
+        return;
 
-        if (Mouse.current == null)
-            return;
+    if (Mouse.current == null)
+        return;
 
-        if (!Mouse.current.leftButton.isPressed)
-            return;
+    if (!Mouse.current.leftButton.isPressed)
+        return;
 
-        Scrub();
-    }
+    // Only the TOP plate can be scrubbed.
+    if (!IsTopPlate())
+        return;
 
+    Scrub();
+}
     private void Scrub()
     {
         progress += scrubAmount;
 
+        progress = Mathf.Clamp01(progress);
+
         if (progressBar != null)
         {
             progressBar.value = progress;
+        }
+
+        // Show foam while scrubbing.
+        if (scrubFoam != null && !scrubFoam.activeSelf)
+        {
+            scrubFoam.SetActive(true);
+        }
+
+        // Play particles.
+        if (scrubParticles != null && !scrubParticles.isPlaying)
+        {
+            scrubParticles.Play();
+        }
+
+        // Scrub sound.
+        if (scrubSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(scrubSound);
+        }
+
+        // Slightly transition dirty plate toward clean.
+        if (dishImage != null)
+        {
+            dishImage.color = Color.Lerp(
+                dirtyColor,
+                cleanColor,
+                progress
+            );
         }
 
         if (progress >= 1f)
@@ -103,7 +181,22 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
 
         if (dishImage != null)
         {
-            dishImage.color = Color.white;
+            dishImage.color = cleanColor;
+        }
+
+        if (scrubFoam != null)
+        {
+            scrubFoam.SetActive(false);
+        }
+
+        if (scrubParticles != null)
+        {
+            scrubParticles.Stop();
+        }
+
+        if (cleanSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(cleanSound);
         }
 
         Debug.Log("Dish scrubbed!");
@@ -129,7 +222,17 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
 
         if (dishImage != null)
         {
-            dishImage.color = Color.gray;
+            dishImage.color = dirtyColor;
+        }
+
+        if (scrubFoam != null)
+        {
+            scrubFoam.SetActive(false);
+        }
+
+        if (scrubParticles != null)
+        {
+            scrubParticles.Stop();
         }
 
         if (rinsePlate != null)

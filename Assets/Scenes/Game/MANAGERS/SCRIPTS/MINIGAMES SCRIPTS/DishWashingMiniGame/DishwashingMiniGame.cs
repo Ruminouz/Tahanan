@@ -67,8 +67,8 @@ public class DishwashingMiniGame : MonoBehaviour
 
         leftoversRemaining = leftoverCount;
         platesRemaining = plateCount;
-        platesToRinse = plateCount;
-        platesToDry = plateCount;
+        platesToRinse = 0;
+        platesToDry = 0;
 
         SpawnPlates();
         SpawnLeftovers();
@@ -215,31 +215,57 @@ public class DishwashingMiniGame : MonoBehaviour
     // SCRUB
     // =========================================================
 
-    public void PlateScrubbed(WashableDish dish)
+   public void PlateScrubbed(WashableDish dish)
+{
+    if (currentStage != WashStage.Scrub)
+        return;
+
+    platesRemaining--;
+
+    if (platesRemaining < 0)
+        platesRemaining = 0;
+
+    Debug.Log(
+        "Plate scrubbed! Plates still to scrub: " +
+        platesRemaining
+    );
+
+    // This particular plate is now allowed to be dragged
+    // into the rinsing area.
+    if (dish != null)
     {
-        if (currentStage != WashStage.Scrub)
-            return;
-
-        platesRemaining--;
-
-        if (platesRemaining < 0)
-            platesRemaining = 0;
+        dish.EnableRinsing();
 
         Debug.Log(
-            "Plate scrubbed! Remaining: " +
-            platesRemaining
+            "Scrubbed plate is now READY TO DRAG into rinsing area."
         );
-
-        if (dish != null)
-        {
-            dish.EnableRinsing();
-        }
-
-        if (platesRemaining == 0)
-        {
-            StartRinsing();
-        }
     }
+
+    // DO NOT switch to Dry here.
+    // The player still needs to rinse this plate.
+}
+public void PlateMovedToRinsing(DishRinsePlate plate)
+{
+    if (currentStage != WashStage.Scrub &&
+        currentStage != WashStage.Rinse)
+        return;
+
+    // Count this plate as part of the rinse queue.
+    platesToRinse++;
+
+    Debug.Log(
+        "Plate moved to rinsing area! " +
+        "Plates waiting to rinse: " +
+        platesToRinse
+    );
+
+    // Once the first scrubbed plate enters the rinse area,
+    // the player can start rinsing immediately.
+    currentStage = WashStage.Rinse;
+
+    Debug.Log("RINSE STAGE ACTIVE.");
+}
+
 
     private void StartRinsing()
     {
@@ -253,7 +279,7 @@ public class DishwashingMiniGame : MonoBehaviour
     // RINSE
     // =========================================================
 
-    public void PlateRinsed(DishRinsePlate plate)
+ public void PlateRinsed(DishRinsePlate plate)
 {
     if (currentStage != WashStage.Rinse)
         return;
@@ -264,25 +290,56 @@ public class DishwashingMiniGame : MonoBehaviour
         platesToRinse = 0;
 
     Debug.Log(
-        "Plate rinsed! Remaining: " +
+        "Plate rinsed! Plates still waiting to rinse: " +
         platesToRinse
     );
 
-    if (platesToRinse == 0)
-    {
-        StartDrying();
-    }
-}
+    // =====================================================
+    // NOT ALL PLATES HAVE BEEN SCRUBBED YET
+    // =====================================================
 
-    private void StartDrying()
+    if (platesRemaining > 0)
+    {
+        currentStage = WashStage.Scrub;
+
+        Debug.Log(
+            "More plates still need to be scrubbed."
+        );
+
+        return;
+    }
+
+    // =====================================================
+    // ALL PLATES HAVE BEEN SCRUBBED
+    // =====================================================
+
+    if (platesToRinse > 0)
+    {
+        currentStage = WashStage.Rinse;
+
+        Debug.Log(
+            "All plates scrubbed, but some still need rinsing."
+        );
+
+        return;
+    }
+
+    // =====================================================
+    // ALL PLATES SCRUBBED + ALL PLATES RINSED
+    // =====================================================
+
+    StartDrying();
+}
+private void StartDrying()
 {
     currentStage = WashStage.Dry;
 
     platesToDry = plateCount;
 
     Debug.Log("==============================");
+    Debug.Log("ALL PLATES SCRUBBED!");
     Debug.Log("ALL PLATES RINSED!");
-    Debug.Log("CURRENT STAGE: DRY");
+    Debug.Log("DRYING STAGE ENABLED!");
     Debug.Log("Plates to dry: " + platesToDry);
     Debug.Log("Put plates on the drying rack.");
     Debug.Log("==============================");
@@ -304,28 +361,14 @@ public class DishwashingMiniGame : MonoBehaviour
         " plates."
     );
 }
-
     // =========================================================
     // DRY
     // =========================================================
 
     public void PlateDried()
 {
-    Debug.Log("================================");
-    Debug.Log("PlateDried() RECEIVED!");
-    Debug.Log("Current Stage: " + currentStage);
-    Debug.Log("Plates To Dry BEFORE: " + platesToDry);
-    Debug.Log("================================");
-
     if (currentStage != WashStage.Dry)
-    {
-        Debug.LogWarning(
-            "PlateDried() ignored because current stage is: " +
-            currentStage
-        );
-
         return;
-    }
 
     platesToDry--;
 
@@ -337,13 +380,9 @@ public class DishwashingMiniGame : MonoBehaviour
         platesToDry
     );
 
-    if (platesToDry <= 0)
+    if (platesToDry == 0)
     {
-        Debug.Log("================================");
         Debug.Log("ALL PLATES ARE ON DRYING RACK!");
-        Debug.Log("DISHWASHING MINI GAME COMPLETE!");
-        Debug.Log("================================");
-
         CompleteGame();
     }
 }
@@ -366,31 +405,38 @@ public class DishwashingMiniGame : MonoBehaviour
     // SPAWN
     // =========================================================
 
-    private void SpawnPlates()
+private void SpawnPlates()
+{
+    if (platePrefab == null || washingArea == null)
+        return;
+
+    for (int i = 0; i < plateCount; i++)
     {
-        if (platePrefab == null || washingArea == null)
-            return;
+        GameObject plate = Instantiate(
+            platePrefab,
+            washingArea
+        );
 
-        for (int i = 0; i < plateCount; i++)
-        {
-            GameObject plate = Instantiate(
-                platePrefab,
-                washingArea
-            );
+        // Stack the plates in one pile.
+        // Each plate is slightly offset so the pile is visible.
+        float verticalOffset = i * 12f;
+        float horizontalOffset = i * 4f;
 
-            float spacing = 100f;
+        plate.transform.localPosition = new Vector3(
+            horizontalOffset,
+            verticalOffset,
+            0f
+        );
 
-            plate.transform.localPosition =
-                new Vector3(
-                    i * spacing,
-                    0f,
-                    0f
-                );
+        // Slight rotation makes the pile feel more natural.
+        float rotation = (i % 2 == 0) ? -2f : 2f;
 
-            plate.transform.localRotation =
-                Quaternion.identity;
-        }
+        plate.transform.localRotation =
+            Quaternion.Euler(0f, 0f, rotation);
     }
+}
+
+
 
     private void SpawnLeftovers()
     {
@@ -454,20 +500,32 @@ public class DishwashingMiniGame : MonoBehaviour
     // COMPLETE
     // =========================================================
 
-    public void CompleteGame()
+ 
+public void CompleteGame()
+{
+    currentStage = WashStage.Complete;
+
+    Debug.Log("DISHWASHING COMPLETE!");
+
+    // Disable sponge after the mini-game finishes.
+    if (sponge != null)
     {
-        currentStage = WashStage.Complete;
-
-        Debug.Log("DISHWASHING COMPLETE!");
-
-        if (currentChore != null)
-        {
-            currentChore.Complete();
-        }
-
-        if (panel != null)
-            panel.SetActive(false);
-
-        currentChore = null;
+        sponge.SetActive(false);
+        Debug.Log("Sponge disabled.");
     }
+
+    if (currentChore != null)
+    {
+        currentChore.Complete();
+    }
+
+    if (panel != null)
+    {
+        panel.SetActive(false);
+    }
+
+    currentChore = null;
+}
+
+
 }

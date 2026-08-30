@@ -17,6 +17,9 @@ public class DishRinsePlate : MonoBehaviour,
     private bool canDry = false;
     private bool alreadyDried = false;
 
+    // Prevent counting the same plate twice.
+    private bool countedForRinse = false;
+
     private DishwashingMiniGame miniGame;
 
     private void Awake()
@@ -37,6 +40,8 @@ public class DishRinsePlate : MonoBehaviour,
         canDry = false;
         isRinsed = false;
         alreadyDried = false;
+
+        countedForRinse = false;
 
         Debug.Log("Plate ready for rinsing.");
     }
@@ -98,7 +103,7 @@ public class DishRinsePlate : MonoBehaviour,
             group.blocksRaycasts = true;
 
         // =================================================
-        // RINSING
+        // RINSING AREA
         // =================================================
 
         if (canRinse)
@@ -117,22 +122,63 @@ public class DishRinsePlate : MonoBehaviour,
                         rectTransform.position,
                         eventData.pressEventCamera))
                 {
+                    // Put plate inside rinsing area.
                     transform.SetParent(rinseObject.transform);
 
                     rectTransform.anchoredPosition =
                         Vector2.zero;
 
+                    Debug.Log(
+                        "================================"
+                    );
+
+                    Debug.Log(
+                        "PLATE PLACED IN RINSING AREA!"
+                    );
+
+                    // =========================================
+                    // IMPORTANT:
+                    // Count this plate for rinsing immediately.
+                    // =========================================
+
+                    if (!countedForRinse)
+                    {
+                        countedForRinse = true;
+
+                        if (miniGame == null)
+                        {
+                            miniGame =
+                                FindFirstObjectByType<DishwashingMiniGame>();
+                        }
+
+                        if (miniGame != null)
+                        {
+                            miniGame.PlateMovedToRinsing(this);
+
+                            Debug.Log(
+                                "Plate registered for rinsing."
+                            );
+                        }
+                        else
+                        {
+                            Debug.LogError(
+                                "DishwashingMiniGame not found!"
+                            );
+                        }
+                    }
+
+                    // Tell the rinse area that a plate arrived.
                     DishRinseArea rinseArea =
                         rinseObject.GetComponent<DishRinseArea>();
 
                     if (rinseArea != null)
                     {
-                        Debug.Log(
-                            "Plate placed in rinsing area."
-                        );
-
                         rinseArea.ReceivePlate(this);
                     }
+
+                    Debug.Log(
+                        "================================"
+                    );
 
                     return;
                 }
@@ -167,7 +213,7 @@ public class DishRinsePlate : MonoBehaviour,
         }
 
         // =================================================
-        // RETURN
+        // RETURN TO ORIGINAL POSITION
         // =================================================
 
         transform.SetParent(originalParent);
@@ -199,9 +245,17 @@ public class DishRinsePlate : MonoBehaviour,
         rectTransform.anchoredPosition =
             Vector2.zero;
 
-        Debug.Log("==============================");
-        Debug.Log("PLATE PLACED ON DRYING RACK!");
-        Debug.Log("==============================");
+        Debug.Log(
+            "================================"
+        );
+
+        Debug.Log(
+            "PLATE PLACED ON DRYING RACK!"
+        );
+
+        Debug.Log(
+            "================================"
+        );
 
         if (miniGame == null)
         {
@@ -229,7 +283,7 @@ public class DishRinsePlate : MonoBehaviour,
     // RINSE COMPLETE
     // =====================================================
 
-   public void FinishRinsing()
+    public void FinishRinsing()
 {
     if (isRinsed)
         return;
@@ -237,14 +291,23 @@ public class DishRinsePlate : MonoBehaviour,
     isRinsed = true;
     canRinse = false;
 
-    Debug.Log("Plate rinsing finished!");
+    Debug.Log("PLATE RINSING FINISHED!");
 
-    DishwashingMiniGame miniGame =
-        FindFirstObjectByType<DishwashingMiniGame>();
+    if (miniGame == null)
+    {
+        miniGame =
+            FindFirstObjectByType<DishwashingMiniGame>();
+    }
 
     if (miniGame != null)
     {
         miniGame.PlateRinsed(this);
     }
+
+    // IMPORTANT:
+    // Do NOT enable drying here.
+    //
+    // DishwashingMiniGame will enable drying only
+    // after ALL plates have been scrubbed AND rinsed.
 }
 }
