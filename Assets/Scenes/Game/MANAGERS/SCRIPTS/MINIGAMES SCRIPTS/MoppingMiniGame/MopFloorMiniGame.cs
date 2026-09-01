@@ -21,12 +21,8 @@ public class MoppingMinigame : MonoBehaviour
     private bool isMopping = false;
     private bool mouseIsDown = false;
 
-    private DayManager dayManager;
-
     private void Start()
     {
-        dayManager = FindFirstObjectByType<DayManager>();
-
         if (minigamePanel != null)
         {
             minigamePanel.SetActive(false);
@@ -77,13 +73,11 @@ public class MoppingMinigame : MonoBehaviour
         if (Mouse.current == null)
             return;
 
-        // Left mouse button pressed
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             mouseIsDown = true;
         }
 
-        // Left mouse button released
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             mouseIsDown = false;
@@ -152,27 +146,23 @@ public class MoppingMinigame : MonoBehaviour
             progressBar.value = 1f;
         }
 
+        // Clean the spawned water.
         if (currentWetArea != null)
         {
             currentWetArea.Clean();
         }
 
-        if (dayManager != null)
-        {
-            Chore mopFloorChore = dayManager.MopFloorChore;
+        // Complete the sudden task.
+        SuddenTaskManager suddenTaskManager =
+            FindFirstObjectByType<SuddenTaskManager>();
 
-            if (mopFloorChore != null)
-            {
-                mopFloorChore.Complete();
-            }
-            else
-            {
-                Debug.LogWarning("Mop Floor Chore is not assigned in DayManager.");
-            }
+        if (suddenTaskManager != null)
+        {
+            suddenTaskManager.CompleteMopTask();
         }
         else
         {
-            Debug.LogWarning("DayManager was not found.");
+            Debug.LogWarning("SuddenTaskManager was not found.");
         }
 
         if (minigamePanel != null)
@@ -183,3 +173,4 @@ public class MoppingMinigame : MonoBehaviour
         Debug.Log("MOPPING COMPLETE!");
     }
 }
+

@@ -221,8 +221,8 @@ MonoBehaviour:
   dishImage: {fileID: 415947499136125851}
   dirtyColor: {r: 0.8490566, g: 0.8290317, b: 0.8290317, a: 1}
   cleanColor: {r: 1, g: 1, b: 1, a: 1}
-  progressBar: {fileID: 0}
-  scrubAmount: 0.05
+  progressBar: {fileID: 4709751118746571732}
+  scrubAmount: 0.06
   scrubFoam: {fileID: 6904846919562498512}
   scrubParticles: {fileID: 0}
   scrubSound: {fileID: 0}

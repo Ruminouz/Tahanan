@@ -8,69 +8,190 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private Text choreListText;
     [SerializeField] private Slider timeBar;
 
+
     private TimeManager timeManager;
     private DayManager dayManager;
 
+    private SweepingManager sweepingManager;
+    private WaterSpawner waterSpawner;
+
+
+
     private void Start()
     {
-        timeManager = FindFirstObjectByType<TimeManager>();
-        dayManager = FindFirstObjectByType<DayManager>();
+        timeManager =
+            FindFirstObjectByType<TimeManager>();
+
+        dayManager =
+            FindFirstObjectByType<DayManager>();
+
+        sweepingManager =
+            FindFirstObjectByType<SweepingManager>();
+
+        waterSpawner =
+            FindFirstObjectByType<WaterSpawner>();
     }
+
+
+
 
     private void Update()
     {
-        if (timeManager == null || dayManager == null)
+        if (timeManager == null ||
+            dayManager == null)
             return;
 
+
         UpdateDay();
+
         UpdateTime();
+
         UpdateChoreList();
     }
 
+
+
+
+
     private void UpdateDay()
     {
-        dayText.text = "Day " + dayManager.CurrentDay;
+        dayText.text =
+            "Day " + dayManager.CurrentDay;
     }
+
+
+
+
 
     private void UpdateTime()
     {
-        float percentage = timeManager.GetTimePercentage();
+        float percentage =
+            timeManager.GetTimePercentage();
 
-        timeBar.value = percentage;
 
-        float remainingSeconds = timeManager.GetRemainingTime();
+        timeBar.value =
+            percentage;
 
-        int minutes = Mathf.FloorToInt(remainingSeconds / 60f);
-        int seconds = Mathf.FloorToInt(remainingSeconds % 60f);
 
-        timeText.text = string.Format(
-            "Time: {0:00}:{1:00}",
-            minutes,
-            seconds
-        );
+
+        float remainingSeconds =
+            timeManager.GetRemainingTime();
+
+
+
+        int minutes =
+            Mathf.FloorToInt(
+                remainingSeconds / 60f
+            );
+
+
+        int seconds =
+            Mathf.FloorToInt(
+                remainingSeconds % 60f
+            );
+
+
+
+        timeText.text =
+            string.Format(
+                "Time: {0:00}:{1:00}",
+                minutes,
+                seconds
+            );
     }
+
+
+
+
 
     private void UpdateChoreList()
     {
-        Chore[] chores = dayManager.GetActiveChores();
+        choreListText.text =
+            "CHORES\n";
 
-        if (chores == null)
-            return;
 
-        choreListText.text = "CHORES\n";
 
-        foreach (Chore chore in chores)
+        // ==========================
+        // NORMAL CHORES
+        // ==========================
+
+        Chore[] chores =
+            dayManager.GetActiveChores();
+
+
+
+        if (chores != null)
         {
-            if (chore == null)
-                continue;
-
-            if (chore.IsCompleted)
+            foreach (Chore chore in chores)
             {
-                choreListText.text += "✓ " + chore.ChoreName + "\n";
+                if (chore == null)
+                    continue;
+
+
+
+                if (chore.IsCompleted)
+                {
+                    choreListText.text +=
+                        "✓ "
+                        + chore.ChoreName
+                        + "\n";
+                }
+                else
+                {
+                    choreListText.text +=
+                        "○ "
+                        + chore.ChoreName
+                        + "\n";
+                }
+            }
+        }
+
+
+
+
+
+        // ==========================
+        // SWEEPING TASK
+        // ==========================
+
+        if (sweepingManager != null)
+        {
+            if (sweepingManager.IsSweepingCompleted)
+            {
+                choreListText.text +=
+                    "✓ Sweep Dust\n";
             }
             else
             {
-                choreListText.text += "○ " + chore.ChoreName + "\n";
+                choreListText.text +=
+                    "○ Sweep Dust ("
+                    + sweepingManager.RemainingDust
+                    + " remaining)\n";
+            }
+        }
+
+
+
+
+
+        // ==========================
+        // MOPPING TASK
+        // ==========================
+
+        if (waterSpawner != null &&
+            waterSpawner.MopTaskStarted)
+        {
+            if (waterSpawner.IsMoppingCompleted)
+            {
+                choreListText.text +=
+                    "✓ Mop Floor\n";
+            }
+            else
+            {
+                choreListText.text +=
+                    "○ Mop Floor ("
+                    + waterSpawner.RemainingWetAreas
+                    + " remaining)\n";
             }
         }
     }
