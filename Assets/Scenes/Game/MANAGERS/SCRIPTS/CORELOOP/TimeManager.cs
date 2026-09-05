@@ -7,17 +7,24 @@ public class TimeManager : MonoBehaviour
     private float currentTime;
     private bool timeRunning = false;
 
+
+    public float DayLength => dayLength;
+
+
     private void Start()
     {
         StartDayTime();
     }
+
 
     private void Update()
     {
         if (!timeRunning)
             return;
 
+
         currentTime += Time.deltaTime;
+
 
         if (currentTime >= dayLength)
         {
@@ -28,23 +35,41 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+
+
     public void StartDayTime()
     {
         currentTime = 0f;
         timeRunning = true;
 
-        Debug.Log("Day timer started.");
+        Debug.Log("Day timer reset and started.");
     }
+
+
+
+    public void ResetDayTimer()
+    {
+        currentTime = 0f;
+        timeRunning = true;
+
+        Debug.Log("New day timer started.");
+    }
+
+
 
     public float GetTime()
     {
         return currentTime;
     }
 
+
+
     public float GetRemainingTime()
     {
         return dayLength - currentTime;
     }
+
+
 
     public float GetTimePercentage()
     {

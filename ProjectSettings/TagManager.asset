@@ -5,11 +5,16 @@ TagManager:
   serializedVersion: 3
   tags:
   - DirtySpot
+  - RinsingArea
+  - DryingRack
+  - TrashBin
+  - Ground
+  - Sponge
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interactable
   - Water
   - UI
   - 
