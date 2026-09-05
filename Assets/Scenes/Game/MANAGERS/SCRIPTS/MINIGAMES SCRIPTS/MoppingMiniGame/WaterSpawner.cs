@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class WaterSpawner : MonoBehaviour
 {
+    private bool initialized = false;
     [Header("Water Setup")]
     [SerializeField] private GameObject waterPrefab;
     [SerializeField] private Transform[] waterSpawnPoints;
@@ -13,9 +14,8 @@ public class WaterSpawner : MonoBehaviour
 
 
     [Header("Spawn Timing")]
-    [SerializeField] private float minSpawnDelay = 20f;
-    [SerializeField] private float maxSpawnDelay = 60f;
-
+    [SerializeField] private float minSpawnDelay = 80f;
+[SerializeField] private float maxSpawnDelay = 120f;
 
 
     private List<Transform> availableSpawnPoints =
@@ -26,9 +26,10 @@ public class WaterSpawner : MonoBehaviour
         new List<WetArea>();
 
 
-    private bool spawning = true;
+    private bool spawning = false;
 
-    private float spawnTimer;
+    private float spawnTimer = 0f;
+
 
 
     private bool mopTaskStarted = false;
@@ -36,13 +37,16 @@ public class WaterSpawner : MonoBehaviour
     private bool mopCompleted = false;
 
 
+
     private SuddenTaskManager suddenTaskManager;
 
+    private DayManager dayManager;
 
 
-    // ==============================
+
+    // =========================
     // HUD ACCESS
-    // ==============================
+    // =========================
 
     public int RemainingWetAreas
     {
@@ -53,6 +57,7 @@ public class WaterSpawner : MonoBehaviour
     }
 
 
+
     public bool MopTaskStarted
     {
         get
@@ -60,6 +65,7 @@ public class WaterSpawner : MonoBehaviour
             return mopTaskStarted;
         }
     }
+
 
 
     public bool IsMoppingCompleted
@@ -72,45 +78,99 @@ public class WaterSpawner : MonoBehaviour
 
 
 
-
-    private void Start()
+    public bool HasActiveWater
     {
-        suddenTaskManager =
-            FindFirstObjectByType<SuddenTaskManager>();
-
-
-        ResetSpawnPoints();
-
-        SetNextSpawnTime();
-
-
-        // Mop task exists for HUD tracking
-        mopTaskStarted = true;
-        mopCompleted = false;
-    }
-
-
-
-
-    private void Update()
-    {
-        if (!spawning)
-            return;
-
-
-        spawnTimer -= Time.deltaTime;
-
-
-        if (spawnTimer <= 0f)
+        get
         {
-            SpawnWater();
-
-            SetNextSpawnTime();
+            return activeWetAreas.Count > 0;
         }
     }
 
 
 
+   private void Start()
+{
+    InitializeSpawner();
+}
+
+
+private void InitializeSpawner()
+{
+    if(initialized)
+        return;
+
+
+    suddenTaskManager =
+        FindFirstObjectByType<SuddenTaskManager>();
+
+
+    dayManager =
+        FindFirstObjectByType<DayManager>();
+
+
+    ResetSpawnPoints();
+
+
+    initialized = true;
+
+
+    Debug.Log("WaterSpawner Initialized");
+}
+
+private void Update()
+{
+    if(!spawning)
+        return;
+
+
+    spawnTimer -= Time.deltaTime;
+
+
+    if(spawnTimer <= 0)
+    {
+        Debug.Log("Trying to spawn water...");
+
+        SpawnWater();
+
+        SetNextSpawnTime();
+    }
+}
+
+    // =========================
+    // DAILY RESET
+    // =========================
+
+
+   public void ResetDailyMop()
+{
+    foreach(WetArea area in activeWetAreas)
+    {
+        if(area != null)
+            Destroy(area.gameObject);
+    }
+
+
+    activeWetAreas.Clear();
+
+
+    mopTaskStarted = false;
+
+    mopCompleted = false;
+
+
+    spawning = false;
+
+
+    spawnTimer = 0f;
+
+
+    ResetSpawnPoints();
+
+
+    Debug.Log(
+        "WaterSpawner reset."
+    );
+}
 
 
     private void ResetSpawnPoints()
@@ -118,27 +178,80 @@ public class WaterSpawner : MonoBehaviour
         availableSpawnPoints.Clear();
 
 
-        foreach (Transform spawnPoint in waterSpawnPoints)
+        foreach(Transform point in waterSpawnPoints)
         {
-            if (spawnPoint != null)
+            if(point != null)
             {
-                availableSpawnPoints.Add(spawnPoint);
+                availableSpawnPoints.Add(point);
             }
         }
+
+
+        Debug.Log(
+            "Spawn points loaded: "
+            + availableSpawnPoints.Count
+        );
     }
 
 
 
+
+
+    // =========================
+    // SPAWN TIMER
+    // =========================
 
 
     private void SetNextSpawnTime()
     {
+        float difficulty = 0;
+
+
+        if(dayManager != null)
+        {
+            difficulty =
+                dayManager.CurrentDifficulty;
+        }
+
+
+
+       float currentMin =
+    minSpawnDelay -
+    (difficulty * 8f);
+
+
+float currentMax =
+    maxSpawnDelay -
+    (difficulty * 10f);
+
+
+        currentMin =
+            Mathf.Max(currentMin,3f);
+
+
+
+        currentMax =
+            Mathf.Max(currentMax,5f);
+
+
+
+
         spawnTimer =
             Random.Range(
-                minSpawnDelay,
-                maxSpawnDelay
+                currentMin,
+                currentMax
             );
+
+
+
+        Debug.Log(
+            "Next water spawn in "
+            + spawnTimer
+            + " seconds"
+        );
     }
+
+
 
 
 
@@ -146,10 +259,10 @@ public class WaterSpawner : MonoBehaviour
 
     private void SpawnWater()
     {
-        if (waterPrefab == null)
+        if(waterPrefab == null)
         {
             Debug.LogWarning(
-                "Water Prefab is not assigned."
+                "Water prefab missing."
             );
 
             return;
@@ -157,10 +270,10 @@ public class WaterSpawner : MonoBehaviour
 
 
 
-        if (availableSpawnPoints.Count == 0)
+        if(availableSpawnPoints.Count == 0)
         {
-            Debug.Log(
-                "No available water spots."
+            Debug.LogWarning(
+                "No water spawn points."
             );
 
             return;
@@ -169,7 +282,7 @@ public class WaterSpawner : MonoBehaviour
 
 
 
-        int randomIndex =
+        int index =
             Random.Range(
                 0,
                 availableSpawnPoints.Count
@@ -177,61 +290,71 @@ public class WaterSpawner : MonoBehaviour
 
 
 
-        Transform selectedSpot =
-            availableSpawnPoints[randomIndex];
+        Transform point =
+            availableSpawnPoints[index];
 
 
 
-        GameObject newWater =
+        GameObject water =
             Instantiate(
                 waterPrefab,
-                selectedSpot.position,
-                selectedSpot.rotation
+                point.position,
+                point.rotation
             );
 
 
 
         WetArea wetArea =
-            newWater.GetComponent<WetArea>();
+            water.GetComponent<WetArea>();
 
 
 
-        if (wetArea != null)
-        {
-            wetArea.SetSpawner(
-                this,
-                selectedSpot
-            );
-
-
-            wetArea.SetMoppingMinigame(
-                moppingMinigame
-            );
-
-
-            activeWetAreas.Add(
-                wetArea
-            );
-        }
-        else
+        if(wetArea == null)
         {
             Debug.LogWarning(
-                "Water prefab missing WetArea component."
+                "Water prefab missing WetArea."
             );
 
 
-            Destroy(newWater);
+            Destroy(water);
 
             return;
         }
 
 
 
-        availableSpawnPoints.RemoveAt(randomIndex);
+
+
+        wetArea.SetSpawner(
+            this,
+            point
+        );
 
 
 
-        if (suddenTaskManager != null)
+        wetArea.SetMoppingMinigame(
+            moppingMinigame
+        );
+
+
+
+        activeWetAreas.Add(
+            wetArea
+        );
+
+
+
+        availableSpawnPoints.RemoveAt(index);
+
+
+
+        mopTaskStarted = true;
+
+        mopCompleted = false;
+
+
+
+        if(suddenTaskManager != null)
         {
             suddenTaskManager.ShowMopTask();
         }
@@ -240,7 +363,7 @@ public class WaterSpawner : MonoBehaviour
 
         Debug.Log(
             "Water spawned at: "
-            + selectedSpot.name
+            + point.name
         );
     }
 
@@ -248,36 +371,11 @@ public class WaterSpawner : MonoBehaviour
 
 
 
-    public void FreeSpawnPoint(
-        Transform spawnPoint
-    )
+
+
+    public void RemoveWetArea(WetArea wetArea)
     {
-        if (spawnPoint == null)
-            return;
-
-
-
-        if (!availableSpawnPoints.Contains(spawnPoint))
-        {
-            availableSpawnPoints.Add(spawnPoint);
-        }
-
-
-        Debug.Log(
-            "Water spot available again: "
-            + spawnPoint.name
-        );
-    }
-
-
-
-
-
-    public void RemoveWetArea(
-        WetArea wetArea
-    )
-    {
-        if (activeWetAreas.Contains(wetArea))
+        if(activeWetAreas.Contains(wetArea))
         {
             activeWetAreas.Remove(wetArea);
         }
@@ -285,19 +383,19 @@ public class WaterSpawner : MonoBehaviour
 
 
         Debug.Log(
-            "Remaining wet areas: "
+            "Remaining water: "
             + activeWetAreas.Count
         );
 
 
 
-        if (activeWetAreas.Count == 0)
+        if(activeWetAreas.Count == 0)
         {
             mopCompleted = true;
 
 
             Debug.Log(
-                "ALL WET AREAS CLEANED! MOP COMPLETE!"
+                "ALL WATER CLEANED"
             );
         }
     }
@@ -306,19 +404,61 @@ public class WaterSpawner : MonoBehaviour
 
 
 
-    public void StopSpawning()
+
+
+    public void FreeSpawnPoint(Transform point)
     {
-        spawning = false;
+        if(point == null)
+            return;
+
+
+
+        if(!availableSpawnPoints.Contains(point))
+        {
+            availableSpawnPoints.Add(point);
+        }
     }
 
 
 
 
 
-    public void StartSpawning()
-    {
-        spawning = true;
 
-        SetNextSpawnTime();
+public void StartSpawning()
+{
+    spawning = true;
+
+
+    mopTaskStarted = true;
+
+    mopCompleted = false;
+
+
+    ResetSpawnPoints();
+
+
+    SetNextSpawnTime();
+
+
+    if(suddenTaskManager != null)
+    {
+        suddenTaskManager.ShowMopTask();
+    }
+
+
+    Debug.Log(
+        "Water spawning enabled. Points: "
+        + availableSpawnPoints.Count
+    );
+}
+
+    public void StopSpawning()
+    {
+        spawning = false;
+
+
+        Debug.Log(
+            "Water spawning disabled."
+        );
     }
 }

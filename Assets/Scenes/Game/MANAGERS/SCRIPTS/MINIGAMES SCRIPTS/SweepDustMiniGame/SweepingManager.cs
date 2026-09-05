@@ -9,9 +9,16 @@ public class SweepingManager : MonoBehaviour
 
 
     [Header("Difficulty Scaling")]
-    [SerializeField] private int startingDust = 2;
-    [SerializeField] private int dustIncreasePerDay = 1;
-
+    [SerializeField] private int[] dustPerDay =
+    {
+        2, // Day 1
+        2, // Day 2
+        3, // Day 3
+        4, // Day 4
+        4, // Day 5
+        5, // Day 6
+        5  // Day 7
+    };
 
 
     [Header("Sweeping Minigame")]
@@ -19,15 +26,20 @@ public class SweepingManager : MonoBehaviour
 
 
 
-    private List<DustSpot> activeDust = new List<DustSpot>();
+    private List<DustSpot> activeDust =
+        new List<DustSpot>();
+
 
     private ChoreManager choreManager;
     private DayManager dayManager;
 
-    private Chore sweepDustChore;
 
     private bool sweepingCompleted = false;
-
+    private Chore sweepDustChore;
+    public void SetSweepDustChore(Chore chore)
+{
+    sweepDustChore = chore;
+}
 
 
     public int RemainingDust
@@ -39,6 +51,7 @@ public class SweepingManager : MonoBehaviour
     }
 
 
+
     public bool IsSweepingCompleted
     {
         get
@@ -46,6 +59,7 @@ public class SweepingManager : MonoBehaviour
             return sweepingCompleted;
         }
     }
+
 
 
 
@@ -64,23 +78,15 @@ public class SweepingManager : MonoBehaviour
 
 
 
-    // DayManager will send the correct chore reference
-    public void SetSweepDustChore(Chore chore)
-    {
-        sweepDustChore = chore;
-    }
-
-
-
-
-
     public void StartSweepingTask()
     {
         sweepingCompleted = false;
 
         SpawnDust();
 
-        Debug.Log("SWEEPING TASK STARTED!");
+        Debug.Log(
+            "SWEEPING TASK STARTED!"
+        );
     }
 
 
@@ -92,20 +98,20 @@ public class SweepingManager : MonoBehaviour
         activeDust.Clear();
 
 
-        int difficulty = 0;
+
+        int currentDay = 1;
 
 
         if(dayManager != null)
         {
-            difficulty =
-                dayManager.CurrentDifficulty;
+            currentDay =
+                dayManager.CurrentDay;
         }
 
 
 
         int dustAmount =
-            startingDust +
-            (difficulty * dustIncreasePerDay);
+            GetDustAmount(currentDay);
 
 
 
@@ -126,7 +132,9 @@ public class SweepingManager : MonoBehaviour
 
 
         List<Transform> availablePoints =
-            new List<Transform>(dustSpawnPoints);
+            new List<Transform>(
+                dustSpawnPoints
+            );
 
 
 
@@ -139,11 +147,15 @@ public class SweepingManager : MonoBehaviour
                 );
 
 
+
             Transform point =
                 availablePoints[randomIndex];
 
 
-            availablePoints.RemoveAt(randomIndex);
+
+            availablePoints.RemoveAt(
+                randomIndex
+            );
 
 
 
@@ -168,7 +180,9 @@ public class SweepingManager : MonoBehaviour
                 );
 
 
-                activeDust.Add(dustSpot);
+                activeDust.Add(
+                    dustSpot
+                );
             }
             else
             {
@@ -193,6 +207,26 @@ public class SweepingManager : MonoBehaviour
 
 
 
+    private int GetDustAmount(int day)
+    {
+        int index = day - 1;
+
+
+        if(index >= 0 &&
+           index < dustPerDay.Length)
+        {
+            return dustPerDay[index];
+        }
+
+
+        // Default for future days
+        return dustPerDay[dustPerDay.Length - 1];
+    }
+
+
+
+
+
     public void CompleteDust(DustSpot cleanedDust)
     {
         if(activeDust.Contains(cleanedDust))
@@ -201,10 +235,12 @@ public class SweepingManager : MonoBehaviour
         }
 
 
+
         Debug.Log(
             "Remaining dust: "
             + activeDust.Count
         );
+
 
 
         if(activeDust.Count == 0)
@@ -217,34 +253,37 @@ public class SweepingManager : MonoBehaviour
 
 
 
-  private void CompleteSweepingTask()
-{
-    if(sweepingCompleted)
-        return;
-
-
-    sweepingCompleted = true;
-
-
-    Debug.Log(
-        "ALL DUST CLEANED! SWEEPING COMPLETE!"
-    );
-
-
-    if(choreManager != null)
+    private void CompleteSweepingTask()
     {
-        choreManager.CompleteChore(1);
+        if(sweepingCompleted)
+            return;
+
+
+
+        sweepingCompleted = true;
+
 
 
         Debug.Log(
-            "Sweeping completed through ChoreManager."
+            "ALL DUST CLEANED! SWEEPING COMPLETE!"
         );
+
+
+
+        if(choreManager != null)
+        {
+            choreManager.CompleteChore(1);
+
+
+            Debug.Log(
+                "Sweeping completed through ChoreManager."
+            );
+        }
+        else
+        {
+            Debug.LogWarning(
+                "ChoreManager not found."
+            );
+        }
     }
-    else
-    {
-        Debug.LogWarning(
-            "ChoreManager not found."
-        );
-    }
-}
 }

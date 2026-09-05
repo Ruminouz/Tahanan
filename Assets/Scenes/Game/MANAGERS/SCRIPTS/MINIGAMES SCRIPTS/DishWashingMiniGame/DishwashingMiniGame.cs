@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using System.Collections.Generic;
+using UnityEngine.UI;
 public class DishwashingMiniGame : MonoBehaviour
 {
     public enum WashStage
@@ -11,23 +12,41 @@ public class DishwashingMiniGame : MonoBehaviour
         Dry,
         Complete
     }
+   [Header("Mini Game Timer")]
+[SerializeField] private float dishwashingTime = 90f;
 
+[SerializeField] private Text timerText;
+
+private float currentTimer;
+private bool timerRunning;
     [Header("Main Panel")]
     [SerializeField] private GameObject panel;
-
+    private DayManager dayManager;
+[SerializeField] private GameObject garbageBag;
+[SerializeField] private Transform garbageSpawnPoint;
     [Header("Dish Setup")]
     [SerializeField] private GameObject platePrefab;
     [SerializeField] private Transform washingArea;
     [SerializeField] private int plateCount = 3;
-
+    private WashableDish currentScrubbingPlate;
+    private List<WashableDish> spawnedPlates =
+    new List<WashableDish>();
     [Header("Leftovers")]
     [SerializeField] private GameObject leftoverPrefab;
     [SerializeField] private Transform leftoverSpawnArea;
     [SerializeField] private int leftoverCount = 1;
 
-    [Header("Dishwashing Tools")]
-    [SerializeField] private GameObject sponge;
-    [SerializeField] private GameObject soap;
+   [Header("Dishwashing Tools")]
+[SerializeField] private GameObject sponge;
+[SerializeField] private DishSponge dishSponge;
+[SerializeField] private GameObject soap;
+
+
+[Header("Day Scaling")]
+
+
+private int currentPlateAmount;
+private int currentLeftoverAmount;
 
     [Header("Rinsing")]
     [SerializeField] private Transform rinsingArea;
@@ -37,61 +56,150 @@ public class DishwashingMiniGame : MonoBehaviour
 
     [Header("Tutorial")]
     [SerializeField] private ChoreTutorial tutorial;
-
+    
     private Chore currentChore;
     private TutorialManager tutorialManager;
 
     private WashStage currentStage;
 
-    private int leftoversRemaining;
-    private int platesRemaining;
-    private int platesToRinse;
-    private int platesToDry;
+   private int leftoversRemaining;
 
-    private void Start()
+private int platesRemaining;
+private int platesScrubbed;
+private int platesRinsed;
+
+private int platesToRinse;
+private int platesToDry;
+
+public void StartGame(Chore chore)
+{
+    currentChore = chore;
+
+
+    // RESET EVERYTHING FIRST
+    ResetMiniGameState();
+
+
+
+    // OPEN PANEL
+    if(panel != null)
     {
-        tutorialManager = FindFirstObjectByType<TutorialManager>();
-
-        if (panel != null)
-            panel.SetActive(false);
+        panel.SetActive(true);
     }
 
-    public void StartGame(Chore chore)
+
+
+    // ENABLE SPONGE AGAIN
+    if(sponge != null)
     {
-        currentChore = chore;
+        sponge.SetActive(true);
 
-        if (panel != null)
-            panel.SetActive(true);
-
-        ClearOldObjects();
-
-        leftoversRemaining = leftoverCount;
-        platesRemaining = plateCount;
-        platesToRinse = 0;
-        platesToDry = 0;
-
-        SpawnPlates();
-        SpawnLeftovers();
-
-        currentStage = WashStage.RemoveLeftovers;
-
-        bool alreadyLearned = false;
-
-        if (tutorialManager != null)
-        {
-            alreadyLearned =
-                tutorialManager.HasLearned(chore.ChoreName);
-        }
-
-        if (alreadyLearned)
-        {
-            StartDishwashing();
-        }
-        else
-        {
-            ShowTutorial();
-        }
+        Debug.Log("Sponge Enabled");
     }
+    else
+    {
+        Debug.LogWarning("Sponge reference missing!");
+    }
+
+
+
+
+    // RESET SPONGE POSITION + STATE
+    if(dishSponge != null)
+    {
+        dishSponge.ResetSponge();
+    }
+    else
+    {
+        Debug.LogWarning("DishSponge reference missing!");
+    }
+
+
+
+
+
+    // RESET GARBAGE BAG STATE
+    if(garbageBag != null)
+    {
+        garbageBag.SetActive(false);
+
+        Debug.Log(
+            "Garbage bag hidden during dishwashing"
+        );
+    }
+
+
+
+
+
+
+    StartMiniGameTimer();
+
+
+
+    ApplyDayDifficulty();
+
+
+
+    SpawnPlates();
+
+    SpawnLeftovers();
+
+
+
+    currentStage = WashStage.RemoveLeftovers;
+
+
+
+
+
+    bool alreadyLearned = false;
+
+
+
+    if(tutorialManager != null)
+    {
+        alreadyLearned =
+            tutorialManager.HasLearned(
+                chore.ChoreName
+            );
+    }
+
+
+
+
+
+    if(alreadyLearned)
+    {
+        StartDishwashing();
+    }
+    else
+    {
+        ShowTutorial();
+    }
+
+
+
+    Debug.Log(
+        "Dishwashing Started"
+    );
+}
+   private void StartMiniGameTimer()
+{
+    currentTimer = dishwashingTime;
+
+    timerRunning = true;
+
+
+    UpdateTimerUI();
+
+
+    Debug.Log(
+        "Dishwashing Timer Started: "
+        + currentTimer
+        + " seconds"
+    );
+}
 
     private void ShowTutorial()
     {
@@ -111,6 +219,66 @@ public class DishwashingMiniGame : MonoBehaviour
             FinishTutorial
         );
     }
+    private void Update()
+{
+    if(!timerRunning)
+        return;
+
+
+    currentTimer -= Time.deltaTime;
+
+
+    if(currentTimer < 0)
+        currentTimer = 0;
+
+
+    UpdateTimerUI();
+
+
+    if(currentTimer <= 0)
+    {
+        FailDishwashing();
+    }
+}
+private void FailDishwashing()
+{
+    timerRunning = false;
+
+
+    Debug.Log(
+        "DISHWASHING FAILED - TIME OUT"
+    );
+
+
+    ChoreManager choreManager =
+        FindFirstObjectByType<ChoreManager>();
+
+
+    if(choreManager != null)
+    {
+       ChoreManager manager =
+FindFirstObjectByType<ChoreManager>();
+
+
+if(manager != null)
+{
+    manager.MissChore(currentChore);
+}
+    }
+
+
+    if(panel != null)
+    {
+        panel.SetActive(false);
+    }
+    if(timerText != null)
+{
+    timerText.text = "";
+}
+
+
+    currentChore = null;
+}
 
     private void FinishTutorial()
     {
@@ -190,59 +358,105 @@ public class DishwashingMiniGame : MonoBehaviour
 
         EnablePlateScrubbing();
     }
+    public bool CanScrubThisPlate(WashableDish dish)
+{
+    return dish == currentScrubbingPlate;
+}
 
-    private void EnablePlateScrubbing()
+   private void EnablePlateScrubbing()
+{
+    foreach(WashableDish dish in spawnedPlates)
     {
-        WashableDish[] dishes =
-            FindObjectsByType<WashableDish>(
-                FindObjectsInactive.Exclude,
-                FindObjectsSortMode.None
-            );
-
-        foreach (WashableDish dish in dishes)
-        {
-            dish.EnableScrubbing();
-        }
-
-        Debug.Log(
-            "Scrubbing enabled for " +
-            dishes.Length +
-            " plates."
-        );
+        dish.DisableScrubbing();
     }
 
+
+    if(spawnedPlates.Count == 0)
+    {
+        Debug.LogError(
+            "No plates found!"
+        );
+
+        return;
+    }
+
+
+
+    // LAST SPAWNED = TOP PLATE
+    currentScrubbingPlate =
+        spawnedPlates[spawnedPlates.Count - 1];
+
+
+    currentScrubbingPlate.EnableScrubbing();
+
+
+    Debug.Log(
+        "TOP PLATE ENABLED FOR SCRUBBING"
+    );
+}
     // =========================================================
     // SCRUB
     // =========================================================
-
-   public void PlateScrubbed(WashableDish dish)
+private void EnableNextPlate()
 {
-    if (currentStage != WashStage.Scrub)
-        return;
-
-    platesRemaining--;
-
-    if (platesRemaining < 0)
-        platesRemaining = 0;
-
-    Debug.Log(
-        "Plate scrubbed! Plates still to scrub: " +
-        platesRemaining
-    );
-
-    // This particular plate is now allowed to be dragged
-    // into the rinsing area.
-    if (dish != null)
+    // Disable lahat muna
+    foreach(WashableDish dish in spawnedPlates)
     {
-        dish.EnableRinsing();
-
-        Debug.Log(
-            "Scrubbed plate is now READY TO DRAG into rinsing area."
-        );
+        dish.DisableScrubbing();
     }
 
-    // DO NOT switch to Dry here.
-    // The player still needs to rinse this plate.
+
+    // Hanapin next plate sa stack
+    for(int i = spawnedPlates.Count - 1; i >= 0; i--)
+    {
+        WashableDish next =
+            spawnedPlates[i];
+
+
+        if(!next.IsClean)
+        {
+            currentScrubbingPlate = next;
+
+            next.EnableScrubbing();
+
+
+            Debug.Log(
+                "NEXT PLATE ENABLED FOR SCRUBBING"
+            );
+
+            return;
+        }
+    }
+
+
+    Debug.Log(
+        "NO MORE PLATES TO SCRUB"
+    );
+}
+ public void PlateScrubbed(WashableDish dish)
+{
+    if(dish != currentScrubbingPlate)
+        return;
+
+
+    Debug.Log(
+        "Plate scrubbed."
+    );
+
+
+    DishRinsePlate rinse =
+        dish.GetComponent<DishRinsePlate>();
+
+
+    if(rinse != null)
+    {
+        rinse.EnableRinsing();
+    }
+
+
+    Debug.Log(
+        "Plate ready for rinse."
+    );
 }
 public void PlateMovedToRinsing(DishRinsePlate plate)
 {
@@ -281,68 +495,36 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
 
  public void PlateRinsed(DishRinsePlate plate)
 {
-    if (currentStage != WashStage.Rinse)
-        return;
-
-    platesToRinse--;
-
-    if (platesToRinse < 0)
-        platesToRinse = 0;
+    platesRinsed++;
 
     Debug.Log(
-        "Plate rinsed! Plates still waiting to rinse: " +
-        platesToRinse
+        "Rinsed: " +
+        platesRinsed +
+        "/" +
+        currentPlateAmount
     );
 
-    // =====================================================
-    // NOT ALL PLATES HAVE BEEN SCRUBBED YET
-    // =====================================================
 
-    if (platesRemaining > 0)
+    if(platesRinsed < currentPlateAmount)
     {
-        currentStage = WashStage.Scrub;
-
-        Debug.Log(
-            "More plates still need to be scrubbed."
-        );
-
+        EnableNextPlate();
         return;
     }
 
-    // =====================================================
-    // ALL PLATES HAVE BEEN SCRUBBED
-    // =====================================================
 
-    if (platesToRinse > 0)
-    {
-        currentStage = WashStage.Rinse;
+    Debug.Log(
+        "ALL PLATES RINSED. START DRYING."
+    );
 
-        Debug.Log(
-            "All plates scrubbed, but some still need rinsing."
-        );
-
-        return;
-    }
-
-    // =====================================================
-    // ALL PLATES SCRUBBED + ALL PLATES RINSED
-    // =====================================================
 
     StartDrying();
 }
-private void StartDrying()
+    private void StartDrying()
 {
     currentStage = WashStage.Dry;
 
-    platesToDry = plateCount;
+    platesToDry = currentPlateAmount;
 
-    Debug.Log("==============================");
-    Debug.Log("ALL PLATES SCRUBBED!");
-    Debug.Log("ALL PLATES RINSED!");
-    Debug.Log("DRYING STAGE ENABLED!");
-    Debug.Log("Plates to dry: " + platesToDry);
-    Debug.Log("Put plates on the drying rack.");
-    Debug.Log("==============================");
 
     DishRinsePlate[] plates =
         FindObjectsByType<DishRinsePlate>(
@@ -350,182 +532,474 @@ private void StartDrying()
             FindObjectsSortMode.None
         );
 
-    foreach (DishRinsePlate plate in plates)
+
+    foreach(DishRinsePlate plate in plates)
     {
         plate.EnableDrying();
     }
 
-    Debug.Log(
-        "Drying enabled for " +
-        plates.Length +
-        " plates."
-    );
-}
-    // =========================================================
-    // DRY
-    // =========================================================
-
-    public void PlateDried()
-{
-    if (currentStage != WashStage.Dry)
-        return;
-
-    platesToDry--;
-
-    if (platesToDry < 0)
-        platesToDry = 0;
 
     Debug.Log(
-        "Plate placed on drying rack! Remaining: " +
-        platesToDry
+        "DRYING ENABLED FOR ALL PLATES"
     );
-
-    if (platesToDry == 0)
-    {
-        Debug.Log("ALL PLATES ARE ON DRYING RACK!");
-        CompleteGame();
-    }
 }
 
-    // =========================================================
-    // GETTERS
-    // =========================================================
-
-    public int GetPlateCount()
+        public void PlateDried()
     {
-        return plateCount;
+        if (currentStage != WashStage.Dry)
+            return;
+
+        platesToDry--;
+
+        if (platesToDry < 0)
+            platesToDry = 0;
+
+        Debug.Log(
+            "Plate placed on drying rack! Remaining: " +
+            platesToDry
+        );
+
+        if (platesToDry == 0)
+        {
+            Debug.Log("ALL PLATES ARE ON DRYING RACK!");
+            CompleteGame();
+        }
     }
 
-    public WashStage GetCurrentStage()
-    {
-        return currentStage;
-    }
+        // =========================================================
+        // GETTERS
+        // =========================================================
 
-    // =========================================================
-    // SPAWN
-    // =========================================================
+        public int GetPlateCount()
+        {
+            return plateCount;
+        }
 
-private void SpawnPlates()
+        public WashStage GetCurrentStage()
+        {
+            return currentStage;
+        }
+
+        // =========================================================
+        // SPAWN
+        // =========================================================
+
+    private void SpawnPlates()
 {
     if (platePrefab == null || washingArea == null)
         return;
 
-    for (int i = 0; i < plateCount; i++)
-    {
-        GameObject plate = Instantiate(
-            platePrefab,
-            washingArea
-        );
 
-        // Stack the plates in one pile.
-        // Each plate is slightly offset so the pile is visible.
+    spawnedPlates.Clear();
+
+
+    for (int i = 0; i < currentPlateAmount; i++)
+    {
+        GameObject plate =
+            Instantiate(
+                platePrefab,
+                washingArea
+            );
+
+
         float verticalOffset = i * 12f;
         float horizontalOffset = i * 4f;
 
-        plate.transform.localPosition = new Vector3(
-            horizontalOffset,
-            verticalOffset,
-            0f
-        );
 
-        // Slight rotation makes the pile feel more natural.
-        float rotation = (i % 2 == 0) ? -2f : 2f;
+        plate.transform.localPosition =
+            new Vector3(
+                horizontalOffset,
+                verticalOffset,
+                0f
+            );
+
+
+        float rotation =
+            (i % 2 == 0) ? -2f : 2f;
+
 
         plate.transform.localRotation =
-            Quaternion.Euler(0f, 0f, rotation);
+            Quaternion.Euler(
+                0f,
+                0f,
+                rotation
+            );
+
+
+        WashableDish dish =
+            plate.GetComponent<WashableDish>();
+
+
+        if(dish != null)
+        {
+            spawnedPlates.Add(dish);
+        }
     }
+
+
+    Debug.Log(
+        "Spawned plates: " +
+        spawnedPlates.Count
+    );
 }
 
 
 
-    private void SpawnLeftovers()
-    {
-        if (leftoverPrefab == null ||
-            leftoverSpawnArea == null)
-            return;
+        private void SpawnLeftovers()
+{
+    if (leftoverPrefab == null ||
+        leftoverSpawnArea == null)
+        return;
 
-        for (int i = 0; i < leftoverCount; i++)
-        {
-            GameObject leftover = Instantiate(
-                leftoverPrefab,
-                leftoverSpawnArea
-            );
 
-            float spacing = 50f;
+    leftoversRemaining = currentLeftoverAmount;
 
-            leftover.transform.localPosition =
-                new Vector3(
-                    i * spacing,
-                    0f,
-                    0f
+            for (int i = 0; i < currentLeftoverAmount; i++)
+            {
+                GameObject leftover = Instantiate(
+                    leftoverPrefab,
+                    leftoverSpawnArea
                 );
 
-            leftover.transform.localRotation =
-                Quaternion.identity;
+                float spacing = 50f;
 
-            DishLeftOver script =
-                leftover.GetComponent<DishLeftOver>();
+                leftover.transform.localPosition =
+                    new Vector3(
+                        i * spacing,
+                        0f,
+                        0f
+                    );
 
-            if (script != null)
-            {
-                script.SetManager(this);
-            }
-        }
-    }
+                leftover.transform.localRotation =
+                    Quaternion.identity;
 
-    // =========================================================
-    // CLEANUP
-    // =========================================================
+                DishLeftOver script =
+                    leftover.GetComponent<DishLeftOver>();
 
-    private void ClearOldObjects()
-    {
-        if (washingArea != null)
-        {
-            foreach (Transform child in washingArea)
-            {
-                Destroy(child.gameObject);
+                if (script != null)
+                {
+                    script.SetManager(this);
+                }
             }
         }
 
-        if (leftoverSpawnArea != null)
-        {
-            foreach (Transform child in leftoverSpawnArea)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-    }
-
-    // =========================================================
-    // COMPLETE
-    // =========================================================
-
- 
-public void CompleteGame()
+        // =========================================================
+        // CLEANUP
+        // =========================================================
+private void ClearOldObjects()
 {
+    ClearChildren(washingArea);
+
+    ClearChildren(leftoverSpawnArea);
+
+    ClearChildren(rinsingArea);
+
+    ClearChildren(dryingRack);
+
+
+    Debug.Log(
+        "Dishwashing objects cleared."
+    );
+}
+
+
+private void ClearChildren(Transform parent)
+{
+    if(parent == null)
+        return;
+
+
+    foreach(Transform child in parent)
+    {
+        Destroy(child.gameObject);
+    }
+}
+private void ResetSponge()
+{
+    DishSponge dishSponge =
+        FindFirstObjectByType<DishSponge>();
+
+
+    if(dishSponge != null)
+    {
+        dishSponge.ResetSponge();
+
+        Debug.Log(
+            "Sponge reset for new day."
+        );
+    }
+}
+        // =========================================================
+        // COMPLETE
+        // =========================================================
+
+    
+ public void CompleteGame()
+{
+
+    timerRunning = false;
+
+
     currentStage = WashStage.Complete;
+
 
     Debug.Log("DISHWASHING COMPLETE!");
 
-    // Disable sponge after the mini-game finishes.
-    if (sponge != null)
+
+
+    // RESET SPONGE
+    ResetSponge();
+
+
+    if(timerText != null)
     {
-        sponge.SetActive(false);
-        Debug.Log("Sponge disabled.");
+        timerText.text = "";
     }
 
-    if (currentChore != null)
+
+    if(dishSponge != null)
+    {
+        dishSponge.ResetSponge();
+    }
+
+
+    if(sponge != null)
+    {
+        sponge.SetActive(false);
+    }
+
+
+
+    // COMPLETE CHORE
+    if(currentChore != null)
     {
         currentChore.Complete();
     }
 
-    if (panel != null)
-    {
-        panel.SetActive(false);
-    }
 
-    currentChore = null;
+
+
+    // ============================
+    // GET DAY FROM DAY MANAGER
+    // ============================
+
+    // ============================
+// GARBAGE SYSTEM DAY 2-7
+// ============================
+
+if(DayManager.Instance != null)
+{
+
+    int day = DayManager.Instance.CurrentDay;
+
+
+    Debug.Log(
+        "Checking Garbage Unlock Day: "
+        + day
+    );
+
+
+    if(day >= 2)
+    {
+
+        GarbageChore garbageChore =
+        FindFirstObjectByType<GarbageChore>();
+
+
+        if(GarbageChore.Instance != null)
+{
+
+    GarbageChore.Instance.SpawnGarbageBag();
+
+
+    Debug.Log(
+        "Garbage Bag Spawn Called"
+    );
+
+}
+else
+{
+
+    Debug.LogError(
+        "GarbageChore Instance Missing!"
+    );
+
 }
 
+    }
+    else
+    {
+
+        Debug.Log(
+            "Garbage Sorting Locked Day "
+            + day
+        );
+
+    }
+
+}
+else
+{
+
+    Debug.LogWarning(
+        "DayManager Instance Missing!"
+    );
+
+}
+
+
+
+
+    // ============================
+    // CLOSE PANEL
+    // ============================
+
+    if(panel != null)
+    {
+
+        panel.SetActive(false);
+
+
+        Debug.Log(
+            "Dishwashing Panel Closed"
+        );
+
+    }
+
+
+
+    currentChore = null;
+
+}
+private void UpdateTimerUI()
+{
+    if(timerText == null)
+        return;
+
+
+    int minutes =
+        Mathf.FloorToInt(currentTimer / 60);
+
+
+    int seconds =
+        Mathf.FloorToInt(currentTimer % 60);
+
+
+    timerText.text =
+        string.Format(
+            "{0:00}:{1:00}",
+            minutes,
+            seconds
+        );
+}
+
+
+private void ResetMiniGameState()
+{
+    leftoversRemaining = 0;
+
+    platesRemaining = 0;
+    platesScrubbed = 0;
+    platesRinsed = 0;
+
+    platesToRinse = 0;
+    platesToDry = 0;
+
+
+    currentScrubbingPlate = null;
+
+
+    ClearOldObjects();
+
+
+    if(dishSponge != null)
+    {
+        dishSponge.ResetSponge();
+    }
+
+
+    if(sponge != null)
+    {
+        sponge.SetActive(true);
+    }
+
+
+    currentStage = WashStage.RemoveLeftovers;
+
+
+    Debug.Log(
+        "Dishwashing MiniGame fully reset."
+    );
+}
+
+
+private void ApplyDayDifficulty()
+{
+    int day = 1;
+
+    if(dayManager != null)
+    {
+        day = dayManager.CurrentDay;
+    }
+
+
+    switch(day)
+    {
+        case 1:
+            currentPlateAmount = 2;
+            currentLeftoverAmount = 1;
+            break;
+
+
+        case 2:
+            currentPlateAmount = 2;
+            currentLeftoverAmount = 2;
+            break;
+
+
+        case 3:
+            currentPlateAmount = 3;
+            currentLeftoverAmount = 2;
+            break;
+
+
+        case 4:
+            currentPlateAmount = 4;
+            currentLeftoverAmount = 3;
+            break;
+
+
+        case 5:
+            currentPlateAmount = 5;
+            currentLeftoverAmount = 3;
+            break;
+
+
+        case 6:
+            currentPlateAmount = 5;
+            currentLeftoverAmount = 4;
+            break;
+
+
+        case 7:
+            currentPlateAmount = 6;
+            currentLeftoverAmount = 4;
+            break;
+
+
+        default:
+            currentPlateAmount = 2;
+            currentLeftoverAmount = 1;
+            break;
+    }
+
+
+    Debug.Log(
+        "Dishwashing Difficulty Applied. Day: " 
+        + day +
+        " Plates: " +
+        currentPlateAmount
+    );
+}
 
 }

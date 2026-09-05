@@ -9,6 +9,7 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private Slider timeBar;
 
 
+
     private TimeManager timeManager;
     private DayManager dayManager;
 
@@ -22,11 +23,14 @@ public class GameHUD : MonoBehaviour
         timeManager =
             FindFirstObjectByType<TimeManager>();
 
+
         dayManager =
             FindFirstObjectByType<DayManager>();
 
+
         sweepingManager =
             FindFirstObjectByType<SweepingManager>();
+
 
         waterSpawner =
             FindFirstObjectByType<WaterSpawner>();
@@ -35,10 +39,11 @@ public class GameHUD : MonoBehaviour
 
 
 
+
     private void Update()
     {
-        if (timeManager == null ||
-            dayManager == null)
+        if(timeManager == null ||
+           dayManager == null)
             return;
 
 
@@ -55,8 +60,11 @@ public class GameHUD : MonoBehaviour
 
     private void UpdateDay()
     {
-        dayText.text =
-            "Day " + dayManager.CurrentDay;
+        if(dayText != null)
+        {
+            dayText.text =
+                "Day " + dayManager.CurrentDay;
+        }
     }
 
 
@@ -65,12 +73,20 @@ public class GameHUD : MonoBehaviour
 
     private void UpdateTime()
     {
+        if(timeBar == null ||
+           timeText == null)
+            return;
+
+
+
         float percentage =
             timeManager.GetTimePercentage();
 
 
+
         timeBar.value =
             percentage;
+
 
 
 
@@ -120,16 +136,16 @@ public class GameHUD : MonoBehaviour
 
 
 
-        if (chores != null)
+        if(chores != null)
         {
-            foreach (Chore chore in chores)
+            foreach(Chore chore in chores)
             {
-                if (chore == null)
+                if(chore == null)
                     continue;
 
 
 
-                if (chore.IsCompleted)
+                if(chore.IsCompleted)
                 {
                     choreListText.text +=
                         "✓ "
@@ -154,9 +170,9 @@ public class GameHUD : MonoBehaviour
         // SWEEPING TASK
         // ==========================
 
-        if (sweepingManager != null)
+        if(sweepingManager != null)
         {
-            if (sweepingManager.IsSweepingCompleted)
+            if(sweepingManager.IsSweepingCompleted)
             {
                 choreListText.text +=
                     "✓ Sweep Dust\n";
@@ -176,22 +192,31 @@ public class GameHUD : MonoBehaviour
 
         // ==========================
         // MOPPING TASK
+        // DAY 2-7 ONLY
         // ==========================
 
-        if (waterSpawner != null &&
-            waterSpawner.MopTaskStarted)
+        if(waterSpawner != null &&
+           dayManager.CurrentDay >= 2)
         {
-            if (waterSpawner.IsMoppingCompleted)
+            if(waterSpawner.IsMoppingCompleted)
             {
                 choreListText.text +=
                     "✓ Mop Floor\n";
             }
             else
             {
-                choreListText.text +=
-                    "○ Mop Floor ("
-                    + waterSpawner.RemainingWetAreas
-                    + " remaining)\n";
+                if(waterSpawner.HasActiveWater)
+                {
+                    choreListText.text +=
+                        "○ Mop Floor ("
+                        + waterSpawner.RemainingWetAreas
+                        + " remaining)\n";
+                }
+                else
+                {
+                    choreListText.text +=
+                        "○ Mop Floor (Waiting)\n";
+                }
             }
         }
     }

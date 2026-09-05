@@ -10,236 +10,333 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
     [SerializeField] private Color dirtyColor = Color.gray;
     [SerializeField] private Color cleanColor = Color.white;
 
+
     [Header("Scrubbing")]
     [SerializeField] private Slider progressBar;
     [SerializeField] private float scrubAmount = 0.05f;
+
 
     [Header("Scrub Feedback")]
     [SerializeField] private GameObject scrubFoam;
     [SerializeField] private ParticleSystem scrubParticles;
 
+
     [Header("Audio")]
     [SerializeField] private AudioClip scrubSound;
     [SerializeField] private AudioClip cleanSound;
 
-    private float progress = 0f;
 
-    private bool isClean = false;
-    private bool canScrub = false;
-    private bool canRinse = false;
+
+    private float progress;
+
+    private bool isClean;
+
+    private bool canScrub;
+    private bool canRinse;
+
+
 
     private DishwashingMiniGame miniGame;
     private DishRinsePlate rinsePlate;
 
     private AudioSource audioSource;
 
+
+
     public bool IsClean => isClean;
-    private bool IsTopPlate()
-{
-    if (transform.parent == null)
-        return true;
 
-    Transform parent = transform.parent;
 
-    // The last sibling is visually on top.
-    return transform.GetSiblingIndex() ==
-           parent.childCount - 1;
-}
+
     private void Start()
     {
-        miniGame = FindFirstObjectByType<DishwashingMiniGame>();
-        rinsePlate = GetComponent<DishRinsePlate>();
+        miniGame =
+            FindFirstObjectByType<DishwashingMiniGame>();
 
-        audioSource = GetComponent<AudioSource>();
+        rinsePlate =
+            GetComponent<DishRinsePlate>();
 
-        if (audioSource == null)
+
+        audioSource =
+            GetComponent<AudioSource>();
+
+
+        if(audioSource == null)
         {
-            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource =
+                gameObject.AddComponent<AudioSource>();
         }
+
 
         audioSource.playOnAwake = false;
 
+
         ResetDish();
     }
+
+
+
+
+    // =========================================
+    // SCRUB CONTROL
+    // =========================================
+
 
     public void EnableScrubbing()
     {
         canScrub = true;
         canRinse = false;
 
-        if (rinsePlate != null)
+
+        if(rinsePlate != null)
         {
             rinsePlate.DisableRinsing();
         }
 
-        if (scrubFoam != null)
-        {
-            scrubFoam.SetActive(false);
-        }
 
-        Debug.Log("Dish is ready to scrub!");
+        Debug.Log(
+            "Dish enabled for scrubbing."
+        );
     }
 
-    public void EnableRinsing()
+
+
+    public void DisableScrubbing()
     {
         canScrub = false;
-        canRinse = true;
 
-        if (scrubFoam != null)
-        {
-            scrubFoam.SetActive(false);
-        }
 
-        if (rinsePlate != null)
-        {
-            rinsePlate.EnableRinsing();
-        }
-
-        Debug.Log("Dish is ready for rinsing!");
+        Debug.Log(
+            "Dish scrubbing disabled."
+        );
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-{
-    if (!canScrub)
-        return;
 
-    if (isClean)
-        return;
 
-    if (Mouse.current == null)
-        return;
 
-    if (!Mouse.current.leftButton.isPressed)
-        return;
+    // =========================================
+    // POINTER SCRUB
+    // =========================================
 
-    // Only the TOP plate can be scrubbed.
-    if (!IsTopPlate())
-        return;
 
-    Scrub();
-}
+    public void OnPointerEnter(
+        PointerEventData eventData)
+    {
+        if(!canScrub)
+            return;
+
+
+        if(isClean)
+            return;
+
+
+        if(Mouse.current == null)
+            return;
+
+
+        if(!Mouse.current.leftButton.isPressed)
+            return;
+
+
+
+        // CHECK SA MANAGER KUNG ITO ANG TAMANG PLATO
+        if(miniGame != null)
+        {
+            if(!miniGame.CanScrubThisPlate(this))
+                return;
+        }
+
+
+
+        Scrub();
+    }
+
+
+
+
+
     private void Scrub()
     {
         progress += scrubAmount;
 
-        progress = Mathf.Clamp01(progress);
+        progress =
+            Mathf.Clamp01(progress);
 
-        if (progressBar != null)
+
+
+        if(progressBar != null)
         {
             progressBar.value = progress;
         }
 
-        // Show foam while scrubbing.
-        if (scrubFoam != null && !scrubFoam.activeSelf)
+
+
+        if(scrubFoam != null &&
+           !scrubFoam.activeSelf)
         {
             scrubFoam.SetActive(true);
         }
 
-        // Play particles.
-        if (scrubParticles != null && !scrubParticles.isPlaying)
+
+
+        if(scrubParticles != null &&
+           !scrubParticles.isPlaying)
         {
             scrubParticles.Play();
         }
 
-        // Scrub sound.
-        if (scrubSound != null && audioSource != null)
+
+
+        if(scrubSound != null &&
+           audioSource != null)
         {
             audioSource.PlayOneShot(scrubSound);
         }
 
-        // Slightly transition dirty plate toward clean.
-        if (dishImage != null)
+
+
+        if(dishImage != null)
         {
-            dishImage.color = Color.Lerp(
-                dirtyColor,
-                cleanColor,
-                progress
-            );
+            dishImage.color =
+                Color.Lerp(
+                    dirtyColor,
+                    cleanColor,
+                    progress
+                );
         }
 
-        if (progress >= 1f)
+
+
+        if(progress >= 1f)
         {
             CleanDish();
         }
     }
 
+
+
+
+
     private void CleanDish()
     {
-        if (isClean)
+        if(isClean)
             return;
 
+
         isClean = true;
+
         canScrub = false;
         canRinse = true;
 
+
         progress = 1f;
 
-        if (progressBar != null)
+
+
+        if(progressBar != null)
         {
             progressBar.value = 1f;
         }
 
-        if (dishImage != null)
+
+
+        if(dishImage != null)
         {
             dishImage.color = cleanColor;
         }
 
-        if (scrubFoam != null)
+
+
+        if(scrubFoam != null)
         {
             scrubFoam.SetActive(false);
         }
 
-        if (scrubParticles != null)
+
+
+        if(scrubParticles != null)
         {
             scrubParticles.Stop();
         }
 
-        if (cleanSound != null && audioSource != null)
+
+
+        if(cleanSound != null &&
+           audioSource != null)
         {
             audioSource.PlayOneShot(cleanSound);
         }
 
-        Debug.Log("Dish scrubbed!");
 
-        if (miniGame != null)
+
+        Debug.Log(
+            "Dish scrubbed successfully."
+        );
+
+
+
+        if(miniGame != null)
         {
             miniGame.PlateScrubbed(this);
         }
     }
 
+
+
+
+
+    // =========================================
+    // RESET
+    // =========================================
+
+
     public void ResetDish()
     {
         progress = 0f;
 
+
         isClean = false;
+
         canScrub = false;
         canRinse = false;
 
-        if (progressBar != null)
+
+
+        if(progressBar != null)
         {
             progressBar.value = 0f;
         }
 
-        if (dishImage != null)
+
+
+        if(dishImage != null)
         {
             dishImage.color = dirtyColor;
         }
 
-        if (scrubFoam != null)
+
+
+        if(scrubFoam != null)
         {
             scrubFoam.SetActive(false);
         }
 
-        if (scrubParticles != null)
+
+
+        if(scrubParticles != null)
         {
             scrubParticles.Stop();
         }
 
-        if (rinsePlate != null)
+
+
+        if(rinsePlate != null)
         {
             rinsePlate.DisableRinsing();
         }
     }
+
+
+
 
     public bool CanRinse()
     {

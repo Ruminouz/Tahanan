@@ -8,11 +8,13 @@ TagManager:
   - RinsingArea
   - DryingRack
   - TrashBin
+  - Ground
+  - Sponge
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interactable
   - Water
   - UI
   - 

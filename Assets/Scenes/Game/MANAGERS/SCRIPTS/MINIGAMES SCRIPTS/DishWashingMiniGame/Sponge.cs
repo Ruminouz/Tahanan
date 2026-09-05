@@ -2,197 +2,340 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
 public class DishSponge : MonoBehaviour,
     IBeginDragHandler,
     IDragHandler,
     IEndDragHandler
 {
+
     private DishwashingMiniGame miniGame;
+
     private Canvas canvas;
 
+
     private Transform originalParent;
+
     private Vector3 originalPosition;
+
 
     private bool hasSoap = false;
 
-    [Header("Sponge Sprite")]
+
+
+    [Header("Sprite")]
     [SerializeField] private Image spongeImage;
+
 
     [SerializeField] private Sprite normalSpongeSprite;
     [SerializeField] private Sprite soapedSpongeSprite;
 
-    [Header("Soaped Sponge Movement Sprites")]
+
+    [Header("Movement Sprites")]
     [SerializeField] private Sprite soapedSpongeIdleSprite;
     [SerializeField] private Sprite soapedSpongeLeftSprite;
     [SerializeField] private Sprite soapedSpongeRightSprite;
     [SerializeField] private Sprite soapedSpongeUpSprite;
     [SerializeField] private Sprite soapedSpongeDownSprite;
 
+
+
     private Vector2 lastMousePosition;
+
+
+
+    private void Awake()
+    {
+
+        canvas = GetComponentInParent<Canvas>();
+
+
+        if(canvas == null)
+        {
+            canvas = FindFirstObjectByType<Canvas>();
+        }
+
+    }
+
+
 
     private void Start()
     {
-        canvas = GetComponentInParent<Canvas>();
+        SaveOriginalPosition();
 
-        // Initial sprite
-        if (spongeImage != null && normalSpongeSprite != null)
-        {
-            spongeImage.sprite = normalSpongeSprite;
-        }
+        ResetSponge();
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+
+
+
+
+    private void SaveOriginalPosition()
     {
-        originalParent = transform.parent;
-        originalPosition = transform.position;
 
-        lastMousePosition = eventData.position;
-
-        transform.SetParent(canvas.transform);
-
-        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
-
-        if (canvasGroup != null)
+        if(originalParent == null)
         {
-            canvasGroup.blocksRaycasts = false;
+            originalParent = transform.parent;
         }
 
-        Debug.Log("Sponge picked up.");
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        transform.position = eventData.position;
-
-        if (hasSoap)
+        if(originalParent != null)
         {
-            float movementX = eventData.position.x - lastMousePosition.x;
-            float movementY = eventData.position.y - lastMousePosition.y;
-
-            // Use whichever direction has the greater movement.
-            if (Mathf.Abs(movementX) > Mathf.Abs(movementY))
-            {
-                if (movementX < 0)
-                {
-                    // Moving Left
-                    if (spongeImage != null && soapedSpongeLeftSprite != null)
-                    {
-                        spongeImage.sprite = soapedSpongeLeftSprite;
-                    }
-                }
-                else if (movementX > 0)
-                {
-                    // Moving Right
-                    if (spongeImage != null && soapedSpongeRightSprite != null)
-                    {
-                        spongeImage.sprite = soapedSpongeRightSprite;
-                    }
-                }
-            }
-            else
-            {
-                if (movementY < 0)
-                {
-                    // Moving Down
-                    if (spongeImage != null && soapedSpongeDownSprite != null)
-                    {
-                        spongeImage.sprite = soapedSpongeDownSprite;
-                    }
-                }
-                else if (movementY > 0)
-                {
-                    // Moving Up
-                    if (spongeImage != null && soapedSpongeUpSprite != null)
-                    {
-                        spongeImage.sprite = soapedSpongeUpSprite;
-                    }
-                }
-            }
-
-            lastMousePosition = eventData.position;
-        }
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
-
-        if (canvasGroup != null)
-        {
-            canvasGroup.blocksRaycasts = true;
-        }
-
-        if (eventData.pointerEnter != null)
-        {
-            DishSoap dishSoap =
-                eventData.pointerEnter.GetComponentInParent<DishSoap>();
-
-            if (dishSoap != null)
-            {
-                dishSoap.ReceiveSponge(this);
-                return;
-            }
-        }
-
-        transform.SetParent(originalParent);
-        transform.position = originalPosition;
-
-        // Return to idle sprite
-        if (hasSoap)
-        {
-            if (spongeImage != null && soapedSpongeIdleSprite != null)
-            {
-                spongeImage.sprite = soapedSpongeIdleSprite;
-            }
+            originalPosition = transform.localPosition;
         }
         else
         {
-            if (spongeImage != null && normalSpongeSprite != null)
-            {
-                spongeImage.sprite = normalSpongeSprite;
-            }
+            Debug.LogWarning(
+                "Sponge has no parent. Assign it inside the Dishwashing Panel."
+            );
+
+            originalPosition = transform.position;
         }
 
-        Debug.Log("Sponge returned.");
     }
+
+
+
+
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+
+        lastMousePosition = eventData.position;
+
+
+        if(canvas != null)
+        {
+            transform.SetParent(canvas.transform);
+        }
+
+
+        CanvasGroup group =
+            GetComponent<CanvasGroup>();
+
+
+        if(group != null)
+        {
+            group.blocksRaycasts = false;
+        }
+
+
+        Debug.Log("Sponge picked");
+
+    }
+
+
+
+
+
+
+    public void OnDrag(PointerEventData eventData)
+    {
+
+        transform.position =
+            eventData.position;
+
+
+
+        lastMousePosition =
+            eventData.position;
+
+    }
+
+
+
+
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+
+
+        CanvasGroup group =
+            GetComponent<CanvasGroup>();
+
+
+        if(group != null)
+        {
+            group.blocksRaycasts = true;
+        }
+
+
+
+        if(eventData.pointerEnter != null)
+        {
+
+            DishSoap soap =
+            eventData.pointerEnter
+            .GetComponentInParent<DishSoap>();
+
+
+            if(soap != null)
+            {
+                soap.ReceiveSponge(this);
+                return;
+            }
+
+        }
+
+
+
+        ReturnToOriginalPosition();
+
+    }
+
+
+
+
+
+    private void ReturnToOriginalPosition()
+    {
+
+        if(originalParent != null)
+        {
+
+            transform.SetParent(originalParent);
+
+
+            transform.localPosition =
+                originalPosition;
+
+        }
+
+
+        UpdateSprite();
+
+
+        Debug.Log("Sponge returned");
+
+    }
+
+
+
+
+
+
+    public void ResetSponge()
+    {
+
+        hasSoap = false;
+
+
+        if(originalParent != null)
+        {
+
+            transform.SetParent(originalParent);
+
+
+            transform.localPosition =
+                originalPosition;
+
+        }
+
+
+
+        CanvasGroup group =
+            GetComponent<CanvasGroup>();
+
+
+        if(group != null)
+        {
+            group.blocksRaycasts = true;
+        }
+
+
+
+        gameObject.SetActive(true);
+
+
+        UpdateSprite();
+
+
+        Debug.Log("Sponge Reset");
+
+    }
+
+
+
+
+
+
 
     public void AddSoap()
     {
-        if (hasSoap)
+
+        if(hasSoap)
             return;
+
 
         hasSoap = true;
 
-        // Change to soaped idle sprite
-        if (spongeImage != null && soapedSpongeIdleSprite != null)
-        {
-            spongeImage.sprite = soapedSpongeIdleSprite;
-        }
-        else if (spongeImage != null && soapedSpongeSprite != null)
-        {
-            spongeImage.sprite = soapedSpongeSprite;
-        }
 
-        Debug.Log("Sponge now has dishwashing liquid.");
+        UpdateSprite();
 
-        miniGame = FindFirstObjectByType<DishwashingMiniGame>();
 
-        if (miniGame == null)
+
+        miniGame =
+        FindFirstObjectByType<DishwashingMiniGame>();
+
+
+        if(miniGame != null)
         {
-            Debug.LogError("DishwashingMiniGame was NOT found!");
-            return;
+            miniGame.SoapAdded();
         }
 
-        Debug.Log("DishwashingMiniGame found.");
 
-        miniGame.SoapAdded();
+        Debug.Log("Soap Added");
 
-        Debug.Log("SoapAdded() sent to DishwashingMiniGame.");
     }
+
+
+
+
+
+
+    private void UpdateSprite()
+    {
+
+        if(spongeImage == null)
+            return;
+
+
+
+        if(hasSoap)
+        {
+
+            if(soapedSpongeIdleSprite != null)
+            {
+                spongeImage.sprite =
+                soapedSpongeIdleSprite;
+            }
+            else if(soapedSpongeSprite != null)
+            {
+                spongeImage.sprite =
+                soapedSpongeSprite;
+            }
+
+        }
+        else
+        {
+
+            if(normalSpongeSprite != null)
+            {
+                spongeImage.sprite =
+                normalSpongeSprite;
+            }
+
+        }
+
+    }
+
+
+
+
 
     public bool HasSoap()
     {
         return hasSoap;
     }
-}
 
+}
