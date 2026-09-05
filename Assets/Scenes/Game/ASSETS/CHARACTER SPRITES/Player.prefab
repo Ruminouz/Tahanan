@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6134466878455480247
 Transform:
   m_ObjectHideFlags: 0
@@ -222,7 +222,6 @@ GameObject:
   - component: {fileID: 8352465529408984037}
   - component: {fileID: 1578775256816664756}
   - component: {fileID: 6857030955664842019}
-  - component: {fileID: 1987523019735623185}
   - component: {fileID: 2422564435877467724}
   - component: {fileID: 6202568798467450824}
   - component: {fileID: 8337442962231213823}
@@ -387,7 +386,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4057428123570991256}
         m_TargetAssemblyTypeName: InteractionDetector, Assembly-CSharp
         m_MethodName: OnInteract
         m_Mode: 0
@@ -568,19 +567,6 @@ MonoBehaviour:
   m_labelHash: 2.6175869e-27
   m_SpriteKey: 0
   m_SpriteHash: 81887837
---- !u!114 &1987523019735623185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7509236334997600112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a559a37ba0d5c94e888534740341b9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  interactRange: 1.5
 --- !u!114 &2422564435877467724
 MonoBehaviour:
   m_ObjectHideFlags: 0
