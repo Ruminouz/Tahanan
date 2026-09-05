@@ -1,43 +1,43 @@
 fileFormatVersion: 2
-guid: 1d58fc14f034b4340be50f4836bcd3ee
+guid: e4cbe3d98fdbeae4b9e9517a5df7d428
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 549584731697016426
-    second: Untitled186_20260823002507_0
+      213: 609218999558034076
+    second: Walk8D_0
   - first:
-      213: 4559550966107904772
-    second: Untitled186_20260823002507_1
+      213: -1108705756423119140
+    second: Walk8D_1
   - first:
-      213: -4358326232956502884
-    second: Untitled186_20260823002507_2
+      213: -5496477322577955245
+    second: Walk8D_2
   - first:
-      213: 6513427601478518929
-    second: Untitled186_20260823002507_3
+      213: -8947425130470247857
+    second: Walk8D_3
   - first:
-      213: -4832648481738404572
-    second: Untitled186_20260823002507_4
+      213: 3146881914246537074
+    second: Walk8D_4
   - first:
-      213: 6638072458581863810
-    second: Untitled186_20260823002507_5
+      213: -530766524736650949
+    second: Walk8D_5
   - first:
-      213: 8467426204052455119
-    second: Untitled186_20260823002507_6
+      213: 8287027120799394947
+    second: Walk8D_6
   - first:
-      213: -7211279788654548292
-    second: Untitled186_20260823002507_7
+      213: -7485697645409539079
+    second: Walk8D_7
   - first:
-      213: -8198038481898422423
-    second: Untitled186_20260823002507_8
+      213: 7535687519629600109
+    second: Walk8D_8
   - first:
-      213: 4827184356891672836
-    second: Untitled186_20260823002507_9
+      213: 3945886142980266618
+    second: Walk8D_9
   - first:
-      213: -903438793594901196
-    second: Untitled186_20260823002507_10
+      213: -363758412642503802
+    second: Walk8D_10
   - first:
-      213: 794105158928463900
-    second: Untitled186_20260823002507_11
+      213: -7798978570520414742
+    second: Walk8D_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -133,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Untitled186_20260823002507_0
+      name: Walk8D_0
       rect:
         serializedVersion: 2
         x: 0
@@ -148,14 +148,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a6e67c2d66480a700800000000000000
-      internalID: 549584731697016426
+      spriteID: c92531bc371647800800000000000000
+      internalID: 609218999558034076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_1
+      name: Walk8D_1
       rect:
         serializedVersion: 2
         x: 32
@@ -170,14 +170,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 40b96263277c64f30800000000000000
-      internalID: 4559550966107904772
+      spriteID: cde18fb1df51d90f0800000000000000
+      internalID: -1108705756423119140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_2
+      name: Walk8D_2
       rect:
         serializedVersion: 2
         x: 64
@@ -192,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c9c7c5de16d1483c0800000000000000
-      internalID: -4358326232956502884
+      spriteID: 35630c72ff698b3b0800000000000000
+      internalID: -5496477322577955245
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_3
+      name: Walk8D_3
       rect:
         serializedVersion: 2
         x: 0
@@ -214,14 +214,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1980a58d4e7546a50800000000000000
-      internalID: 6513427601478518929
+      spriteID: f42fae3df3c54d380800000000000000
+      internalID: -8947425130470247857
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_4
+      name: Walk8D_4
       rect:
         serializedVersion: 2
         x: 32
@@ -236,14 +236,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 42dc6a17fcbfeecb0800000000000000
-      internalID: -4832648481738404572
+      spriteID: 27f14c89d68fbab20800000000000000
+      internalID: 3146881914246537074
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_5
+      name: Walk8D_5
       rect:
         serializedVersion: 2
         x: 64
@@ -258,14 +258,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 28d63172bbb2f1c50800000000000000
-      internalID: 6638072458581863810
+      spriteID: b31476a68a652a8f0800000000000000
+      internalID: -530766524736650949
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_6
+      name: Walk8D_6
       rect:
         serializedVersion: 2
         x: 0
@@ -280,14 +280,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fce716e2547528570800000000000000
-      internalID: 8467426204052455119
+      spriteID: 38ca643824f610370800000000000000
+      internalID: 8287027120799394947
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_7
+      name: Walk8D_7
       rect:
         serializedVersion: 2
         x: 32
@@ -302,14 +302,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cbaaa4d3d336ceb90800000000000000
-      internalID: -7211279788654548292
+      spriteID: 9fbe26507a57d1890800000000000000
+      internalID: -7485697645409539079
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_8
+      name: Walk8D_8
       rect:
         serializedVersion: 2
         x: 64
@@ -324,14 +324,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 96f367f8f67ba3e80800000000000000
-      internalID: -8198038481898422423
+      spriteID: d65edd19fd3249860800000000000000
+      internalID: 7535687519629600109
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_9
+      name: Walk8D_9
       rect:
         serializedVersion: 2
         x: 0
@@ -346,14 +346,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 401c9d9d89a9df240800000000000000
-      internalID: 4827184356891672836
+      spriteID: a7a99747a8a92c630800000000000000
+      internalID: 3945886142980266618
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_10
+      name: Walk8D_10
       rect:
         serializedVersion: 2
         x: 32
@@ -368,14 +368,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43de77f24375673f0800000000000000
-      internalID: -903438793594901196
+      spriteID: 6833266a6aba3faf0800000000000000
+      internalID: -363758412642503802
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Untitled186_20260823002507_11
+      name: Walk8D_11
       rect:
         serializedVersion: 2
         x: 64
@@ -390,8 +390,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c187c384f6a350b00800000000000000
-      internalID: 794105158928463900
+      spriteID: ae53f359f4674c390800000000000000
+      internalID: -7798978570520414742
       vertices: []
       indices: 
       edges: []
@@ -400,7 +400,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9f1078cc96c953c4d92ce8b1d6082252
+    spriteID: 11bd50d084bbdfc409dd52cda2fcfede
     internalID: 0
     vertices: []
     indices: 
@@ -412,18 +412,18 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Untitled186_20260823002507_0: 549584731697016426
-      Untitled186_20260823002507_1: 4559550966107904772
-      Untitled186_20260823002507_10: -903438793594901196
-      Untitled186_20260823002507_11: 794105158928463900
-      Untitled186_20260823002507_2: -4358326232956502884
-      Untitled186_20260823002507_3: 6513427601478518929
-      Untitled186_20260823002507_4: -4832648481738404572
-      Untitled186_20260823002507_5: 6638072458581863810
-      Untitled186_20260823002507_6: 8467426204052455119
-      Untitled186_20260823002507_7: -7211279788654548292
-      Untitled186_20260823002507_8: -8198038481898422423
-      Untitled186_20260823002507_9: 4827184356891672836
+      Walk8D_0: 609218999558034076
+      Walk8D_1: -1108705756423119140
+      Walk8D_10: -363758412642503802
+      Walk8D_11: -7798978570520414742
+      Walk8D_2: -5496477322577955245
+      Walk8D_3: -8947425130470247857
+      Walk8D_4: 3146881914246537074
+      Walk8D_5: -530766524736650949
+      Walk8D_6: 8287027120799394947
+      Walk8D_7: -7485697645409539079
+      Walk8D_8: 7535687519629600109
+      Walk8D_9: 3945886142980266618
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
