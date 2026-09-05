@@ -35,6 +35,7 @@ Transform:
   - {fileID: 3589155525597412948}
   - {fileID: 8238904472562531827}
   - {fileID: 7490932936070189671}
+  - {fileID: 5642364560794352380}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &904908547400279941
@@ -47,8 +48,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6098582043715910}
   - component: {fileID: 3720020653483822317}
-  - component: {fileID: 389811949153069397}
   - component: {fileID: 3761317380568969781}
+  - component: {fileID: 230741859777349170}
   m_Layer: 0
   m_Name: Feed Dog
   m_TagString: Untagged
@@ -117,20 +118,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.0722122, y: 1.5827241}
   m_EdgeRadius: 0
---- !u!114 &389811949153069397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 904908547400279941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf32e6d587c0ea8459043f89d00ee3f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Chore
-  choreName: Feed Dog
-  points: 1
 --- !u!212 &3761317380568969781
 SpriteRenderer:
   serializedVersion: 2
@@ -190,6 +177,138 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &230741859777349170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904908547400279941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bb914ca8a491a4ba782e634ab5affd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FeedDogChore
+  choreName: FeedDog
+  points: 1
+  miniGame: {fileID: 0}
+--- !u!1 &1081123552167931290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 636711693023225961}
+  m_Layer: 0
+  m_Name: Spawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &636711693023225961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081123552167931290}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.35, y: -10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5642364560794352380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2735977322117174766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5642364560794352380}
+  - component: {fileID: 1143224174660130468}
+  m_Layer: 0
+  m_Name: WaterSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5642364560794352380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2735977322117174766}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.53, y: 2.4300003, z: 0}
+  m_LocalScale: {x: 0.6125, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8448493929798191298}
+  - {fileID: 636711693023225961}
+  - {fileID: 4756699541478532814}
+  m_Father: {fileID: 6937794541632860020}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1143224174660130468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2735977322117174766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4636f22e5959f4aa77f4d4d6c200aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterSpawner
+  waterPrefab: {fileID: 8434417254392206843, guid: 22f1d286bcd5f4c4c80aedbe6bb2e753, type: 3}
+  waterSpawnPoints:
+  - {fileID: 8448493929798191298}
+  - {fileID: 636711693023225961}
+  - {fileID: 4756699541478532814}
+  moppingMinigame: {fileID: 0}
+  minSpawnDelay: 15
+  maxSpawnDelay: 30
+--- !u!1 &5049956157087728379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4756699541478532814}
+  m_Layer: 0
+  m_Name: Spawn3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4756699541478532814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5049956157087728379}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.6, y: 1.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5642364560794352380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5360686316870333254
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,9 +319,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8238904472562531827}
   - component: {fileID: 3792135904406460946}
-  - component: {fileID: 3679144501235194137}
+  - component: {fileID: 7944781119092457655}
+  - component: {fileID: 1965587228811720694}
   m_Layer: 0
-  m_Name: BroomObject
+  m_Name: BroomTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,16 +380,75 @@ BoxCollider2D:
   m_Offset: {x: -0.04661846, y: -0.081581354}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.56, y: 0.93}
+    newSize: {x: 0.56, y: 0.93}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 2.0722122, y: 1.5827241}
   m_EdgeRadius: 0
---- !u!114 &3679144501235194137
+--- !u!212 &7944781119092457655
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5360686316870333254}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: -1682360665
+  m_SortingLayer: 4
+  m_SortingOrder: 1
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 663463509561187115, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.56, y: 0.93}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+--- !u!114 &1965587228811720694
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,11 +457,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 5360686316870333254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf32e6d587c0ea8459043f89d00ee3f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 713a9c9cc7298724d9913831096f9dcf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Chore
-  choreName: WalisTambo
-  points: 1
+  m_EditorClassIdentifier: Assembly-CSharp::BroomChore
+  broomVisual: {fileID: 5360686316870333254}
+--- !u!1 &5659519998778115523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8448493929798191298}
+  m_Layer: 0
+  m_Name: Spawn1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8448493929798191298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5659519998778115523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.88, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5642364560794352380}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7143144424274475320
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +656,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7490932936070189671}
   - component: {fileID: 105440776084430797}
-  - component: {fileID: 1008744591293420526}
+  - component: {fileID: 5097160018990745936}
   m_Layer: 0
   m_Name: Mop
   m_TagString: Untagged
@@ -516,7 +725,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.0722122, y: 1.5827241}
   m_EdgeRadius: 0
---- !u!114 &1008744591293420526
+--- !u!114 &5097160018990745936
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -525,12 +734,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7430527013064816712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e07641a892ece746a4280a8b7de0aa7, type: 3}
+  m_Script: {fileID: 11500000, guid: 31d06b7371862bf4cb0f529afd0c02b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MopFloorChore
-  choreName: Mop
-  points: 1
-  miniGame: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::MopChore
+  mopVisual: {fileID: 7430527013064816712}
 --- !u!1 &8531304797500106011
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,8 +748,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1627051401830394652}
   - component: {fileID: 8762771649892286710}
-  - component: {fileID: 6486862262113523852}
   - component: {fileID: 7882477388946322438}
+  - component: {fileID: 7741791015243803529}
   m_Layer: 0
   m_Name: CleanLeaves
   m_TagString: Untagged
@@ -611,20 +818,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.0722122, y: 1.5827241}
   m_EdgeRadius: 0
---- !u!114 &6486862262113523852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8531304797500106011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf32e6d587c0ea8459043f89d00ee3f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Chore
-  choreName: Leaves
-  points: 1
 --- !u!212 &7882477388946322438
 SpriteRenderer:
   serializedVersion: 2
@@ -684,6 +877,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &7741791015243803529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8531304797500106011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd62d51a82cf2834180aaa7787ab32bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CleanLeavesChore
+  choreName: Leaves
+  points: 1
+  miniGame: {fileID: 0}
 --- !u!1 &8896623799091094127
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,8 +902,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3589155525597412948}
   - component: {fileID: 8118176736823776730}
-  - component: {fileID: 2796996743078893735}
   - component: {fileID: 4739130307779235392}
+  - component: {fileID: 96812348994949727}
   m_Layer: 0
   m_Name: TrashBins
   m_TagString: Untagged
@@ -764,20 +972,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.0722122, y: 1.5827241}
   m_EdgeRadius: 0
---- !u!114 &2796996743078893735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8896623799091094127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf32e6d587c0ea8459043f89d00ee3f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Chore
-  choreName: TrashBins
-  points: 1
 --- !u!212 &4739130307779235392
 SpriteRenderer:
   serializedVersion: 2
@@ -837,3 +1031,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &96812348994949727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8896623799091094127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d97051485ab38c4eb850559f4248765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ThrowTrashChore
+  choreName: Garbage
+  points: 1
+  miniGame: {fileID: 0}
+  garbageBag: {fileID: 0}
