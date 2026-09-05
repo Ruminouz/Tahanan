@@ -4,14 +4,8 @@ public class FeedDogChore : Chore
 {
     [SerializeField] private FeedDogMiniGame miniGame;
 
-    public override void Interact()
+        public override void Interact()
     {
-        if (IsCompleted)
-        {
-            Debug.Log("Feed Dog is already completed.");
-            return;
-        }
-
         Debug.Log("Starting Feed Dog Mini-Game!");
 
         if (miniGame != null)

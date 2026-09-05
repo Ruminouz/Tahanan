@@ -62,35 +62,10 @@ public class Chore : Interactable
     // INTERACT
     // =========================
 
-  public override void Interact()
-{
-
-    if(isCompleted)
+      public override bool CanInteract()
     {
-        Debug.Log(
-            choreName + " already completed."
-        );
-
-        return;
+        return !isCompleted && !isMissed;
     }
-
-
-    if(isMissed)
-    {
-        Debug.Log(
-            choreName + " was missed today."
-        );
-
-        return;
-    }
-
-
-
-    Debug.Log(
-        "Starting chore: " 
-        + choreName
-    );
-}
 
 
 

@@ -116,117 +116,34 @@ public class GarbageChore : Chore
 
 
 
+        public override bool CanInteract()
+    {
+        if (!base.CanInteract()) return false;
+
+        int day = DayManager.Instance != null ? DayManager.Instance.CurrentDay : 1;
+        if (day < 2) return false;
+
+        if (!hasGarbageBag) return false;
+
+        if (GarbageCarry.Instance == null || !GarbageCarry.Instance.HasGarbage()) return false;
+
+        return true;
+    }
+
     public override void Interact()
     {
+        Debug.Log("Starting Garbage Sorting Mini Game");
 
-
-        if(IsCompleted)
+        if (miniGame != null)
         {
-
-            Debug.Log(
-                "Garbage chore already completed."
-            );
-              Debug.Log(
-        "GarbageChore Triggered!"
-    );
-            return;
-
-        }
-
-
-
-
-        int day = 1;
-
-
-        if(DayManager.Instance != null)
-        {
-            day = DayManager.Instance.CurrentDay;
-        }
-
-
-
-        if(day < 2  )
-        {
-
-            Debug.Log(
-                "Garbage Sorting MiniGame locked Day "
-                + day
-            );
-
-            return;
-
-        }
-
-
-
-
-
-
-        if(!hasGarbageBag)
-        {
-
-            Debug.Log(
-                "Player needs garbage bag first!"
-            );
-
-            return;
-
-        }
-
-
-
-
-
-
-
-        if(GarbageCarry.Instance == null ||
-           !GarbageCarry.Instance.HasGarbage())
-        {
-
-            Debug.Log(
-                "Player is not carrying garbage!"
-            );
-
-            return;
-
-        }
-
-
-
-
-
-
-        Debug.Log(
-            "Starting Garbage Sorting Mini Game"
-        );
-
-
-
-
-
-        if(miniGame != null)
-        {
-
             miniGame.StartGame(this);
-
-
             GarbageCarry.Instance.RemoveBag();
-
-
             hasGarbageBag = false;
-
         }
         else
         {
-
-            Debug.LogWarning(
-                "Garbage Sorting MiniGame missing!"
-            );
-
+            Debug.LogWarning("Garbage Sorting MiniGame missing!");
         }
-
-
     }
 
 

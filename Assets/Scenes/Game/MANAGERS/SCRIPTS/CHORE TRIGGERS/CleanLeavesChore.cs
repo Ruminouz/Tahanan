@@ -4,14 +4,8 @@ public class CleanLeavesChore : Chore
 {
     [SerializeField] private CleanLeavesMiniGame miniGame;
 
-    public override void Interact()
+        public override void Interact()
     {
-        if (IsCompleted)
-        {
-            Debug.Log("Clean Leaves is already completed.");
-            return;
-        }
-
         Debug.Log("Starting Clean Leaves Mini-Game!");
 
         if (miniGame != null)

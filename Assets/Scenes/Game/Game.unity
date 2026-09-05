@@ -1082,7 +1082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5672931171257741802, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5672931171257741802, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
@@ -1099,7 +1099,7 @@ PrefabInstance:
     - target: {fileID: 5672931171257741802, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1635143937}
+      objectReference: {fileID: 0}
     - target: {fileID: 5672931171257741802, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1148,7 +1148,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1987523019735623185, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1158,17 +1159,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3372556679785361106, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
   m_PrefabInstance: {fileID: 1591657217}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1635143937 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1987523019735623185, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
-  m_PrefabInstance: {fileID: 1591657217}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a559a37ba0d5c94e888534740341b9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
 --- !u!114 &1636646965 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8110631947403721046, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
