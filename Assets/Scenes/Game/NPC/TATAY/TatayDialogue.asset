@@ -15,9 +15,10 @@ MonoBehaviour:
   npcName: Tatay
   npcPortrait: {fileID: 655666607, guid: 72143ab2aa9ca084fb44f34a55500642, type: 3}
   dialogueLines:
-  - Kilala mo ba si Rene?
-  - Bayani ng Pilipinas yon nak
-  autoProgressLines: 0100
+  - TEST TEST TEST TEST 1111
+  - 222 TEST TEST TEST TEST
+  - TEST TEST TEST TEST 333
+  autoProgressLines: 0101
   autoProgressDelay: 1.5
   typingSpeed: 0.05
   voiceSound: {fileID: 8300000, guid: b24cb45d643e31b4aaf43c015afb9382, type: 3}
