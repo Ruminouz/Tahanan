@@ -16,7 +16,7 @@ public class TimeManager : MonoBehaviour
     }
 
 
->>>>>>> 39fe477 (a)
+
     private void Start()
     {
         StartDayTime();
