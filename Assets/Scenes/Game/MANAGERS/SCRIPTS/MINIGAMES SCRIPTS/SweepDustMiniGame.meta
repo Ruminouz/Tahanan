@@ -1,6 +1,7 @@
 fileFormatVersion: 2
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 guid: f027ec0257d8ece42a37fdaed8f9b20c
 guid: f027ec0257d8ece42a37fdaed8f9b20c
 
@@ -17,6 +18,9 @@ guid: f027ec0257d8ece42a37fdaed8f9b20c
 =======
 guid: f027ec0257d8ece42a37fdaed8f9b20c
 >>>>>>> 3d2333e (Revert "a")
+=======
+guid: f027ec0257d8ece42a37fdaed8f9b20c
+>>>>>>> 1f4baca (a)
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
