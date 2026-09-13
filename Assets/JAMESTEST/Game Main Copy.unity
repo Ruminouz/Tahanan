@@ -3348,7 +3348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a559a37ba0d5c94e888534740341b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  interactRange: 1.5
 --- !u!114 &1635143935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7034,7 +7033,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
