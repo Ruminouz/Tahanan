@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Animator animator;
+    private float speedMultiplier = 1f;
+
+    public float CurrentMoveSpeed => moveSpeed * speedMultiplier;
 
     void Start()
     {
@@ -28,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     float moveVelocity = CurrentMoveSpeed > 0 ? CurrentMoveSpeed : moveSpeed;
     rb.linearVelocity = moveInput * moveVelocity;
     animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+>>>>>>> 39fe477 (a)
 }
 
     public void Move(InputAction.CallbackContext context)
@@ -56,5 +60,10 @@ public class PlayerMovement : MonoBehaviour
             moveInput = Vector2.zero;
             animator.SetBool("isWalking", false);
         }
+    }
+
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        speedMultiplier = Mathf.Max(0.1f, multiplier);
     }
 }

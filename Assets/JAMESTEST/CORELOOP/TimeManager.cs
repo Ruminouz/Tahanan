@@ -6,6 +6,17 @@ public class TimeManager : MonoBehaviour
 
     private float currentTime;
     private bool timeRunning = false;
+
+    public float DayLength => dayLength;
+
+    public void AddTime(float seconds)
+    {
+        currentTime = Mathf.Clamp(currentTime - seconds, 0f, dayLength);
+        timeRunning = true;
+    }
+
+
+>>>>>>> 39fe477 (a)
     private void Start()
     {
         StartDayTime();
