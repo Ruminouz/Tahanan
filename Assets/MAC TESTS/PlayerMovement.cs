@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Animator animator;
+    private float speedMultiplier = 1f;
+
+    public float CurrentMoveSpeed => moveSpeed * speedMultiplier;
 
     void Start()
     {
@@ -18,9 +21,20 @@ public class PlayerMovement : MonoBehaviour
 
   private void FixedUpdate()
 {
+<<<<<<< Updated upstream:Assets/MAC TESTS/PlayerMovement.cs
     rb.linearVelocity = moveInput * moveSpeed;
 
    
+=======
+    if(PauseController.IsGamePaused)
+        {
+            rb.linearVelocity = Vector2.zero;
+            animator.SetBool("isWalking", false);
+            return;
+        }
+    rb.linearVelocity = moveInput * CurrentMoveSpeed;
+    animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+>>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
 }
 
     public void Move(InputAction.CallbackContext context)
@@ -49,5 +63,10 @@ public class PlayerMovement : MonoBehaviour
             moveInput = Vector2.zero;
             animator.SetBool("isWalking", false);
         }
+    }
+
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        speedMultiplier = Mathf.Max(0.1f, multiplier);
     }
 }
