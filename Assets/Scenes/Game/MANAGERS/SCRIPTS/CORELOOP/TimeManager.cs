@@ -6,11 +6,19 @@ public class TimeManager : MonoBehaviour
 
     private float currentTime;
     private bool timeRunning = false;
+<<<<<<< Updated upstream:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
 
 
     public float DayLength => dayLength;
 
 
+=======
+<<<<<<< HEAD
+    
+=======
+
+>>>>>>> parent of 39fe477 (a)
+>>>>>>> Stashed changes:Assets/JAMESTEST/CORELOOP/TimeManager.cs
     private void Start()
     {
         StartDayTime();
