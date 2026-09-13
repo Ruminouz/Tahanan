@@ -7,10 +7,29 @@ public class TimeManager : MonoBehaviour
     private float currentTime;
     private bool timeRunning = false;
 
+<<<<<<< Updated upstream:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
+=======
+<<<<<<< Updated upstream:Assets/JAMESTEST/CORELOOP/TimeManager.cs
+<<<<<<< Updated upstream:Assets/JAMESTEST/CORELOOP/TimeManager.cs
+=======
+=======
+<<<<<<< Updated upstream:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
+>>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
+>>>>>>> Stashed changes:Assets/JAMESTEST/CORELOOP/TimeManager.cs
 
     public float DayLength => dayLength;
 
 
+<<<<<<< Updated upstream:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
+=======
+<<<<<<< Updated upstream:Assets/JAMESTEST/CORELOOP/TimeManager.cs
+
+>>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
+=======
+=======
+>>>>>>> Stashed changes:Assets/JAMESTEST/CORELOOP/TimeManager.cs
+>>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
+>>>>>>> Stashed changes:Assets/JAMESTEST/CORELOOP/TimeManager.cs
     private void Start()
     {
         StartDayTime();
