@@ -18,18 +18,6 @@ public class PlayerMovement : MonoBehaviour
 
   private void FixedUpdate()
 {
-<<<<<<< Updated upstream:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
-=======
-<<<<<<< Updated upstream:Assets/MAC TESTS/PlayerMovement.cs
-<<<<<<< Updated upstream:Assets/MAC TESTS/PlayerMovement.cs
-    rb.linearVelocity = moveInput * moveSpeed;
-
-   
-=======
-=======
-<<<<<<< Updated upstream:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
->>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
->>>>>>> Stashed changes:Assets/MAC TESTS/PlayerMovement.cs
     if(PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;
@@ -38,18 +26,6 @@ public class PlayerMovement : MonoBehaviour
         }
     rb.linearVelocity = moveInput * moveSpeed;
     animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
-<<<<<<< Updated upstream:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
-=======
-<<<<<<< Updated upstream:Assets/MAC TESTS/PlayerMovement.cs
->>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
-=======
-=======
-    rb.linearVelocity = moveInput * moveSpeed;
-
-   
->>>>>>> Stashed changes:Assets/MAC TESTS/PlayerMovement.cs
->>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
->>>>>>> Stashed changes:Assets/MAC TESTS/PlayerMovement.cs
 }
 
     public void Move(InputAction.CallbackContext context)
