@@ -96,7 +96,6 @@ public class GarbageCarry : MonoBehaviour
 
     }
 
-<<<<<<< HEAD
     public void ClearBag()
     {
         if (currentBag == null)
@@ -107,6 +106,4 @@ public class GarbageCarry : MonoBehaviour
         currentBag = null;
     }
 
-=======
->>>>>>> 2ND-MAIN
 }

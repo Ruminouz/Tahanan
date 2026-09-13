@@ -15,7 +15,6 @@ public class WaterSpawner : MonoBehaviour
 
     [Header("Spawn Timing")]
     [SerializeField] private float minSpawnDelay = 80f;
-<<<<<<< HEAD
     [SerializeField] private float maxSpawnDelay = 120f;
 
     [Header("Maximum Water Spawns Per Day")]
@@ -30,9 +29,6 @@ public class WaterSpawner : MonoBehaviour
         3, // Day 6
         3  // Day 7
     };
-=======
-[SerializeField] private float maxSpawnDelay = 120f;
->>>>>>> 2ND-MAIN
 
 
     private List<Transform> availableSpawnPoints =
@@ -46,34 +42,24 @@ public class WaterSpawner : MonoBehaviour
     private bool spawning = false;
 
     private float spawnTimer = 0f;
-<<<<<<< HEAD
     private int waterSpawnCount;
-=======
->>>>>>> 2ND-MAIN
 
 
 
     private bool mopTaskStarted = false;
 
     private bool mopCompleted = false;
-<<<<<<< HEAD
     private bool mopMissed = false;
     private bool mopCounted = false;
-=======
->>>>>>> 2ND-MAIN
 
 
 
     private SuddenTaskManager suddenTaskManager;
-<<<<<<< HEAD
     private ChoreManager choreManager;
-=======
->>>>>>> 2ND-MAIN
 
     private DayManager dayManager;
 
 
-<<<<<<< HEAD
     private DayManager ResolveDayManager()
     {
         if (dayManager == null)
@@ -84,8 +70,6 @@ public class WaterSpawner : MonoBehaviour
         return dayManager;
     }
 
-=======
->>>>>>> 2ND-MAIN
 
     // =========================
     // HUD ACCESS
@@ -119,11 +103,8 @@ public class WaterSpawner : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     public bool IsMoppingMissed => mopMissed;
 
-=======
->>>>>>> 2ND-MAIN
 
 
     public bool HasActiveWater
@@ -134,7 +115,6 @@ public class WaterSpawner : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     public bool IsSpawning => spawning;
 
     public int WaterSpawnCount => waterSpawnCount;
@@ -160,11 +140,6 @@ public class WaterSpawner : MonoBehaviour
 
 
 private void Awake()
-=======
-
-
-   private void Start()
->>>>>>> 2ND-MAIN
 {
     InitializeSpawner();
 }
@@ -172,7 +147,6 @@ private void Awake()
 
 private void InitializeSpawner()
 {
-<<<<<<< HEAD
         if (initialized)
             return;
 
@@ -182,27 +156,6 @@ private void InitializeSpawner()
 
         ResetSpawnPoints();
         initialized = true;
-=======
-    if(initialized)
-        return;
-
-
-    suddenTaskManager =
-        FindFirstObjectByType<SuddenTaskManager>();
-
-
-    dayManager =
-        FindFirstObjectByType<DayManager>();
-
-
-    ResetSpawnPoints();
-
-
-    initialized = true;
-
-
-    Debug.Log("WaterSpawner Initialized");
->>>>>>> 2ND-MAIN
 }
 
 private void Update()
@@ -210,15 +163,12 @@ private void Update()
     if(!spawning)
         return;
 
-<<<<<<< HEAD
     if (waterSpawnCount >= MaxWaterSpawnsToday)
     {
         spawning = false;
         return;
     }
 
-=======
->>>>>>> 2ND-MAIN
 
     spawnTimer -= Time.deltaTime;
 
@@ -246,22 +196,15 @@ private void Update()
             Destroy(area.gameObject);
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2ND-MAIN
     activeWetAreas.Clear();
 
 
     mopTaskStarted = false;
 
     mopCompleted = false;
-<<<<<<< HEAD
     mopMissed = false;
     mopCounted = false;
     waterSpawnCount = 0;
-=======
->>>>>>> 2ND-MAIN
 
 
     spawning = false;
@@ -284,12 +227,9 @@ private void Update()
         availableSpawnPoints.Clear();
 
 
-<<<<<<< HEAD
         if (waterSpawnPoints == null)
             return;
 
-=======
->>>>>>> 2ND-MAIN
         foreach(Transform point in waterSpawnPoints)
         {
             if(point != null)
@@ -316,7 +256,6 @@ private void Update()
 
     private void SetNextSpawnTime()
     {
-<<<<<<< HEAD
         var resolvedDayManager = ResolveDayManager();
 
         float difficulty = 0f;
@@ -324,20 +263,10 @@ private void Update()
         if (resolvedDayManager != null)
         {
             difficulty = resolvedDayManager.CurrentDifficulty;
-=======
-        float difficulty = 0;
-
-
-        if(dayManager != null)
-        {
-            difficulty =
-                dayManager.CurrentDifficulty;
->>>>>>> 2ND-MAIN
         }
 
 
 
-<<<<<<< HEAD
         float currentMin = minSpawnDelay - (difficulty * 8f);
         float currentMax = maxSpawnDelay - (difficulty * 10f);
 
@@ -352,50 +281,19 @@ private void Update()
         {
             currentMax = currentMin + 5f;
         }
-=======
-       float currentMin =
-    minSpawnDelay -
-    (difficulty * 8f);
-
-
-float currentMax =
-    maxSpawnDelay -
-    (difficulty * 10f);
-
-
-        currentMin =
-            Mathf.Max(currentMin,3f);
-
-
-
-        currentMax =
-            Mathf.Max(currentMax,5f);
->>>>>>> 2ND-MAIN
 
 
 
 
-<<<<<<< HEAD
         spawnTimer = Random.Range(currentMin, currentMax);
-=======
-        spawnTimer =
-            Random.Range(
-                currentMin,
-                currentMax
-            );
->>>>>>> 2ND-MAIN
 
 
 
         Debug.Log(
             "Next water spawn in "
             + spawnTimer
-<<<<<<< HEAD
             + " seconds | difficulty="
             + difficulty
-=======
-            + " seconds"
->>>>>>> 2ND-MAIN
         );
     }
 
@@ -490,11 +388,8 @@ float currentMax =
             wetArea
         );
 
-<<<<<<< HEAD
         waterSpawnCount++;
 
-=======
->>>>>>> 2ND-MAIN
 
 
         availableSpawnPoints.RemoveAt(index);
@@ -504,10 +399,7 @@ float currentMax =
         mopTaskStarted = true;
 
         mopCompleted = false;
-<<<<<<< HEAD
         mopMissed = false;
-=======
->>>>>>> 2ND-MAIN
 
 
 
@@ -550,15 +442,12 @@ float currentMax =
         {
             mopCompleted = true;
 
-<<<<<<< HEAD
             if (!mopCounted && choreManager != null)
             {
                 choreManager.CompleteDynamicChore(1);
                 mopCounted = true;
             }
 
-=======
->>>>>>> 2ND-MAIN
 
             Debug.Log(
                 "ALL WATER CLEANED"
@@ -566,7 +455,6 @@ float currentMax =
         }
     }
 
-<<<<<<< HEAD
     public void MarkMoppingMissed()
     {
         if (!mopTaskStarted || mopCompleted)
@@ -590,8 +478,6 @@ float currentMax =
         activeWetAreas.Clear();
     }
 
-=======
->>>>>>> 2ND-MAIN
 
 
 
@@ -618,7 +504,6 @@ float currentMax =
 
 public void StartSpawning()
 {
-<<<<<<< HEAD
     InitializeSpawner();
 
     if (waterPrefab == null || availableSpawnPoints.Count == 0)
@@ -644,14 +529,6 @@ public void StartSpawning()
         Debug.Log("No water spawns configured for Day " + day + ".");
         return;
     }
-=======
-    spawning = true;
-
-
-    mopTaskStarted = true;
-
-    mopCompleted = false;
->>>>>>> 2ND-MAIN
 
 
     ResetSpawnPoints();

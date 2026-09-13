@@ -14,12 +14,9 @@ public class FeedDogSlider : MonoBehaviour
     [SerializeField] private float limit = 250f;
     [SerializeField] private float successRange = 50f;
 
-<<<<<<< HEAD
     private float baseSpeed;
     private float baseSuccessRange;
 
-=======
->>>>>>> 2ND-MAIN
 
     private bool movingRight = true;
     private bool active = false;
@@ -31,12 +28,9 @@ public class FeedDogSlider : MonoBehaviour
 
     private void Start()
     {
-<<<<<<< HEAD
         baseSpeed = speed;
         baseSuccessRange = successRange;
 
-=======
->>>>>>> 2ND-MAIN
         miniGame = FindFirstObjectByType<FeedDogMiniGame>();
 
         if(miniGame == null)
@@ -45,7 +39,6 @@ public class FeedDogSlider : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     public void ApplyDifficulty(int difficulty)
     {
         difficulty = Mathf.Max(0, difficulty);
@@ -63,8 +56,6 @@ public class FeedDogSlider : MonoBehaviour
         );
     }
 
-=======
->>>>>>> 2ND-MAIN
 
 
     public void StartSlider()

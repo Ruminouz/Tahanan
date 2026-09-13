@@ -1,22 +1,15 @@
 using UnityEngine;
-<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 
 public class ChoreManager : MonoBehaviour
 {
     public event Action<Chore> ChoreMissed;
-=======
-
-public class ChoreManager : MonoBehaviour
-{
->>>>>>> 2ND-MAIN
     public int completedChores = 0;
     public int missedChores = 0;
 
     public int totalPoints = 0;
 
-<<<<<<< HEAD
     private readonly HashSet<Chore> helperCompletedChores = new HashSet<Chore>();
 
     public int TotalChores => completedChores + missedChores;
@@ -36,8 +29,6 @@ public class ChoreManager : MonoBehaviour
             helperCompletedChores.Add(chore);
     }
 
-=======
->>>>>>> 2ND-MAIN
 
     // Automatically calculates finished chores
     public int finishedChores
@@ -56,7 +47,6 @@ public class ChoreManager : MonoBehaviour
 
         totalPoints += points;
 
-<<<<<<< HEAD
         EconomyManager economyManager = FindFirstObjectByType<EconomyManager>();
         if (economyManager != null)
             economyManager.AwardChorePoints(points);
@@ -65,8 +55,6 @@ public class ChoreManager : MonoBehaviour
         if (moodManager != null)
             moodManager.HandleCompletedChore();
 
-=======
->>>>>>> 2ND-MAIN
 
         Debug.Log("Chore Completed!");
 
@@ -81,7 +69,6 @@ public class ChoreManager : MonoBehaviour
         );
     }
 
-<<<<<<< HEAD
     public void CompleteChore(Chore chore, int points, int earlyBonusPoints)
     {
         int earnedPoints = points;
@@ -91,18 +78,13 @@ public class ChoreManager : MonoBehaviour
         CompleteChore(earnedPoints);
     }
 
-=======
->>>>>>> 2ND-MAIN
 
 
     // OLD VERSION
     public void MissChore()
     {
         missedChores++;
-<<<<<<< HEAD
         ChoreMissed?.Invoke(null);
-=======
->>>>>>> 2ND-MAIN
 
 
         Debug.Log("Chore Missed!");
@@ -124,10 +106,7 @@ public class ChoreManager : MonoBehaviour
     public void MissChore(Chore chore)
     {
         missedChores++;
-<<<<<<< HEAD
         ChoreMissed?.Invoke(chore);
-=======
->>>>>>> 2ND-MAIN
 
 
         if (chore != null)
@@ -160,17 +139,13 @@ public class ChoreManager : MonoBehaviour
         completedChores = 0;
         missedChores = 0;
         totalPoints = 0;
-<<<<<<< HEAD
         helperCompletedChores.Clear();
-=======
->>>>>>> 2ND-MAIN
 
 
         Debug.Log(
             "Daily chore progress reset."
         );
     }
-<<<<<<< HEAD
 
     public void CompleteDynamicChore(int points)
     {
@@ -181,6 +156,4 @@ public class ChoreManager : MonoBehaviour
     {
         MissChore();
     }
-=======
->>>>>>> 2ND-MAIN
 }

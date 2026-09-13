@@ -190,15 +190,8 @@ IEndDragHandler
                 );
 
 
-<<<<<<< HEAD
-                if (GarbageSortingMiniGame.Instance != null)
-                {
-                    GarbageSortingMiniGame.Instance.CheckTrash(this, bin);
-                }
-=======
                 GarbageSortingMiniGame.Instance
                 .CheckTrash(this, bin);
->>>>>>> 2ND-MAIN
 
 
                 return;

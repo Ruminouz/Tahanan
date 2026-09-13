@@ -37,15 +37,9 @@ public class SweepingManager : MonoBehaviour
     private bool sweepingCompleted = false;
     private Chore sweepDustChore;
     public void SetSweepDustChore(Chore chore)
-<<<<<<< HEAD
     {
         sweepDustChore = chore;
     }
-=======
-{
-    sweepDustChore = chore;
-}
->>>>>>> 2ND-MAIN
 
 
     public int RemainingDust
@@ -72,7 +66,6 @@ public class SweepingManager : MonoBehaviour
 
     private void Awake()
     {
-<<<<<<< HEAD
         choreManager = FindFirstObjectByType<ChoreManager>();
         ResolveDayManager();
     }
@@ -87,14 +80,6 @@ public class SweepingManager : MonoBehaviour
         }
 
         return dayManager;
-=======
-        choreManager =
-            FindFirstObjectByType<ChoreManager>();
-
-
-        dayManager =
-            FindFirstObjectByType<DayManager>();
->>>>>>> 2ND-MAIN
     }
 
 
@@ -118,7 +103,6 @@ public class SweepingManager : MonoBehaviour
 
     private void SpawnDust()
     {
-<<<<<<< HEAD
         foreach (DustSpot dust in activeDust)
         {
             if (dust != null)
@@ -134,28 +118,17 @@ public class SweepingManager : MonoBehaviour
             return;
         }
 
-=======
-        activeDust.Clear();
-
->>>>>>> 2ND-MAIN
 
 
         int currentDay = 1;
 
 
-<<<<<<< HEAD
         DayManager resolvedDayManager = ResolveDayManager();
 
         if(resolvedDayManager != null)
         {
             currentDay =
                 resolvedDayManager.CurrentDay;
-=======
-        if(dayManager != null)
-        {
-            currentDay =
-                dayManager.CurrentDay;
->>>>>>> 2ND-MAIN
         }
 
 
@@ -229,11 +202,8 @@ public class SweepingManager : MonoBehaviour
                     sweepingMinigame
                 );
 
-<<<<<<< HEAD
                 dustSpot.SetSweepingManager(this);
 
-=======
->>>>>>> 2ND-MAIN
 
                 activeDust.Add(
                     dustSpot
@@ -325,7 +295,6 @@ public class SweepingManager : MonoBehaviour
 
 
 
-<<<<<<< HEAD
         if (sweepDustChore != null)
         {
             sweepDustChore.Complete();
@@ -335,9 +304,6 @@ public class SweepingManager : MonoBehaviour
             );
         }
         else if(choreManager != null)
-=======
-        if(choreManager != null)
->>>>>>> 2ND-MAIN
         {
             choreManager.CompleteChore(1);
 

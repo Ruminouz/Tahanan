@@ -71,7 +71,6 @@ private int platesRinsed;
 private int platesToRinse;
 private int platesToDry;
 
-<<<<<<< HEAD
 private void Start()
 {
     tutorialManager = FindFirstObjectByType<TutorialManager>();
@@ -85,10 +84,6 @@ public void StartGame(Chore chore)
     if (chore == null)
         return;
 
-=======
-public void StartGame(Chore chore)
-{
->>>>>>> 2ND-MAIN
     currentChore = chore;
 
 
@@ -803,7 +798,6 @@ private void ResetSponge()
 // GARBAGE SYSTEM DAY 2-7
 // ============================
 
-<<<<<<< HEAD
 DayManager resolvedDayManager = dayManager != null
     ? dayManager
     : (DayManager.Instance != null
@@ -814,12 +808,6 @@ if(resolvedDayManager != null)
 {
 
     int day = resolvedDayManager.CurrentDay;
-=======
-if(DayManager.Instance != null)
-{
-
-    int day = DayManager.Instance.CurrentDay;
->>>>>>> 2ND-MAIN
 
 
     Debug.Log(
@@ -964,7 +952,6 @@ private void ResetMiniGameState()
 
 private void ApplyDayDifficulty()
 {
-<<<<<<< HEAD
     DayManager resolvedDayManager = dayManager != null
         ? dayManager
         : (DayManager.Instance != null
@@ -979,14 +966,6 @@ private void ApplyDayDifficulty()
         : 1;
 
     day = Mathf.Max(1, day);
-=======
-    int day = 1;
-
-    if(dayManager != null)
-    {
-        day = dayManager.CurrentDay;
-    }
->>>>>>> 2ND-MAIN
 
 
     switch(day)
@@ -1034,13 +1013,8 @@ private void ApplyDayDifficulty()
 
 
         default:
-<<<<<<< HEAD
             currentPlateAmount = Mathf.Clamp(2 + day - 1, 2, 6);
             currentLeftoverAmount = Mathf.Clamp(1 + Mathf.CeilToInt((day - 1) * 0.5f), 1, 4);
-=======
-            currentPlateAmount = 2;
-            currentLeftoverAmount = 1;
->>>>>>> 2ND-MAIN
             break;
     }
 

@@ -7,7 +7,6 @@ public class TimeManager : MonoBehaviour
     private float currentTime;
     private bool timeRunning = false;
 
-<<<<<<< HEAD:Assets/JAMESTEST/CORELOOP/TimeManager.cs
     public float DayLength => dayLength;
 
     public void AddTime(float seconds)
@@ -17,12 +16,6 @@ public class TimeManager : MonoBehaviour
     }
 
 
-=======
-
-
-    public float DayLength => dayLength;
-
->>>>>>> 2ND-MAIN:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
 
     private void Start()
     {

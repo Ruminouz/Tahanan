@@ -26,7 +26,6 @@ public class MoppingMinigame : MonoBehaviour
 
 
     private DayManager dayManager;
-<<<<<<< HEAD
     private SuddenTaskManager suddenTaskManager;
 
 
@@ -51,26 +50,11 @@ public class MoppingMinigame : MonoBehaviour
 
     private void ConfigureMinigameUI()
     {
-=======
-
-
-
-    private void Start()
-    {
-        dayManager =
-            FindFirstObjectByType<DayManager>();
-
-
->>>>>>> 2ND-MAIN
         if (minigamePanel != null)
         {
             minigamePanel.SetActive(false);
         }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2ND-MAIN
         if (progressBar != null)
         {
             progressBar.value = 0f;
@@ -92,12 +76,9 @@ public class MoppingMinigame : MonoBehaviour
 
     public void StartMopping(WetArea wetArea)
     {
-<<<<<<< HEAD
         if (wetArea == null)
             return;
 
-=======
->>>>>>> 2ND-MAIN
         currentWetArea = wetArea;
 
 
@@ -138,7 +119,6 @@ public class MoppingMinigame : MonoBehaviour
 
     private void ApplyDifficulty()
     {
-<<<<<<< HEAD
         var resolvedDayManager = ResolveDayManager();
 
         if (resolvedDayManager == null)
@@ -148,43 +128,14 @@ public class MoppingMinigame : MonoBehaviour
 
         cleaningSpeed = 0.5f - (difficulty * 0.05f);
         cleaningSpeed = Mathf.Max(cleaningSpeed, 0.25f);
-=======
-        if(dayManager == null)
-            return;
-
-
-        int difficulty =
-            dayManager.CurrentDifficulty;
-
-
-
-        cleaningSpeed =
-            0.5f -
-            (difficulty * 0.05f);
-
-
-
-        cleaningSpeed =
-            Mathf.Max(
-                cleaningSpeed,
-                0.25f
-            );
->>>>>>> 2ND-MAIN
 
 
 
         Debug.Log(
             "Mopping difficulty: "
             + difficulty
-<<<<<<< HEAD
             + " | Cleaning Speed: "
             + cleaningSpeed
-=======
-            +
-            " | Cleaning Speed: "
-            +
-            cleaningSpeed
->>>>>>> 2ND-MAIN
         );
     }
 
@@ -254,12 +205,9 @@ public class MoppingMinigame : MonoBehaviour
 
 
 
-<<<<<<< HEAD
         if (minigamePanel == null)
             return;
 
-=======
->>>>>>> 2ND-MAIN
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             minigamePanel.GetComponent<RectTransform>(),
             mousePosition,
@@ -319,15 +267,6 @@ public class MoppingMinigame : MonoBehaviour
 
 
 
-<<<<<<< HEAD
-=======
-        // Complete sudden task
-        SuddenTaskManager suddenTaskManager =
-            FindFirstObjectByType<SuddenTaskManager>();
-
-
-
->>>>>>> 2ND-MAIN
         if(suddenTaskManager != null)
         {
             suddenTaskManager.CompleteMopTask();
@@ -346,11 +285,8 @@ public class MoppingMinigame : MonoBehaviour
             minigamePanel.SetActive(false);
         }
 
-<<<<<<< HEAD
         currentWetArea = null;
 
-=======
->>>>>>> 2ND-MAIN
 
 
         Debug.Log(

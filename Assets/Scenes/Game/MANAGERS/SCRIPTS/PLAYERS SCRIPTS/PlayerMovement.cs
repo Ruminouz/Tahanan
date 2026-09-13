@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
   private void FixedUpdate()
 {
-<<<<<<< HEAD:Assets/MAC TESTS/PlayerMovement.cs
+
     if (PauseController.IsGamePaused)
     {
         rb.linearVelocity = Vector2.zero;
@@ -32,8 +32,8 @@ public class PlayerMovement : MonoBehaviour
     float moveVelocity = CurrentMoveSpeed > 0 ? CurrentMoveSpeed : moveSpeed;
     rb.linearVelocity = moveInput * moveVelocity;
     animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
->>>>>>> 39fe477 (a)
-=======
+
+
     if(PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         }
     rb.linearVelocity = moveInput * moveSpeed;
     animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
->>>>>>> 2ND-MAIN:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
+
 }
 
     public void Move(InputAction.CallbackContext context)

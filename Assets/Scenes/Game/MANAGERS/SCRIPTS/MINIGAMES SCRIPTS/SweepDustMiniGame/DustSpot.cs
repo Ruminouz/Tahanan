@@ -3,10 +3,7 @@ using UnityEngine;
 public class DustSpot : Interactable
 {
     private SweepingMinigame sweepingMinigame;
-<<<<<<< HEAD
     private SweepingManager sweepingManager;
-=======
->>>>>>> 2ND-MAIN
 
     private bool isCleaned = false;
 
@@ -16,14 +13,11 @@ public class DustSpot : Interactable
         sweepingMinigame = minigame;
     }
 
-<<<<<<< HEAD
     public void SetSweepingManager(SweepingManager manager)
     {
         sweepingManager = manager;
     }
 
-=======
->>>>>>> 2ND-MAIN
 
     public override void Interact()
     {
@@ -82,19 +76,9 @@ public class DustSpot : Interactable
         isCleaned = true;
 
 
-<<<<<<< HEAD
         if (sweepingManager != null)
         {
             sweepingManager.CompleteDust(this);
-=======
-        SweepingManager manager =
-            FindFirstObjectByType<SweepingManager>();
-
-
-        if (manager != null)
-        {
-            manager.CompleteDust(this);
->>>>>>> 2ND-MAIN
         }
 
 
