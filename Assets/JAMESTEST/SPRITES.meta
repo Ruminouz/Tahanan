@@ -1,15 +1,13 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
+<<<<<<< Updated upstream:Assets/JAMESTEST/SPRITES.meta
+guid: 6c12d52f160a776469ba0e5d30e9f10a
+=======
 <<<<<<< Updated upstream
 guid: d1881f1069dd7d844a3298a460ee48ff
 =======
-guid: 1c5393f9c1f48264abfbf1b8028a13a4
-=======
-guid: 2389464e982671b45bc89b041a639d72
-=======
-guid: d1881f1069dd7d844a3298a460ee48ff
+guid: e62492ba2963c174ebb838d9484db08d
 >>>>>>> Stashed changes
->>>>>>> Stashed changes
+>>>>>>> Stashed changes:Assets/JAMESTEST/CORELOOP.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
