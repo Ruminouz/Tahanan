@@ -614,6 +614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FeedDogMiniGame
   panel: {fileID: 251893824}
   tutorial: {fileID: 1016962422}
+  slider: {fileID: 0}
 --- !u!114 &251893827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1418,8 +1419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da807e65b2c0204ba85b6d106a137d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrashItem
-  miniGame: {fileID: 1348835640}
-  button: {fileID: 2098380958}
+  trashType: 0
 --- !u!114 &557543512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2945,9 +2945,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrowTrashMiniGame
   panel: {fileID: 1348835638}
-  trashItems:
-  - {fileID: 557543509}
-  tutorial: {fileID: 1016962422}
+  spawner: {fileID: 0}
+  currentDay: 2
 --- !u!114 &1348835641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3666,6 +3665,7 @@ MonoBehaviour:
   choreName: TrashBin
   points: 1
   miniGame: {fileID: 1348835640}
+  garbageBag: {fileID: 0}
 --- !u!1 &2075347554
 GameObject:
   m_ObjectHideFlags: 0
@@ -6596,10 +6596,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!114 &6511671534609637815
 MonoBehaviour:
@@ -6878,7 +6878,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afe271c519ea9042b0af8a08fe64754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingMiniGame
+  dishwashingTime: 90
+  timerText: {fileID: 0}
   panel: {fileID: 58065807473593637}
+  garbageBag: {fileID: 0}
+  garbageSpawnPoint: {fileID: 0}
   platePrefab: {fileID: 4921860481487065061, guid: 4a42f269474bcb84e89b454be0320e97, type: 3}
   washingArea: {fileID: 1555540120207810471}
   plateCount: 3
@@ -6888,7 +6892,6 @@ MonoBehaviour:
   sponge: {fileID: 2437569521933836226}
   dishSponge: {fileID: 0}
   soap: {fileID: 4348521302085655307}
-  dayManager: {fileID: 0}
   rinsingArea: {fileID: 5355576145133323454}
   dryingRack: {fileID: 8448364212613551824}
   tutorial: {fileID: 1016962422}
