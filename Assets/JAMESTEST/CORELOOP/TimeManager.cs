@@ -6,20 +6,7 @@ public class TimeManager : MonoBehaviour
 
     private float currentTime;
     private bool timeRunning = false;
-
-<<<<<<< Updated upstream:Assets/JAMESTEST/CORELOOP/TimeManager.cs
-=======
-
-    public float DayLength => dayLength;
-
-    public void AddTime(float seconds)
-    {
-        currentTime = Mathf.Clamp(currentTime - seconds, 0f, dayLength);
-        timeRunning = true;
-    }
-
-
->>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/CORELOOP/TimeManager.cs
+    
     private void Start()
     {
         StartDayTime();
@@ -64,3 +51,4 @@ public class TimeManager : MonoBehaviour
         return currentTime / dayLength;
     }
 }
+

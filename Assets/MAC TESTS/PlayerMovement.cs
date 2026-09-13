@@ -21,11 +21,6 @@ public class PlayerMovement : MonoBehaviour
 
   private void FixedUpdate()
 {
-<<<<<<< Updated upstream:Assets/MAC TESTS/PlayerMovement.cs
-    rb.linearVelocity = moveInput * moveSpeed;
-
-   
-=======
     if(PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;
@@ -34,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
         }
     rb.linearVelocity = moveInput * CurrentMoveSpeed;
     animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
->>>>>>> Stashed changes:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
 }
 
     public void Move(InputAction.CallbackContext context)
