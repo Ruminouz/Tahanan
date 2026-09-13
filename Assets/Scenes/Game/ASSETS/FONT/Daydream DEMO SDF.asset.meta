@@ -3,6 +3,7 @@ guid: 1cb780c78e6b6174b82d2efea0702b23
 NativeFormatImporter:
   externalObjects: {}
 <<<<<<< HEAD
+<<<<<<< HEAD
   mainObjectFileID: 11400000
   mainObjectFileID: 11400000
 
@@ -16,6 +17,9 @@ NativeFormatImporter:
 >>>>>>> 7b9f93a (test)
 =======
 >>>>>>> fbd887b (Revert "test")
+=======
+  mainObjectFileID: 11400000
+>>>>>>> 3d2333e (Revert "a")
   userData: 
   assetBundleName: 
   assetBundleVariant: 
