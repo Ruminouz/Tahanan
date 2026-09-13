@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 guid: d1881f1069dd7d844a3298a460ee48ff
@@ -10,6 +11,9 @@ guid: 2389464e982671b45bc89b041a639d72
 guid: d1881f1069dd7d844a3298a460ee48ff
 >>>>>>> Stashed changes
 >>>>>>> Stashed changes
+=======
+guid: d1881f1069dd7d844a3298a460ee48ff
+>>>>>>> parent of 1f4baca (a)
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
