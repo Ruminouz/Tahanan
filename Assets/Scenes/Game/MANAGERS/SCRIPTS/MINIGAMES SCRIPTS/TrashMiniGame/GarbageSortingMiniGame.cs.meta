@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: c788644065ce2914baa2d935cd185b7a
 guid: c788644065ce2914baa2d935cd185b7a
 
@@ -8,11 +9,23 @@ DefaultImporter:
   assetBundleName: 
   assetBundleVariant: 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Stashed changes
 >>>>>>> 5f2e2ac (test)
 =======
+<<<<<<< Updated upstream
+>>>>>>> fbd887b (Revert "test")
+=======
 guid: c788644065ce2914baa2d935cd185b7a
 >>>>>>> Stashed changes
-=======
->>>>>>> parent of 1f4baca (a)
+guid: c788644065ce2914baa2d935cd185b7a
+guid: c788644065ce2914baa2d935cd185b7a
+
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
 >>>>>>> 7b9f93a (test)
+=======
+>>>>>>> fbd887b (Revert "test")
