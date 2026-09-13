@@ -6,7 +6,6 @@ public class TimeManager : MonoBehaviour
 
     private float currentTime;
     private bool timeRunning = false;
-
     private void Start()
     {
         StartDayTime();
@@ -51,3 +50,4 @@ public class TimeManager : MonoBehaviour
         return currentTime / dayLength;
     }
 }
+

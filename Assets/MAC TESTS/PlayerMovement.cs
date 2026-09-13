@@ -18,9 +18,16 @@ public class PlayerMovement : MonoBehaviour
 
   private void FixedUpdate()
 {
-    rb.linearVelocity = moveInput * moveSpeed;
+    if (PauseController.IsGamePaused)
+    {
+        rb.linearVelocity = Vector2.zero;
+        animator.SetBool("isWalking", false);
+        return;
+    }
 
-   
+    float moveVelocity = CurrentMoveSpeed > 0 ? CurrentMoveSpeed : moveSpeed;
+    rb.linearVelocity = moveInput * moveVelocity;
+    animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
 }
 
     public void Move(InputAction.CallbackContext context)
