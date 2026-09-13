@@ -1,13 +1,11 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
 guid: 792b19e82e94bc141b02ce4433f5c4e9
-guid: 792b19e82e94bc141b02ce4433f5c4e9
-
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> Stashed changes
@@ -29,3 +27,8 @@ DefaultImporter:
 >>>>>>> 7b9f93a (test)
 =======
 >>>>>>> fbd887b (Revert "test")
+=======
+=======
+guid: 792b19e82e94bc141b02ce4433f5c4e9
+>>>>>>> Stashed changes
+>>>>>>> 61c4efa (Revert "test")
