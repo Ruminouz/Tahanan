@@ -36,12 +36,15 @@ public class SuddenTaskManager : MonoBehaviour
         Instance = this;
     }
 
+<<<<<<< HEAD
     private void OnDestroy()
     {
         if (Instance == this)
             Instance = null;
     }
 
+=======
+>>>>>>> 2ND-MAIN
 
 
 

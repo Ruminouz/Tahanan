@@ -27,14 +27,18 @@ public class GarbageSortingMiniGame : MonoBehaviour
 
 
     private int totalTrash;
+<<<<<<< HEAD
 
     private DayManager dayManager;
+=======
+>>>>>>> 2ND-MAIN
     
 
 
 
     private void Awake()
     {
+<<<<<<< HEAD
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -62,12 +66,18 @@ public class GarbageSortingMiniGame : MonoBehaviour
         return dayManager;
     }
 
+=======
+        Instance = this;
+    }
+
+>>>>>>> 2ND-MAIN
 
 
 
 
     public void StartGame(Chore chore)
 {
+<<<<<<< HEAD
     if (chore == null || panel == null || spawner == null)
     {
         Debug.LogWarning("Garbage sorting references are incomplete.");
@@ -78,6 +88,11 @@ public class GarbageSortingMiniGame : MonoBehaviour
 
     spawner.StopSpawning();
 
+=======
+
+    currentChore = chore;
+
+>>>>>>> 2ND-MAIN
 
     mistakes = 0;
     correct = 0;
@@ -85,6 +100,7 @@ public class GarbageSortingMiniGame : MonoBehaviour
 
 
 
+<<<<<<< HEAD
     DayManager resolvedDayManager = ResolveDayManager();
 
     if (resolvedDayManager != null)
@@ -92,6 +108,8 @@ public class GarbageSortingMiniGame : MonoBehaviour
 
     currentDay = Mathf.Max(2, currentDay);
 
+=======
+>>>>>>> 2ND-MAIN
     totalTrash = GetTrashAmount();
 
 
@@ -294,6 +312,7 @@ private void CompleteGame()
         spawner.StopSpawning();
     }
 
+<<<<<<< HEAD
     if (currentChore != null)
     {
         ChoreManager choreManager = FindFirstObjectByType<ChoreManager>();
@@ -302,6 +321,8 @@ private void CompleteGame()
             choreManager.MissChore(currentChore);
     }
 
+=======
+>>>>>>> 2ND-MAIN
 
     panel.SetActive(false);
 

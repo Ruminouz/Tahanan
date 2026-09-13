@@ -4,6 +4,7 @@ public class Chore : Interactable
 {
     [SerializeField] private string choreName;
     [SerializeField] private int points = 1;
+<<<<<<< HEAD
     [Header("Chore Scoring")]
     [Tooltip("Time in seconds from the start of the day before this chore is marked missed.")]
     [Min(1f)]
@@ -11,6 +12,8 @@ public class Chore : Interactable
     [Tooltip("Extra points awarded when this chore is completed before its deadline.")]
     [Min(0)]
     [SerializeField] private int earlyBonusPoints = 1;
+=======
+>>>>>>> 2ND-MAIN
 
 
     private bool isCompleted = false;
@@ -24,6 +27,7 @@ public class Chore : Interactable
 
     public bool IsMissed => isMissed;
 
+<<<<<<< HEAD
     public float DeadlineSeconds => deadlineSeconds;
 
     public float RemainingDeadline
@@ -38,6 +42,8 @@ public class Chore : Interactable
         }
     }
 
+=======
+>>>>>>> 2ND-MAIN
 
 
 
@@ -97,7 +103,11 @@ public class Chore : Interactable
     // COMPLETE
     // =========================
 
+<<<<<<< HEAD
     public virtual void Complete()
+=======
+    public void Complete()
+>>>>>>> 2ND-MAIN
     {
 
         if(isCompleted || isMissed)
@@ -115,7 +125,11 @@ public class Chore : Interactable
 
         if(manager != null)
         {
+<<<<<<< HEAD
             manager.CompleteChore(this, points, earlyBonusPoints);
+=======
+            manager.CompleteChore(points);
+>>>>>>> 2ND-MAIN
         }
 
 

@@ -2,7 +2,32 @@ fileFormatVersion: 2
 guid: 1cb780c78e6b6174b82d2efea0702b23
 NativeFormatImporter:
   externalObjects: {}
+<<<<<<< HEAD
   mainObjectFileID: 0
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  mainObjectFileID: 11400000
+  mainObjectFileID: 11400000
+
+>>>>>>> Stashed changes
+<<<<<<< HEAD
+>>>>>>> 5f2e2ac (test)
+=======
+=======
+  mainObjectFileID: 11400000
+>>>>>>> Stashed changes
+>>>>>>> 7b9f93a (test)
+=======
+>>>>>>> fbd887b (Revert "test")
+=======
+  mainObjectFileID: 11400000
+>>>>>>> 3d2333e (Revert "a")
+=======
+mainObjectFileID: 11400000
+>>>>>>> 1f4baca (a)
+>>>>>>> 2ND-MAIN
   userData: 
   assetBundleName: 
   assetBundleVariant: 

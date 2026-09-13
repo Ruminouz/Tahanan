@@ -119,6 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &69815907
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,6 +621,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &203220492
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,7 +673,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da807e65b2c0204ba85b6d106a137d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrashItem
+<<<<<<< HEAD
   trashType: 0
+=======
+  miniGame: {fileID: 877082445}
+  button: {fileID: 1773621623}
+>>>>>>> 2ND-MAIN
 --- !u!114 &203220495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,6 +717,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203220492}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &211844920
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,6 +994,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &251893824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,7 +1051,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FeedDogMiniGame
   panel: {fileID: 251893824}
   tutorial: {fileID: 1016962422}
+<<<<<<< HEAD
   slider: {fileID: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!114 &251893827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1079,6 +1093,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251893824}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &291436845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,6 +1232,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1001 &297262481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1354,6 +1371,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1689166036}
   m_SourcePrefab: {fileID: 100100000, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+<<<<<<< HEAD
 --- !u!114 &297262487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1361,14 +1379,36 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 297262481}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916011253}
+=======
+--- !u!114 &297262482 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1008744591293420526, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e07641a892ece746a4280a8b7de0aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MopFloorChore
+--- !u!114 &297262487 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2239029968107294515, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+>>>>>>> 2ND-MAIN
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3bc6498afe253e48ae9a007ac955825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingChore
+<<<<<<< HEAD
   choreName: Dishes
   points: 1
   miniGame: {fileID: 4711215982214959295}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1001 &307130796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1426,6 +1466,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ae4e292d2b23604481dfaadb9959482, type: 3}
+<<<<<<< HEAD
 --- !u!1 &350629121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,6 +1487,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+--- !u!1 &350629121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8896623799091094127, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!114 &350629125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,6 +1509,7 @@ MonoBehaviour:
   choreName: TrashBin
   points: 1
   miniGame: {fileID: 877082445}
+<<<<<<< HEAD
   garbageBag: {fileID: 0}
 --- !u!114 &350629126
 MonoBehaviour:
@@ -1736,6 +1785,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &455678893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1869,6 +1920,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455678893}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &469576650
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,6 +2059,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &472857643
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,6 +2229,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477228660}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &480729706
 GameObject:
   m_ObjectHideFlags: 0
@@ -2865,6 +2920,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &530407397
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,6 +3001,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530407397}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &537628957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4415,6 +4473,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+--- !u!1 &556693580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8531304797500106011, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!114 &556693584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4430,6 +4495,7 @@ MonoBehaviour:
   choreName: Leaves
   points: 1
   miniGame: {fileID: 1480334313}
+<<<<<<< HEAD
 --- !u!114 &556693585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4565,6 +4631,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2011384473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1001 &562381898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4580,7 +4648,11 @@ PrefabInstance:
     - target: {fileID: 3294744070882659104, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
       propertyPath: mopFloor
       value: 
+<<<<<<< HEAD
       objectReference: {fileID: 0}
+=======
+      objectReference: {fileID: 297262482}
+>>>>>>> 2ND-MAIN
     - target: {fileID: 3294744070882659104, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
       propertyPath: sweepDust
       value: 
@@ -4785,6 +4857,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592409217}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &632950853
 GameObject:
   m_ObjectHideFlags: 0
@@ -5092,6 +5165,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 159368220}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &661590173
 GameObject:
   m_ObjectHideFlags: 0
@@ -5171,6 +5246,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &672814778
 GameObject:
   m_ObjectHideFlags: 0
@@ -5202,6 +5278,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 159368220}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &691213502
 GameObject:
   m_ObjectHideFlags: 0
@@ -5392,6 +5470,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a55eddbfd9182244e842d569a549494b, type: 3}
+<<<<<<< HEAD
 --- !u!1 &760432243
 GameObject:
   m_ObjectHideFlags: 0
@@ -6082,6 +6161,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1001 &823459562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6139,6 +6220,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4bae0a0bc6d6a428d1f4e997ef63f2, type: 3}
+<<<<<<< HEAD
 --- !u!1 &876797232
 GameObject:
   m_ObjectHideFlags: 0
@@ -6309,6 +6391,8 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &877082443
 GameObject:
   m_ObjectHideFlags: 0
@@ -6362,8 +6446,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrowTrashMiniGame
   panel: {fileID: 877082443}
+<<<<<<< HEAD
   spawner: {fileID: 0}
   currentDay: 2
+=======
+  trashItems:
+  - {fileID: 203220492}
+  tutorial: {fileID: 1016962422}
+>>>>>>> 2ND-MAIN
 --- !u!114 &877082446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6402,6 +6492,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877082443}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &905087637
 GameObject:
   m_ObjectHideFlags: 0
@@ -6955,6 +7046,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!114 &1016962422 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6691896892925268721, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
@@ -6966,6 +7059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6d2b3852625a428ddf62cce91ef96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChoreTutorial
+<<<<<<< HEAD
 --- !u!1 &1038553027
 GameObject:
   m_ObjectHideFlags: 0
@@ -14675,11 +14769,14 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1248275650 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7509236334997600112, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
   m_PrefabInstance: {fileID: 1591657217}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &1254251302
 GameObject:
   m_ObjectHideFlags: 0
@@ -15324,6 +15421,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1339724663
 GameObject:
   m_ObjectHideFlags: 0
@@ -15429,6 +15528,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bc4dc9b6e302fd478da7353d1f753dd, type: 3}
+<<<<<<< HEAD
 --- !u!1 &1376598240
 GameObject:
   m_ObjectHideFlags: 0
@@ -15449,6 +15549,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+--- !u!1 &1376598240 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 904908547400279941, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!114 &1376598244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15464,6 +15571,7 @@ MonoBehaviour:
   choreName: FeedDog
   points: 1
   miniGame: {fileID: 251893826}
+<<<<<<< HEAD
 --- !u!114 &1376598245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15737,6 +15845,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1480334311
 GameObject:
   m_ObjectHideFlags: 0
@@ -15830,6 +15940,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480334311}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1482302228
 GameObject:
   m_ObjectHideFlags: 0
@@ -16244,6 +16355,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1554252810
 GameObject:
   m_ObjectHideFlags: 0
@@ -16323,6 +16436,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1554252810}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1576369813
 GameObject:
   m_ObjectHideFlags: 0
@@ -16461,6 +16575,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1001 &1591657217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16575,6 +16691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   interactRange: 1.5
+<<<<<<< HEAD
 --- !u!1 &1646794721
 GameObject:
   m_ObjectHideFlags: 0
@@ -16764,6 +16881,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+--- !u!1 &1689166033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5360686316870333254, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!114 &1689166036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16779,6 +16903,7 @@ MonoBehaviour:
   choreName: Sweep Dust
   points: 1
   miniGame: {fileID: 9143637853095240279}
+<<<<<<< HEAD
 --- !u!4 &1689166037
 Transform:
   m_ObjectHideFlags: 0
@@ -17634,6 +17759,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1773621621
 GameObject:
   m_ObjectHideFlags: 0
@@ -17755,6 +17882,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773621621}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1796850239
 GameObject:
   m_ObjectHideFlags: 0
@@ -29296,6 +29424,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!114 &25909681374219787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29816,6 +29946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WashableDish
   dishImage: {fileID: 1700057261574976673}
+<<<<<<< HEAD
   dirtyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   cleanColor: {r: 1, g: 1, b: 1, a: 1}
   progressBar: {fileID: 0}
@@ -29824,6 +29955,10 @@ MonoBehaviour:
   scrubParticles: {fileID: 0}
   scrubSound: {fileID: 0}
   cleanSound: {fileID: 0}
+=======
+  progressBar: {fileID: 0}
+  scrubAmount: 0.05
+>>>>>>> 2ND-MAIN
 --- !u!222 &1789908492033030307
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30105,6 +30240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WashableDish
   dishImage: {fileID: 1007892170487461513}
+<<<<<<< HEAD
   dirtyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   cleanColor: {r: 1, g: 1, b: 1, a: 1}
   progressBar: {fileID: 0}
@@ -30113,6 +30249,10 @@ MonoBehaviour:
   scrubParticles: {fileID: 0}
   scrubSound: {fileID: 0}
   cleanSound: {fileID: 0}
+=======
+  progressBar: {fileID: 0}
+  scrubAmount: 0.05
+>>>>>>> 2ND-MAIN
 --- !u!114 &3058109299791653024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31007,6 +31147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WashableDish
   dishImage: {fileID: 3430844744897472967}
+<<<<<<< HEAD
   dirtyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   cleanColor: {r: 1, g: 1, b: 1, a: 1}
   progressBar: {fileID: 0}
@@ -31015,6 +31156,10 @@ MonoBehaviour:
   scrubParticles: {fileID: 0}
   scrubSound: {fileID: 0}
   cleanSound: {fileID: 0}
+=======
+  progressBar: {fileID: 0}
+  scrubAmount: 0.05
+>>>>>>> 2ND-MAIN
 --- !u!114 &4711215982214959295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31027,6 +31172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afe271c519ea9042b0af8a08fe64754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingMiniGame
+<<<<<<< HEAD
   dishwashingTime: 90
   timerText: {fileID: 0}
   panel: {fileID: 3340594709319862548}
@@ -31043,6 +31189,13 @@ MonoBehaviour:
   soap: {fileID: 0}
   rinsingArea: {fileID: 0}
   dryingRack: {fileID: 0}
+=======
+  panel: {fileID: 3340594709319862548}
+  dishes:
+  - {fileID: 1722907670486127278}
+  - {fileID: 4688521507208710609}
+  - {fileID: 2997149802689169962}
+>>>>>>> 2ND-MAIN
   tutorial: {fileID: 1016962422}
 --- !u!114 &4724695417257367564
 MonoBehaviour:
@@ -31457,11 +31610,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f811c7632fc80d4081e5b2a6a3b0607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MopFloorMiniGame
+<<<<<<< HEAD
   minigamePanel: {fileID: 0}
   progressBar: {fileID: 0}
   mop: {fileID: 0}
   moppingArea: {fileID: 0}
   cleaningSpeed: 0.5
+=======
+  panel: {fileID: 4422646383779930968}
+  dirtySpots:
+  - {fileID: 4910430792819824106}
+  tutorial: {fileID: 1016962422}
+>>>>>>> 2ND-MAIN
 --- !u!222 &5483176534320499064
 CanvasRenderer:
   m_ObjectHideFlags: 0

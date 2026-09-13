@@ -1,5 +1,30 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 0a2497eb591028a4d8e23a27240a32a2
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+guid: 4eabdf9e5adcb1645835ef539cd21524
+guid: 4eabdf9e5adcb1645835ef539cd21524
+
+>>>>>>> Stashed changes
+<<<<<<< HEAD
+>>>>>>> 5f2e2ac (test)
+=======
+=======
+guid: 4eabdf9e5adcb1645835ef539cd21524
+>>>>>>> Stashed changes
+>>>>>>> 7b9f93a (test)
+=======
+>>>>>>> fbd887b (Revert "test")
+=======
+guid: 4eabdf9e5adcb1645835ef539cd21524
+>>>>>>> 3d2333e (Revert "a")
+=======
+guid: 4eabdf9e5adcb1645835ef539cd21524
+>>>>>>> 1f4baca (a)
+>>>>>>> 2ND-MAIN
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

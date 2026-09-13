@@ -119,6 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &10454304
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,6 +258,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &34833972
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
   dayLength: 300
+<<<<<<< HEAD
 --- !u!1 &42068694
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +444,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &66120795
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddf5492c1f8ed44682d0adfe325acce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
+<<<<<<< HEAD
 --- !u!1 &76673385
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +767,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &102147028
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,6 +800,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 661246172}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &110791251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,6 +1077,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &130598893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1110,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 661246172}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &130979859
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,6 +2838,8 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &159476208
 GameObject:
   m_ObjectHideFlags: 0
@@ -2951,6 +2966,7 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
 --- !u!1 &190073522
 GameObject:
   m_ObjectHideFlags: 0
@@ -3089,6 +3105,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &204096595
 GameObject:
   m_ObjectHideFlags: 0
@@ -3252,6 +3270,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 205706890}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &227918215
 GameObject:
   m_ObjectHideFlags: 0
@@ -3528,6 +3547,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &251893824
 GameObject:
   m_ObjectHideFlags: 0
@@ -3583,7 +3604,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FeedDogMiniGame
   panel: {fileID: 251893824}
   tutorial: {fileID: 1016962422}
+<<<<<<< HEAD
   slider: {fileID: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!114 &251893827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3872,6 +3896,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1812454643}
   m_SourcePrefab: {fileID: 100100000, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+<<<<<<< HEAD
 --- !u!114 &297262487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3879,14 +3904,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 297262481}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105945180}
+=======
+--- !u!114 &297262487 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2239029968107294515, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+>>>>>>> 2ND-MAIN
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3bc6498afe253e48ae9a007ac955825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingChore
+<<<<<<< HEAD
   choreName: Dishes
   points: 1
   miniGame: {fileID: 7224421212362748716}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1001 &307130796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3975,6 +4011,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 411101566}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &346952321
 GameObject:
   m_ObjectHideFlags: 0
@@ -4299,6 +4336,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &408542252
 GameObject:
   m_ObjectHideFlags: 0
@@ -4567,6 +4606,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455678893}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &467273262
 GameObject:
   m_ObjectHideFlags: 0
@@ -4863,6 +4903,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+--- !u!1 &505828125 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 904908547400279941, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!114 &505828129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4878,6 +4925,7 @@ MonoBehaviour:
   choreName: FeedDog
   points: 1
   miniGame: {fileID: 251893826}
+<<<<<<< HEAD
 --- !u!4 &505828130
 Transform:
   m_ObjectHideFlags: 0
@@ -5013,6 +5061,8 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.0722122, y: 1.5827241}
   m_EdgeRadius: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &530407397
 GameObject:
   m_ObjectHideFlags: 0
@@ -5092,6 +5142,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530407397}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &542107417
 GameObject:
   m_ObjectHideFlags: 0
@@ -5230,6 +5281,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &557543509
 GameObject:
   m_ObjectHideFlags: 0
@@ -5280,7 +5333,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da807e65b2c0204ba85b6d106a137d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrashItem
+<<<<<<< HEAD
   trashType: 0
+=======
+  miniGame: {fileID: 1348835640}
+  button: {fileID: 2098380958}
+>>>>>>> 2ND-MAIN
 --- !u!114 &557543512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5435,6 +5493,7 @@ PrefabInstance:
       addedObject: {fileID: 66120796}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
+<<<<<<< HEAD
 --- !u!1 &566770672
 GameObject:
   m_ObjectHideFlags: 0
@@ -5455,6 +5514,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+--- !u!1 &566770672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8531304797500106011, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!114 &566770676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5470,6 +5536,7 @@ MonoBehaviour:
   choreName: Leaves
   points: 1
   miniGame: {fileID: 670857665}
+<<<<<<< HEAD
 --- !u!4 &566770677
 Transform:
   m_ObjectHideFlags: 0
@@ -5743,6 +5810,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &586526449
 GameObject:
   m_ObjectHideFlags: 0
@@ -5941,6 +6010,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617457169}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &645062614
 GameObject:
   m_ObjectHideFlags: 0
@@ -6079,6 +6149,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &661246171
 GameObject:
   m_ObjectHideFlags: 0
@@ -6439,6 +6511,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691213502}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &722212470
 GameObject:
   m_ObjectHideFlags: 0
@@ -6568,6 +6641,8 @@ Transform:
   - {fileID: 2011766961}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1001 &730960228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6625,6 +6700,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a55eddbfd9182244e842d569a549494b, type: 3}
+<<<<<<< HEAD
 --- !u!1 &752399713
 GameObject:
   m_ObjectHideFlags: 0
@@ -6763,6 +6839,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &790307272
 GameObject:
   m_ObjectHideFlags: 0
@@ -6940,6 +7018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CleanLeafSpot
   miniGame: {fileID: 670857665}
+<<<<<<< HEAD
 --- !u!1 &846849310
 GameObject:
   m_ObjectHideFlags: 0
@@ -7247,6 +7326,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1696345054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &919821146
 GameObject:
   m_ObjectHideFlags: 0
@@ -7305,6 +7386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8786fc9e5d376d247b636507fd5cb0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishSoap
+<<<<<<< HEAD
 --- !u!1 &938376670
 GameObject:
   m_ObjectHideFlags: 0
@@ -7443,6 +7525,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &965873635
 GameObject:
   m_ObjectHideFlags: 0
@@ -7569,6 +7653,7 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
 --- !u!1 &1001190077
 GameObject:
   m_ObjectHideFlags: 0
@@ -17838,6 +17923,8 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+=======
+>>>>>>> 2ND-MAIN
 --- !u!114 &1016962422 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6691896892925268721, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
@@ -17849,6 +17936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f6d2b3852625a428ddf62cce91ef96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChoreTutorial
+<<<<<<< HEAD
 --- !u!1 &1049371689
 GameObject:
   m_ObjectHideFlags: 0
@@ -18678,6 +18766,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1117870469
 GameObject:
   m_ObjectHideFlags: 0
@@ -18879,6 +18969,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162758487}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1206258113
 GameObject:
   m_ObjectHideFlags: 0
@@ -18917,6 +19008,8 @@ Transform:
   - {fileID: 1696345054}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1211325288
 GameObject:
   m_ObjectHideFlags: 0
@@ -18948,6 +19041,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 411101566}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &1219984341
 GameObject:
   m_ObjectHideFlags: 0
@@ -19393,6 +19487,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1329195922
 GameObject:
   m_ObjectHideFlags: 0
@@ -19525,8 +19621,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrowTrashMiniGame
   panel: {fileID: 1348835638}
+<<<<<<< HEAD
   spawner: {fileID: 0}
   currentDay: 2
+=======
+  trashItems:
+  - {fileID: 557543509}
+  tutorial: {fileID: 1016962422}
+>>>>>>> 2ND-MAIN
 --- !u!114 &1348835641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19626,6 +19728,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bc4dc9b6e302fd478da7353d1f753dd, type: 3}
+<<<<<<< HEAD
 --- !u!1 &1355988534
 GameObject:
   m_ObjectHideFlags: 0
@@ -26295,6 +26398,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1374651561
 GameObject:
   m_ObjectHideFlags: 0
@@ -26375,6 +26480,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4637795737750619904, guid: 04e4daaaa78572d45a67f02b65e13afe, type: 3}
   m_PrefabInstance: {fileID: 562381898}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &1425803291
 GameObject:
   m_ObjectHideFlags: 0
@@ -27097,6 +27203,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1554252810
 GameObject:
   m_ObjectHideFlags: 0
@@ -27176,6 +27284,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1554252810}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1586767440
 GameObject:
   m_ObjectHideFlags: 0
@@ -27258,6 +27367,8 @@ Transform:
   - {fileID: 1523756189}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1590891967
 GameObject:
   m_ObjectHideFlags: 0
@@ -27333,6 +27444,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1590891967}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1597412619
 GameObject:
   m_ObjectHideFlags: 0
@@ -27609,6 +27721,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!114 &1635143928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27669,6 +27783,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
 --- !u!1 &1684468118
 GameObject:
   m_ObjectHideFlags: 0
@@ -27827,6 +27942,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+--- !u!1 &1689166033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5360686316870333254, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!212 &1689166041
 SpriteRenderer:
   serializedVersion: 2
@@ -27884,7 +28006,11 @@ SpriteRenderer:
   m_Size: {x: 0.56, y: 0.93}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+<<<<<<< HEAD
   m_WasSpriteAssigned: 0
+=======
+  m_WasSpriteAssigned: 1
+>>>>>>> 2ND-MAIN
   m_SpriteSortPoint: 0
 --- !u!114 &1689166042
 MonoBehaviour:
@@ -27899,6 +28025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BroomChore
   broomVisual: {fileID: 1689166033}
+<<<<<<< HEAD
 --- !u!4 &1689166043
 Transform:
   m_ObjectHideFlags: 0
@@ -27973,6 +28100,8 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.0722122, y: 1.5827241}
   m_EdgeRadius: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1689219244
 GameObject:
   m_ObjectHideFlags: 0
@@ -28004,6 +28133,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 661246172}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &1696345053
 GameObject:
   m_ObjectHideFlags: 0
@@ -28197,6 +28327,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1781841442
 GameObject:
   m_ObjectHideFlags: 0
@@ -28264,6 +28396,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
 --- !u!1 &1807671846
 GameObject:
   m_ObjectHideFlags: 0
@@ -28402,6 +28535,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1810955671
 GameObject:
   m_ObjectHideFlags: 0
@@ -28433,6 +28568,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 411101566}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &1812454639
 GameObject:
   m_ObjectHideFlags: 0
@@ -28468,6 +28604,18 @@ Transform:
   - {fileID: 661246172}
   m_Father: {fileID: 1206258114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+--- !u!1 &1812454639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7430527013064816712, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1812454640 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7490932936070189671, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!114 &1812454643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28481,6 +28629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MopChore
   mopVisual: {fileID: 1812454639}
+<<<<<<< HEAD
 --- !u!114 &1812454644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28954,6 +29103,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &1851436675
 GameObject:
   m_ObjectHideFlags: 0
@@ -29030,6 +29181,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851436675}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &1860843155
 GameObject:
   m_ObjectHideFlags: 0
@@ -29716,6 +29868,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+=======
+--- !u!1 &1986083901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8896623799091094127, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+  m_PrefabInstance: {fileID: 297262481}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> 2ND-MAIN
 --- !u!114 &1986083905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29731,6 +29890,7 @@ MonoBehaviour:
   choreName: TrashBin
   points: 1
   miniGame: {fileID: 1348835640}
+<<<<<<< HEAD
   garbageBag: {fileID: 0}
 --- !u!114 &1986083906
 MonoBehaviour:
@@ -30346,6 +30506,8 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &2075347554
 GameObject:
   m_ObjectHideFlags: 0
@@ -30498,6 +30660,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2098380956}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &2100551309
 GameObject:
   m_ObjectHideFlags: 0
@@ -30636,6 +30799,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &2111313171
 GameObject:
   m_ObjectHideFlags: 0
@@ -30867,6 +31032,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118241145}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &2121961291
 GameObject:
   m_ObjectHideFlags: 0
@@ -31143,6 +31309,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+=======
+>>>>>>> 2ND-MAIN
 --- !u!1 &4491644543535094
 GameObject:
   m_ObjectHideFlags: 0
@@ -33690,7 +33858,11 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
+<<<<<<< HEAD
   m_Size: {x: 1, y: 1}
+=======
+  m_Size: {x: 2, y: 2}
+>>>>>>> 2ND-MAIN
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -33972,11 +34144,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afe271c519ea9042b0af8a08fe64754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingMiniGame
+<<<<<<< HEAD
   dishwashingTime: 90
   timerText: {fileID: 0}
   panel: {fileID: 58065807473593637}
   garbageBag: {fileID: 0}
   garbageSpawnPoint: {fileID: 0}
+=======
+  panel: {fileID: 58065807473593637}
+>>>>>>> 2ND-MAIN
   platePrefab: {fileID: 4921860481487065061, guid: 4a42f269474bcb84e89b454be0320e97, type: 3}
   washingArea: {fileID: 1555540120207810471}
   plateCount: 3
@@ -33986,6 +34162,10 @@ MonoBehaviour:
   sponge: {fileID: 2437569521933836226}
   dishSponge: {fileID: 0}
   soap: {fileID: 4348521302085655307}
+<<<<<<< HEAD
+=======
+  dayManager: {fileID: 0}
+>>>>>>> 2ND-MAIN
   rinsingArea: {fileID: 5355576145133323454}
   dryingRack: {fileID: 8448364212613551824}
   tutorial: {fileID: 1016962422}

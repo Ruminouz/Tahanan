@@ -10,6 +10,7 @@ public class WaypointMover : MonoBehaviour
     public float waitTime = 2f;
     public bool loopWaypoints = true;
 
+<<<<<<< HEAD
     [Header("Collision Avoidance")]
     [SerializeField] private LayerMask obstacleLayers = ~0;
     [SerializeField, Min(0f)] private float collisionPadding = 0.02f;
@@ -42,6 +43,14 @@ public class WaypointMover : MonoBehaviour
         if (waypointParent == null)
             return;
 
+=======
+    private Transform[] waypoints;
+    private int currentWaypointIndex;
+    private bool isWaiting;
+
+    void Start()
+    {
+>>>>>>> 2ND-MAIN
         waypoints = new Transform[waypointParent.childCount];
 
         for (int i = 0; i < waypointParent.childCount; i++)
@@ -52,16 +61,22 @@ public class WaypointMover : MonoBehaviour
 
     void Update()
     {
+<<<<<<< HEAD
         if (PauseController.IsGamePaused || isWaiting || !movementEnabled)
         {
             StopMovement();
             stuckTimer = 0f;
+=======
+        if (PauseController.IsGamePaused || isWaiting)
+        {
+>>>>>>> 2ND-MAIN
             return;
         }
 
         MoveToWaypoint();
     }
 
+<<<<<<< HEAD
     private void StopMovement()
     {
         Rigidbody2D body = GetComponent<Rigidbody2D>();
@@ -69,11 +84,14 @@ public class WaypointMover : MonoBehaviour
             body.linearVelocity = Vector2.zero;
     }
 
+=======
+>>>>>>> 2ND-MAIN
     void MoveToWaypoint()
     {
         if (waypoints == null || waypoints.Length == 0) return;
 
         Transform target = waypoints[currentWaypointIndex];
+<<<<<<< HEAD
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
         Vector2 toTarget = (Vector2)target.position - currentPosition;
         float step = moveSpeed * Time.deltaTime;
@@ -98,11 +116,18 @@ public class WaypointMover : MonoBehaviour
             transform.position = currentPosition + safeMovement;
 
         if (Vector2.Distance(currentPosition + safeMovement, target.position) < 0.1f)
+=======
+
+        transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+
+        if (Vector2.Distance(transform.position, target.position) < 0.1f)
+>>>>>>> 2ND-MAIN
         {
             StartCoroutine(WaitAtWaypoint());
         }
     }
 
+<<<<<<< HEAD
     private void SelectAlternativeWaypoint(Vector2 currentPosition)
     {
         stuckTimer = 0f;
@@ -144,6 +169,8 @@ public class WaypointMover : MonoBehaviour
         return bodyCollider.Cast(toTarget.normalized, filter, hits, toTarget.magnitude + collisionPadding) == 0;
     }
 
+=======
+>>>>>>> 2ND-MAIN
     IEnumerator WaitAtWaypoint()
     {
         isWaiting = true;

@@ -41,10 +41,15 @@ public class FallingTrash : MonoBehaviour
         if(rectTransform.anchoredPosition.y <= -500)
         {
 
+<<<<<<< HEAD
             if (GarbageSortingMiniGame.Instance != null)
             {
                 GarbageSortingMiniGame.Instance.TrashMissed();
             }
+=======
+            GarbageSortingMiniGame.Instance
+            .TrashMissed();
+>>>>>>> 2ND-MAIN
 
 
             Destroy(gameObject);

@@ -9,7 +9,10 @@ public class FeedDogMiniGame : MonoBehaviour
 
     private Chore currentChore;
     private TutorialManager tutorialManager;
+<<<<<<< HEAD
     private DayManager dayManager;
+=======
+>>>>>>> 2ND-MAIN
 
     private bool feedingStarted = false;
 
@@ -18,18 +21,24 @@ public class FeedDogMiniGame : MonoBehaviour
     private void Start()
     {
         tutorialManager = FindFirstObjectByType<TutorialManager>();
+<<<<<<< HEAD
         dayManager = DayManager.Instance != null
             ? DayManager.Instance
             : FindFirstObjectByType<DayManager>();
+=======
+>>>>>>> 2ND-MAIN
     }
 
 
 
     public void StartGame(Chore chore)
     {
+<<<<<<< HEAD
         if (chore == null || panel == null)
             return;
 
+=======
+>>>>>>> 2ND-MAIN
         currentChore = chore;
         feedingStarted = false;
 
@@ -62,12 +71,15 @@ public class FeedDogMiniGame : MonoBehaviour
 
     private void ShowTutorial()
     {
+<<<<<<< HEAD
         if (tutorial == null)
         {
             StartFeeding();
             return;
         }
 
+=======
+>>>>>>> 2ND-MAIN
         tutorial.ShowTutorial(
             "FEED THE DOG",
             "1. Watch the slider.\n" +
@@ -106,6 +118,7 @@ public class FeedDogMiniGame : MonoBehaviour
 
         if(slider != null)
         {
+<<<<<<< HEAD
             DayManager resolvedDayManager = dayManager != null
                 ? dayManager
                 : (DayManager.Instance != null
@@ -117,6 +130,8 @@ public class FeedDogMiniGame : MonoBehaviour
                 : 0;
 
             slider.ApplyDifficulty(difficulty);
+=======
+>>>>>>> 2ND-MAIN
             slider.StartSlider();
         }
     }

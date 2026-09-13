@@ -1,0 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerMovement : MonoBehaviour
+{
+    [SerializeField] private float moveSpeed = 5f;
+    private Rigidbody2D rb;
+    private Vector2 moveInput;
+    private Animator animator;
+    private float speedMultiplier = 1f;
+
+    public float CurrentMoveSpeed => moveSpeed * speedMultiplier;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+    }
+
+  private void FixedUpdate()
+{
+<<<<<<< HEAD:Assets/MAC TESTS/PlayerMovement.cs
+    if (PauseController.IsGamePaused)
+    {
+        rb.linearVelocity = Vector2.zero;
+        animator.SetBool("isWalking", false);
+        return;
+    }
+
+    float moveVelocity = CurrentMoveSpeed > 0 ? CurrentMoveSpeed : moveSpeed;
+    rb.linearVelocity = moveInput * moveVelocity;
+    animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+>>>>>>> 39fe477 (a)
+=======
+    if(PauseController.IsGamePaused)
+        {
+            rb.linearVelocity = Vector2.zero;
+            animator.SetBool("isWalking", false);
+            return;
+        }
+    rb.linearVelocity = moveInput * moveSpeed;
+    animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+>>>>>>> 2ND-MAIN:Assets/Scenes/Game/MANAGERS/SCRIPTS/PLAYERS SCRIPTS/PlayerMovement.cs
+}
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        // Read raw input
+        Vector2 input = context.ReadValue<Vector2>();
+
+        if (context.performed)
+        {
+            moveInput = input;
+            // Update direction vectors while moving
+            animator.SetFloat("InputX", moveInput.x);
+            animator.SetFloat("InputY", moveInput.y);
+        }
+        else if (context.canceled)
+        {
+            // Store last valid movement direction BEFORE clearing moveInput
+            if (moveInput != Vector2.zero)
+            {
+                animator.SetFloat("LastInputX", moveInput.x);
+                animator.SetFloat("LastInputY", moveInput.y);
+            }
+
+            moveInput = Vector2.zero;
+            animator.SetBool("isWalking", false);
+        }
+    }
+
+    public void SetSpeedMultiplier(float multiplier)
+    {
+        speedMultiplier = Mathf.Max(0.1f, multiplier);
+    }
+}

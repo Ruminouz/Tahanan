@@ -221,7 +221,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
   currentDay: 2
+<<<<<<< HEAD
   missedChoresGameOverThreshold: 5
+=======
+>>>>>>> 2ND-MAIN
   washDishes: {fileID: 0}
   mopFloor: {fileID: 0}
   sweepDust: {fileID: 0}

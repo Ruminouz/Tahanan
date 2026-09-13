@@ -17,12 +17,16 @@ public class GarbageChore : Chore
 
 
     private bool hasGarbageBag = false;
+<<<<<<< HEAD
     private DayManager dayManager;
+=======
+>>>>>>> 2ND-MAIN
 
 
 
     private void Awake()
     {
+<<<<<<< HEAD
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -37,11 +41,16 @@ public class GarbageChore : Chore
         if (Instance == this)
             Instance = null;
     }
+=======
+        Instance = this;
+    }
+>>>>>>> 2ND-MAIN
     private void Start()
 {
     gameObject.SetActive(true);
 }
 
+<<<<<<< HEAD
     private DayManager ResolveDayManager()
     {
         if (dayManager == null)
@@ -54,14 +63,26 @@ public class GarbageChore : Chore
         return dayManager;
     }
 
+=======
+>>>>>>> 2ND-MAIN
 
 
 
     public void SpawnGarbageBag()
     {
 
+<<<<<<< HEAD
         DayManager resolvedDayManager = ResolveDayManager();
         int day = resolvedDayManager != null ? resolvedDayManager.CurrentDay : 1;
+=======
+        int day = 1;
+
+
+        if(DayManager.Instance != null)
+        {
+            day = DayManager.Instance.CurrentDay;
+        }
+>>>>>>> 2ND-MAIN
 
 
 
@@ -130,6 +151,7 @@ public class GarbageChore : Chore
 
     }
 
+<<<<<<< HEAD
     public override void Complete()
     {
         if (IsCompleted || IsMissed)
@@ -145,6 +167,8 @@ public class GarbageChore : Chore
         base.Complete();
     }
 
+=======
+>>>>>>> 2ND-MAIN
 
 
 
@@ -155,8 +179,12 @@ public class GarbageChore : Chore
     {
         if (!base.CanInteract()) return false;
 
+<<<<<<< HEAD
         DayManager resolvedDayManager = ResolveDayManager();
         int day = resolvedDayManager != null ? resolvedDayManager.CurrentDay : 1;
+=======
+        int day = DayManager.Instance != null ? DayManager.Instance.CurrentDay : 1;
+>>>>>>> 2ND-MAIN
         if (day < 2) return false;
 
         if (!hasGarbageBag) return false;
