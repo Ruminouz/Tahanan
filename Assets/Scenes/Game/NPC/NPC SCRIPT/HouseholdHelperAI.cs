@@ -22,8 +22,6 @@ public class HouseholdHelperAI : MonoBehaviour
     [SerializeField, Min(0.05f)] private float arriveDistance = 0.2f;
     [SerializeField, Min(0.1f)] private float helpTimeout = 20f;
     [SerializeField, Min(0f)] private float playerChoreDistance = 2f;
-    [SerializeField] private LayerMask obstacleLayers = ~0;
-    [SerializeField, Min(0f)] private float collisionPadding = 0.02f;
 
     [Header("Bad Mood")]
     [SerializeField] private Transform bubbleAnchor;
@@ -42,7 +40,6 @@ public class HouseholdHelperAI : MonoBehaviour
     private int choresHelpedToday;
     private bool helping;
     private Rigidbody2D body;
-    private Collider2D bodyCollider;
     private HouseholdCharacterAI characterAI;
     private Transform player;
 
@@ -56,7 +53,6 @@ public class HouseholdHelperAI : MonoBehaviour
             : FindFirstObjectByType<DayManager>();
         choreManager = FindFirstObjectByType<ChoreManager>();
         body = GetComponent<Rigidbody2D>();
-        bodyCollider = GetComponent<Collider2D>();
         characterAI = GetComponent<HouseholdCharacterAI>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
@@ -155,18 +151,10 @@ public class HouseholdHelperAI : MonoBehaviour
         {
             if (!PauseController.IsGamePaused)
             {
-                Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
                 Vector2 nextPosition = Vector2.MoveTowards(
-                    currentPosition,
+                    transform.position,
                     chore.transform.position,
                     moveSpeed * Time.deltaTime);
-                Vector2 movement = NPCMovement2D.GetCollisionSafeMovement(
-                    bodyCollider,
-                    nextPosition - currentPosition,
-                    (Vector2)chore.transform.position - currentPosition,
-                    obstacleLayers,
-                    collisionPadding);
-                nextPosition = currentPosition + movement;
 
                 if (body != null)
                     body.MovePosition(nextPosition);
@@ -209,9 +197,7 @@ public class HouseholdHelperAI : MonoBehaviour
             return;
 
         Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
-        Canvas canvas = SpeechBubbleCanvas.GetOrCreate(anchor);
-        GameObject bubble = Instantiate(moodBubblePrefab, anchor.position, Quaternion.identity, canvas.transform);
-        bubble.transform.SetParent(canvas.transform, true);
+        GameObject bubble = Instantiate(moodBubblePrefab, anchor.position, Quaternion.identity, anchor);
         TMPro.TMP_Text tmpText = bubble.GetComponentInChildren<TMPro.TMP_Text>();
         if (tmpText != null)
             tmpText.text = badMoodLine;

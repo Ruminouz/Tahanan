@@ -11,13 +11,13 @@ public class SweepingManager : MonoBehaviour
     [Header("Difficulty Scaling")]
     [SerializeField] private int[] dustPerDay =
     {
-        2, // Day 1
+        1, // Day 1
         2, // Day 2
         3, // Day 3
         4, // Day 4
-        4, // Day 5
-        5, // Day 6
-        5  // Day 7
+        5, // Day 5
+        6, // Day 6
+        7  // Day 7
     };
 
 
@@ -36,6 +36,11 @@ public class SweepingManager : MonoBehaviour
 
     private bool sweepingCompleted = false;
     private Chore sweepDustChore;
+    private int totalDustSpawned;
+    private int cleanedDustCount;
+
+    public int TotalDustSpawned => totalDustSpawned;
+    public int CleanedDustCount => cleanedDustCount;
     public void SetSweepDustChore(Chore chore)
     {
         sweepDustChore = chore;
@@ -89,6 +94,8 @@ public class SweepingManager : MonoBehaviour
     public void StartSweepingTask()
     {
         sweepingCompleted = false;
+        totalDustSpawned = 0;
+        cleanedDustCount = 0;
 
         SpawnDust();
 
@@ -226,6 +233,8 @@ public class SweepingManager : MonoBehaviour
             "Dust spawned: "
             + activeDust.Count
         );
+
+        totalDustSpawned = activeDust.Count;
     }
 
 
@@ -257,6 +266,7 @@ public class SweepingManager : MonoBehaviour
         if(activeDust.Contains(cleanedDust))
         {
             activeDust.Remove(cleanedDust);
+            cleanedDustCount++;
         }
 
 

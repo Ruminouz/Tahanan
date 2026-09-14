@@ -90,7 +90,7 @@ public class GarbageSortingMiniGame : MonoBehaviour
     if (resolvedDayManager != null)
         currentDay = resolvedDayManager.CurrentDay;
 
-    currentDay = Mathf.Max(2, currentDay);
+    currentDay = Mathf.Clamp(currentDay, 1, 7);
 
     totalTrash = GetTrashAmount();
 

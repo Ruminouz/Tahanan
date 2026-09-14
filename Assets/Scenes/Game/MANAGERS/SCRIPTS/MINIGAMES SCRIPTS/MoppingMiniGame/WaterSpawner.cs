@@ -43,6 +43,7 @@ public class WaterSpawner : MonoBehaviour
 
     private float spawnTimer = 0f;
     private int waterSpawnCount;
+    private int cleanedWaterCount;
 
 
 
@@ -118,6 +119,8 @@ public class WaterSpawner : MonoBehaviour
     public bool IsSpawning => spawning;
 
     public int WaterSpawnCount => waterSpawnCount;
+    public int TotalWaterSpawned => waterSpawnCount;
+    public int CleanedWaterCount => cleanedWaterCount;
 
     public int MaxWaterSpawnsToday
     {
@@ -190,7 +193,10 @@ private void Update()
 
    public void ResetDailyMop()
 {
-    foreach(WetArea area in activeWetAreas)
+       if (moppingMinigame != null)
+           moppingMinigame.ResetMopping();
+
+       foreach(WetArea area in activeWetAreas)
     {
         if(area != null)
             Destroy(area.gameObject);
@@ -205,6 +211,7 @@ private void Update()
     mopMissed = false;
     mopCounted = false;
     waterSpawnCount = 0;
+    cleanedWaterCount = 0;
 
 
     spawning = false;
@@ -427,6 +434,7 @@ private void Update()
         if(activeWetAreas.Contains(wetArea))
         {
             activeWetAreas.Remove(wetArea);
+            cleanedWaterCount++;
         }
 
 
@@ -506,6 +514,9 @@ public void StartSpawning()
 {
     InitializeSpawner();
 
+    if (moppingMinigame != null)
+        moppingMinigame.ResetMopping();
+
     if (waterPrefab == null || availableSpawnPoints.Count == 0)
     {
         Debug.LogWarning("Water spawning cannot start without a prefab and spawn points.");
@@ -537,12 +548,6 @@ public void StartSpawning()
     SetNextSpawnTime();
 
 
-    if(suddenTaskManager != null)
-    {
-        suddenTaskManager.ShowMopTask();
-    }
-
-
     Debug.Log(
         "Water spawning enabled. Points: "
         + availableSpawnPoints.Count
@@ -552,6 +557,9 @@ public void StartSpawning()
     public void StopSpawning()
     {
         spawning = false;
+
+        if (moppingMinigame != null)
+            moppingMinigame.ResetMopping();
 
 
         Debug.Log(

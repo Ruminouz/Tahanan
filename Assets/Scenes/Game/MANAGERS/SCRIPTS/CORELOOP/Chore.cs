@@ -38,6 +38,12 @@ public class Chore : Interactable
         }
     }
 
+    protected void SetChoreName(string name)
+    {
+        if (!string.IsNullOrWhiteSpace(name))
+            choreName = name;
+    }
+
 
 
 

@@ -37,7 +37,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
         panel.SetActive(true);
 
-        int currentDay = dayManager != null ? dayManager.CurrentDay : 2;
+        int currentDay = dayManager != null ? dayManager.CurrentDay : 1;
         ConfigureDifficulty(currentDay);
 
         bool alreadyLearned = false;
@@ -59,8 +59,14 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
     private void ConfigureDifficulty(int day)
     {
+        day = Mathf.Clamp(day, 1, 7);
+
         switch (day)
         {
+            case 1:
+                totalItemsNeeded = 3;
+                maxMistakes = 3;
+                break;
             case 2:
                 totalItemsNeeded = 5;
                 maxMistakes = 3;
@@ -141,7 +147,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
             return;
         }
 
-        int currentDay = dayManager != null ? dayManager.CurrentDay : 2;
+        int currentDay = dayManager != null ? dayManager.CurrentDay : 1;
         spawnedWaste = spawner.SpawnWaste(totalItemsNeeded, spawnArea, currentDay);
 
         foreach (WasteObject waste in spawnedWaste)

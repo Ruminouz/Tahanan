@@ -25,7 +25,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private GarbageChore garbageChore;
 
     [Header("Segregation System")]
-    [SerializeField] private SegregateWasteChore segregateWasteChore;
+    [SerializeField] private Chore segregateWasteChore;
 
     [Header("Day Transition UI")]
     [SerializeField] private CanvasGroup transitionFade;
@@ -38,9 +38,9 @@ public class DayManager : MonoBehaviour
     [SerializeField] private float transitionDuration = 0.5f;
 
     [Header("Game Over")]
-    [Tooltip("Maximum chores that may be missed in one day before game over.")]
+    [Tooltip("Maximum chores that may be missed before game over. Element 0 is Day 1 and element 6 is Day 7.")]
     [Min(0)]
-    [SerializeField] private int missedChoresGameOverThreshold = 5;
+    [SerializeField] private int[] missedChoresGameOverThresholdByDay = { 5, 5, 5, 5, 5, 5, 5 };
 
     private TimeManager timeManager;
     private ChoreManager choreManager;
@@ -53,12 +53,15 @@ public class DayManager : MonoBehaviour
     private bool gameOver;
 
     public int CurrentDay => currentDay;
-    public int CurrentDifficulty => Mathf.Max(0, currentDay - 2);
+    // Difficulty is intentionally one-based so every playable day has a
+    // distinct level, including Day 1.
+    public int CurrentDifficulty => Mathf.Clamp(currentDay, 1, 7);
     public Chore MopFloorChore => mopFloor;
     public Chore SweepDustChore => sweepDust;
+    public Chore SegregateWasteChore => segregateWasteChore;
     public bool IsGameOver => gameOver;
     public bool HasReachedMissedChoreGameOverThreshold => choreManager != null &&
-        choreManager.missedChores >= missedChoresGameOverThreshold;
+        choreManager.missedChores >= GetMissedChoreGameOverThreshold();
 
     private void Awake()
     {
@@ -71,6 +74,7 @@ public class DayManager : MonoBehaviour
         Instance = this;
         CacheSceneManagers();
         FindSweepDustChore();
+        ResolveSegregateWasteChore();
 
         if (continueButton != null)
             continueButton.onClick.AddListener(ContinueToNextDay);
@@ -85,6 +89,23 @@ public class DayManager : MonoBehaviour
         choreManager = FindFirstObjectByType<ChoreManager>();
         suddenTaskManager = FindFirstObjectByType<SuddenTaskManager>();
         sweepingManager = FindFirstObjectByType<SweepingManager>();
+    }
+
+    private void ResolveSegregateWasteChore()
+    {
+        if (segregateWasteChore == null)
+        {
+            segregateWasteChore = FindFirstObjectByType<SegregateWasteChore>(
+                FindObjectsInactive.Include);
+
+            if (segregateWasteChore == null)
+            {
+                // Older scenes stored the segregation entry point as the
+                // legacy CleanLeavesChore component.
+                segregateWasteChore = FindFirstObjectByType<CleanLeavesChore>(
+                    FindObjectsInactive.Include);
+            }
+        }
     }
 
     private void Start()
@@ -111,17 +132,7 @@ public class DayManager : MonoBehaviour
 
         ExpireChoresAtDeadline();
 
-        if (!AllActiveChoresResolved())
-            return;
-
-        if (sweepingManager != null && sweepDust != null &&
-            !sweepingManager.IsSweepingCompleted)
-            return;
-
-        if (waterSpawner != null &&
-            (waterSpawner.IsSpawning ||
-             (waterSpawner.MopTaskStarted &&
-              !waterSpawner.IsMoppingCompleted && !waterSpawner.IsMoppingMissed)))
+        if (HasPendingHudChores())
             return;
 
         FinishDay();
@@ -129,6 +140,7 @@ public class DayManager : MonoBehaviour
 
     private void StartDay()
     {
+        ResolveSegregateWasteChore();
         ResolveWaterSpawner();
 
         Debug.Log("=== START DAY " + currentDay + " ===");
@@ -170,6 +182,8 @@ public class DayManager : MonoBehaviour
             waterSpawner.ResetDailyMop();
             Debug.Log("Water Reset");
         }
+
+        ResetMoppingMinigames();
 
         if (suddenTaskManager != null)
         {
@@ -226,7 +240,10 @@ public class DayManager : MonoBehaviour
         EnableChore(washDishes);
         EnableChore(sweepDust);
         EnableChore(feedDog);
-        EnableChore(cleanLeaves);
+        // Leaves are handled by the segregation mini-game. Keep the legacy
+        // clean-leaves reference for scene compatibility, but never register
+        // it as a second daily chore.
+        DisableChore(cleanLeaves);
 
         DisableChore(mopFloor);
         DisableChore(throwTrash);
@@ -236,7 +253,6 @@ public class DayManager : MonoBehaviour
         AddActiveChore(chores, washDishes);
         AddActiveChore(chores, sweepDust);
         AddActiveChore(chores, feedDog);
-        AddActiveChore(chores, cleanLeaves);
 
         if (garbageChore != null && currentDay >= 2)
         {
@@ -267,7 +283,7 @@ public class DayManager : MonoBehaviour
 
     private void AddActiveChore(List<Chore> chores, Chore chore)
     {
-        if (chore != null)
+        if (chore != null && !chores.Contains(chore))
             chores.Add(chore);
     }
 
@@ -311,6 +327,16 @@ public class DayManager : MonoBehaviour
         return activeChores;
     }
 
+    private int GetMissedChoreGameOverThreshold()
+    {
+        if (missedChoresGameOverThresholdByDay == null ||
+            missedChoresGameOverThresholdByDay.Length == 0)
+            return 5;
+
+        int dayIndex = Mathf.Clamp(currentDay - 1, 0, missedChoresGameOverThresholdByDay.Length - 1);
+        return missedChoresGameOverThresholdByDay[dayIndex];
+    }
+
     public void TriggerGameOver()
     {
         if (dayFinished || gameOver)
@@ -348,9 +374,23 @@ public class DayManager : MonoBehaviour
         if (waterSpawner != null)
             waterSpawner.StopSpawning();
 
-        gameOver = choreManager != null &&
-            choreManager.missedChores >= missedChoresGameOverThreshold;
+        gameOver = HasReachedMissedChoreGameOverThreshold;
         ShowDaySummary();
+    }
+
+    private bool HasPendingHudChores()
+    {
+        if (!AllActiveChoresResolved())
+            return true;
+
+        if (sweepingManager != null &&
+            !sweepingManager.IsSweepingCompleted)
+            return true;
+
+        return waterSpawner != null &&
+            (waterSpawner.IsSpawning ||
+             (waterSpawner.MopTaskStarted &&
+              !waterSpawner.IsMoppingCompleted && !waterSpawner.IsMoppingMissed));
     }
 
     private void ExpireChoresAtDeadline()
@@ -410,6 +450,20 @@ public class DayManager : MonoBehaviour
                 string marker = waterSpawner.IsMoppingCompleted ? "✓ " : "- ";
                 string status = waterSpawner.IsMoppingCompleted ? "COMPLETED" : "MISSED";
                 summary.AppendLine(marker + "Mop Floor - " + status);
+            }
+
+            if (sweepingManager != null)
+            {
+                summary.AppendLine(
+                    "Dust swept: " + sweepingManager.CleanedDustCount + "/" +
+                    sweepingManager.TotalDustSpawned);
+            }
+
+            if (waterSpawner != null)
+            {
+                summary.AppendLine(
+                    "Water mopped: " + waterSpawner.CleanedWaterCount + "/" +
+                    waterSpawner.TotalWaterSpawned);
             }
 
             summaryChoresText.text = summary.ToString();
@@ -505,6 +559,19 @@ public class DayManager : MonoBehaviour
         dayFinished = false;
         Debug.Log("Starting Next Day: " + currentDay);
         StartDay();
+    }
+
+    private void ResetMoppingMinigames()
+    {
+        MoppingMinigame[] minigames = FindObjectsByType<MoppingMinigame>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        foreach (MoppingMinigame minigame in minigames)
+        {
+            if (minigame != null)
+                minigame.ResetMopping();
+        }
     }
 
     private void FindSweepDustChore()

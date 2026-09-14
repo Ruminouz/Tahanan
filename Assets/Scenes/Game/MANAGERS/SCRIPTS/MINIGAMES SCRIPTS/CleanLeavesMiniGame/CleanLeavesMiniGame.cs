@@ -45,6 +45,12 @@ public class CleanLeavesMiniGame : MonoBehaviour
 
     private void ShowTutorial()
     {
+        if (tutorial == null)
+        {
+            StartCleaning();
+            return;
+        }
+
         tutorial.ShowTutorial(
             "CLEAN LEAVES",
             "1. Hold Left Mouse Button.\n" +

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameHUD : MonoBehaviour
 {
@@ -62,6 +63,7 @@ public class GameHUD : MonoBehaviour
         choreListText.text = "CHORES\n";
         Chore[] chores = dayManager.GetActiveChores();
         bool sweepListed = false;
+        HashSet<Chore> listedChores = new HashSet<Chore>();
 
         if (chores != null)
         {
@@ -73,11 +75,13 @@ public class GameHUD : MonoBehaviour
                 if (chore == dayManager.SweepDustChore)
                     sweepListed = true;
 
-                AppendChore(chore);
+                if (listedChores.Add(chore))
+                    AppendChore(chore);
             }
         }
 
-        if (!sweepListed && dayManager.SweepDustChore != null)
+        if (!sweepListed && dayManager.SweepDustChore != null &&
+            listedChores.Add(dayManager.SweepDustChore))
             AppendChore(dayManager.SweepDustChore);
 
         if (!sweepListed && dayManager.SweepDustChore == null && sweepingManager != null)

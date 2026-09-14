@@ -28,6 +28,11 @@ public class MoppingMinigame : MonoBehaviour
     private DayManager dayManager;
     private SuddenTaskManager suddenTaskManager;
 
+    private void Awake()
+    {
+        ConfigureMinigameUI();
+    }
+
 
     private DayManager ResolveDayManager()
     {
@@ -44,21 +49,29 @@ public class MoppingMinigame : MonoBehaviour
     {
         dayManager = ResolveDayManager();
         suddenTaskManager = FindFirstObjectByType<SuddenTaskManager>();
-        ConfigureMinigameUI();
     }
 
 
     private void ConfigureMinigameUI()
     {
+        ResetMopping();
+    }
+
+    public void ResetMopping()
+    {
+        currentWetArea = null;
+        progress = 0f;
+        isMopping = false;
+        mouseIsDown = false;
+
         if (minigamePanel != null)
-        {
             minigamePanel.SetActive(false);
-        }
 
         if (progressBar != null)
-        {
             progressBar.value = 0f;
-        }
+
+        if (mop != null)
+            mop.gameObject.SetActive(false);
     }
 
 
