@@ -23,4 +23,15 @@ public class BroomPickup : Interactable
 
         Debug.Log("Broom collected!");
     }
+
+    public void ResetForDay()
+    {
+        if (playerTool == null)
+            playerTool = FindFirstObjectByType<PlayerTool>();
+
+        if (playerTool != null)
+            playerTool.ResetTool();
+
+        gameObject.SetActive(true);
+    }
 }

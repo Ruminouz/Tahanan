@@ -6,6 +6,13 @@ public class BroomChore : Interactable
 
     private bool hasBeenPickedUp = false;
 
+    public void ResetForDay()
+    {
+        hasBeenPickedUp = false;
+
+        if (broomVisual != null)
+            broomVisual.SetActive(true);
+    }
 
     public override void Interact()
     {

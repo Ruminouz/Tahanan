@@ -1,11 +1,12 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChoreTutorial : MonoBehaviour
 {
     [SerializeField] private GameObject tutorialPanel;
-    [SerializeField] private Text titleText;
-    [SerializeField] private Text stepsText;
+    [SerializeField] private TMP_Text titleText;
+    [SerializeField] private TMP_Text stepsText;
     [SerializeField] private Button continueButton;
 
     private System.Action onFinished;

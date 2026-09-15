@@ -6,6 +6,14 @@ public class MopChore : Interactable
 
     private bool hasBeenPickedUp = false;
 
+    public void ResetForDay()
+    {
+        hasBeenPickedUp = false;
+
+        if (mopVisual != null)
+            mopVisual.SetActive(true);
+    }
+
     public override void Interact()
     {
         if (hasBeenPickedUp)

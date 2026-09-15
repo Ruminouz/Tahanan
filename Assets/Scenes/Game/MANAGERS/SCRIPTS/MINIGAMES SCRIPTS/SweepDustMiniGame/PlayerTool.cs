@@ -10,4 +10,9 @@ public class PlayerTool : MonoBehaviour
 
         Debug.Log("Player picked up broom!");
     }
+
+    public void ResetTool()
+    {
+        hasBroom = false;
+    }
 }

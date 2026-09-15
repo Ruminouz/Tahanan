@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class HouseholdHelperAI : MonoBehaviour
@@ -198,15 +199,9 @@ public class HouseholdHelperAI : MonoBehaviour
 
         Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
         GameObject bubble = Instantiate(moodBubblePrefab, anchor.position, Quaternion.identity, anchor);
-        TMPro.TMP_Text tmpText = bubble.GetComponentInChildren<TMPro.TMP_Text>();
+        TMP_Text tmpText = bubble.GetComponentInChildren<TMP_Text>();
         if (tmpText != null)
             tmpText.text = badMoodLine;
-        else
-        {
-            UnityEngine.UI.Text legacyText = bubble.GetComponentInChildren<UnityEngine.UI.Text>();
-            if (legacyText != null)
-                legacyText.text = badMoodLine;
-        }
 
         Destroy(bubble, bubbleDuration);
     }

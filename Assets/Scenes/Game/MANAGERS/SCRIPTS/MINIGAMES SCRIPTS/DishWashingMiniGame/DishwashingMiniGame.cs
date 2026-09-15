@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ public class DishwashingMiniGame : MonoBehaviour
    [Header("Mini Game Timer")]
 [SerializeField] private float dishwashingTime = 90f;
 
-[SerializeField] private Text timerText;
+[SerializeField] private TMP_Text timerText;
 
 private float currentTimer;
 private bool timerRunning;

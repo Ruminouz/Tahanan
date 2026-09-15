@@ -1,16 +1,17 @@
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class GameHUD : MonoBehaviour
 {
-    [SerializeField] private Text dayText;
-    [SerializeField] private Text timeText;
-    [SerializeField] private Text choreListText;
+    [SerializeField] private TMP_Text dayText;
+    [SerializeField] private TMP_Text timeText;
+    [SerializeField] private TMP_Text choreListText;
     [SerializeField] private Slider timeBar;
-    [SerializeField] private Text pointsText;
-    [SerializeField] private Text coinsText;
-    [SerializeField] private Text successRateText;
+    [SerializeField] private TMP_Text pointsText;
+    [SerializeField] private TMP_Text coinsText;
+    [SerializeField] private TMP_Text successRateText;
 
     private TimeManager timeManager;
     private DayManager dayManager;

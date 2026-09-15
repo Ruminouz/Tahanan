@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private Transform dailySpawnPoint;
+
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Animator animator;
@@ -13,37 +15,48 @@ public class PlayerMovement : MonoBehaviour
 
     public float CurrentMoveSpeed => moveSpeed * speedMultiplier;
 
-    void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
-  private void FixedUpdate()
-{
-
-    if (PauseController.IsGamePaused)
+    private void Start()
     {
-        rb.linearVelocity = Vector2.zero;
-        animator.SetBool("isWalking", false);
-        return;
+        ResetToDailySpawn();
     }
 
-    float moveVelocity = CurrentMoveSpeed > 0 ? CurrentMoveSpeed : moveSpeed;
-    rb.linearVelocity = moveInput * moveVelocity;
-    animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+    public void ResetToDailySpawn()
+    {
+        moveInput = Vector2.zero;
 
+        if (dailySpawnPoint != null)
+        {
+            transform.SetPositionAndRotation(
+                dailySpawnPoint.position,
+                dailySpawnPoint.rotation);
+        }
 
-    if(PauseController.IsGamePaused)
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        if (animator != null)
+            animator.SetBool("isWalking", false);
+    }
+
+    private void FixedUpdate()
+    {
+        if (PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;
             animator.SetBool("isWalking", false);
             return;
         }
-    rb.linearVelocity = moveInput * moveSpeed;
-    animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
 
-}
+        float moveVelocity = CurrentMoveSpeed > 0 ? CurrentMoveSpeed : moveSpeed;
+        rb.linearVelocity = moveInput * moveVelocity;
+        animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+    }
 
     public void Move(InputAction.CallbackContext context)
     {

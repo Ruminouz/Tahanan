@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MomAI : MonoBehaviour
 {
@@ -232,12 +231,6 @@ public class MomAI : MonoBehaviour
         TMP_Text tmpText = bubble.GetComponentInChildren<TMP_Text>();
         if (tmpText != null)
             tmpText.text = line;
-        else
-        {
-            Text legacyText = bubble.GetComponentInChildren<Text>();
-            if (legacyText != null)
-                legacyText.text = line;
-        }
 
         Destroy(bubble, bubbleDuration);
     }

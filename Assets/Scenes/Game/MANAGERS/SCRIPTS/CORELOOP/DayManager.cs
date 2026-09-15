@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -32,9 +33,9 @@ public class DayManager : MonoBehaviour
     [SerializeField] private GameObject daySummaryPanel;
     [SerializeField] private Button continueButton;
     [SerializeField] private Button mainMenuButton;
-    [SerializeField] private Text summaryChoresText;
-    [SerializeField] private Text summarySuccessRateText;
-    [SerializeField] private Text summaryPointsText;
+    [SerializeField] private TMP_Text summaryChoresText;
+    [SerializeField] private TMP_Text summarySuccessRateText;
+    [SerializeField] private TMP_Text summaryPointsText;
     [SerializeField] private float transitionDuration = 0.5f;
 
     [Header("Game Over")]
@@ -171,6 +172,8 @@ public class DayManager : MonoBehaviour
 
     private void ResetDayDependencies()
     {
+        ResetPlayerAndTools();
+
         if (timeManager != null)
         {
             timeManager.ResetDayTimer();
@@ -189,6 +192,52 @@ public class DayManager : MonoBehaviour
         {
             suddenTaskManager.ResetMopTask();
             Debug.Log("Mop Task Reset");
+        }
+    }
+
+    private void ResetPlayerAndTools()
+    {
+        PlayerMovement playerMovement = FindFirstObjectByType<PlayerMovement>();
+        if (playerMovement != null)
+            playerMovement.ResetToDailySpawn();
+
+        MoppingPlayerState moppingState = FindFirstObjectByType<MoppingPlayerState>();
+        if (moppingState != null)
+            moppingState.ResetMop();
+
+        SweepingPlayerState sweepingState = FindFirstObjectByType<SweepingPlayerState>();
+        if (sweepingState != null)
+            sweepingState.ResetBroom();
+
+        PlayerTool playerTool = FindFirstObjectByType<PlayerTool>();
+        if (playerTool != null)
+            playerTool.ResetTool();
+
+        MopChore[] mopChores = FindObjectsByType<MopChore>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (MopChore mopChore in mopChores)
+        {
+            if (mopChore != null)
+                mopChore.ResetForDay();
+        }
+
+        BroomChore[] broomChores = FindObjectsByType<BroomChore>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (BroomChore broomChore in broomChores)
+        {
+            if (broomChore != null)
+                broomChore.ResetForDay();
+        }
+
+        BroomPickup[] broomPickups = FindObjectsByType<BroomPickup>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (BroomPickup broomPickup in broomPickups)
+        {
+            if (broomPickup != null)
+                broomPickup.ResetForDay();
         }
     }
 
