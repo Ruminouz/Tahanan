@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public enum EconomyRewardType
 {
@@ -12,8 +13,8 @@ public class EconomyManager : MonoBehaviour
     public static EconomyManager Instance { get; private set; }
 
     [Header("Wallet")]
-    [SerializeField] private int startingCoins;
-    [SerializeField] private int startingPoints;
+    [SerializeField, Min(0)] private int startingCoins;
+    [SerializeField, Min(0)] private int startingPoints;
     [SerializeField] private int coinsPerChorePoint = 1;
 
     [Header("Reward Settings")]
@@ -21,12 +22,26 @@ public class EconomyManager : MonoBehaviour
     [SerializeField] private float movementBoostDuration = 15f;
     [SerializeField] private float extraTimeSeconds = 15f;
 
+    [Header("Shop - Mop")]
+    [SerializeField, Min(1)] private int mopUpgradeBaseCost = 10;
+    [SerializeField, Min(0f)] private float upgradedMopCleaningSpeedMultiplier = 1.2f;
+
     private int coins;
     private int points;
     private float movementBoostEndTime;
+    private int mopUpgradeLevel;
+
+    public event Action<int> CoinsChanged;
+    public event Action<int> MopUpgradeChanged;
 
     public int Coins => coins;
     public int Points => points;
+    public int MopUpgradeLevel => mopUpgradeLevel;
+    public bool HasUpgradedMop => mopUpgradeLevel == 1;
+    public bool CanUpgradeMop => !HasUpgradedMop;
+    public float MopCleaningSpeedMultiplier => HasUpgradedMop
+        ? Mathf.Max(1f, upgradedMopCleaningSpeedMultiplier)
+        : 1f;
     public bool HasMovementBoost => Time.time < movementBoostEndTime;
 
     private void Awake()
@@ -40,6 +55,7 @@ public class EconomyManager : MonoBehaviour
         Instance = this;
         coins = startingCoins;
         points = startingPoints;
+        mopUpgradeLevel = 0;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -64,15 +80,39 @@ public class EconomyManager : MonoBehaviour
 
     public void AddCoins(int amount)
     {
+        if (amount == 0)
+            return;
+
         coins = Mathf.Max(0, coins + amount);
+        CoinsChanged?.Invoke(coins);
     }
 
     public bool TrySpendCoins(int amount)
     {
-        if (amount < 0 || coins < amount)
+        if (amount <= 0 || coins < amount)
             return false;
 
         coins -= amount;
+        CoinsChanged?.Invoke(coins);
+        return true;
+    }
+
+    public int GetMopUpgradeCost()
+    {
+        if (!CanUpgradeMop)
+            return -1;
+
+        return mopUpgradeBaseCost;
+    }
+
+    public bool TryPurchaseMopUpgrade()
+    {
+        int cost = GetMopUpgradeCost();
+        if (cost < 0 || !TrySpendCoins(cost))
+            return false;
+
+        mopUpgradeLevel = 1;
+        MopUpgradeChanged?.Invoke(mopUpgradeLevel);
         return true;
     }
 

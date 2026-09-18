@@ -12,6 +12,7 @@ public class MoppingMinigame : MonoBehaviour
     [Header("Mop")]
     [SerializeField] private RectTransform mop;
     [SerializeField] private RectTransform moppingArea;
+    [SerializeField] private GameObject upgradedMopVisual;
 
 
     [Header("Cleaning")]
@@ -23,6 +24,7 @@ public class MoppingMinigame : MonoBehaviour
     private float progress = 0f;
     private bool isMopping = false;
     private bool mouseIsDown = false;
+    private RectTransform activeMop;
 
 
     private DayManager dayManager;
@@ -63,6 +65,7 @@ public class MoppingMinigame : MonoBehaviour
         progress = 0f;
         isMopping = false;
         mouseIsDown = false;
+        activeMop = null;
 
         if (minigamePanel != null)
             minigamePanel.SetActive(false);
@@ -72,6 +75,9 @@ public class MoppingMinigame : MonoBehaviour
 
         if (mop != null)
             mop.gameObject.SetActive(false);
+
+        if (upgradedMopVisual != null)
+            upgradedMopVisual.SetActive(false);
     }
 
 
@@ -99,8 +105,7 @@ public class MoppingMinigame : MonoBehaviour
         isMopping = true;
         mouseIsDown = false;
 
-
-
+        ApplyMopVisual(GetCurrentMopLevel());
         ApplyDifficulty();
 
 
@@ -117,12 +122,6 @@ public class MoppingMinigame : MonoBehaviour
         }
 
 
-        if (mop != null)
-        {
-            mop.gameObject.SetActive(true);
-        }
-
-
         Debug.Log(
             "MOPPING MINIGAME STARTED!"
         );
@@ -133,14 +132,16 @@ public class MoppingMinigame : MonoBehaviour
     private void ApplyDifficulty()
     {
         var resolvedDayManager = ResolveDayManager();
-
-        if (resolvedDayManager == null)
-            return;
-
-        int difficulty = resolvedDayManager.CurrentDifficulty;
+        int difficulty = resolvedDayManager != null
+            ? resolvedDayManager.CurrentDifficulty
+            : 0;
 
         cleaningSpeed = 0.5f - (difficulty * 0.05f);
         cleaningSpeed = Mathf.Max(cleaningSpeed, 0.25f);
+
+        EconomyManager economyManager = EconomyManager.Instance;
+        if (economyManager != null)
+            cleaningSpeed *= economyManager.MopCleaningSpeedMultiplier;
 
 
 
@@ -150,6 +151,35 @@ public class MoppingMinigame : MonoBehaviour
             + " | Cleaning Speed: "
             + cleaningSpeed
         );
+    }
+
+    private int GetCurrentMopLevel()
+    {
+        return EconomyManager.Instance != null && EconomyManager.Instance.HasUpgradedMop
+            ? 1
+            : 0;
+    }
+
+    private void ApplyMopVisual(int level)
+    {
+        if (mop != null)
+            mop.gameObject.SetActive(false);
+        if (upgradedMopVisual != null)
+            upgradedMopVisual.SetActive(false);
+
+        GameObject selectedVisual = level == 1
+            ? upgradedMopVisual
+            : (mop != null ? mop.gameObject : null);
+        if (selectedVisual == null)
+        {
+            activeMop = null;
+            return;
+        }
+
+        selectedVisual.SetActive(true);
+        RectTransform selectedRect = selectedVisual.GetComponent<RectTransform>();
+        if (selectedRect != null)
+            activeMop = selectedRect;
     }
 
 
@@ -208,7 +238,7 @@ public class MoppingMinigame : MonoBehaviour
 
     private void MoveMop()
     {
-        if(mop == null)
+        if(activeMop == null)
             return;
 
 
@@ -230,7 +260,7 @@ public class MoppingMinigame : MonoBehaviour
 
 
 
-        mop.localPosition =
+        activeMop.localPosition =
             localPosition;
     }
 
@@ -238,7 +268,7 @@ public class MoppingMinigame : MonoBehaviour
 
     private bool IsMopInsideMoppingArea()
     {
-        if(mop == null || moppingArea == null)
+        if(activeMop == null || moppingArea == null)
             return false;
 
 
