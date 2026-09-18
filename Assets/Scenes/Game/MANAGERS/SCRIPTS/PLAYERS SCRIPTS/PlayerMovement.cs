@@ -46,16 +46,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (rb == null)
+            return;
+
         if (PauseController.IsGamePaused)
         {
             rb.linearVelocity = Vector2.zero;
-            animator.SetBool("isWalking", false);
+            if (animator != null)
+                animator.SetBool("isWalking", false);
             return;
         }
 
         float moveVelocity = CurrentMoveSpeed > 0 ? CurrentMoveSpeed : moveSpeed;
         rb.linearVelocity = moveInput * moveVelocity;
-        animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+
+        if (animator != null)
+            animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -67,20 +73,24 @@ public class PlayerMovement : MonoBehaviour
         {
             moveInput = input;
             // Update direction vectors while moving
-            animator.SetFloat("InputX", moveInput.x);
-            animator.SetFloat("InputY", moveInput.y);
+            if (animator != null)
+            {
+                animator.SetFloat("InputX", moveInput.x);
+                animator.SetFloat("InputY", moveInput.y);
+            }
         }
         else if (context.canceled)
         {
             // Store last valid movement direction BEFORE clearing moveInput
-            if (moveInput != Vector2.zero)
+            if (moveInput != Vector2.zero && animator != null)
             {
                 animator.SetFloat("LastInputX", moveInput.x);
                 animator.SetFloat("LastInputY", moveInput.y);
             }
 
             moveInput = Vector2.zero;
-            animator.SetBool("isWalking", false);
+            if (animator != null)
+                animator.SetBool("isWalking", false);
         }
     }
 

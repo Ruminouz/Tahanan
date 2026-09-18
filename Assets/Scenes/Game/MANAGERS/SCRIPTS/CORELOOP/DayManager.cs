@@ -518,11 +518,14 @@ public class DayManager : MonoBehaviour
             summaryChoresText.text = summary.ToString();
         }
 
+        float successRate = choreManager != null ? choreManager.SuccessRate : 0f;
+        int totalPoints = choreManager != null ? choreManager.totalPoints : 0;
+
         if (summarySuccessRateText != null)
-            summarySuccessRateText.text = "Success Rate: " + choreManager.SuccessRate.ToString("0") + "%";
+            summarySuccessRateText.text = "Success Rate: " + successRate.ToString("0") + "%";
 
         if (summaryPointsText != null)
-            summaryPointsText.text = "Points Earned: " + choreManager.totalPoints;
+            summaryPointsText.text = "Points Earned: " + totalPoints;
 
         if (continueButton != null)
             continueButton.gameObject.SetActive(!gameOver);

@@ -87,16 +87,18 @@ public class MopChore : Interactable
 
         SetAllMopVisualsActive(false);
         GameObject selectedVisual = level == 1 ? upgradedMopVisual : mopVisual;
-        if (selectedVisual != null)
+        if (selectedVisual != null && selectedVisual != gameObject)
             selectedVisual.SetActive(true);
     }
 
     private void SetAllMopVisualsActive(bool isActive)
     {
-        if (mopVisual != null)
+        // The legacy prefab can reference this trigger itself as mopVisual.
+        // Toggling it here would invoke OnEnable again indefinitely.
+        if (mopVisual != null && mopVisual != gameObject)
             mopVisual.SetActive(isActive);
 
-        if (upgradedMopVisual != null)
+        if (upgradedMopVisual != null && upgradedMopVisual != gameObject)
             upgradedMopVisual.SetActive(isActive);
     }
 }
