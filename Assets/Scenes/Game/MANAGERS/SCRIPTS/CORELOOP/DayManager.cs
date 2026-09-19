@@ -197,6 +197,14 @@ public class DayManager : MonoBehaviour
 
     private void ResetPlayerAndTools()
     {
+        PlayerEquipmentInventory inventory = FindFirstObjectByType<PlayerEquipmentInventory>();
+        if (inventory != null)
+            inventory.ResetForDay();
+
+        GarbageCarry garbageCarry = FindFirstObjectByType<GarbageCarry>();
+        if (garbageCarry != null)
+            garbageCarry.ResetForDay();
+
         PlayerMovement playerMovement = FindFirstObjectByType<PlayerMovement>();
         if (playerMovement != null)
             playerMovement.ResetToDailySpawn();

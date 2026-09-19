@@ -46,15 +46,13 @@ public class BroomChore : Interactable
 
         playerState.PickUpBroom();
 
-
         hasBeenPickedUp = true;
 
+        PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
+        if (inventory == null)
+            inventory = player.AddComponent<PlayerEquipmentInventory>();
 
-        if (broomVisual != null)
-        {
-            broomVisual.SetActive(false);
-        }
-
+        inventory.Add(EquipmentType.Broom, broomVisual != null ? broomVisual : gameObject);
 
         Debug.Log("BROOM PICKED UP!");
     }

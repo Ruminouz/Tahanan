@@ -28,23 +28,18 @@ public class GarbageCarry : MonoBehaviour
 
     public void Pickup(GameObject bag)
     {
-
-        currentBag = bag;
-
+        if (bag == null)
+            return;
 
         originalPosition =
         bag.transform.position;
 
+        PlayerEquipmentInventory inventory = GetComponent<PlayerEquipmentInventory>();
+        if (inventory == null)
+            inventory = gameObject.AddComponent<PlayerEquipmentInventory>();
 
-
-        bag.transform.SetParent(
-            carryPoint
-        );
-
-
-        bag.transform.localPosition =
-        Vector3.zero;
-
+        inventory.Add(EquipmentType.GarbageBag, bag, carryPoint);
+        currentBag = bag;
 
         Debug.Log(
         "Player carrying garbage"
@@ -103,6 +98,11 @@ public class GarbageCarry : MonoBehaviour
 
         currentBag.transform.SetParent(null);
         currentBag.SetActive(false);
+        currentBag = null;
+    }
+
+    public void ResetForDay()
+    {
         currentBag = null;
     }
 

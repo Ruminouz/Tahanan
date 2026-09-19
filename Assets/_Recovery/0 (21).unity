@@ -885,9 +885,13 @@ PrefabInstance:
       value: -10.86
       objectReference: {fileID: 0}
     - target: {fileID: 5097160018990745936, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
+      propertyPath: mopVisual
+      value: 
+      objectReference: {fileID: 1620574704}
+    - target: {fileID: 5097160018990745936, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
       propertyPath: upgradedMopVisual
       value: 
-      objectReference: {fileID: 1492777095}
+      objectReference: {fileID: 1620574704}
     - target: {fileID: 5097160018990745936, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
       propertyPath: mopVisualByLevel.Array.size
       value: 2
@@ -962,7 +966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7490932936070189671, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.336
+      value: 1.79
       objectReference: {fileID: 0}
     - target: {fileID: 7741791015243803529, guid: 4b111e0bfa1ce7a49ab090afc3a1743b, type: 3}
       propertyPath: miniGame
@@ -1995,7 +1999,7 @@ MonoBehaviour:
   movementBoostDuration: 15
   extraTimeSeconds: 15
   mopUpgradeBaseCost: 10
-  upgradedMopCleaningSpeedMultiplier: 5
+  upgradedMopCleaningSpeedMultiplier: 1.2
 --- !u!114 &534126630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2256,94 +2260,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1372860110}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &614554695
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 614554696}
-  - component: {fileID: 614554699}
-  - component: {fileID: 614554698}
-  - component: {fileID: 614554697}
-  m_Layer: 5
-  m_Name: InventoryPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &614554696
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614554695}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1044174423}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.338013, y: -475.687}
-  m_SizeDelta: {x: -811.073, y: -951.385}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &614554697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614554695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f6a2c8e1d4b9a705c7e2f8b6d1a4e93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
---- !u!114 &614554698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614554695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &614554699
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614554695}
-  m_CullTransparentMesh: 1
 --- !u!1 &623624170 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7790154647851300767, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
@@ -5192,10 +5108,6 @@ PrefabInstance:
       propertyPath: carryPoint
       value: 
       objectReference: {fileID: 79365035}
-    - target: {fileID: 9216347852014683021, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.262
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1987523019735623185, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
     m_RemovedGameObjects: []
@@ -8117,9 +8029,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2764585302648697081, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       insertIndex: -1
       addedObject: {fileID: 68763429}
-    - targetCorrespondingSourceObject: {fileID: 2764585302648697081, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 614554696}
     - targetCorrespondingSourceObject: {fileID: 2683075093970689445, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       insertIndex: 3
       addedObject: {fileID: 1862735773}

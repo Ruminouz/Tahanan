@@ -28,6 +28,9 @@ public class GameHUD : MonoBehaviour
         sweepingManager = FindFirstObjectByType<SweepingManager>();
         waterSpawner = FindFirstObjectByType<WaterSpawner>();
         choreManager = FindFirstObjectByType<ChoreManager>();
+
+        if (GetComponent<PlayerInventoryUI>() == null)
+            gameObject.AddComponent<PlayerInventoryUI>();
     }
 
     private void Update()

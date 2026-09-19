@@ -79,7 +79,15 @@ public class WetArea : Interactable
             return;
         }
 
+        PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
+        if (inventory == null || inventory.SelectedEquipment != EquipmentType.Mop)
+        {
+            Debug.Log(
+                "Equip the mop before mopping."
+            );
 
+            return;
+        }
 
         if (moppingMinigame == null)
         {

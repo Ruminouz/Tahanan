@@ -2,36 +2,28 @@ using UnityEngine;
 
 public class BroomPickup : Interactable
 {
-    private PlayerTool playerTool;
-
-    private void Start()
-    {
-        playerTool = FindFirstObjectByType<PlayerTool>();
-    }
-
     public override void Interact()
     {
-        if (playerTool.hasBroom)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+            return;
+
+        PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
+        if (inventory != null && inventory.Owns(EquipmentType.Broom))
         {
             Debug.Log("Player already has broom.");
             return;
         }
 
-        playerTool.PickupBroom();
+        if (inventory == null)
+            inventory = player.AddComponent<PlayerEquipmentInventory>();
 
-        gameObject.SetActive(false);
-
+        inventory.Add(EquipmentType.Broom, gameObject);
         Debug.Log("Broom collected!");
     }
 
     public void ResetForDay()
     {
-        if (playerTool == null)
-            playerTool = FindFirstObjectByType<PlayerTool>();
-
-        if (playerTool != null)
-            playerTool.ResetTool();
-
         gameObject.SetActive(true);
     }
 }

@@ -52,6 +52,12 @@ public class DustSpot : Interactable
             return;
         }
 
+        PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
+        if (inventory == null || inventory.SelectedEquipment != EquipmentType.Broom)
+        {
+            Debug.Log("Equip the broom before sweeping.");
+            return;
+        }
 
         if (sweepingMinigame == null)
         {

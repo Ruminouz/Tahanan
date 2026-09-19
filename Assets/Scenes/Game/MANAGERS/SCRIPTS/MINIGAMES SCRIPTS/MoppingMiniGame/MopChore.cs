@@ -37,6 +37,12 @@ public class MopChore : Interactable
     public void ResetForDay()
     {
         hasBeenPickedUp = false;
+
+        // The default mop visual can be this same GameObject. Inventory reset
+        // disables it, so reactivate the pickup object before applying visuals.
+        if (!gameObject.activeSelf)
+            gameObject.SetActive(true);
+
         ApplyMopVisual(GetCurrentMopLevel());
     }
 
@@ -69,6 +75,11 @@ public class MopChore : Interactable
         hasBeenPickedUp = true;
 
         SetAllMopVisualsActive(false);
+        PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
+        if (inventory == null)
+            inventory = player.AddComponent<PlayerEquipmentInventory>();
+
+        inventory.Add(EquipmentType.Mop, mopVisual != null ? mopVisual : gameObject);
 
         Debug.Log("MOP PICKED UP!");
     }
