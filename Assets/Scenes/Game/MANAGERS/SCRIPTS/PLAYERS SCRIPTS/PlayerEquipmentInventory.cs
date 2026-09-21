@@ -39,6 +39,12 @@ public class PlayerEquipmentInventory : MonoBehaviour
             && item != null;
     }
 
+    public GameObject GetVisual(EquipmentType equipment)
+    {
+        ownedItems.TryGetValue(equipment, out GameObject visual);
+        return visual;
+    }
+
     public IReadOnlyCollection<EquipmentType> OwnedEquipment =>
         ownedItems.Keys;
 

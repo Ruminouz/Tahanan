@@ -15,6 +15,7 @@ public class Chore : Interactable
 
     private bool isCompleted = false;
     private bool isMissed = false;
+    private float deadlineBonusSeconds;
 
     
 
@@ -34,7 +35,7 @@ public class Chore : Interactable
             if (timeManager == null)
                 return deadlineSeconds;
 
-            return Mathf.Max(0f, deadlineSeconds - timeManager.GetTime());
+            return Mathf.Max(0f, deadlineSeconds + deadlineBonusSeconds - timeManager.GetTime());
         }
     }
 
@@ -42,6 +43,17 @@ public class Chore : Interactable
     {
         if (!string.IsNullOrWhiteSpace(name))
             choreName = name;
+    }
+
+    public void ExtendDeadline(float seconds)
+    {
+        if (seconds > 0f && !isCompleted && !isMissed)
+            deadlineBonusSeconds += seconds;
+    }
+
+    public void SetRuntimeChoreName(string name)
+    {
+        SetChoreName(name);
     }
 
 
@@ -55,6 +67,7 @@ public class Chore : Interactable
 {
     isCompleted = false;
     isMissed = false;
+    deadlineBonusSeconds = 0f;
 
     gameObject.SetActive(true);
 

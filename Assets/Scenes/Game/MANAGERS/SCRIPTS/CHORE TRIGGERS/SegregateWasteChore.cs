@@ -58,4 +58,10 @@ public class SegregateWasteChore : Chore
             Debug.LogWarning("Segregate Waste Mini-Game is not assigned!");
         }
     }
+
+    public void ConfigureSpawnedChore(string runtimeName)
+    {
+        SetRuntimeChoreName(runtimeName);
+        ResetChore();
+    }
 }

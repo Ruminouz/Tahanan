@@ -12,8 +12,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     private Animator animator;
     private float speedMultiplier = 1f;
+    private float temporarySpeedMultiplier = 1f;
 
-    public float CurrentMoveSpeed => moveSpeed * speedMultiplier;
+    public float CurrentMoveSpeed => moveSpeed * speedMultiplier * temporarySpeedMultiplier;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     public void ResetToDailySpawn()
     {
         moveInput = Vector2.zero;
+        temporarySpeedMultiplier = 1f;
 
         if (dailySpawnPoint != null)
         {
@@ -97,5 +99,17 @@ public class PlayerMovement : MonoBehaviour
     public void SetSpeedMultiplier(float multiplier)
     {
         speedMultiplier = Mathf.Max(0.1f, multiplier);
+    }
+
+    public void ApplyTemporarySpeedBoost(float multiplier, float duration)
+    {
+        StartCoroutine(TemporarySpeedBoost(multiplier, duration));
+    }
+
+    private IEnumerator TemporarySpeedBoost(float multiplier, float duration)
+    {
+        temporarySpeedMultiplier = Mathf.Max(temporarySpeedMultiplier, multiplier);
+        yield return new WaitForSeconds(duration);
+        temporarySpeedMultiplier = 1f;
     }
 }

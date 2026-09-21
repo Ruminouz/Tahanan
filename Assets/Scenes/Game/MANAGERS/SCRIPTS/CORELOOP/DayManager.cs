@@ -50,6 +50,7 @@ public class DayManager : MonoBehaviour
     private WaterSpawner waterSpawner;
 
     private Chore[] activeChores;
+    private readonly List<Chore> dynamicChores = new List<Chore>();
     private bool dayFinished;
     private bool gameOver;
 
@@ -200,6 +201,10 @@ public class DayManager : MonoBehaviour
         PlayerEquipmentInventory inventory = FindFirstObjectByType<PlayerEquipmentInventory>();
         if (inventory != null)
             inventory.ResetForDay();
+
+        BunsoBoostInventory boostInventory = FindFirstObjectByType<BunsoBoostInventory>();
+        if (boostInventory != null)
+            boostInventory.ResetForDay();
 
         GarbageCarry garbageCarry = FindFirstObjectByType<GarbageCarry>();
         if (garbageCarry != null)
@@ -369,6 +374,14 @@ public class DayManager : MonoBehaviour
 
     private void ResetAllChores()
     {
+        for (int i = dynamicChores.Count - 1; i >= 0; i--)
+        {
+            Chore dynamicChore = dynamicChores[i];
+            if (dynamicChore != null)
+                Destroy(dynamicChore.gameObject);
+        }
+        dynamicChores.Clear();
+
         DisableChore(washDishes);
         DisableChore(mopFloor);
         DisableChore(sweepDust);
@@ -382,6 +395,33 @@ public class DayManager : MonoBehaviour
     public Chore[] GetActiveChores()
     {
         return activeChores;
+    }
+
+    public void RegisterDynamicChore(Chore chore)
+    {
+        if (chore == null || dynamicChores.Contains(chore))
+            return;
+
+        dynamicChores.Add(chore);
+        List<Chore> chores = activeChores != null
+            ? new List<Chore>(activeChores)
+            : new List<Chore>();
+        AddActiveChore(chores, chore);
+        activeChores = chores.ToArray();
+    }
+
+    public void UnregisterDynamicChore(Chore chore)
+    {
+        if (chore == null)
+            return;
+
+        dynamicChores.Remove(chore);
+        if (activeChores == null)
+            return;
+
+        List<Chore> chores = new List<Chore>(activeChores);
+        chores.Remove(chore);
+        activeChores = chores.ToArray();
     }
 
     private int GetMissedChoreGameOverThreshold()
