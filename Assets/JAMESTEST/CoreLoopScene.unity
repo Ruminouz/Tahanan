@@ -2478,7 +2478,7 @@ MonoBehaviour:
   - {fileID: 760133841}
   - {fileID: 447101753}
   - {fileID: 572636148}
-  emptySlotSprite: {fileID: -7832214784768987486, guid: de844472edf58514c8d332383dc698de, type: 3}
+  emptySlotSprite: {fileID: -9182177788924653191, guid: 4e86041df77398d48ab4b82de6bf1f9d, type: 3}
   chocolateSprite: {fileID: 8386067457128398079, guid: aab55cf87ab958d46981b995b26257f7, type: 3}
   extraTimeSprite: {fileID: -7754988575891523622, guid: 8d782902958a6354797c1a649a2949a0, type: 3}
   broomSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
