@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private float temporarySpeedMultiplier = 1f;
 
     public float CurrentMoveSpeed => moveSpeed * speedMultiplier * temporarySpeedMultiplier;
+    private bool playingFootsteps = false;
+    public float footstepSpeed = 0.5f;
 
     private void Awake()
     {
@@ -56,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             if (animator != null)
                 animator.SetBool("isWalking", false);
+            StopFootsteps();
             return;
         }
 
@@ -64,7 +67,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (animator != null)
             animator.SetBool("isWalking", rb.linearVelocity.magnitude > 0);
+        if(rb.linearVelocity.magnitude > 0 && !playingFootsteps)
+    {
+        StartFootsteps();
     }
+    else if(rb.linearVelocity.magnitude == 0)
+    {
+        StopFootsteps();
+    }
+}
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -111,5 +122,23 @@ public class PlayerMovement : MonoBehaviour
         temporarySpeedMultiplier = Mathf.Max(temporarySpeedMultiplier, multiplier);
         yield return new WaitForSeconds(duration);
         temporarySpeedMultiplier = 1f;
+    }
+
+    void StartFootsteps()
+    {
+        playingFootsteps = true;
+        InvokeRepeating(nameof(PlayFootsteps), 0f, footstepSpeed);
+        
+    }
+
+    void StopFootsteps()
+    {
+        playingFootsteps = false;
+        CancelInvoke(nameof(PlayFootsteps));
+    }
+
+    void PlayFootsteps()
+    {
+        SoundEffectManager.Play("Footstep", true);
     }
 }
