@@ -129,6 +129,81 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7318132094067371633, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
   m_PrefabInstance: {fileID: 6215878004242929653}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &44429766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 44429767}
+  - component: {fileID: 44429769}
+  - component: {fileID: 44429768}
+  m_Layer: 5
+  m_Name: UpgradedBroom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &44429767
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44429766}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.9862, y: 4.9862, z: 4.9862}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1372377671}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &44429768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44429766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.8113208, g: 0.12629052, b: 0.12629052, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &44429769
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44429766}
+  m_CullTransparentMesh: 1
 --- !u!114 &63568580 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4851141290149487819, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
@@ -159,7 +234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &68763429
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5792,6 +5867,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792b19e82e94bc141b02ce4433f5c4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SweepingMinigame
+--- !u!224 &1372377671 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 861968361822883220, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+  m_PrefabInstance: {fileID: 6215878004242929653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1372860109
 GameObject:
   m_ObjectHideFlags: 0
@@ -9503,6 +9583,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 281675359315078018, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+      propertyPath: upgradedBroomVisual
+      value: 
+      objectReference: {fileID: 44429767}
     - target: {fileID: 861968361822883220, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -3
@@ -9992,6 +10076,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3749222646802510629, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       insertIndex: 2
       addedObject: {fileID: 1052012819}
+    - targetCorrespondingSourceObject: {fileID: 861968361822883220, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 44429767}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3186574704149066355, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       insertIndex: -1
