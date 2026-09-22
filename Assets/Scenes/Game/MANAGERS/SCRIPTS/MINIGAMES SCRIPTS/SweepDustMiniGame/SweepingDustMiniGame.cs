@@ -12,6 +12,7 @@ public class SweepingMinigame : MonoBehaviour
 
     [Header("Broom")]
     [SerializeField] private RectTransform broom;
+    [SerializeField] private RectTransform upgradedBroomVisual;
     [SerializeField] private RectTransform sweepingArea;
 
 
@@ -25,16 +26,35 @@ public class SweepingMinigame : MonoBehaviour
     private float progress;
     private bool isSweeping;
     private bool mouseIsDown;
+    private RectTransform activeBroom;
 
 
 
     private void Start()
     {
+        ResetSweeping();
+    }
+
+
+    private void ResetSweeping()
+    {
+        currentDustSpot = null;
+        progress = 0f;
+        isSweeping = false;
+        mouseIsDown = false;
+        activeBroom = null;
+
         if (minigamePanel != null)
             minigamePanel.SetActive(false);
 
         if (progressBar != null)
-            progressBar.value = 0;
+            progressBar.value = 0f;
+
+        if (broom != null)
+            broom.gameObject.SetActive(false);
+
+        if (upgradedBroomVisual != null)
+            upgradedBroomVisual.gameObject.SetActive(false);
     }
 
 
@@ -62,6 +82,9 @@ public class SweepingMinigame : MonoBehaviour
         isSweeping = true;
         mouseIsDown = false;
 
+        ApplyBroomVisual(GetCurrentBroomLevel());
+        ApplyDifficulty();
+
 
         if (minigamePanel != null)
             minigamePanel.SetActive(true);
@@ -71,11 +94,49 @@ public class SweepingMinigame : MonoBehaviour
             progressBar.value = 0;
 
 
-        if (broom != null)
-            broom.gameObject.SetActive(true);
-
-
         Debug.Log("SWEEPING STARTED");
+    }
+
+    private void ApplyDifficulty()
+    {
+        int difficulty = DayManager.Instance != null ? DayManager.Instance.CurrentDifficulty : 0;
+        cleaningSpeed = 0.5f - (difficulty * 0.05f);
+        cleaningSpeed = Mathf.Max(cleaningSpeed, 0.25f);
+
+        EconomyManager economyManager = EconomyManager.Instance;
+        if (economyManager != null)
+            cleaningSpeed *= economyManager.BroomCleaningSpeedMultiplier;
+
+        Debug.Log("Sweeping difficulty: " + difficulty + " | Cleaning Speed: " + cleaningSpeed);
+    }
+
+    private int GetCurrentBroomLevel()
+    {
+        return EconomyManager.Instance != null && EconomyManager.Instance.HasUpgradedBroom ? 1 : 0;
+    }
+
+    private void ApplyBroomVisual(int level)
+    {
+        if (broom != null)
+            broom.gameObject.SetActive(false);
+
+        if (upgradedBroomVisual != null)
+            upgradedBroomVisual.gameObject.SetActive(false);
+
+        GameObject selectedVisual = level == 1
+            ? upgradedBroomVisual != null ? upgradedBroomVisual.gameObject : null
+            : broom != null ? broom.gameObject : null;
+
+        if (selectedVisual == null)
+        {
+            activeBroom = null;
+            return;
+        }
+
+        selectedVisual.SetActive(true);
+        RectTransform selectedRect = selectedVisual.GetComponent<RectTransform>();
+        if (selectedRect != null)
+            activeBroom = selectedRect;
     }
 
 
@@ -107,7 +168,8 @@ public class SweepingMinigame : MonoBehaviour
             progress += cleaningSpeed * Time.deltaTime;
 
 
-            progressBar.value = progress;
+            if (progressBar != null)
+                progressBar.value = progress;
 
 
             if (progress >= 1)
@@ -121,12 +183,11 @@ public class SweepingMinigame : MonoBehaviour
 
     private void MoveBroom()
     {
+        if (activeBroom == null || minigamePanel == null)
+            return;
+
         Vector2 mousePosition =
             Mouse.current.position.ReadValue();
-
-
-        if (broom == null || minigamePanel == null)
-            return;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             minigamePanel.GetComponent<RectTransform>(),
@@ -136,14 +197,14 @@ public class SweepingMinigame : MonoBehaviour
         );
 
 
-        broom.localPosition = localPosition;
+        activeBroom.localPosition = localPosition;
     }
 
 
 
     private bool IsInsideArea()
     {
-        if (sweepingArea == null || Mouse.current == null)
+        if (activeBroom == null || sweepingArea == null || Mouse.current == null)
             return false;
 
         return RectTransformUtility.RectangleContainsScreenPoint(
@@ -175,6 +236,7 @@ public class SweepingMinigame : MonoBehaviour
             minigamePanel.SetActive(false);
 
         currentDustSpot = null;
+        activeBroom = null;
 
 
         Debug.Log("SWEEPING COMPLETE!");

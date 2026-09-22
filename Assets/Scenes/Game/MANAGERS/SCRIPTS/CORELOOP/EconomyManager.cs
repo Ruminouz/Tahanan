@@ -26,21 +26,33 @@ public class EconomyManager : MonoBehaviour
     [SerializeField, Min(1)] private int mopUpgradeBaseCost = 10;
     [SerializeField, Min(0f)] private float upgradedMopCleaningSpeedMultiplier = 1.2f;
 
+    [Header("Shop - Broom")]
+    [SerializeField, Min(1)] private int broomUpgradeBaseCost = 10;
+    [SerializeField, Min(0f)] private float upgradedBroomCleaningSpeedMultiplier = 1.35f;
+
     private int coins;
     private int points;
     private float movementBoostEndTime;
     private int mopUpgradeLevel;
+    private int broomUpgradeLevel;
 
     public event Action<int> CoinsChanged;
     public event Action<int> MopUpgradeChanged;
+    public event Action<int> BroomUpgradeChanged;
 
     public int Coins => coins;
     public int Points => points;
     public int MopUpgradeLevel => mopUpgradeLevel;
+    public int BroomUpgradeLevel => broomUpgradeLevel;
     public bool HasUpgradedMop => mopUpgradeLevel == 1;
     public bool CanUpgradeMop => !HasUpgradedMop;
+    public bool HasUpgradedBroom => broomUpgradeLevel == 1;
+    public bool CanUpgradeBroom => !HasUpgradedBroom;
     public float MopCleaningSpeedMultiplier => HasUpgradedMop
         ? Mathf.Max(1f, upgradedMopCleaningSpeedMultiplier)
+        : 1f;
+    public float BroomCleaningSpeedMultiplier => HasUpgradedBroom
+        ? Mathf.Max(1f, upgradedBroomCleaningSpeedMultiplier)
         : 1f;
     public bool HasMovementBoost => Time.time < movementBoostEndTime;
 
@@ -56,6 +68,7 @@ public class EconomyManager : MonoBehaviour
         coins = startingCoins;
         points = startingPoints;
         mopUpgradeLevel = 0;
+        broomUpgradeLevel = 0;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -113,6 +126,25 @@ public class EconomyManager : MonoBehaviour
 
         mopUpgradeLevel = 1;
         MopUpgradeChanged?.Invoke(mopUpgradeLevel);
+        return true;
+    }
+
+    public int GetBroomUpgradeCost()
+    {
+        if (!CanUpgradeBroom)
+            return -1;
+
+        return broomUpgradeBaseCost;
+    }
+
+    public bool TryPurchaseBroomUpgrade()
+    {
+        int cost = GetBroomUpgradeCost();
+        if (cost < 0 || !TrySpendCoins(cost))
+            return false;
+
+        broomUpgradeLevel = 1;
+        BroomUpgradeChanged?.Invoke(broomUpgradeLevel);
         return true;
     }
 
