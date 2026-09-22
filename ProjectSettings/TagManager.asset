@@ -10,6 +10,7 @@ TagManager:
   - TrashBin
   - Ground
   - Sponge
+  - NPCS
   layers:
   - Default
   - TransparentFX
