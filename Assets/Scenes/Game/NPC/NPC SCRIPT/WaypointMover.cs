@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class WaypointMover : MonoBehaviour
@@ -17,12 +15,14 @@ public class WaypointMover : MonoBehaviour
     [SerializeField, Min(0f)] private float minimumProgress = 0.001f;
 
     private Transform[] waypoints;
+    private Transform[] activeWaypoints;
     private int currentWaypointIndex;
     private bool isWaiting;
     private bool movementEnabled = true;
     private Collider2D bodyCollider;
     private Rigidbody2D body;
     private float stuckTimer;
+    private float waitTimer;
 
     public bool MovementEnabled => movementEnabled;
 
@@ -48,6 +48,8 @@ public class WaypointMover : MonoBehaviour
         {
             waypoints[i] = waypointParent.GetChild(i);
         }
+
+        activeWaypoints = waypoints;
     }
 
     void Update()
@@ -56,6 +58,13 @@ public class WaypointMover : MonoBehaviour
         {
             StopMovement();
             stuckTimer = 0f;
+            return;
+        }
+
+        if (waitTimer > 0f)
+        {
+            waitTimer -= Time.deltaTime;
+            StopMovement();
             return;
         }
 
@@ -71,9 +80,13 @@ public class WaypointMover : MonoBehaviour
 
     void MoveToWaypoint()
     {
-        if (waypoints == null || waypoints.Length == 0) return;
+        activeWaypoints = waypoints;
+        if (activeWaypoints == null || activeWaypoints.Length == 0) return;
 
-        Transform target = waypoints[currentWaypointIndex];
+        if (currentWaypointIndex >= activeWaypoints.Length)
+            currentWaypointIndex = 0;
+
+        Transform target = activeWaypoints[currentWaypointIndex];
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
         Vector2 toTarget = (Vector2)target.position - currentPosition;
         float step = moveSpeed * Time.deltaTime;
@@ -99,7 +112,11 @@ public class WaypointMover : MonoBehaviour
 
         if (Vector2.Distance(currentPosition + safeMovement, target.position) < 0.1f)
         {
-            StartCoroutine(WaitAtWaypoint());
+            waitTimer = waitTime;
+            if (loopWaypoints)
+                currentWaypointIndex = (currentWaypointIndex + 1) % activeWaypoints.Length;
+            else
+                currentWaypointIndex = Mathf.Min(currentWaypointIndex + 1, activeWaypoints.Length - 1);
         }
     }
 
@@ -107,21 +124,21 @@ public class WaypointMover : MonoBehaviour
     {
         stuckTimer = 0f;
 
-        if (waypoints.Length <= 1)
+        if (activeWaypoints == null || activeWaypoints.Length <= 1)
             return;
 
         int nextIndex = currentWaypointIndex;
-        for (int i = 0; i < waypoints.Length - 1; i++)
+        for (int i = 0; i < activeWaypoints.Length - 1; i++)
         {
-            nextIndex = (nextIndex + 1) % waypoints.Length;
-            if (HasClearPath(currentPosition, waypoints[nextIndex].position))
+            nextIndex = (nextIndex + 1) % activeWaypoints.Length;
+            if (HasClearPath(currentPosition, activeWaypoints[nextIndex].position))
             {
                 currentWaypointIndex = nextIndex;
                 return;
             }
         }
 
-        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+        currentWaypointIndex = (currentWaypointIndex + 1) % activeWaypoints.Length;
     }
 
     private bool HasClearPath(Vector2 currentPosition, Vector2 targetPosition)
@@ -144,15 +161,4 @@ public class WaypointMover : MonoBehaviour
         return bodyCollider.Cast(toTarget.normalized, filter, hits, toTarget.magnitude + collisionPadding) == 0;
     }
 
-    IEnumerator WaitAtWaypoint()
-    {
-        isWaiting = true;
-        yield return new WaitForSeconds(waitTime);
-
-        currentWaypointIndex = loopWaypoints 
-            ? (currentWaypointIndex + 1) % waypoints.Length 
-            : Mathf.Min(currentWaypointIndex + 1, waypoints.Length - 1);
-
-        isWaiting = false;
-    }
 }

@@ -10,6 +10,13 @@ public class MopShopUI : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private Button closeButton;
 
+    [Header("Cat")]
+    [SerializeField] private TMP_Text catCostText;
+    [SerializeField] private TMP_Text catStatusText;
+    [SerializeField] private Button catBuyButton;
+    [SerializeField] private GameObject catPrefab;
+    [SerializeField] private Transform catSpawnPoint;
+
     private EconomyManager economyManager;
 
     private void OnEnable()
@@ -21,6 +28,9 @@ public class MopShopUI : MonoBehaviour
 
         if (closeButton != null)
             closeButton.onClick.AddListener(CloseShop);
+
+        if (catBuyButton != null)
+            catBuyButton.onClick.AddListener(BuyCat);
 
         Refresh();
     }
@@ -44,6 +54,9 @@ public class MopShopUI : MonoBehaviour
 
         if (closeButton != null)
             closeButton.onClick.RemoveListener(CloseShop);
+
+        if (catBuyButton != null)
+            catBuyButton.onClick.RemoveListener(BuyCat);
     }
 
     private void OnEconomyChanged(int value)
@@ -87,6 +100,23 @@ public class MopShopUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void BuyCat()
+    {
+        if (economyManager == null)
+            economyManager = EconomyManager.Instance;
+
+        if (economyManager == null || catPrefab == null || !economyManager.TryPurchaseCat())
+            return;
+
+        Transform spawnPoint = catSpawnPoint != null ? catSpawnPoint : transform;
+        if (catPrefab.scene.IsValid())
+            catPrefab.SetActive(true);
+        else
+            Instantiate(catPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        Refresh();
+    }
+
     private void Refresh()
     {
         if (economyManager == null)
@@ -120,5 +150,22 @@ public class MopShopUI : MonoBehaviour
 
         if (buyButton != null)
             buyButton.interactable = canUpgrade && economyManager.Coins >= cost;
+
+        bool canBuyCat = economyManager.CanPurchaseCat;
+        int catCost = economyManager.GetCatCost();
+        if (catCostText != null)
+            catCostText.text = canBuyCat ? "Cost: " + catCost + " coins" : "PURCHASED";
+
+        if (catStatusText != null)
+        {
+            catStatusText.text = !canBuyCat
+                ? "Cat is at home"
+                : economyManager.Coins >= catCost
+                    ? "Adopt the cat"
+                    : "Not enough coins";
+        }
+
+        if (catBuyButton != null)
+            catBuyButton.interactable = canBuyCat && catPrefab != null && economyManager.Coins >= catCost;
     }
 }

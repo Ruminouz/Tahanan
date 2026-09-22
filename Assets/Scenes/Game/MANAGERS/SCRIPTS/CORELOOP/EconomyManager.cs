@@ -30,15 +30,20 @@ public class EconomyManager : MonoBehaviour
     [SerializeField, Min(1)] private int broomUpgradeBaseCost = 10;
     [SerializeField, Min(0f)] private float upgradedBroomCleaningSpeedMultiplier = 1.35f;
 
+    [Header("Shop - Cat")]
+    [SerializeField, Min(1)] private int catBaseCost = 10;
+
     private int coins;
     private int points;
     private float movementBoostEndTime;
     private int mopUpgradeLevel;
     private int broomUpgradeLevel;
+    private bool catPurchased;
 
     public event Action<int> CoinsChanged;
     public event Action<int> MopUpgradeChanged;
     public event Action<int> BroomUpgradeChanged;
+    public event Action<bool> CatPurchaseChanged;
 
     public int Coins => coins;
     public int Points => points;
@@ -48,6 +53,8 @@ public class EconomyManager : MonoBehaviour
     public bool CanUpgradeMop => !HasUpgradedMop;
     public bool HasUpgradedBroom => broomUpgradeLevel == 1;
     public bool CanUpgradeBroom => !HasUpgradedBroom;
+    public bool HasPurchasedCat => catPurchased;
+    public bool CanPurchaseCat => !catPurchased;
     public float MopCleaningSpeedMultiplier => HasUpgradedMop
         ? Mathf.Max(1f, upgradedMopCleaningSpeedMultiplier)
         : 1f;
@@ -69,6 +76,7 @@ public class EconomyManager : MonoBehaviour
         points = startingPoints;
         mopUpgradeLevel = 0;
         broomUpgradeLevel = 0;
+        catPurchased = false;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -145,6 +153,22 @@ public class EconomyManager : MonoBehaviour
 
         broomUpgradeLevel = 1;
         BroomUpgradeChanged?.Invoke(broomUpgradeLevel);
+        return true;
+    }
+
+    public int GetCatCost()
+    {
+        return CanPurchaseCat ? catBaseCost : -1;
+    }
+
+    public bool TryPurchaseCat()
+    {
+        int cost = GetCatCost();
+        if (cost < 0 || !TrySpendCoins(cost))
+            return false;
+
+        catPurchased = true;
+        CatPurchaseChanged?.Invoke(catPurchased);
         return true;
     }
 

@@ -41,7 +41,6 @@ public class HouseholdHelperAI : MonoBehaviour
     private int choresHelpedToday;
     private bool helping;
     private Rigidbody2D body;
-    private HouseholdCharacterAI characterAI;
     private Transform player;
 
     private void Start()
@@ -54,7 +53,6 @@ public class HouseholdHelperAI : MonoBehaviour
             : FindFirstObjectByType<DayManager>();
         choreManager = FindFirstObjectByType<ChoreManager>();
         body = GetComponent<Rigidbody2D>();
-        characterAI = GetComponent<HouseholdCharacterAI>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         ResetForDay();
@@ -142,9 +140,6 @@ public class HouseholdHelperAI : MonoBehaviour
     private IEnumerator HelpWithChore(Chore chore)
     {
         helping = true;
-        if (characterAI != null)
-            characterAI.StartHelping();
-
         float elapsed = 0f;
         while (chore != null && !chore.IsCompleted && !chore.IsMissed &&
                Vector2.Distance(transform.position, chore.transform.position) > arriveDistance &&
@@ -178,8 +173,6 @@ public class HouseholdHelperAI : MonoBehaviour
         }
 
         helping = false;
-        if (characterAI != null)
-            characterAI.StopHelping();
     }
 
     private void TryShowBadMoodBubble()

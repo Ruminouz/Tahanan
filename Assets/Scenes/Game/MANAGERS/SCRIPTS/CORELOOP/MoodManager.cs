@@ -71,6 +71,15 @@ public class MoodManager : MonoBehaviour
         UpdateSlider();
     }
 
+    public void AddMood(float amount)
+    {
+        if (amount == 0f)
+            return;
+
+        mood = Mathf.Clamp(mood + amount, 0f, 100f);
+        UpdateSlider();
+    }
+
     public void ResetDailyMood()
     {
         mood = Mathf.Clamp(startingMood, 0f, 100f);
