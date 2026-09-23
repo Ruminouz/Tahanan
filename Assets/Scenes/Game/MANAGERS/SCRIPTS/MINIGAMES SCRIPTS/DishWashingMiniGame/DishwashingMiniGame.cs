@@ -17,9 +17,15 @@ public class DishwashingMiniGame : MonoBehaviour
 [SerializeField] private float dishwashingTime = 90f;
 
 [SerializeField] private TMP_Text timerText;
+   [SerializeField] private TMP_Text scoreText;
+   [SerializeField] private TMP_Text comboText;
+   [SerializeField] private float comboWindow = 2.5f;
 
-private float currentTimer;
-private bool timerRunning;
+   private float currentTimer;
+   private bool timerRunning;
+   private int currentScore;
+   private int currentCombo;
+   private float comboTimer;
     [Header("Main Panel")]
     [SerializeField] private GameObject panel;
     private DayManager dayManager;
@@ -239,19 +245,30 @@ public void StartGame(Chore chore)
 
     currentTimer -= Time.deltaTime;
 
+        if(comboTimer > 0f)
+        {
+            comboTimer -= Time.deltaTime;
 
-    if(currentTimer < 0)
-        currentTimer = 0;
+            if(comboTimer <= 0f)
+            {
+                comboTimer = 0f;
+                currentCombo = 0;
+                UpdateScoreUI();
+            }
+        }
+
+        if(currentTimer < 0)
+            currentTimer = 0;
 
 
-    UpdateTimerUI();
+        UpdateTimerUI();
 
 
-    if(currentTimer <= 0)
-    {
-        FailDishwashing();
+        if(currentTimer <= 0)
+        {
+            FailDishwashing();
+        }
     }
-}
 private void FailDishwashing()
 {
     timerRunning = false;
@@ -326,14 +343,16 @@ if(manager != null)
     if (leftoversRemaining < 0)
         leftoversRemaining = 0;
 
-    Debug.Log("Leftover removed!");
-    Debug.Log("Leftovers remaining: " + leftoversRemaining);
+        AwardComboScore(30, "Leftover cleared!");
 
-    if (leftoversRemaining <= 0)
-    {
-        StartAddSoap();
+        Debug.Log("Leftover removed!");
+        Debug.Log("Leftovers remaining: " + leftoversRemaining);
+
+        if (leftoversRemaining <= 0)
+        {
+            StartAddSoap();
+        }
     }
-}
 
     private void StartAddSoap()
     {
@@ -450,6 +469,7 @@ private void EnableNextPlate()
     if(dish != currentScrubbingPlate)
         return;
 
+    AwardComboScore(45, "Nice scrub!");
 
     Debug.Log(
         "Plate scrubbed."
@@ -508,6 +528,7 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
  public void PlateRinsed(DishRinsePlate plate)
 {
     platesRinsed++;
+    AwardComboScore(35, "Rinse bonus!");
 
     Debug.Log(
         "Rinsed: " +
@@ -562,21 +583,22 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
             return;
 
         platesToDry--;
+            AwardComboScore(60, "Rack master!");
 
-        if (platesToDry < 0)
-            platesToDry = 0;
+            if (platesToDry < 0)
+                platesToDry = 0;
 
-        Debug.Log(
-            "Plate placed on drying rack! Remaining: " +
-            platesToDry
-        );
+            Debug.Log(
+                "Plate placed on drying rack! Remaining: " +
+                platesToDry
+            );
 
-        if (platesToDry == 0)
-        {
-            Debug.Log("ALL PLATES ARE ON DRYING RACK!");
-            CompleteGame();
+            if (platesToDry == 0)
+            {
+                Debug.Log("ALL PLATES ARE ON DRYING RACK!");
+                CompleteGame();
+            }
         }
-    }
 
         // =========================================================
         // GETTERS
@@ -814,26 +836,76 @@ private void ResetSponge()
 }
 private void UpdateTimerUI()
 {
-    if(timerText == null)
-        return;
+    if(timerText != null)
+    {
+        int minutes =
+            Mathf.FloorToInt(currentTimer / 60);
 
 
-    int minutes =
-        Mathf.FloorToInt(currentTimer / 60);
+        int seconds =
+            Mathf.FloorToInt(currentTimer % 60);
 
 
-    int seconds =
-        Mathf.FloorToInt(currentTimer % 60);
+        timerText.text =
+            string.Format(
+                "{0:00}:{1:00}",
+                minutes,
+                seconds
+            );
+    }
 
-
-    timerText.text =
-        string.Format(
-            "{0:00}:{1:00}",
-            minutes,
-            seconds
-        );
+    UpdateScoreUI();
 }
 
+private void UpdateScoreUI()
+{
+    if(scoreText != null)
+    {
+        scoreText.text = "Score: " + currentScore;
+    }
+
+    if(comboText != null)
+    {
+        if(currentCombo > 1)
+        {
+            comboText.text = "Combo x" + currentCombo;
+        }
+        else
+        {
+            comboText.text = "Clean streak";
+        }
+    }
+}
+
+private void AwardComboScore(int baseScore, string message)
+{
+    if(!timerRunning)
+        return;
+
+    if(comboTimer <= 0f)
+    {
+        currentCombo = 1;
+    }
+    else
+    {
+        currentCombo++;
+    }
+
+    comboTimer = comboWindow;
+
+    float multiplier = 1f + (currentCombo - 1) * 0.35f;
+    int awardedScore = Mathf.RoundToInt(baseScore * multiplier);
+
+    currentScore += awardedScore;
+    currentTimer = Mathf.Min(dishwashingTime, currentTimer + 0.2f + currentCombo * 0.12f);
+
+    if(!string.IsNullOrEmpty(message))
+    {
+        Debug.Log(message + " | Combo x" + currentCombo + " | +" + awardedScore + " score");
+    }
+
+    UpdateScoreUI();
+}
 
 private void ResetMiniGameState()
 {
@@ -845,6 +917,9 @@ private void ResetMiniGameState()
 
     platesToRinse = 0;
     platesToDry = 0;
+    currentScore = 0;
+    currentCombo = 0;
+    comboTimer = 0f;
 
 
     currentScrubbingPlate = null;
@@ -866,6 +941,7 @@ private void ResetMiniGameState()
 
 
     currentStage = WashStage.RemoveLeftovers;
+    UpdateScoreUI();
 
 
     Debug.Log(

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class WashableDish : MonoBehaviour, IPointerEnterHandler
+public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHandler, IPointerExitHandler
 {
     [Header("Dish Visual")]
     [SerializeField] private Image dishImage;
@@ -33,6 +33,7 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
 
     private bool canScrub;
     private bool canRinse;
+    private Vector2 lastPointerPosition;
 
 
 
@@ -121,6 +122,22 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
     public void OnPointerEnter(
         PointerEventData eventData)
     {
+        ProcessScrubInput(eventData);
+    }
+
+    public void OnPointerMove(
+        PointerEventData eventData)
+    {
+        ProcessScrubInput(eventData);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        lastPointerPosition = Vector2.zero;
+    }
+
+    private void ProcessScrubInput(PointerEventData eventData)
+    {
         if(!canScrub)
             return;
 
@@ -134,11 +151,12 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
 
 
         if(!Mouse.current.leftButton.isPressed)
+        {
+            lastPointerPosition = Vector2.zero;
             return;
+        }
 
 
-
-        // CHECK SA MANAGER KUNG ITO ANG TAMANG PLATO
         if(miniGame != null)
         {
             if(!miniGame.CanScrubThisPlate(this))
@@ -146,21 +164,33 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
         }
 
 
+        float scrubBoost = 1f;
 
-        Scrub();
+        if(lastPointerPosition != Vector2.zero)
+        {
+            float pointerTravel =
+                Vector2.Distance(
+                    eventData.position,
+                    lastPointerPosition
+                );
+
+            scrubBoost = Mathf.Clamp01(pointerTravel / 18f) * 0.6f + 1f;
+        }
+
+        lastPointerPosition = eventData.position;
+        Scrub(scrubBoost);
     }
 
 
 
 
 
-    private void Scrub()
+    private void Scrub(float bonusMultiplier = 1f)
     {
-        progress += scrubAmount;
+        progress += scrubAmount * bonusMultiplier;
 
         progress =
             Mathf.Clamp01(progress);
-
 
 
         if(progressBar != null)
@@ -178,10 +208,16 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
 
 
 
-        if(scrubParticles != null &&
-           !scrubParticles.isPlaying)
+        if(scrubParticles != null)
         {
-            scrubParticles.Play();
+            if(!scrubParticles.isPlaying)
+            {
+                scrubParticles.Play();
+            }
+
+            scrubParticles.Emit(
+                Mathf.CeilToInt(2f + bonusMultiplier * 2f)
+            );
         }
 
 
@@ -204,6 +240,13 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
                 );
         }
 
+        float targetScale = 1f + progress * 0.12f;
+        transform.localScale = Vector3.Lerp(
+            transform.localScale,
+            new Vector3(targetScale, targetScale, 1f),
+            0.35f
+        );
+
 
 
         if(progress >= 1f)
@@ -211,7 +254,6 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
             CleanDish();
         }
     }
-
 
 
 
@@ -292,12 +334,14 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler
     public void ResetDish()
     {
         progress = 0f;
+        lastPointerPosition = Vector2.zero;
 
 
         isClean = false;
 
         canScrub = false;
         canRinse = false;
+        transform.localScale = Vector3.one;
 
 
 
