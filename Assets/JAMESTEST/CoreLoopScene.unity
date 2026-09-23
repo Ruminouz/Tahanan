@@ -2362,7 +2362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ab9aec46de3bb4c8d353a3ed73165a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EconomyManager
-  startingCoins: 100
+  startingCoins: 0
   startingPoints: 0
   coinsPerChorePoint: 1
   movementSpeedMultiplier: 1.25
@@ -2371,7 +2371,7 @@ MonoBehaviour:
   mopUpgradeBaseCost: 10
   upgradedMopCleaningSpeedMultiplier: 5
   broomUpgradeBaseCost: 10
-  upgradedBroomCleaningSpeedMultiplier: 1.35
+  upgradedBroomCleaningSpeedMultiplier: 5
   catBaseCost: 10
 --- !u!114 &534126630
 MonoBehaviour:
@@ -8533,7 +8533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 505677076971138407, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 636095390322487913, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
       propertyPath: triggerTags.Array.size
@@ -9107,7 +9107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoodManager
   moodSlider: {fileID: 490425223}
-  startingMood: 12.7
+  startingMood: 60
   concernedThreshold: 65
   angryThreshold: 13.5
   moodLossPerMissedChore: 20
@@ -9282,6 +9282,7 @@ GameObject:
   - component: {fileID: 1867118960}
   - component: {fileID: 1867118961}
   - component: {fileID: 1867118962}
+  - component: {fileID: 1867118963}
   m_Layer: 7
   m_Name: HelperNPC
   m_TagString: NPCS
@@ -9521,6 +9522,33 @@ MonoBehaviour:
   calmLine: It feels peaceful today.
   concernedLine: We should take care of the house.
   angryLine: Something needs to change.
+--- !u!114 &1867118963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867118952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53d8b1a63c473d46945d85ccac980d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HelperNPC
+  minimumMood: 65
+  helpChance: 50
+  checkInterval: 15
+  maximumChoresPerDay: 01000000010000000100000003000000030000000400000004000000
+  defaultMaximumChoresPerDay: 2
+  moveSpeed: 1.5
+  arriveDistance: 0.2
+  helpTimeout: 20
+  playerChoreDistance: 2
+  bubbleAnchor: {fileID: 1396958288}
+  moodBubblePrefab: {fileID: 0}
+  badMoodBubbleInterval: 8
+  badMoodBubbleChance: 50
+  bubbleDuration: 3
+  badMoodLine: I do not feel like helping right now.
 --- !u!1 &1871971665
 GameObject:
   m_ObjectHideFlags: 0
