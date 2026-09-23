@@ -187,15 +187,7 @@ public class HouseholdHelperAI : MonoBehaviour
 
     private void ShowBadMoodBubble()
     {
-        if (moodBubblePrefab == null)
-            return;
-
         Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
-        GameObject bubble = Instantiate(moodBubblePrefab, anchor.position, Quaternion.identity, anchor);
-        TMP_Text tmpText = bubble.GetComponentInChildren<TMP_Text>();
-        if (tmpText != null)
-            tmpText.text = badMoodLine;
-
-        Destroy(bubble, bubbleDuration);
+        SpeechBubbleCanvas.Show(anchor, badMoodLine, bubbleDuration);
     }
 }

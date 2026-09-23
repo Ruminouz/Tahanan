@@ -94,16 +94,8 @@ public class CatInteraction : MonoBehaviour
 
     private void ShowHeartBubble()
     {
-        if (heartBubblePrefab == null)
-            return;
-
         Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
-        Canvas canvas = SpeechBubbleCanvas.GetOrCreate(anchor);
-        GameObject bubble = Instantiate(heartBubblePrefab, anchor.position, Quaternion.identity, canvas.transform);
-        TMPro.TMP_Text text = bubble.GetComponentInChildren<TMPro.TMP_Text>();
-        if (text != null)
-            text.text = "♥";
-        Destroy(bubble, bubbleDuration);
+        SpeechBubbleCanvas.Show(anchor, "♥", bubbleDuration);
     }
 
     private static void Shuffle(WaypointMover[] npcs)

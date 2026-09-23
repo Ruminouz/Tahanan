@@ -108,20 +108,8 @@ public class BunsoAI : MonoBehaviour
 
     private void ShowBadMoodBubble()
     {
-        if (moodBubblePrefab == null)
-            return;
-
         Transform anchor = topAnchor != null ? topAnchor : transform;
-        Canvas canvas = SpeechBubbleCanvas.GetOrCreate(anchor);
-        GameObject bubble = Instantiate(
-            moodBubblePrefab,
-            anchor.position,
-            Quaternion.identity,
-            canvas.transform);
-        TMP_Text text = bubble.GetComponentInChildren<TMP_Text>();
-        if (text != null)
-            text.text = badMoodLine;
-        Destroy(bubble, bubbleDuration);
+        SpeechBubbleCanvas.Show(anchor, badMoodLine, bubbleDuration);
     }
 
     private void OnDestroy()

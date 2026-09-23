@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public enum HouseholdMood
 public class MoodManager : MonoBehaviour
 {
     public static MoodManager Instance { get; private set; }
+    public event Action<HouseholdMood, HouseholdMood> MoodChanged;
 
     [Header("Mood")]
     [SerializeField] private Slider moodSlider;
@@ -67,8 +69,7 @@ public class MoodManager : MonoBehaviour
 
     public void HandleCompletedChore()
     {
-        mood = Mathf.Clamp(mood + moodRecoveryPerCompletedChore, 0f, 100f);
-        UpdateSlider();
+        SetMood(mood + moodRecoveryPerCompletedChore);
     }
 
     public void AddMood(float amount)
@@ -76,20 +77,30 @@ public class MoodManager : MonoBehaviour
         if (amount == 0f)
             return;
 
-        mood = Mathf.Clamp(mood + amount, 0f, 100f);
-        UpdateSlider();
+        SetMood(mood + amount);
     }
 
     public void ResetDailyMood()
     {
-        mood = Mathf.Clamp(startingMood, 0f, 100f);
-        UpdateSlider();
+        SetMood(startingMood);
     }
 
     private void HandleMissedChore(Chore chore)
     {
-        mood = Mathf.Clamp(mood - moodLossPerMissedChore, 0f, 100f);
+        SetMood(mood - moodLossPerMissedChore);
+    }
+
+    private void SetMood(float value)
+    {
+        HouseholdMood previousMood = CurrentMood;
+        mood = Mathf.Clamp(value, 0f, 100f);
         UpdateSlider();
+
+        HouseholdMood newMood = CurrentMood;
+        if (newMood != previousMood)
+        {
+            MoodChanged?.Invoke(previousMood, newMood);
+        }
     }
 
     private void SubscribeToChoreManager()

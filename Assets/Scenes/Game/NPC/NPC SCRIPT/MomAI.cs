@@ -152,16 +152,12 @@ public class MomAI : MonoBehaviour
         while (player != null && Vector2.Distance(transform.position, player.position) > spankDistance &&
                elapsed < approachTimeout)
         {
-            Vector2 movement = Vector2.MoveTowards(
-                transform.position,
-                player.position,
-                approachSpeed * Time.deltaTime) - (Vector2)transform.position;
-            movement = NPCMovement2D.GetCollisionSafeMovement(
-                bodyCollider,
-                movement,
-                (Vector2)player.position - (Vector2)transform.position,
-                obstacleLayers,
-                collisionPadding);
+            Vector2 movement = waypointMover != null
+                ? waypointMover.GetMovementTowards(player.position, approachSpeed)
+                : Vector2.MoveTowards(
+                    transform.position,
+                    player.position,
+                    approachSpeed * Time.deltaTime) - (Vector2)transform.position;
             Vector2 nextPosition = (Vector2)transform.position + movement;
 
             UpdateMovementAnimation(nextPosition - (Vector2)transform.position);
@@ -219,20 +215,9 @@ public class MomAI : MonoBehaviour
 
     private void ShowMoodDialogue()
     {
-        if (moodBubblePrefab == null)
-            return;
-
         Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
-        Canvas canvas = SpeechBubbleCanvas.GetOrCreate(anchor);
-        GameObject bubble = Instantiate(moodBubblePrefab, anchor.position, Quaternion.identity, canvas.transform);
-        bubble.transform.SetParent(canvas.transform, true);
         string line = GetMoodLine();
-
-        TMP_Text tmpText = bubble.GetComponentInChildren<TMP_Text>();
-        if (tmpText != null)
-            tmpText.text = line;
-
-        Destroy(bubble, bubbleDuration);
+        SpeechBubbleCanvas.Show(anchor, line, bubbleDuration);
     }
 
     private string GetMoodLine()

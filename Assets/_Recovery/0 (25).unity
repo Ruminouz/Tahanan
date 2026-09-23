@@ -443,7 +443,7 @@ Transform:
   m_GameObject: {fileID: 129610331}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32.983, y: -2.665, z: 0}
+  m_LocalPosition: {x: -33.1, y: -2.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1200,11 +1200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bc6498afe253e48ae9a007ac955825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingChore
---- !u!1 &304069315 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 602520743345909514, guid: 68f61eb0cd9e0e143a8da28944dfdf86, type: 3}
-  m_PrefabInstance: {fileID: 1899528752}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &307130796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3009,7 +3004,6 @@ GameObject:
   - component: {fileID: 636674653}
   - component: {fileID: 636674652}
   - component: {fileID: 636674651}
-  - component: {fileID: 636674658}
   m_Layer: 7
   m_Name: BunsoNPC
   m_TagString: NPCS
@@ -3062,10 +3056,6 @@ MonoBehaviour:
   collisionPadding: 0.02
   stuckTimeout: 0.2
   minimumProgress: 0.001
-  navigationCellSize: 0.35
-  navigationBoundsPadding: 2
-  navigationMaxNodes: 5000
-  personalSpace: 0.65
 --- !u!50 &636674653
 Rigidbody2D:
   serializedVersion: 5
@@ -3233,25 +3223,6 @@ Transform:
   - {fileID: 1285727523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &636674658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 636674650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4d5d85f9e1435bb0d64b78d1b8f9a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCSocialParticipant
-  canSocialize: 1
-  displayName: Bunso
-  speechAnchor: {fileID: 1098179531}
-  waypointMover: {fileID: 636674652}
-  calmLine: It feels peaceful today.
-  concernedLine: We should take care of the house.
-  angryLine: Something needs to change.
 --- !u!1 &646732798 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9015425452851628900, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
@@ -7737,25 +7708,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5583211197997473430, guid: 68f61eb0cd9e0e143a8da28944dfdf86, type: 3}
   m_PrefabInstance: {fileID: 1899528752}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1592104305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304069315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4d5d85f9e1435bb0d64b78d1b8f9a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCSocialParticipant
-  canSocialize: 1
-  displayName: Tatay
-  speechAnchor: {fileID: 129610332}
-  waypointMover: {fileID: 1609937397}
-  calmLine: It feels peaceful today.
-  concernedLine: We should take care of the house.
-  angryLine: Something needs to change.
 --- !u!1 &1607340164
 GameObject:
   m_ObjectHideFlags: 0
@@ -7998,6 +7950,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c173154abb763804dacff0d4f93e47d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!1 &1615302348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3283153859027537218, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
+  m_PrefabInstance: {fileID: 1645791681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1617462939
 GameObject:
   m_ObjectHideFlags: 0
@@ -8583,10 +8540,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3283153859027537218, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4067303802896532925, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
       propertyPath: nameText
       value: 
@@ -8603,37 +8556,8 @@ PrefabInstance:
       propertyPath: portraitImage
       value: 
       objectReference: {fileID: 6215878004242929654}
-    - target: {fileID: 4150485475081995690, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
-      propertyPath: m_Color.b
-      value: 0.10849059
-      objectReference: {fileID: 0}
-    - target: {fileID: 4150485475081995690, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
-      propertyPath: m_Color.g
-      value: 0.10849059
-      objectReference: {fileID: 0}
-    - target: {fileID: 4150485475081995690, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9188409563072450689, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.003179809
-      objectReference: {fileID: 0}
-    - target: {fileID: 9188409563072450689, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.003179809
-      objectReference: {fileID: 0}
-    - target: {fileID: 9188409563072450689, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.003179809
-      objectReference: {fileID: 0}
-    - target: {fileID: 9188409563072450689, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.69
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 3283153859027537218, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2146055081384079214, guid: 0f707e7010ba43945ad5f434885d5d79, type: 3}
       insertIndex: -1
@@ -9281,7 +9205,6 @@ GameObject:
   - component: {fileID: 1867118959}
   - component: {fileID: 1867118960}
   - component: {fileID: 1867118961}
-  - component: {fileID: 1867118962}
   m_Layer: 7
   m_Name: HelperNPC
   m_TagString: NPCS
@@ -9498,29 +9421,6 @@ MonoBehaviour:
   collisionPadding: 0.02
   stuckTimeout: 0.2
   minimumProgress: 0.001
-  navigationCellSize: 0.35
-  navigationBoundsPadding: 2
-  navigationMaxNodes: 5000
-  personalSpace: 0.65
---- !u!114 &1867118962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1867118952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4d5d85f9e1435bb0d64b78d1b8f9a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCSocialParticipant
-  canSocialize: 1
-  displayName: Kuya
-  speechAnchor: {fileID: 1396958288}
-  waypointMover: {fileID: 1867118961}
-  calmLine: It feels peaceful today.
-  concernedLine: We should take care of the house.
-  angryLine: Something needs to change.
 --- !u!1 &1871971665
 GameObject:
   m_ObjectHideFlags: 0
@@ -10071,9 +9971,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 693533749}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 602520743345909514, guid: 68f61eb0cd9e0e143a8da28944dfdf86, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1592104305}
     - targetCorrespondingSourceObject: {fileID: 1046031777557145913, guid: 68f61eb0cd9e0e143a8da28944dfdf86, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1609937390}
@@ -10113,7 +10010,7 @@ MonoBehaviour:
   pettingDuration: 3
   moodGain: 10
   bubbleAnchor: {fileID: 1281407720}
-  heartBubblePrefab: {fileID: 0}
+  heartBubblePrefab: {fileID: 1615302348}
   bubbleDuration: 2
 --- !u!1 &1923276557
 GameObject:
@@ -10542,61 +10439,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1976227116}
   m_CullTransparentMesh: 1
---- !u!1 &1978069263
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1978069265}
-  - component: {fileID: 1978069264}
-  m_Layer: 0
-  m_Name: NPCinteractionManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1978069264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978069263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f8dc3d5f5df41f2a75a4e2f0d4c6b91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCInteractionManager
-  checkInterval: 5
-  conversationDuration: 4
-  interactionCooldown: 12
-  approachSpeed: 1.5
-  arriveDistance: 0.25
-  conversationDistance: 0.8
-  bubbleDuration: 2.5
-  participants:
-  - {fileID: 636674658}
-  - {fileID: 1867118962}
-  - {fileID: 1592104305}
---- !u!4 &1978069265
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978069263}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.03036, y: -17.30028, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1978447355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12945,4 +12787,3 @@ SceneRoots:
   - {fileID: 636674657}
   - {fileID: 1645791681}
   - {fileID: 1276356199}
-  - {fileID: 1978069265}

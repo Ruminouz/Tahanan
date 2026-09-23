@@ -1,8 +1,52 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public static class NPCMovement2D
 {
     private static readonly RaycastHit2D[] CastResults = new RaycastHit2D[8];
+    private static readonly List<WaypointMover> Movers = new();
+
+    public static void Register(WaypointMover mover)
+    {
+        if (mover != null && !Movers.Contains(mover))
+            Movers.Add(mover);
+    }
+
+    public static void Unregister(WaypointMover mover)
+    {
+        Movers.Remove(mover);
+    }
+
+    public static Vector2 GetSeparationMovement(
+        WaypointMover mover,
+        Vector2 position,
+        Vector2 movement,
+        float personalSpace)
+    {
+        if (movement.sqrMagnitude <= 0.0001f || personalSpace <= 0f)
+            return movement;
+
+        Vector2 result = movement;
+        float minimumDistance = personalSpace;
+        foreach (WaypointMover other in Movers)
+        {
+            if (other == null || other == mover || !other.MovementEnabled)
+                continue;
+
+            Vector2 offset = position - (Vector2)other.transform.position;
+            float distance = offset.magnitude;
+            if (distance <= 0.001f || distance >= minimumDistance)
+                continue;
+
+            float strength = (minimumDistance - distance) / minimumDistance;
+            Vector2 sideStep = Vector2.Perpendicular(offset / distance) * strength * movement.magnitude;
+            if (Vector2.Dot(sideStep, movement) < 0f)
+                sideStep = -sideStep;
+            result += sideStep + offset.normalized * strength * movement.magnitude;
+        }
+
+        return Vector2.ClampMagnitude(result, movement.magnitude);
+    }
 
     public static Vector2 GetCollisionSafeMovement(
         Collider2D moverCollider,

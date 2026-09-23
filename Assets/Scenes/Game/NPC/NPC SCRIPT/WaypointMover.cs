@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaypointMover : MonoBehaviour
@@ -13,6 +14,10 @@ public class WaypointMover : MonoBehaviour
     [SerializeField, Min(0f)] private float collisionPadding = 0.02f;
     [SerializeField, Min(0.05f)] private float stuckTimeout = 0.2f;
     [SerializeField, Min(0f)] private float minimumProgress = 0.001f;
+    [SerializeField, Min(0.1f)] private float navigationCellSize = 0.35f;
+    [SerializeField, Min(0f)] private float navigationBoundsPadding = 2f;
+    [SerializeField, Min(64)] private int navigationMaxNodes = 5000;
+    [SerializeField, Min(0.1f)] private float personalSpace = 0.65f;
 
     private Transform[] waypoints;
     private Transform[] activeWaypoints;
@@ -23,6 +28,9 @@ public class WaypointMover : MonoBehaviour
     private Rigidbody2D body;
     private float stuckTimer;
     private float waitTimer;
+    private List<Vector2> currentPath;
+    private int currentPathIndex;
+    private Vector2 pathTarget;
 
     public bool MovementEnabled => movementEnabled;
 
@@ -50,6 +58,16 @@ public class WaypointMover : MonoBehaviour
         }
 
         activeWaypoints = waypoints;
+    }
+
+    private void OnEnable()
+    {
+        NPCMovement2D.Register(this);
+    }
+
+    private void OnDisable()
+    {
+        NPCMovement2D.Unregister(this);
     }
 
     void Update()
@@ -89,10 +107,16 @@ public class WaypointMover : MonoBehaviour
         Transform target = activeWaypoints[currentWaypointIndex];
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
         Vector2 toTarget = (Vector2)target.position - currentPosition;
+        Vector2 navigationTarget = GetPathTarget(currentPosition, target.position);
         float step = moveSpeed * Time.deltaTime;
-        Vector2 movement = Vector2.ClampMagnitude(toTarget, step);
+        Vector2 movement = Vector2.ClampMagnitude(navigationTarget - currentPosition, step);
+        movement = NPCMovement2D.GetSeparationMovement(this, currentPosition, movement, personalSpace);
         Vector2 safeMovement = NPCMovement2D.GetCollisionSafeMovement(
-            bodyCollider, movement, toTarget, obstacleLayers, collisionPadding);
+            bodyCollider,
+            movement,
+            navigationTarget - currentPosition,
+            obstacleLayers,
+            collisionPadding);
 
         float previousDistance = toTarget.magnitude;
         float nextDistance = Vector2.Distance(currentPosition + safeMovement, target.position);
@@ -118,6 +142,60 @@ public class WaypointMover : MonoBehaviour
             else
                 currentWaypointIndex = Mathf.Min(currentWaypointIndex + 1, activeWaypoints.Length - 1);
         }
+    }
+
+    public Vector2 GetMovementTowards(Vector2 target, float speed)
+    {
+        Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
+        Vector2 navigationTarget = GetPathTarget(currentPosition, target);
+        Vector2 movement = Vector2.ClampMagnitude(navigationTarget - currentPosition, speed * Time.deltaTime);
+        movement = NPCMovement2D.GetSeparationMovement(this, currentPosition, movement, personalSpace);
+        return NPCMovement2D.GetCollisionSafeMovement(
+            bodyCollider,
+            movement,
+            navigationTarget - currentPosition,
+            obstacleLayers,
+            collisionPadding);
+    }
+
+    public bool MoveTowards(Vector2 target, float speed, float arriveDistance)
+    {
+        Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
+        Vector2 movement = GetMovementTowards(target, speed);
+
+        if (body != null)
+            body.MovePosition(currentPosition + movement);
+        else
+            transform.position = currentPosition + movement;
+
+        return Vector2.Distance(currentPosition, target) <= arriveDistance;
+    }
+
+    private Vector2 GetPathTarget(Vector2 currentPosition, Vector2 target)
+    {
+        if (currentPath == null ||
+            currentPathIndex >= currentPath.Count ||
+            (target - pathTarget).sqrMagnitude > navigationCellSize * navigationCellSize)
+        {
+            currentPath = NPCNavigation2D.FindPath(
+                currentPosition,
+                target,
+                bodyCollider,
+                obstacleLayers,
+                navigationCellSize,
+                navigationBoundsPadding,
+                navigationMaxNodes);
+            currentPathIndex = 0;
+            pathTarget = target;
+        }
+
+        while (currentPathIndex < currentPath.Count - 1 &&
+               (currentPath[currentPathIndex] - currentPosition).sqrMagnitude < navigationCellSize * navigationCellSize)
+        {
+            currentPathIndex++;
+        }
+
+        return currentPath.Count == 0 ? target : currentPath[currentPathIndex];
     }
 
     private void SelectAlternativeWaypoint(Vector2 currentPosition)
