@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1517776339794607632
+--- !u!1 &3253320574037499346
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,46 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2125973658422138917}
-  - component: {fileID: 6691896892925268721}
+  - component: {fileID: 2404755125628415091}
+  - component: {fileID: 2825153866502043712}
   m_Layer: 0
-  m_Name: ChoreTutorial
+  m_Name: MoodManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2125973658422138917
+--- !u!4 &2404755125628415091
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1517776339794607632}
+  m_GameObject: {fileID: 3253320574037499346}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 357.4538, y: 153.33508, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4637795737750619904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6691896892925268721
+--- !u!114 &2825153866502043712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1517776339794607632}
+  m_GameObject: {fileID: 3253320574037499346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03f6d2b3852625a428ddf62cce91ef96, type: 3}
+  m_Script: {fileID: 11500000, guid: fb2ebbd4331288547b757c6a173db3d5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChoreTutorial
-  tutorialPanel: {fileID: 0}
-  titleText: {fileID: 0}
-  stepsText: {fileID: 0}
-  continueButton: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::MoodManager
+  moodSlider: {fileID: 0}
+  startingMood: 60
+  concernedThreshold: 65
+  angryThreshold: 13.5
+  moodLossPerMissedChore: 20
+  moodRecoveryPerCompletedChore: 5
 --- !u!1 &3448818962546764555
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,6 +59,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4637795737750619904}
+  - component: {fileID: 2692077750421036365}
+  - component: {fileID: 1647585330715371540}
+  - component: {fileID: 4793150637367861876}
+  - component: {fileID: 8804010453060458501}
+  - component: {fileID: 7103819177915578307}
+  - component: {fileID: 1432158800708567070}
+  - component: {fileID: 3375970537328336038}
+  - component: {fileID: 4194799523798922073}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -73,162 +83,27 @@ Transform:
   m_GameObject: {fileID: 3448818962546764555}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.73138, y: 1.08741, z: 0}
+  m_LocalPosition: {x: 1.56688, y: -15.75378, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2125973658422138917}
-  - {fileID: 1437706475260302521}
-  - {fileID: 670302899961368939}
-  - {fileID: 2783458376680387642}
-  - {fileID: 6231147748196154479}
-  - {fileID: 3523008066521718623}
+  - {fileID: 8860200519094090897}
+  - {fileID: 2404755125628415091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4012855889686387331
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6231147748196154479}
-  - component: {fileID: 6417268680146074941}
-  m_Layer: 0
-  m_Name: TimeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6231147748196154479
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4012855889686387331}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4637795737750619904}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6417268680146074941
+--- !u!114 &2692077750421036365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4012855889686387331}
+  m_GameObject: {fileID: 3448818962546764555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3425151329f10524184ff8341a917f05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TimeManager
-  dayLength: 240
---- !u!1 &4089502631028632994
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 670302899961368939}
-  - component: {fileID: 1929227348024971594}
-  m_Layer: 0
-  m_Name: SuddenTaskManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &670302899961368939
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4089502631028632994}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4637795737750619904}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1929227348024971594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4089502631028632994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d31099eb7db000344b183c4ec02acfa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SuddenTaskManager
-  suddenTaskPanel: {fileID: 0}
-  mopFloorTask: {fileID: 0}
---- !u!1 &4795567229530040696
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1437706475260302521}
-  - component: {fileID: 3294744070882659104}
-  m_Layer: 0
-  m_Name: DayManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1437706475260302521
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4795567229530040696}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.56585, y: 1.0568101, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4637795737750619904}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3294744070882659104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4795567229530040696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3787d5818c4ff549bdb2e12960d7e87, type: 3}
+  m_Script: {fileID: 11500000, guid: d0b33e59b2e0d71498e5369b5271faaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  currentDay: 2
-  missedChoresGameOverThresholdByDay:
-  - 5
-  - 5
-  - 5
-  - 5
-  - 5
-  - 5
-  - 5
+  currentDay: 1
   washDishes: {fileID: 0}
   mopFloor: {fileID: 0}
   sweepDust: {fileID: 0}
@@ -236,51 +111,130 @@ MonoBehaviour:
   cleanLeaves: {fileID: 0}
   throwTrash: {fileID: 0}
   garbageChore: {fileID: 0}
---- !u!1 &5900429030954946854
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3523008066521718623}
-  - component: {fileID: 8952150646662324949}
-  m_Layer: 0
-  m_Name: TutorialManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3523008066521718623
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5900429030954946854}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4637795737750619904}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8952150646662324949
+  segregateWasteChore: {fileID: 0}
+  transitionFade: {fileID: 0}
+  daySummaryPanel: {fileID: 0}
+  continueButton: {fileID: 0}
+  mainMenuButton: {fileID: 0}
+  summaryChoresText: {fileID: 0}
+  summarySuccessRateText: {fileID: 0}
+  summaryPointsText: {fileID: 0}
+  transitionDuration: 0.5
+  summaryLineDelay: 0.25
+  missedChoresGameOverThresholdByDay: 05000000050000000500000005000000050000000500000005000000
+--- !u!114 &1647585330715371540
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5900429030954946854}
+  m_GameObject: {fileID: 3448818962546764555}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ddf5492c1f8ed44682d0adfe325acce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
---- !u!1 &6014312689262683466
+--- !u!114 &4793150637367861876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448818962546764555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3425151329f10524184ff8341a917f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimeManager
+  dayLength: 300
+--- !u!114 &8804010453060458501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448818962546764555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fb7b26d641d36844a9dd9abf861fb59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChoreManager
+  completedChores: 0
+  missedChores: 0
+  totalPoints: 0
+--- !u!114 &7103819177915578307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448818962546764555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab9aec46de3bb4c8d353a3ed73165a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EconomyManager
+  startingCoins: 0
+  startingPoints: 0
+  coinsPerChorePoint: 1
+  movementSpeedMultiplier: 1.25
+  movementBoostDuration: 15
+  extraTimeSeconds: 15
+  mopUpgradeBaseCost: 10
+  upgradedMopCleaningSpeedMultiplier: 5
+  broomUpgradeBaseCost: 10
+  upgradedBroomCleaningSpeedMultiplier: 5
+  catBaseCost: 10
+--- !u!114 &1432158800708567070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448818962546764555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31099eb7db000344b183c4ec02acfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SuddenTaskManager
+  suddenTaskPanel: {fileID: 0}
+  mopFloorTask: {fileID: 0}
+--- !u!114 &3375970537328336038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448818962546764555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f6d2b3852625a428ddf62cce91ef96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChoreTutorial
+  tutorialPanel: {fileID: 0}
+  titleText: {fileID: 0}
+  stepsText: {fileID: 0}
+  continueButton: {fileID: 0}
+--- !u!114 &4194799523798922073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448818962546764555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43bb2a8d240574746839cf6c654d065c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameHUD
+  dayText: {fileID: 0}
+  timeText: {fileID: 0}
+  choreListText: {fileID: 0}
+  timeBar: {fileID: 0}
+  pointsText: {fileID: 0}
+  coinsText: {fileID: 0}
+  successRateText: {fileID: 0}
+--- !u!1 &4638821258728949021
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -288,22 +242,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2783458376680387642}
-  - component: {fileID: 508857342533921936}
+  - component: {fileID: 8860200519094090897}
+  - component: {fileID: 21463701669037350}
   m_Layer: 0
-  m_Name: ChoreManager
+  m_Name: MopUpgradedManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2783458376680387642
+--- !u!4 &8860200519094090897
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6014312689262683466}
+  m_GameObject: {fileID: 4638821258728949021}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -312,18 +266,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4637795737750619904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &508857342533921936
+--- !u!114 &21463701669037350
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6014312689262683466}
+  m_GameObject: {fileID: 4638821258728949021}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f6e5a355af1dd24f805f1cf8792ec31, type: 3}
+  m_Script: {fileID: 11500000, guid: 877659d0796326e438c0fef87fa82ca0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChoreManager
-  completedChores: 0
-  missedChores: 0
-  totalPoints: 0
+  m_EditorClassIdentifier: Assembly-CSharp::MopUpgradeManager

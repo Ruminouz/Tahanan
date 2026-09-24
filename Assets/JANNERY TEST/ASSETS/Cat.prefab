@@ -14,13 +14,14 @@ GameObject:
   - component: {fileID: 91899704063817267}
   - component: {fileID: 636095390322487913}
   - component: {fileID: 1543016040306804249}
+  - component: {fileID: 6362561340956784036}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2146055081384079214
 Transform:
   m_ObjectHideFlags: 0
@@ -35,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2685311176407129635}
-  - {fileID: 9188409563072450689}
+  - {fileID: 6169354503553588665}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5278989271417173919
@@ -177,6 +178,7 @@ MonoBehaviour:
   - {fileID: 8560559198361610151, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
   triggerTags:
   - Player
+  - NPCS
 --- !u!61 &1543016040306804249
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -223,7 +225,28 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.4944608, y: 0.47148705}
   m_EdgeRadius: 0
---- !u!1 &3283153859027537218
+--- !u!114 &6362561340956784036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505677076971138407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069e1403275d51f4389c8325fddac89e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatInteraction
+  checkInterval: 8
+  interactionChance: 45
+  approachSpeed: 1.5
+  approachDistance: 0.5
+  pettingDuration: 3
+  moodGain: 10
+  bubbleAnchor: {fileID: 2685311176407129635}
+  heartBubblePrefab: {fileID: 0}
+  bubbleDuration: 2
+--- !u!1 &1056127391890774002
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,23 +254,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9188409563072450689}
-  - component: {fileID: 1592348899923386999}
-  - component: {fileID: 4150485475081995690}
+  - component: {fileID: 6169354503553588665}
   m_Layer: 0
-  m_Name: Speech cat
+  m_Name: Cat spawn point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &9188409563072450689
-RectTransform:
+--- !u!4 &6169354503553588665
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3283153859027537218}
+  m_GameObject: {fileID: 1056127391890774002}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -255,49 +277,6 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2146055081384079214}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.405}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1592348899923386999
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3283153859027537218}
-  m_CullTransparentMesh: 1
---- !u!114 &4150485475081995690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3283153859027537218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: -7832214784768987486, guid: de844472edf58514c8d332383dc698de, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4839234159159353766
 GameObject:
   m_ObjectHideFlags: 0
