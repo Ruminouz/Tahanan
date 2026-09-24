@@ -205,6 +205,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &7092437024862738578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 290058707333873765}
+  m_Layer: 0
+  m_Name: PlayerSpan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &290058707333873765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092437024862738578}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.06, y: 5.51, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3372556679785361106}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7509236334997600112
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +256,6 @@ GameObject:
   - component: {fileID: 2422564435877467724}
   - component: {fileID: 6202568798467450824}
   - component: {fileID: 8337442962231213823}
-  - component: {fileID: 9274618301853027461}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -249,6 +279,7 @@ Transform:
   - {fileID: 6134466878455480247}
   - {fileID: 8935189840966961768}
   - {fileID: 9216347852014683021}
+  - {fileID: 290058707333873765}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6503267638043022393
@@ -376,6 +407,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
@@ -480,6 +523,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 3.5
+  dailySpawnPoint: {fileID: 290058707333873765}
+  footstepSpeed: 0.5
 --- !u!95 &4171294094092885655
 Animator:
   serializedVersion: 7
@@ -605,20 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530874e3e07861546bdea43777751077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GarbageCarry
-  carryPoint: {fileID: 0}
---- !u!114 &9274618301853027461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7509236334997600112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d9a7d8e6c1b4f2a9e3d7c5b1a8f6042, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerEquipmentInventory
-  equipmentHandPoint: {fileID: 9216347852014683021}
+  carryPoint: {fileID: 8935189840966961768}
 --- !u!1 &9216347852014683020
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,7 +676,7 @@ Transform:
   m_GameObject: {fileID: 9216347852014683020}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.37, y: -0.234, z: 0}
+  m_LocalPosition: {x: -0.37, y: -0.262, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
