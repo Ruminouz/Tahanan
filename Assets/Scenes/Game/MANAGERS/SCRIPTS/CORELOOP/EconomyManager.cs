@@ -41,6 +41,7 @@ public class EconomyManager : MonoBehaviour
     private bool catPurchased;
 
     public event Action<int> CoinsChanged;
+    public event Action<int> CoinsEarned;
     public event Action<int> MopUpgradeChanged;
     public event Action<int> BroomUpgradeChanged;
     public event Action<bool> CatPurchaseChanged;
@@ -106,6 +107,8 @@ public class EconomyManager : MonoBehaviour
 
         coins = Mathf.Max(0, coins + amount);
         CoinsChanged?.Invoke(coins);
+        if (amount > 0)
+            CoinsEarned?.Invoke(amount);
     }
 
     public bool TrySpendCoins(int amount)

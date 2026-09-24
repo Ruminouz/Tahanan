@@ -9,16 +9,15 @@ public class SweepingMinigame : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject minigamePanel;
     [SerializeField] private Slider progressBar;
-    [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private TMP_Text comboText;
+    [Tooltip("Optional text that displays the current sweeping speed grade.")]
+    [SerializeField] private TMP_Text speedGradeText;
     [SerializeField] private Image sweepingAreaImage;
     [SerializeField] private int dustParticleCount = 18;
     [SerializeField] private Sprite dustSprite;
-    [SerializeField] private float comboWindow = 2.25f;
 
     [Header("Dust")]
-    [SerializeField] private Vector2 dustParticleSizeMin = new Vector2(20f, 20f);
-    [SerializeField] private Vector2 dustParticleSizeMax = new Vector2(38f, 38f);
+    [SerializeField] private Vector2 dustParticleSizeMin = new Vector2(100f, 100f);
+    [SerializeField] private Vector2 dustParticleSizeMax = new Vector2(150f, 150f);
 
     [Header("Broom")]
     [SerializeField] private RectTransform broom;
@@ -29,19 +28,26 @@ public class SweepingMinigame : MonoBehaviour
     [SerializeField] private float broomBobAmount = 3f;
     [SerializeField] private float broomBobSpeed = 14f;
     [SerializeField] private float broomMotionScale = 0.14f;
-    [SerializeField] private Vector2 brushColliderOffset = new Vector2(0f, -19f);
-    [SerializeField] private float brushColliderRadius = 23f;
-    [SerializeField] private float minimumStrokeDistance = 22f;
+    [SerializeField] private Sprite broomUpSprite;
+    [SerializeField] private Sprite broomDownSprite;
+    [SerializeField] private Sprite broomLeftSprite;
+    [SerializeField] private Sprite broomRightSprite;
+    [SerializeField] private Vector2 brushColliderOffset = new Vector2(0f, -28f);
+    [SerializeField] private float brushColliderRadius = 52f;
+    [SerializeField] private float minimumStrokeDistance = 35f;
     [SerializeField] private float minimumSweepSpeed = 80f;
 
     [Header("Cleaning")]
     [SerializeField] private float baseSweepDuration = 12f;
     [SerializeField] private float sweepBonusMultiplier = 1.75f;
     [SerializeField] private float dragMomentumThreshold = 400f;
-    [SerializeField] private float comboDecay = 0.8f;
     [SerializeField] private float sweepAreaDrift = 40f;
     [SerializeField] private float sweepAreaDriftSpeed = 1.5f;
     [SerializeField] private Vector2 dustSpread = new Vector2(140f, 100f);
+    [Header("Speed Reward")]
+    [SerializeField, Min(0)] private int baseSpeedRewardCoins = 2;
+    [SerializeField, Min(0)] private int maximumSpeedBonusCoins = 8;
+    [SerializeField, Min(0.1f)] private float targetSweepDuration = 12f;
 
     private DustSpot currentDustSpot;
     private List<Image> dustVisuals = new List<Image>();
@@ -51,14 +57,11 @@ public class SweepingMinigame : MonoBehaviour
     private bool isSweeping;
     private bool mouseIsDown;
     private RectTransform activeBroom;
+    private Image activeBroomImage;
     private Image activeAreaImage;
     private Vector2 lastMousePosition;
     private float currentMomentum;
-    private float comboMultiplier = 1f;
-    private float comboTimer;
-    private float rewardCooldown;
-    private int currentScore;
-    private int currentCombo;
+    private float sweepStartTime;
     private Vector2 baseSweepingAreaPosition;
     private float driftPhase;
     private Vector3 activeBroomBaseScale;
@@ -105,11 +108,7 @@ public class SweepingMinigame : MonoBehaviour
         activeAreaImage = null;
         lastMousePosition = Vector2.zero;
         currentMomentum = 0f;
-        comboMultiplier = 1f;
-        comboTimer = 0f;
-        rewardCooldown = 0f;
-        currentScore = 0;
-        currentCombo = 0;
+        sweepStartTime = 0f;
         driftPhase = 0f;
         broomAnimationTime = 0f;
         lastBrushWorldPosition = Vector3.zero;
@@ -124,8 +123,8 @@ public class SweepingMinigame : MonoBehaviour
 
         if (progressBar != null)
             progressBar.value = 0f;
-
-        UpdateScoreUI();
+        if (speedGradeText != null)
+            speedGradeText.text = string.Empty;
 
         if (broom != null)
             broom.gameObject.SetActive(false);
@@ -151,21 +150,6 @@ public class SweepingMinigame : MonoBehaviour
         if (!isSweeping)
             return;
 
-        if (comboTimer > 0f)
-        {
-            comboTimer -= Time.deltaTime;
-            if (comboTimer <= 0f)
-            {
-                comboTimer = 0f;
-                currentCombo = 0;
-                comboMultiplier = 1f;
-                UpdateScoreUI();
-            }
-        }
-
-        if (rewardCooldown > 0f)
-            rewardCooldown -= Time.deltaTime;
-
         HandleMouseInput();
     }
 
@@ -178,11 +162,7 @@ public class SweepingMinigame : MonoBehaviour
         progress = 0f;
         isSweeping = true;
         mouseIsDown = false;
-        comboMultiplier = 1f;
-        comboTimer = 0f;
-        rewardCooldown = 0f;
-        currentScore = 0;
-        currentCombo = 0;
+        sweepStartTime = Time.time;
         currentMomentum = 0f;
         lastMousePosition = Vector2.zero;
         driftPhase = 0f;
@@ -205,8 +185,8 @@ public class SweepingMinigame : MonoBehaviour
 
         if (progressBar != null)
             progressBar.value = 0f;
-
-        UpdateScoreUI();
+        if (speedGradeText != null)
+            speedGradeText.text = "Ready!";
 
         if (activeAreaImage != null)
         {
@@ -216,37 +196,6 @@ public class SweepingMinigame : MonoBehaviour
         }
 
         Debug.Log("SWEEPING STARTED");
-    }
-
-    private void UpdateScoreUI()
-    {
-        if (scoreText != null)
-            scoreText.text = "Score: " + currentScore;
-
-        if (comboText != null)
-            comboText.text = currentCombo > 1 ? "Combo x" + currentCombo : "Clean streak";
-    }
-
-    private void AwardComboScore(int baseScore, string reason)
-    {
-        if (!isSweeping)
-            return;
-
-        if (comboTimer <= 0f)
-            currentCombo = 1;
-        else
-            currentCombo++;
-
-        comboTimer = comboWindow;
-        comboMultiplier = Mathf.Min(3.25f, comboMultiplier + 0.25f);
-
-        int awardedScore = Mathf.RoundToInt(baseScore * comboMultiplier);
-        currentScore += awardedScore;
-
-        if (!string.IsNullOrEmpty(reason))
-            Debug.Log(reason + " | Combo x" + currentCombo + " | +" + awardedScore + " score");
-
-        UpdateScoreUI();
     }
 
     private void ApplyDifficulty()
@@ -281,6 +230,7 @@ public class SweepingMinigame : MonoBehaviour
         if (selectedVisual == null)
         {
             activeBroom = null;
+            activeBroomImage = null;
             return;
         }
 
@@ -289,6 +239,9 @@ public class SweepingMinigame : MonoBehaviour
         if (selectedRect != null)
         {
             activeBroom = selectedRect;
+            activeBroomImage = selectedRect.GetComponent<Image>();
+            if (activeBroomImage == null)
+                activeBroomImage = selectedRect.GetComponentInChildren<Image>();
             activeBroomBaseScale = level == 1 ? upgradedBroomBaseScale : normalBroomBaseScale;
             activeBroomBaseRotation = selectedRect.localRotation;
             selectedRect.localScale = activeBroomBaseScale * broomDisplayScale;
@@ -405,7 +358,6 @@ public class SweepingMinigame : MonoBehaviour
         if (releaseThisFrame)
         {
             mouseIsDown = false;
-            comboMultiplier = Mathf.Max(1f, comboMultiplier - 0.5f);
         }
 
         UpdateSweepAreaMotion();
@@ -427,6 +379,7 @@ public class SweepingMinigame : MonoBehaviour
         Vector3 brushDelta = currentBrushWorldPosition - lastBrushWorldPosition;
         float delta = brushDelta.magnitude;
         currentMomentum = delta / Mathf.Max(Time.deltaTime, 0.016f);
+        UpdateSpeedGrade();
         lastBrushWorldPosition = currentBrushWorldPosition;
 
         bool insideArea = IsInsideArea();
@@ -439,19 +392,11 @@ public class SweepingMinigame : MonoBehaviour
 
         if (insideArea && validSweepStroke && currentMomentum >= minimumSweepSpeed)
         {
-            progress += baseCleanRate * rewardMultiplier * comboMultiplier * upgradeBonus * Time.deltaTime;
-            comboMultiplier = Mathf.Min(2.25f, comboMultiplier + Time.deltaTime * 0.8f);
-
-            if (rewardCooldown <= 0f)
-            {
-                AwardComboScore(Mathf.RoundToInt(18f * (1f + Mathf.Clamp01(currentMomentum / dragMomentumThreshold))), "Sweep streak!");
-                rewardCooldown = 0.18f;
-            }
+            progress += baseCleanRate * rewardMultiplier * upgradeBonus * Time.deltaTime;
         }
         else
         {
             progress = Mathf.Max(0f, progress - Time.deltaTime * 0.18f);
-            comboMultiplier = Mathf.Max(1f, comboMultiplier - Time.deltaTime * comboDecay);
         }
 
         UpdateDustVisuals(insideArea && validSweepStroke && currentMomentum >= minimumSweepSpeed, rewardMultiplier);
@@ -518,6 +463,8 @@ public class SweepingMinigame : MonoBehaviour
 
     private bool UpdateSweepStroke(Vector3 brushDelta)
     {
+        UpdateBroomSprite(brushDelta);
+
         float verticalDistance = Mathf.Abs(brushDelta.y);
         if (verticalDistance < 0.01f)
             return false;
@@ -541,7 +488,22 @@ public class SweepingMinigame : MonoBehaviour
         }
 
         currentStrokeDistance += verticalDistance;
-        return direction == expectedStrokeDirection;
+        return true;
+    }
+
+    private void UpdateBroomSprite(Vector3 brushDelta)
+    {
+        if (activeBroomImage == null || brushDelta.sqrMagnitude < 0.01f)
+            return;
+
+        Sprite directionalSprite;
+        if (Mathf.Abs(brushDelta.x) > Mathf.Abs(brushDelta.y))
+            directionalSprite = brushDelta.x > 0f ? broomRightSprite : broomLeftSprite;
+        else
+            directionalSprite = brushDelta.y > 0f ? broomUpSprite : broomDownSprite;
+
+        if (directionalSprite != null)
+            activeBroomImage.sprite = directionalSprite;
     }
 
     private void UpdateSweepAreaMotion()
@@ -594,6 +556,28 @@ public class SweepingMinigame : MonoBehaviour
         activeBroom.anchoredPosition = broomTargetPosition + Vector2.up * bob;
     }
 
+    private void UpdateSpeedGrade()
+    {
+        if (speedGradeText == null)
+            return;
+
+        if (currentMomentum < minimumSweepSpeed)
+        {
+            speedGradeText.text = "Too slow";
+            return;
+        }
+
+        float speedRatio = currentMomentum / Mathf.Max(1f, dragMomentumThreshold);
+        if (speedRatio < 0.5f)
+            speedGradeText.text = "Getting faster";
+        else if (speedRatio < 0.8f)
+            speedGradeText.text = "Fast";
+        else if (speedRatio < 1.15f)
+            speedGradeText.text = "Very fast";
+        else
+            speedGradeText.text = "Super fast!";
+    }
+
     private bool IsInsideArea()
     {
         if (activeBroom == null || sweepingArea == null || Mouse.current == null)
@@ -617,13 +601,9 @@ public class SweepingMinigame : MonoBehaviour
         if (currentDustSpot != null)
             currentDustSpot.Clean();
 
-        if (currentScore > 0)
-        {
-            int finishBonus = Mathf.RoundToInt(75f * Mathf.Max(1f, comboMultiplier));
-            currentScore += finishBonus;
-            UpdateScoreUI();
-            Debug.Log("Perfect sweep! +" + finishBonus + " score");
-        }
+        int rewardCoins = CalculateSpeedRewardCoins(Time.time - sweepStartTime, targetSweepDuration);
+        if (EconomyManager.Instance != null)
+            EconomyManager.Instance.AddCoins(rewardCoins);
 
         if (minigamePanel != null)
             minigamePanel.SetActive(false);
@@ -641,8 +621,15 @@ public class SweepingMinigame : MonoBehaviour
         ClearDustVisuals();
         currentDustSpot = null;
         activeBroom = null;
+        activeBroomImage = null;
         activeAreaImage = null;
 
-        Debug.Log("SWEEPING COMPLETE!");
+        Debug.Log("SWEEPING COMPLETE! +" + rewardCoins + " speed reward coins");
+    }
+
+    private int CalculateSpeedRewardCoins(float elapsedSeconds, float targetSeconds)
+    {
+        float speedRatio = Mathf.Clamp01((targetSeconds - elapsedSeconds) / targetSeconds);
+        return baseSpeedRewardCoins + Mathf.RoundToInt(maximumSpeedBonusCoins * speedRatio);
     }
 }

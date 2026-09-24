@@ -37,6 +37,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private TMP_Text summarySuccessRateText;
     [SerializeField] private TMP_Text summaryPointsText;
     [SerializeField] private float transitionDuration = 0.5f;
+    [SerializeField, Min(0f)] private float summaryLineDelay = 0.25f;
 
     [Header("Game Over")]
     [Tooltip("Maximum chores that may be missed before game over. Element 0 is Day 1 and element 6 is Day 7.")]
@@ -48,11 +49,16 @@ public class DayManager : MonoBehaviour
     private SuddenTaskManager suddenTaskManager;
     private SweepingManager sweepingManager;
     private WaterSpawner waterSpawner;
+    private MoodManager moodManager;
+    private EconomyManager economyManager;
 
     private Chore[] activeChores;
     private readonly List<Chore> dynamicChores = new List<Chore>();
     private bool dayFinished;
     private bool gameOver;
+    private int dailyCoinsEarned;
+    private Coroutine summaryCoroutine;
+    private bool summaryRevealComplete;
 
     public int CurrentDay => currentDay;
     // Difficulty is intentionally one-based so every playable day has a
@@ -75,6 +81,13 @@ public class DayManager : MonoBehaviour
 
         Instance = this;
         CacheSceneManagers();
+        moodManager = MoodManager.Instance != null
+            ? MoodManager.Instance
+            : FindFirstObjectByType<MoodManager>();
+        economyManager = EconomyManager.Instance != null
+            ? EconomyManager.Instance
+            : FindFirstObjectByType<EconomyManager>();
+        SubscribeToEconomy();
         FindSweepDustChore();
         ResolveSegregateWasteChore();
 
@@ -123,6 +136,9 @@ public class DayManager : MonoBehaviour
         if (mainMenuButton != null)
             mainMenuButton.onClick.RemoveListener(ReturnToMainMenu);
 
+        if (economyManager != null)
+            economyManager.CoinsEarned -= HandleCoinsEarned;
+
         if (Instance == this)
             Instance = null;
     }
@@ -147,6 +163,18 @@ public class DayManager : MonoBehaviour
 
         Debug.Log("=== START DAY " + currentDay + " ===");
 
+        if (economyManager == null)
+            economyManager = EconomyManager.Instance != null
+                ? EconomyManager.Instance
+                : FindFirstObjectByType<EconomyManager>();
+        SubscribeToEconomy();
+
+        if (moodManager == null)
+            moodManager = MoodManager.Instance != null
+                ? MoodManager.Instance
+                : FindFirstObjectByType<MoodManager>();
+
+        dailyCoinsEarned = 0;
         ResetDayDependencies();
         ResetAllChores();
         SetupGarbage();
@@ -524,10 +552,50 @@ public class DayManager : MonoBehaviour
         if (daySummaryPanel != null)
             daySummaryPanel.SetActive(true);
 
+        float successRate = choreManager != null ? choreManager.SuccessRate : 0f;
+        int totalPoints = choreManager != null ? choreManager.totalPoints : 0;
+        HouseholdMood endingMood = moodManager != null
+            ? moodManager.CurrentMood
+            : HouseholdMood.Concerned;
+
+        if (summarySuccessRateText != null)
+            summarySuccessRateText.text = "Success Rate: " + successRate.ToString("0") + "%";
+
+        if (summaryPointsText != null)
+        {
+            summaryPointsText.text = "Points Earned: " + totalPoints
+                + "\nCoins Earned: " + dailyCoinsEarned
+                + "\nFamily Mood: " + FormatMood(endingMood);
+        }
+
+        summaryRevealComplete = false;
+        if (continueButton != null)
+        {
+            continueButton.gameObject.SetActive(!gameOver);
+            continueButton.interactable = false;
+        }
+
+        if (mainMenuButton != null)
+        {
+            mainMenuButton.gameObject.SetActive(false);
+            mainMenuButton.interactable = false;
+        }
+
+        if (summaryCoroutine != null)
+            StopCoroutine(summaryCoroutine);
+
+        summaryCoroutine = StartCoroutine(RevealDaySummary(endingMood));
+    }
+
+    private IEnumerator RevealDaySummary(HouseholdMood endingMood)
+    {
         if (summaryChoresText != null)
         {
             StringBuilder summary = new StringBuilder();
-            summary.AppendLine("Chores");
+            summary.AppendLine("DAY " + currentDay + " COMPLETE");
+            summary.AppendLine();
+            summary.AppendLine("Chores finished:");
+            summaryChoresText.text = summary.ToString();
 
             if (activeChores != null)
             {
@@ -536,58 +604,96 @@ public class DayManager : MonoBehaviour
                     if (chore == null)
                         continue;
 
-                    string marker = chore.IsCompleted ? "✓ " : "- ";
-                    string status = chore.IsCompleted ? "COMPLETED" : "MISSED";
-                    summary.AppendLine(marker + chore.ChoreName + " - " + status);
+                    summary.AppendLine((chore.IsCompleted ? "✓ " : "- ")
+                        + chore.ChoreName
+                        + (chore.IsCompleted ? " - COMPLETED" : " - MISSED"));
+                    summaryChoresText.text = summary.ToString();
+                    yield return new WaitForSecondsRealtime(summaryLineDelay);
                 }
             }
 
             if (waterSpawner != null && waterSpawner.MopTaskStarted)
             {
-                string marker = waterSpawner.IsMoppingCompleted ? "✓ " : "- ";
-                string status = waterSpawner.IsMoppingCompleted ? "COMPLETED" : "MISSED";
-                summary.AppendLine(marker + "Mop Floor - " + status);
+                summary.AppendLine((waterSpawner.IsMoppingCompleted ? "✓ " : "- ")
+                    + "Mop Floor"
+                    + (waterSpawner.IsMoppingCompleted ? " - COMPLETED" : " - MISSED"));
+                summaryChoresText.text = summary.ToString();
+                yield return new WaitForSecondsRealtime(summaryLineDelay);
             }
 
             if (sweepingManager != null)
             {
-                summary.AppendLine(
-                    "Dust swept: " + sweepingManager.CleanedDustCount + "/" +
-                    sweepingManager.TotalDustSpawned);
+                summary.AppendLine("Dust swept: "
+                    + sweepingManager.CleanedDustCount + "/"
+                    + sweepingManager.TotalDustSpawned);
+                summaryChoresText.text = summary.ToString();
+                yield return new WaitForSecondsRealtime(summaryLineDelay);
             }
 
             if (waterSpawner != null)
             {
-                summary.AppendLine(
-                    "Water mopped: " + waterSpawner.CleanedWaterCount + "/" +
-                    waterSpawner.TotalWaterSpawned);
+                summary.AppendLine("Water mopped: "
+                    + waterSpawner.CleanedWaterCount + "/"
+                    + waterSpawner.TotalWaterSpawned);
+                summaryChoresText.text = summary.ToString();
+                yield return new WaitForSecondsRealtime(summaryLineDelay);
             }
 
+            summary.AppendLine();
+            summary.AppendLine("Family mood: " + FormatMood(endingMood));
             summaryChoresText.text = summary.ToString();
+            yield return new WaitForSecondsRealtime(summaryLineDelay);
+
+            if (gameOver)
+            {
+                summary.AppendLine();
+                summary.AppendLine("GAME OVER");
+                summary.AppendLine("Too many chores were missed.");
+                summaryChoresText.text = summary.ToString();
+            }
         }
 
-        float successRate = choreManager != null ? choreManager.SuccessRate : 0f;
-        int totalPoints = choreManager != null ? choreManager.totalPoints : 0;
-
-        if (summarySuccessRateText != null)
-            summarySuccessRateText.text = "Success Rate: " + successRate.ToString("0") + "%";
-
-        if (summaryPointsText != null)
-            summaryPointsText.text = "Points Earned: " + totalPoints;
-
+        summaryRevealComplete = true;
         if (continueButton != null)
-            continueButton.gameObject.SetActive(!gameOver);
+            continueButton.interactable = !gameOver;
 
         if (mainMenuButton != null)
+        {
             mainMenuButton.gameObject.SetActive(gameOver);
+            mainMenuButton.interactable = gameOver;
+        }
+    }
 
-        if (gameOver && summaryChoresText != null)
-            summaryChoresText.text += "\nGAME OVER\nToo many chores were missed.";
+    private string FormatMood(HouseholdMood mood)
+    {
+        switch (mood)
+        {
+            case HouseholdMood.Calm:
+                return "HAPPY";
+            case HouseholdMood.Angry:
+                return "ANGRY";
+            default:
+                return "CONCERNED";
+        }
+    }
+
+    private void SubscribeToEconomy()
+    {
+        if (economyManager == null)
+            return;
+
+        economyManager.CoinsEarned -= HandleCoinsEarned;
+        economyManager.CoinsEarned += HandleCoinsEarned;
+    }
+
+    private void HandleCoinsEarned(int amount)
+    {
+        dailyCoinsEarned += Mathf.Max(0, amount);
     }
 
     public void ContinueToNextDay()
     {
-        if (!dayFinished || gameOver)
+        if (!dayFinished || gameOver || !summaryRevealComplete)
             return;
 
         StartCoroutine(TransitionToNextDay());
@@ -654,6 +760,9 @@ public class DayManager : MonoBehaviour
 
         if (choreManager != null)
             choreManager.ResetDailyProgress();
+
+        if (moodManager != null)
+            moodManager.ResetDailyMood();
 
         gameOver = false;
         dayFinished = false;

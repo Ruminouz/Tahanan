@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -8,9 +7,7 @@ public class MoppingMinigame : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject minigamePanel;
     [SerializeField] private Slider progressBar;
-    [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private TMP_Text comboText;
-    [SerializeField] private TMP_Text feedbackText;
+    [SerializeField] private TMPro.TMP_Text feedbackText;
     [SerializeField] private Image moppingAreaImage;
     [Tooltip("Optional wet-floor sprite shown in the minigame. Recommended: a transparent PNG, 256 x 160 pixels, with the wet area centered.")]
     [SerializeField] private Sprite wetAreaSprite;
@@ -27,8 +24,6 @@ public class MoppingMinigame : MonoBehaviour
     [SerializeField] private float minimumStrokeDistance = 18f;
     [SerializeField] private float minimumMopSpeed = 70f;
     [SerializeField] private float progressDecay = 0.12f;
-    [SerializeField] private float comboWindow = 1.5f;
-    [SerializeField] private float comboDecay = 0.5f;
     [SerializeField] private float dragMomentumThreshold = 350f;
     [SerializeField] private float mopSwingAngle = 12f;
     [SerializeField] private float mopBobAmount = 4f;
@@ -37,6 +32,9 @@ public class MoppingMinigame : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float wetAreaStartAlpha = 0.65f;
     [Tooltip("Wet-area opacity when the floor is almost clean.")]
     [SerializeField, Range(0f, 1f)] private float wetAreaEndAlpha = 0.08f;
+    [Header("Speed Reward")]
+    [SerializeField, Min(0)] private int baseSpeedRewardCoins = 2;
+    [SerializeField, Min(0)] private int maximumSpeedBonusCoins = 8;
 
     private WetArea currentWetArea;
     private float progress;
@@ -47,11 +45,7 @@ public class MoppingMinigame : MonoBehaviour
     private Vector2 lastMousePosition;
     private float currentMomentum;
     private float currentStrokeDistance;
-    private float comboTimer;
-    private float comboMultiplier = 1f;
-    private float rewardCooldown;
-    private int currentScore;
-    private int currentCombo;
+    private float moppingStartTime;
     private int currentStrokeDirection;
     private int expectedStrokeDirection;
     private float mopAnimationTime;
@@ -95,11 +89,7 @@ public class MoppingMinigame : MonoBehaviour
         lastMousePosition = Vector2.zero;
         currentMomentum = 0f;
         currentStrokeDistance = 0f;
-        comboTimer = 0f;
-        comboMultiplier = 1f;
-        rewardCooldown = 0f;
-        currentScore = 0;
-        currentCombo = 0;
+        moppingStartTime = 0f;
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
         mopAnimationTime = 0f;
@@ -119,33 +109,33 @@ public class MoppingMinigame : MonoBehaviour
             SetAreaAlpha(wetAreaEndAlpha);
         }
 
-        UpdateScoreUI();
     }
 
     private void Update()
     {
         if (!isMopping)
-            return;
-
-        if (comboTimer > 0f)
         {
-            comboTimer -= Time.deltaTime;
-            if (comboTimer <= 0f)
-            {
-                currentCombo = 0;
-                comboMultiplier = 1f;
-                UpdateScoreUI();
-            }
+            ClosePanelIfSessionIsInvalid();
+            return;
         }
 
-        rewardCooldown = Mathf.Max(0f, rewardCooldown - Time.deltaTime);
+        if (currentWetArea == null || !currentWetArea.gameObject.activeInHierarchy)
+        {
+            ResetMopping();
+            return;
+        }
+
         HandleMouseInput();
     }
 
     public void StartMopping(WetArea wetArea)
     {
-        if (wetArea == null)
+        if (wetArea == null || !wetArea.gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("Mopping minigame ignored an invalid or inactive wet area.");
+            ResetMopping();
             return;
+        }
 
         currentWetArea = wetArea;
         progress = 0f;
@@ -154,17 +144,22 @@ public class MoppingMinigame : MonoBehaviour
         lastMousePosition = Vector2.zero;
         currentMomentum = 0f;
         currentStrokeDistance = 0f;
-        comboTimer = 0f;
-        comboMultiplier = 1f;
-        rewardCooldown = 0f;
-        currentScore = 0;
-        currentCombo = 0;
+        moppingStartTime = Time.time;
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
         mopAnimationTime = 0f;
 
         ApplyMopVisual(GetCurrentMopLevel());
         ApplyDifficulty();
+
+        if (activeMop == null || moppingArea == null || minigamePanel == null)
+        {
+            Debug.LogWarning(
+                "Mopping minigame could not start because its panel, mop visual, or mopping area is not assigned."
+            );
+            ResetMopping();
+            return;
+        }
 
         if (minigamePanel != null)
             minigamePanel.SetActive(true);
@@ -177,9 +172,20 @@ public class MoppingMinigame : MonoBehaviour
             UpdateWetAreaVisual();
         }
 
-        UpdateScoreUI();
         ShowFeedback("Scrub back and forth!");
         Debug.Log("MOPPING MINIGAME STARTED!");
+    }
+
+    private void ClosePanelIfSessionIsInvalid()
+    {
+        if (minigamePanel != null && minigamePanel.activeSelf)
+            minigamePanel.SetActive(false);
+
+        if (mop != null && mop.gameObject.activeSelf)
+            mop.gameObject.SetActive(false);
+
+        if (upgradedMopVisual != null && upgradedMopVisual.activeSelf)
+            upgradedMopVisual.SetActive(false);
     }
 
     private void ApplyDifficulty()
@@ -252,7 +258,6 @@ public class MoppingMinigame : MonoBehaviour
         {
             mouseIsDown = false;
             currentStrokeDistance = 0f;
-            comboMultiplier = Mathf.Max(1f, comboMultiplier - comboDecay * 0.25f);
         }
 
         if (!mouseIsDown)
@@ -272,13 +277,7 @@ public class MoppingMinigame : MonoBehaviour
         {
             float speedBonus = 1f + Mathf.Clamp01(currentMomentum / dragMomentumThreshold);
             float upgradeBonus = GetCurrentMopLevel() == 1 ? 1.2f : 1f;
-            progress += speedBonus * comboMultiplier * upgradeBonus / mopDuration * Time.deltaTime;
-
-            if (rewardCooldown <= 0f)
-            {
-                AwardComboScore();
-                rewardCooldown = 0.2f;
-            }
+            progress += speedBonus * upgradeBonus / mopDuration * Time.deltaTime;
         }
         else
         {
@@ -305,18 +304,10 @@ public class MoppingMinigame : MonoBehaviour
         if (currentStrokeDistance < minimumStrokeDistance)
             return false;
 
-        bool directionChanged = expectedStrokeDirection == 0
-            || currentStrokeDirection == expectedStrokeDirection;
         expectedStrokeDirection = currentStrokeDirection == 0
             ? expectedStrokeDirection
             : -currentStrokeDirection;
         currentStrokeDistance = 0f;
-        comboMultiplier = directionChanged
-            ? Mathf.Min(2.5f, comboMultiplier + Time.deltaTime * 0.8f)
-            : Mathf.Max(1f, comboMultiplier - comboDecay);
-
-        // Direction changes improve the combo, but are not required to clean.
-        // This keeps slow, vertical, and controller-style movement playable.
         return true;
     }
 
@@ -360,24 +351,6 @@ public class MoppingMinigame : MonoBehaviour
         Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(null, corners[0]);
         Vector2 topRight = RectTransformUtility.WorldToScreenPoint(null, corners[2]);
         return Rect.MinMaxRect(bottomLeft.x, bottomLeft.y, topRight.x, topRight.y);
-    }
-
-    private void AwardComboScore()
-    {
-        currentCombo = comboTimer <= 0f ? 1 : currentCombo + 1;
-        comboTimer = comboWindow;
-        comboMultiplier = Mathf.Min(3f, comboMultiplier + 0.25f);
-        currentScore += Mathf.RoundToInt(12f * comboMultiplier);
-        UpdateScoreUI();
-        ShowFeedback(currentCombo > 1 ? "Nice streak!" : "Good scrub!");
-    }
-
-    private void UpdateScoreUI()
-    {
-        if (scoreText != null)
-            scoreText.text = "Score: " + currentScore;
-        if (comboText != null)
-            comboText.text = currentCombo > 1 ? "Combo x" + currentCombo : "Keep scrubbing!";
     }
 
     private void ShowFeedback(string message)
@@ -428,6 +401,14 @@ public class MoppingMinigame : MonoBehaviour
         if (currentWetArea != null)
             currentWetArea.Clean();
 
+        float targetDuration = Mathf.Max(0.1f, mopDuration);
+        float speedRatio = Mathf.Clamp01(
+            (targetDuration - (Time.time - moppingStartTime)) / targetDuration);
+        int rewardCoins = baseSpeedRewardCoins
+            + Mathf.RoundToInt(maximumSpeedBonusCoins * speedRatio);
+        if (EconomyManager.Instance != null)
+            EconomyManager.Instance.AddCoins(rewardCoins);
+
         if (suddenTaskManager != null)
             suddenTaskManager.CompleteMopTask();
         else
@@ -437,6 +418,6 @@ public class MoppingMinigame : MonoBehaviour
             minigamePanel.SetActive(false);
 
         currentWetArea = null;
-        Debug.Log("MOPPING COMPLETE! Score: " + currentScore);
+        Debug.Log("MOPPING COMPLETE! +" + rewardCoins + " speed reward coins");
     }
 }

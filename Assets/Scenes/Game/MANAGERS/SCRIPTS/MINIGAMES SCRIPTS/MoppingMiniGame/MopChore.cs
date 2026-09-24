@@ -4,8 +4,10 @@ public class MopChore : Interactable
 {
     [SerializeField] private GameObject mopVisual;
     [SerializeField] private GameObject upgradedMopVisual;
+    [SerializeField] private ChoreTutorial tutorial;
 
     private bool hasBeenPickedUp = false;
+    private TutorialManager tutorialManager;
 
     private void OnEnable()
     {
@@ -15,6 +17,7 @@ public class MopChore : Interactable
 
     private void Start()
     {
+        tutorialManager = FindFirstObjectByType<TutorialManager>();
         SubscribeToEconomy();
         ApplyMopVisual(GetCurrentMopLevel());
     }
@@ -81,7 +84,35 @@ public class MopChore : Interactable
 
         inventory.Add(EquipmentType.Mop, mopVisual != null ? mopVisual : gameObject);
 
+        ShowFirstPickupTutorial();
         Debug.Log("MOP PICKED UP!");
+    }
+
+    private void ShowFirstPickupTutorial()
+    {
+        const string tutorialKey = "Mop";
+        if (tutorialManager == null)
+            tutorialManager = FindFirstObjectByType<TutorialManager>();
+
+        if (tutorialManager != null && tutorialManager.HasLearned(tutorialKey))
+            return;
+
+        if (tutorial == null)
+            tutorial = FindFirstObjectByType<ChoreTutorial>();
+
+        if (tutorial == null)
+        {
+            tutorialManager?.MarkAsLearned(tutorialKey);
+            return;
+        }
+
+        tutorial.ShowTutorial(
+            "MOPPING",
+            "1. Equip the mop.\n" +
+            "2. Hold Left Mouse Button.\n" +
+            "3. Move the mop over the wet area.\n" +
+            "4. Scrub quickly until the water fades.",
+            () => tutorialManager?.MarkAsLearned(tutorialKey));
     }
 
     private int GetCurrentMopLevel()
