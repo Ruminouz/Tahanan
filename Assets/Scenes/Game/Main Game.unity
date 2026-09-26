@@ -8075,7 +8075,7 @@ PrefabInstance:
       objectReference: {fileID: 172758209}
     - target: {fileID: 2185080593934125634, guid: 6411d194b01356e418c8a51e8f47a3d5, type: 3}
       propertyPath: currentDay
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2185080593934125634, guid: 6411d194b01356e418c8a51e8f47a3d5, type: 3}
       propertyPath: throwTrash
@@ -8123,7 +8123,7 @@ PrefabInstance:
       objectReference: {fileID: 656263195}
     - target: {fileID: 2343853918197992944, guid: 6411d194b01356e418c8a51e8f47a3d5, type: 3}
       propertyPath: dayLength
-      value: 50
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 2343853918197992944, guid: 6411d194b01356e418c8a51e8f47a3d5, type: 3}
       propertyPath: nightTint.b
