@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3425151329f10524184ff8341a917f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
-  dayLength: 300
+  dayLength: 250
 --- !u!114 &8804010453060458501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +231,8 @@ MonoBehaviour:
   timeText: {fileID: 0}
   choreListText: {fileID: 0}
   timeBar: {fileID: 0}
+  clockFaceSprite: {fileID: 8581363780399802525, guid: 922b77a9796829c46979d96230d7063e, type: 3}
+  clockAnchor: {fileID: 0}
   pointsText: {fileID: 0}
   coinsText: {fileID: 0}
   successRateText: {fileID: 0}

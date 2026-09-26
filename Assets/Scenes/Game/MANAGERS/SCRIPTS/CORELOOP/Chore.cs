@@ -5,9 +5,9 @@ public class Chore : Interactable
     [SerializeField] private string choreName;
     [SerializeField] private int points = 1;
     [Header("Chore Scoring")]
-    [Tooltip("Time in seconds from the start of the day before this chore is marked missed.")]
+    [Tooltip("Elapsed game seconds after 8 AM when due (21 = 9 AM, 63 = 11 AM, 208 = 6 PM, 250 = 8 PM).")]
     [Min(1f)]
-    [SerializeField] private float deadlineSeconds = 300f;
+    [SerializeField] private float deadlineSeconds = 250f;
     [Tooltip("Extra points awarded when this chore is completed before its deadline.")]
     [Min(0)]
     [SerializeField] private int earlyBonusPoints = 1;
@@ -26,6 +26,8 @@ public class Chore : Interactable
     public bool IsMissed => isMissed;
 
     public float DeadlineSeconds => deadlineSeconds;
+
+    public float DeadlineTime => deadlineSeconds + deadlineBonusSeconds;
 
     public float RemainingDeadline
     {

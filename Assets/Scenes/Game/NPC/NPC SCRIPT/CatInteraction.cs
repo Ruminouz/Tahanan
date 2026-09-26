@@ -8,6 +8,7 @@ public class CatInteraction : MonoBehaviour
     [SerializeField, Range(0f, 100f)] private float interactionChance = 45f;
     [SerializeField, Min(0.1f)] private float approachSpeed = 1.5f;
     [SerializeField, Min(0.05f)] private float approachDistance = 0.5f;
+    [SerializeField, Min(0.1f)] private float approachTimeout = 20f;
     [SerializeField, Min(5f)] private float pettingDuration = 5f;
     [SerializeField, Min(0f)] private float moodGain = 10f;
 
@@ -50,20 +51,37 @@ public class CatInteraction : MonoBehaviour
         currentNpc = npc;
         bool wasMoving = npc.MovementEnabled;
         npc.SetMovementEnabled(false);
+        npc.ResetWaypointRoute();
+        SpeechBubbleCanvas.Show(npc.transform, "Asan si ming ming", bubbleDuration);
 
-        while (npc != null && Vector2.Distance(npc.transform.position, transform.position) > approachDistance)
+        Collider2D catCollider = GetPettingCollider();
+        float elapsed = 0f;
+        bool reachedCat = false;
+        while (npc != null && elapsed < approachTimeout)
         {
+            Vector2 currentPosition = GetNpcPosition(npc);
+            Vector2 targetPosition = GetPettingPosition(npc, currentPosition, catCollider);
+            if (Vector2.Distance(currentPosition, targetPosition) <= 0.1f)
+            {
+                reachedCat = true;
+                break;
+            }
+
             if (!PauseController.IsGamePaused)
             {
-                Vector2 nextPosition = Vector2.MoveTowards(
-                    npc.transform.position,
-                    transform.position,
-                    approachSpeed * Time.deltaTime);
+                Vector2 movement = npc.GetMovementAlongWaypointRoute(
+                    targetPosition,
+                    approachSpeed,
+                    Mathf.Max(0.1f, approachDistance),
+                    true);
+                Vector2 nextPosition = currentPosition + movement;
                 Rigidbody2D body = npc.GetComponent<Rigidbody2D>();
                 if (body != null)
                     body.MovePosition(nextPosition);
                 else
                     npc.transform.position = nextPosition;
+
+                elapsed += Time.deltaTime;
             }
 
             yield return null;
@@ -75,21 +93,70 @@ public class CatInteraction : MonoBehaviour
             yield break;
         }
 
-        ShowHeartBubble();
-        yield return new WaitForSeconds(Mathf.Max(5f, pettingDuration));
+        if (reachedCat)
+        {
+            ShowHeartBubble();
+            yield return new WaitForSeconds(Mathf.Max(5f, pettingDuration));
+
+            if (npc != null)
+            {
+                MoodManager moodManager = MoodManager.Instance != null
+                    ? MoodManager.Instance
+                    : FindFirstObjectByType<MoodManager>();
+                if (moodManager != null)
+                    moodManager.AddMood(moodGain);
+            }
+        }
+        else
+        {
+            Debug.LogWarning(name + " could not find a clear waypoint route to the cat.", this);
+        }
 
         if (npc != null)
         {
-            MoodManager moodManager = MoodManager.Instance != null
-                ? MoodManager.Instance
-                : FindFirstObjectByType<MoodManager>();
-            if (moodManager != null)
-                moodManager.AddMood(moodGain);
-
+            npc.ResetWaypointRoute();
             npc.SetMovementEnabled(wasMoving);
         }
 
         currentNpc = null;
+    }
+
+    private Collider2D GetPettingCollider()
+    {
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D candidate in colliders)
+        {
+            if (candidate != null && candidate.enabled && !candidate.isTrigger)
+                return candidate;
+        }
+
+        return null;
+    }
+
+    private Vector2 GetPettingPosition(WaypointMover npc, Vector2 npcPosition, Collider2D catCollider)
+    {
+        if (catCollider == null)
+            return Vector2.MoveTowards(transform.position, npcPosition, approachDistance);
+
+        Vector2 closestPoint = catCollider.ClosestPoint(npcPosition);
+        Vector2 direction = npcPosition - closestPoint;
+        if (direction.sqrMagnitude <= 0.0001f)
+            direction = npcPosition - (Vector2)transform.position;
+        if (direction.sqrMagnitude <= 0.0001f)
+            direction = Vector2.up;
+
+        Collider2D npcCollider = npc.GetComponent<Collider2D>();
+        float npcClearance = npcCollider != null
+            ? Mathf.Max(npcCollider.bounds.extents.x, npcCollider.bounds.extents.y) + 0.1f
+            : approachDistance;
+        float gap = Mathf.Max(approachDistance, npcClearance);
+        return closestPoint + direction.normalized * gap;
+    }
+
+    private static Vector2 GetNpcPosition(WaypointMover npc)
+    {
+        Rigidbody2D body = npc.GetComponent<Rigidbody2D>();
+        return body != null ? body.position : (Vector2)npc.transform.position;
     }
 
     private void ShowHeartBubble()

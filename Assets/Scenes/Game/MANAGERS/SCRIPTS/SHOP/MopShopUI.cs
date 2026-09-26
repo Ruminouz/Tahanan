@@ -17,7 +17,13 @@ public class MopShopUI : MonoBehaviour
     [SerializeField] private GameObject catPrefab;
     [SerializeField] private Transform catSpawnPoint;
 
+    [Header("Shop Icons")]
+    [SerializeField] private Sprite mopUpgradeIcon;
+    [SerializeField] private Sprite catIcon;
+
     private EconomyManager economyManager;
+    private ShopItemCardUI mopCard;
+    private ShopItemCardUI catCard;
 
     private void OnEnable()
     {
@@ -31,6 +37,24 @@ public class MopShopUI : MonoBehaviour
 
         if (catBuyButton != null)
             catBuyButton.onClick.AddListener(BuyCat);
+
+        ShopItemCardUI.PrepareShopPanel(transform, closeButton);
+        mopCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "MopUpgrade",
+            0,
+            mopUpgradeIcon,
+            "Mop Upgrade",
+            "Clean spills faster with an upgraded mop.",
+            BuyMopUpgrade);
+        catCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "CatAdoption",
+            2,
+            catIcon,
+            "Adopt a Cat",
+            "Bring a friendly cat companion home.",
+            BuyCat);
 
         Refresh();
     }
@@ -127,6 +151,12 @@ public class MopShopUI : MonoBehaviour
             if (buyButton != null)
                 buyButton.interactable = false;
 
+            if (mopCard != null)
+                mopCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
+            if (catCard != null)
+                catCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
             return;
         }
 
@@ -151,6 +181,14 @@ public class MopShopUI : MonoBehaviour
         if (buyButton != null)
             buyButton.interactable = canUpgrade && economyManager.Coins >= cost;
 
+        if (mopCard != null)
+        {
+            mopCard.SetPurchaseState(
+                canUpgrade ? cost + " COINS" : "MAX LEVEL",
+                !canUpgrade ? "MAXED" : economyManager.Coins >= cost ? "UPGRADE" : "NEED COINS",
+                canUpgrade && economyManager.Coins >= cost);
+        }
+
         bool canBuyCat = economyManager.CanPurchaseCat;
         int catCost = economyManager.GetCatCost();
         if (catCostText != null)
@@ -167,5 +205,13 @@ public class MopShopUI : MonoBehaviour
 
         if (catBuyButton != null)
             catBuyButton.interactable = canBuyCat && catPrefab != null && economyManager.Coins >= catCost;
+
+        if (catCard != null)
+        {
+            catCard.SetPurchaseState(
+                canBuyCat ? catCost + " COINS" : "OWNED",
+                !canBuyCat ? "OWNED" : catPrefab == null ? "NOT SET UP" : economyManager.Coins >= catCost ? "ADOPT" : "NEED COINS",
+                canBuyCat && catPrefab != null && economyManager.Coins >= catCost);
+        }
     }
 }

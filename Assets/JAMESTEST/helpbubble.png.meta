@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8d782902958a6354797c1a649a2949a0
+guid: ce00a5bd2dc941e41ac397b7eb21ba97
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7754988575891523622
-    second: timer_0
+      213: -5364587402048746381
+    second: helpbubble_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: timer_0
+      name: helpbubble_0
       rect:
         serializedVersion: 2
-        x: 111
-        y: 47
-        width: 1890
-        height: 1922
+        x: 26
+        y: 15
+        width: 164
+        height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad7f5c85afeb06490800000000000000
-      internalID: -7754988575891523622
+      spriteID: 37c495e3e282d85b0800000000000000
+      internalID: -5364587402048746381
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      timer_0: -7754988575891523622
+      helpbubble_0: -5364587402048746381
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

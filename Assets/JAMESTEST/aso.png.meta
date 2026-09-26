@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8d782902958a6354797c1a649a2949a0
+guid: ac7777586342a114cafe57a15162339a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7754988575891523622
-    second: timer_0
+      213: 8547402250504553676
+    second: aso_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: timer_0
+      name: aso_0
       rect:
         serializedVersion: 2
-        x: 111
-        y: 47
-        width: 1890
-        height: 1922
+        x: 515
+        y: 283
+        width: 986
+        height: 1346
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad7f5c85afeb06490800000000000000
-      internalID: -7754988575891523622
+      spriteID: cc4c2bd8f097e9670800000000000000
+      internalID: 8547402250504553676
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      timer_0: -7754988575891523622
+      aso_0: 8547402250504553676
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

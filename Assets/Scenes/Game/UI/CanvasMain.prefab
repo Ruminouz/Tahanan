@@ -458,7 +458,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -890,7 +890,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 8966945178157639174, guid: 8c2e0c244bf369242b534be9c30c5902, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3830,39 +3830,6 @@ MonoBehaviour:
   wetAreaEndAlpha: 0.08
   baseSpeedRewardCoins: 2
   maximumSpeedBonusCoins: 8
---- !u!114 &7281883821844763946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1477932427037815368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ac7d03b03f5f94459e028a55465747d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MoppingMinigame
-  minigamePanel: {fileID: 1477932427037815368}
-  progressBar: {fileID: 0}
-  feedbackText: {fileID: 8616186256250332270}
-  moppingAreaImage: {fileID: 9115319149055546900}
-  wetAreaSprite: {fileID: 8509550459451208454, guid: 7459ec0b184bddd42956ece572d41717, type: 3}
-  wetAreaSpriteSize: {x: 150, y: 90}
-  mop: {fileID: 5362212066191308081}
-  moppingArea: {fileID: 3855757087197312518}
-  upgradedMopVisual: {fileID: 3805057960202223583}
-  baseMopDuration: 8
-  minimumStrokeDistance: 18
-  minimumMopSpeed: 70
-  progressDecay: 0.12
-  dragMomentumThreshold: 350
-  mopSwingAngle: 12
-  mopBobAmount: 4
-  mopBobSpeed: 14
-  wetAreaStartAlpha: 0.947
-  wetAreaEndAlpha: 0.08
-  baseSpeedRewardCoins: 2
-  maximumSpeedBonusCoins: 8
 --- !u!1 &1524750721475249742
 GameObject:
   m_ObjectHideFlags: 0
@@ -6317,7 +6284,7 @@ MonoBehaviour:
   broom: {fileID: 8261512649170478844}
   upgradedBroomVisual: {fileID: 981005258171999619}
   sweepingArea: {fileID: 861968361822883220}
-  broomDisplayScale: 3
+  broomDisplayScale: 0.2
   broomSwingAngle: 28
   broomBobAmount: 3
   broomBobSpeed: 0
@@ -10882,6 +10849,8 @@ MonoBehaviour:
   catBuyButton: {fileID: 2990736500735786186}
   catPrefab: {fileID: 0}
   catSpawnPoint: {fileID: 0}
+  mopUpgradeIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
+  catIcon: {fileID: -7232521027535748977, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
 --- !u!114 &4393531447390649606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10899,6 +10868,7 @@ MonoBehaviour:
   statusText: {fileID: 362564199182212666}
   buyButton: {fileID: 7030262168487605869}
   closeButton: {fileID: 7357787115545750377}
+  broomUpgradeIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
 --- !u!1 &4296794477077739298
 GameObject:
   m_ObjectHideFlags: 0
@@ -11665,6 +11635,8 @@ MonoBehaviour:
   catBuyButton: {fileID: 2869268565475118502}
   catPrefab: {fileID: 0}
   catSpawnPoint: {fileID: 0}
+  mopUpgradeIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
+  catIcon: {fileID: -7232521027535748977, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
 --- !u!114 &3846898025652169751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11682,6 +11654,7 @@ MonoBehaviour:
   statusText: {fileID: 142165914111417204}
   buyButton: {fileID: 1532249510517768138}
   closeButton: {fileID: 8456375768233427567}
+  broomUpgradeIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
 --- !u!1 &4562022974541950020
 GameObject:
   m_ObjectHideFlags: 0
@@ -12340,7 +12313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.049153328, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

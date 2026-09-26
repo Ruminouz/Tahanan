@@ -55,13 +55,50 @@ public static class NPCMovement2D
         LayerMask obstacleLayers,
         float collisionPadding)
     {
+        return GetCollisionSafeMovementInternal(
+            moverCollider,
+            movement,
+            toTarget,
+            obstacleLayers,
+            collisionPadding,
+            null,
+            false);
+    }
+
+    public static Vector2 GetCollisionSafeMovement(
+        Collider2D moverCollider,
+        Vector2 movement,
+        Vector2 toTarget,
+        LayerMask obstacleLayers,
+        float collisionPadding,
+        Transform taggedPlayerObstacle)
+    {
+        return GetCollisionSafeMovementInternal(
+            moverCollider,
+            movement,
+            toTarget,
+            obstacleLayers,
+            collisionPadding,
+            taggedPlayerObstacle,
+            true);
+    }
+
+    private static Vector2 GetCollisionSafeMovementInternal(
+        Collider2D moverCollider,
+        Vector2 movement,
+        Vector2 toTarget,
+        LayerMask obstacleLayers,
+        float collisionPadding,
+        Transform taggedPlayerObstacle,
+        bool includeTaggedPlayerTriggers)
+    {
         if (moverCollider == null || movement.sqrMagnitude <= 0.0001f)
             return movement;
 
         ContactFilter2D filter = new ContactFilter2D
         {
             useLayerMask = true,
-            useTriggers = false
+            useTriggers = includeTaggedPlayerTriggers
         };
         filter.SetLayerMask(obstacleLayers);
 
@@ -71,15 +108,23 @@ public static class NPCMovement2D
             CastResults,
             movement.magnitude + collisionPadding);
 
-        if (hitCount == 0)
-            return movement;
-
-        RaycastHit2D nearestHit = CastResults[0];
-        for (int i = 1; i < hitCount; i++)
+        RaycastHit2D nearestHit = default;
+        bool foundBlockingHit = false;
+        for (int i = 0; i < hitCount; i++)
         {
-            if (CastResults[i].distance < nearestHit.distance)
+            Collider2D hitCollider = CastResults[i].collider;
+            if (!IsBlockingCollider(hitCollider, taggedPlayerObstacle, includeTaggedPlayerTriggers))
+                continue;
+
+            if (!foundBlockingHit || CastResults[i].distance < nearestHit.distance)
+            {
                 nearestHit = CastResults[i];
+                foundBlockingHit = true;
+            }
         }
+
+        if (!foundBlockingHit)
+            return movement;
 
         Vector2 wallDirection = Vector2.Perpendicular(nearestHit.normal).normalized;
         if (Vector2.Dot(wallDirection, toTarget) < 0f)
@@ -92,6 +137,45 @@ public static class NPCMovement2D
             CastResults,
             slideMovement.magnitude + collisionPadding);
 
-        return slideHitCount == 0 ? slideMovement : Vector2.zero;
+        for (int i = 0; i < slideHitCount; i++)
+        {
+            if (IsBlockingCollider(
+                    CastResults[i].collider,
+                    taggedPlayerObstacle,
+                    includeTaggedPlayerTriggers))
+                return Vector2.zero;
+        }
+
+        return slideMovement;
+    }
+
+    private static bool IsBlockingCollider(
+        Collider2D collider,
+        Transform taggedPlayerObstacle,
+        bool includeTaggedPlayerTriggers)
+    {
+        if (collider == null)
+            return false;
+
+        if (taggedPlayerObstacle != null &&
+            (collider.transform == taggedPlayerObstacle ||
+             collider.transform.IsChildOf(taggedPlayerObstacle)))
+            return true;
+
+        for (Transform parent = collider.transform; parent != null; parent = parent.parent)
+        {
+            if (parent.CompareTag("Player"))
+                return true;
+        }
+
+        if (includeTaggedPlayerTriggers)
+        {
+            int layer = collider.gameObject.layer;
+            if (layer == LayerMask.NameToLayer("NPCS") ||
+                layer == LayerMask.NameToLayer("WALL COLLIDERS"))
+                return true;
+        }
+
+        return !collider.isTrigger;
     }
 }

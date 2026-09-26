@@ -7,6 +7,7 @@ public class MomAI : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform player;
     [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Transform bubbleAnchor;
     [SerializeField] private GameObject moodBubblePrefab;
@@ -20,8 +21,12 @@ public class MomAI : MonoBehaviour
     [SerializeField, Min(0f)] private float bubbleDuration = 3f;
     [SerializeField, Min(0f)] private float angryBubbleInterval = 8f;
     [SerializeField, Min(0.1f)] private float approachSpeed = 2f;
+    [SerializeField, Min(0.1f)] private float spankApproachSpeed = 4f;
     [SerializeField, Min(0.1f)] private float spankDistance = 0.8f;
     [SerializeField, Min(0.1f)] private float approachTimeout = 5f;
+    [SerializeField, Min(0.1f)] private float spankApproachTimeout = 15f;
+    [SerializeField, Min(0.01f)] private float waypointArrivalDistance = 0.15f;
+    [SerializeField, Min(0.05f)] private float chaseStuckTimeout = 0.5f;
     [SerializeField] private string spankTrigger = "Spank";
     [SerializeField] private LayerMask obstacleLayers = ~0;
     [SerializeField, Min(0f)] private float collisionPadding = 0.02f;
@@ -30,6 +35,7 @@ public class MomAI : MonoBehaviour
     [SerializeField] private string calmLine = "Good job helping around the house!";
     [SerializeField] private string concernedLine = "Please try to finish your chores.";
     [SerializeField] private string angryLine = "You missed another chore! Get moving!";
+    [SerializeField] private Color angrySpriteColor = new Color(1f, 0.45f, 0.45f, 1f);
 
     private MoodManager moodManager;
     private ChoreManager choreManager;
@@ -39,6 +45,9 @@ public class MomAI : MonoBehaviour
     private bool gameOverRequested;
     private int pendingReprimands;
     private Collider2D bodyCollider;
+    private float chaseStuckTimer;
+    private Color normalSpriteColor = Color.white;
+    private bool hasNormalSpriteColor;
 
     private void Awake()
     {
@@ -59,10 +68,20 @@ public class MomAI : MonoBehaviour
         if (animator == null)
             animator = GetComponent<Animator>();
 
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+        {
+            normalSpriteColor = spriteRenderer.color;
+            hasNormalSpriteColor = true;
+        }
+
         bodyCollider = GetComponent<Collider2D>();
 
         if (waypointMover == null)
             waypointMover = GetComponent<WaypointMover>();
+
     }
 
     private void OnEnable()
@@ -78,7 +97,10 @@ public class MomAI : MonoBehaviour
     private void Update()
     {
         if (moodManager == null || moodManager.CurrentMood != HouseholdMood.Angry)
+        {
+            RestoreSpriteColor();
             return;
+        }
 
         if (Time.time >= nextAngryBubbleTime)
         {
@@ -148,22 +170,60 @@ public class MomAI : MonoBehaviour
         if (waypointMover != null)
             waypointMover.SetMovementEnabled(false);
 
+        SetAngrySpriteColor();
+        if (waypointMover != null)
+            waypointMover.ResetWaypointRoute();
+
         float elapsed = 0f;
+        float maxApproachTime = Mathf.Max(approachTimeout, spankApproachTimeout);
+        Vector2 previousPosition = transform.position;
         while (player != null && Vector2.Distance(transform.position, player.position) > spankDistance &&
-               elapsed < approachTimeout)
+               elapsed < maxApproachTime)
         {
             Vector2 movement = waypointMover != null
-                ? waypointMover.GetMovementTowards(player.position, approachSpeed)
+                ? waypointMover.GetMovementAlongWaypointRoute(
+                    player.position,
+                    spankApproachSpeed,
+                    waypointArrivalDistance)
+                : waypointMover != null
+                    ? waypointMover.GetMovementTowards(player.position, spankApproachSpeed)
                 : Vector2.MoveTowards(
                     transform.position,
                     player.position,
-                    approachSpeed * Time.deltaTime) - (Vector2)transform.position;
+                    spankApproachSpeed * Time.deltaTime) - (Vector2)transform.position;
             Vector2 nextPosition = (Vector2)transform.position + movement;
 
             UpdateMovementAnimation(nextPosition - (Vector2)transform.position);
             transform.position = nextPosition;
+
+            if ((nextPosition - previousPosition).sqrMagnitude <= 0.000001f)
+                chaseStuckTimer += Time.deltaTime;
+            else
+                chaseStuckTimer = 0f;
+
+            if (chaseStuckTimer >= chaseStuckTimeout)
+            {
+                if (waypointMover != null)
+                    waypointMover.ResetWaypointRoute();
+                chaseStuckTimer = 0f;
+            }
+
+            previousPosition = transform.position;
             elapsed += Time.deltaTime;
             yield return null;
+        }
+
+        bool isInSpankRange = player != null &&
+            Vector2.Distance(transform.position, player.position) <= spankDistance;
+        if (!isInSpankRange)
+        {
+            StopMovementAnimation();
+            RestoreSpriteColor();
+            if (waypointMover != null)
+                waypointMover.ResetWaypointRoute();
+            if (waypointMover != null)
+                waypointMover.SetMovementEnabled(true);
+            yield break;
         }
 
         StopMovementAnimation();
@@ -182,9 +242,24 @@ public class MomAI : MonoBehaviour
         if (playerMovement != null)
             StartCoroutine(SlowPlayer());
 
+        RestoreSpriteColor();
+        if (waypointMover != null)
+            waypointMover.ResetWaypointRoute();
         yield return new WaitForSeconds(0.75f);
         if (waypointMover != null)
             waypointMover.SetMovementEnabled(true);
+    }
+
+    private void SetAngrySpriteColor()
+    {
+        if (spriteRenderer != null)
+            spriteRenderer.color = angrySpriteColor;
+    }
+
+    private void RestoreSpriteColor()
+    {
+        if (spriteRenderer != null && hasNormalSpriteColor)
+            spriteRenderer.color = normalSpriteColor;
     }
 
     private void UpdateMovementAnimation(Vector2 direction)

@@ -10,7 +10,11 @@ public class BroomShopUI : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private Button closeButton;
 
+    [Header("Shop Icon")]
+    [SerializeField] private Sprite broomUpgradeIcon;
+
     private EconomyManager economyManager;
+    private ShopItemCardUI broomCard;
 
     private void OnEnable()
     {
@@ -21,6 +25,16 @@ public class BroomShopUI : MonoBehaviour
 
         if (closeButton != null)
             closeButton.onClick.AddListener(CloseShop);
+
+        ShopItemCardUI.PrepareShopPanel(transform, closeButton);
+        broomCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "BroomUpgrade",
+            1,
+            broomUpgradeIcon,
+            "Broom Upgrade",
+            "Sweep dust faster with an upgraded broom.",
+            BuyBroomUpgrade);
 
         Refresh();
     }
@@ -97,6 +111,9 @@ public class BroomShopUI : MonoBehaviour
             if (buyButton != null)
                 buyButton.interactable = false;
 
+            if (broomCard != null)
+                broomCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
             return;
         }
 
@@ -120,5 +137,13 @@ public class BroomShopUI : MonoBehaviour
 
         if (buyButton != null)
             buyButton.interactable = canUpgrade && economyManager.Coins >= cost;
+
+        if (broomCard != null)
+        {
+            broomCard.SetPurchaseState(
+                canUpgrade ? cost + " COINS" : "MAX LEVEL",
+                !canUpgrade ? "MAXED" : economyManager.Coins >= cost ? "UPGRADE" : "NEED COINS",
+                canUpgrade && economyManager.Coins >= cost);
+        }
     }
 }

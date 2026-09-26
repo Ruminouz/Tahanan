@@ -22,6 +22,8 @@ public class HouseholdHelperAI : MonoBehaviour
     [SerializeField, Min(0.1f)] private float moveSpeed = 1.5f;
     [SerializeField, Min(0.05f)] private float arriveDistance = 0.2f;
     [SerializeField, Min(0.1f)] private float helpTimeout = 20f;
+    [SerializeField, Min(0.05f)] private float choreStuckTimeout = 0.5f;
+    [SerializeField, Min(1f)] private float choreSpeedMultiplier = 2f;
     [SerializeField, Min(0f)] private float playerChoreDistance = 2f;
 
     [Header("Bad Mood")]
@@ -41,7 +43,9 @@ public class HouseholdHelperAI : MonoBehaviour
     private int choresHelpedToday;
     private bool helping;
     private Rigidbody2D body;
+    private WaypointMover waypointMover;
     private Transform player;
+    private float choreStuckTimer;
 
     private void Start()
     {
@@ -53,6 +57,7 @@ public class HouseholdHelperAI : MonoBehaviour
             : FindFirstObjectByType<DayManager>();
         choreManager = FindFirstObjectByType<ChoreManager>();
         body = GetComponent<Rigidbody2D>();
+        waypointMover = GetComponent<WaypointMover>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         ResetForDay();
@@ -139,31 +144,68 @@ public class HouseholdHelperAI : MonoBehaviour
 
     private IEnumerator HelpWithChore(Chore chore)
     {
+        if (waypointMover == null)
+        {
+            Debug.LogWarning(name + " cannot help with chores because it has no WaypointMover.", this);
+            yield break;
+        }
+
         helping = true;
+        bool restoreWaypointMovement = waypointMover.MovementEnabled;
+        waypointMover.SetMovementEnabled(false);
+        waypointMover.ResetWaypointRoute();
+        ShowChoreAnnouncement(chore);
+
         float elapsed = 0f;
+        choreStuckTimer = 0f;
+        Vector2 previousPosition = GetCurrentPosition();
         while (chore != null && !chore.IsCompleted && !chore.IsMissed &&
-               Vector2.Distance(transform.position, chore.transform.position) > arriveDistance &&
+               Vector2.Distance(GetCurrentPosition(), chore.transform.position) > arriveDistance &&
                elapsed < helpTimeout)
         {
             if (!PauseController.IsGamePaused)
             {
-                Vector2 nextPosition = Vector2.MoveTowards(
-                    transform.position,
+                Vector2 currentPosition = GetCurrentPosition();
+                Vector2 movement = waypointMover.GetMovementAlongWaypointRoute(
                     chore.transform.position,
-                    moveSpeed * Time.deltaTime);
+                    moveSpeed * choreSpeedMultiplier,
+                    arriveDistance,
+                    true,
+                    player);
+                Vector2 nextPosition = currentPosition + movement;
 
                 if (body != null)
                     body.MovePosition(nextPosition);
                 else
                     transform.position = nextPosition;
+
+                elapsed += Time.deltaTime;
+                yield return null;
+
+                if (PauseController.IsGamePaused)
+                    continue;
+
+                Vector2 actualPosition = GetCurrentPosition();
+                if ((actualPosition - previousPosition).sqrMagnitude <= 0.000001f)
+                    choreStuckTimer += Time.deltaTime;
+                else
+                    choreStuckTimer = 0f;
+
+                if (choreStuckTimer >= choreStuckTimeout)
+                {
+                    waypointMover.ResetWaypointRoute();
+                    choreStuckTimer = 0f;
+                }
+
+                previousPosition = actualPosition;
+                continue;
             }
 
-            elapsed += Time.deltaTime;
             yield return null;
         }
 
         if (chore != null && !chore.IsCompleted && !chore.IsMissed &&
-            Vector2.Distance(transform.position, chore.transform.position) <= arriveDistance &&
+            Vector2.Distance(GetCurrentPosition(), chore.transform.position) <= arriveDistance &&
             IsAvailableForHelper(chore))
         {
             chore.Complete();
@@ -172,7 +214,33 @@ public class HouseholdHelperAI : MonoBehaviour
             Debug.Log(name + " helped complete " + chore.ChoreName + ".");
         }
 
+        waypointMover.ResetWaypointRoute();
+        waypointMover.SetMovementEnabled(restoreWaypointMovement);
+
         helping = false;
+    }
+
+    private void ShowChoreAnnouncement(Chore chore)
+    {
+        string message = null;
+        if (chore is DishwashingChore)
+            message = "Ako na mag huhugas";
+        else if (chore is GarbageChore ||
+                 string.Equals(chore.ChoreName, "Garbage", System.StringComparison.OrdinalIgnoreCase))
+            message = "Ako na magtatapon ng basura";
+        else if (string.Equals(chore.ChoreName, "PickUp", System.StringComparison.OrdinalIgnoreCase))
+            message = "Nagkalat nanaman si bunso";
+
+        if (!string.IsNullOrEmpty(message))
+        {
+            Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
+            SpeechBubbleCanvas.Show(anchor, message, bubbleDuration);
+        }
+    }
+
+    private Vector2 GetCurrentPosition()
+    {
+        return body != null ? body.position : (Vector2)transform.position;
     }
 
     private void TryShowBadMoodBubble()

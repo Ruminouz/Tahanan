@@ -35,6 +35,13 @@ public static class NPCNavigation2D
         bounds.Encapsulate(target);
         bounds.Expand(boundsPadding * 2f + cellSize * 2f);
 
+        ContactFilter2D obstacleFilter = new ContactFilter2D
+        {
+            useLayerMask = true,
+            useTriggers = false
+        };
+        obstacleFilter.SetLayerMask(obstacleLayers);
+
         int width = Mathf.Clamp(Mathf.CeilToInt(bounds.size.x / cellSize), 2, 128);
         int height = Mathf.Clamp(Mathf.CeilToInt(bounds.size.y / cellSize), 2, 128);
         Vector2 origin = bounds.min;
@@ -82,11 +89,11 @@ public static class NPCNavigation2D
                         continue;
 
                     int nextIndex = nextY * width + nextX;
-                    if (!IsWalkable(nextIndex, width, origin, cellSize, mover, obstacleLayers))
+                    if (!IsWalkable(nextIndex, width, origin, cellSize, mover, obstacleFilter))
                         continue;
                     if (x != 0 && y != 0 &&
-                        (!IsWalkable(currentY * width + nextX, width, origin, cellSize, mover, obstacleLayers) ||
-                         !IsWalkable(nextY * width + currentX, width, origin, cellSize, mover, obstacleLayers)))
+                        (!IsWalkable(currentY * width + nextX, width, origin, cellSize, mover, obstacleFilter) ||
+                         !IsWalkable(nextY * width + currentX, width, origin, cellSize, mover, obstacleFilter)))
                         continue;
 
                     float moveCost = x != 0 && y != 0 ? 1.4142f : 1f;
@@ -120,7 +127,7 @@ public static class NPCNavigation2D
                 for (int x = 0; x < width; x++)
                 {
                     int index = y * width + x;
-                    if (!IsWalkable(index, width, origin, cellSize, mover, obstacleLayers))
+                    if (!IsWalkable(index, width, origin, cellSize, mover, obstacleFilter))
                         continue;
 
                     float distance = (GridPosition(index, width, origin, cellSize) - position).sqrMagnitude;
@@ -166,14 +173,14 @@ public static class NPCNavigation2D
         Vector2 origin,
         float cellSize,
         Collider2D mover,
-        LayerMask obstacleLayers)
+        ContactFilter2D obstacleFilter)
     {
         Vector2 position = GridPosition(index, width, origin, cellSize);
-        int count = Physics2D.OverlapCircleNonAlloc(
+        int count = Physics2D.OverlapCircle(
             position,
             Mathf.Max(mover.bounds.extents.x, mover.bounds.extents.y) + cellSize * 0.45f,
-            OverlapResults,
-            obstacleLayers);
+            obstacleFilter,
+            OverlapResults);
 
         for (int i = 0; i < count; i++)
         {

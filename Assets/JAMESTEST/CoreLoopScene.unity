@@ -358,6 +358,8 @@ MonoBehaviour:
   catBuyButton: {fileID: 995943486}
   catPrefab: {fileID: 1905514909}
   catSpawnPoint: {fileID: 1298402942}
+  mopUpgradeIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
+  catIcon: {fileID: -7232521027535748977, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
 --- !u!114 &68763431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,6 +415,7 @@ MonoBehaviour:
   statusText: {fileID: 1637620284}
   buyButton: {fileID: 1785283028}
   closeButton: {fileID: 1405085285}
+  broomUpgradeIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
 --- !u!4 &79365035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8935189840966961768, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
@@ -2400,7 +2403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3425151329f10524184ff8341a917f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
-  dayLength: 300
+  dayLength: 250
 --- !u!114 &534126632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2475,6 +2478,8 @@ MonoBehaviour:
   timeText: {fileID: 1752465968}
   choreListText: {fileID: 1978447355}
   timeBar: {fileID: 0}
+  clockFaceSprite: {fileID: 8581363780399802525, guid: 922b77a9796829c46979d96230d7063e, type: 3}
+  clockAnchor: {fileID: 0}
   pointsText: {fileID: 417675651}
   coinsText: {fileID: 1862735776}
   successRateText: {fileID: 807756565}
@@ -7584,7 +7589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteChore
   choreName: PickUp
   points: 1
-  deadlineSeconds: 300
+  deadlineSeconds: 250
   earlyBonusPoints: 1
   miniGame: {fileID: 1734432312}
 --- !u!1001 &1591657217

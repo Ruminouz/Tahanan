@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8d782902958a6354797c1a649a2949a0
+guid: 96b23138e346cf548a34e0502be680a4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7754988575891523622
-    second: timer_0
+      213: -2987732113715833912
+    second: tindahan_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: timer_0
+      name: tindahan_0
       rect:
         serializedVersion: 2
-        x: 111
-        y: 47
-        width: 1890
-        height: 1922
+        x: 431
+        y: 207
+        width: 1378
+        height: 1794
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad7f5c85afeb06490800000000000000
-      internalID: -7754988575891523622
+      spriteID: 8c3d0f5e8717986d0800000000000000
+      internalID: -2987732113715833912
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      timer_0: -7754988575891523622
+      tindahan_0: -2987732113715833912
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

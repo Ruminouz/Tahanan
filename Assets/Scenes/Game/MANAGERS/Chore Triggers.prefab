@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FeedDogChore
   choreName: FeedDog
   points: 1
-  deadlineSeconds: 300
+  deadlineSeconds: 250
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
 --- !u!1 &1081123552167931290
@@ -941,7 +941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingChore
   choreName: Dishes
   points: 1
-  deadlineSeconds: 300
+  deadlineSeconds: 250
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
 --- !u!1 &7430527013064816712
@@ -1251,7 +1251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteChore
   choreName: PickUp
   points: 1
-  deadlineSeconds: 300
+  deadlineSeconds: 250
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
 --- !u!1 &8896623799091094127
@@ -1407,7 +1407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ThrowTrashChore
   choreName: Garbage
   points: 1
-  deadlineSeconds: 300
+  deadlineSeconds: 250
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
   garbageBag: {fileID: 0}
