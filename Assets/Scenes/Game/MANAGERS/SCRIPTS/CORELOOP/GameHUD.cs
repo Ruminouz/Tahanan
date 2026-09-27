@@ -15,13 +15,29 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private TMP_Text pointsText;
     [SerializeField] private TMP_Text coinsText;
     [SerializeField] private TMP_Text successRateText;
+    [SerializeField] private Sprite coinSprite;
 
     private TimeManager timeManager;
     private DayManager dayManager;
     private SweepingManager sweepingManager;
     private WaterSpawner waterSpawner;
     private ChoreManager choreManager;
+    private EconomyManager economyManager;
     private RectTransform clockHand;
+    private Image clockFaceImage;
+    private Image clockHandImage;
+    private Image clockCenterImage;
+    private Canvas currencyCanvas;
+    private readonly List<CoinPopup> coinPopups = new();
+
+    private sealed class CoinPopup
+    {
+        public PlayerMovement player;
+        public RectTransform rect;
+        public CanvasGroup group;
+        public Image icon;
+        public float elapsed;
+    }
 
     private void Start()
     {
@@ -32,9 +48,15 @@ public class GameHUD : MonoBehaviour
         sweepingManager = FindFirstObjectByType<SweepingManager>();
         waterSpawner = FindFirstObjectByType<WaterSpawner>();
         choreManager = FindFirstObjectByType<ChoreManager>();
+        currencyCanvas = coinsText != null
+            ? coinsText.GetComponentInParent<Canvas>()
+            : FindFirstObjectByType<Canvas>();
 
         if (clockFaceSprite != null)
             CreateClockDisplay();
+
+        CreateCoinCounter();
+        ResolveEconomyManager();
 
         if (GetComponent<PlayerInventoryUI>() == null)
             gameObject.AddComponent<PlayerInventoryUI>();
@@ -42,6 +64,10 @@ public class GameHUD : MonoBehaviour
 
     private void Update()
     {
+        ResolveEconomyManager();
+        UpdateCoinCounter();
+        UpdateCoinPopups();
+
         if (timeManager == null || dayManager == null)
             return;
 
@@ -59,6 +85,8 @@ public class GameHUD : MonoBehaviour
 
     private void UpdateTime()
     {
+        bool isTimeFrozen = timeManager.IsTimeFrozen;
+
         if (clockHand != null)
             clockHand.localRotation = Quaternion.Euler(
                 0f,
@@ -66,7 +94,26 @@ public class GameHUD : MonoBehaviour
                 timeManager.GetClockHandRotation());
 
         if (timeText != null)
-            timeText.text = "Time: " + timeManager.GetClockTimeLabel();
+            timeText.text = "Time: " + timeManager.GetClockTimeLabel() +
+                (isTimeFrozen
+                    ? " (FROZEN " +
+                        Mathf.CeilToInt(timeManager.FreezeTimeRemaining) + "s)"
+                    : string.Empty);
+
+        if (clockFaceImage != null)
+            clockFaceImage.color = isTimeFrozen
+                ? new Color(0.62f, 0.84f, 1f)
+                : Color.white;
+
+        if (clockHandImage != null)
+            clockHandImage.color = isTimeFrozen
+                ? new Color(0.05f, 0.35f, 0.72f)
+                : new Color(0.12f, 0.08f, 0.04f);
+
+        if (clockCenterImage != null)
+            clockCenterImage.color = isTimeFrozen
+                ? new Color(0.05f, 0.35f, 0.72f)
+                : new Color(0.08f, 0.06f, 0.03f);
     }
 
     private void CreateClockDisplay()
@@ -115,10 +162,10 @@ public class GameHUD : MonoBehaviour
             clockRect.sizeDelta = new Vector2(144f, 144f);
         }
 
-        Image clockFace = clockObject.GetComponent<Image>();
-        clockFace.sprite = clockFaceSprite;
-        clockFace.preserveAspect = true;
-        clockFace.raycastTarget = false;
+        clockFaceImage = clockObject.GetComponent<Image>();
+        clockFaceImage.sprite = clockFaceSprite;
+        clockFaceImage.preserveAspect = true;
+        clockFaceImage.raycastTarget = false;
 
         GameObject handObject = new GameObject(
             "Clock Hand",
@@ -133,8 +180,9 @@ public class GameHUD : MonoBehaviour
         clockHand.pivot = new Vector2(0.5f, 0f);
         clockHand.anchoredPosition = Vector2.zero;
         clockHand.sizeDelta = new Vector2(4f, 43f);
-        handObject.GetComponent<Image>().color = new Color(0.12f, 0.08f, 0.04f);
-        handObject.GetComponent<Image>().raycastTarget = false;
+        clockHandImage = handObject.GetComponent<Image>();
+        clockHandImage.color = new Color(0.12f, 0.08f, 0.04f);
+        clockHandImage.raycastTarget = false;
 
         GameObject centerObject = new GameObject(
             "Clock Center",
@@ -148,8 +196,9 @@ public class GameHUD : MonoBehaviour
         centerRect.anchorMax = new Vector2(0.5f, 0.5f);
         centerRect.anchoredPosition = Vector2.zero;
         centerRect.sizeDelta = new Vector2(8f, 8f);
-        centerObject.GetComponent<Image>().color = new Color(0.08f, 0.06f, 0.03f);
-        centerObject.GetComponent<Image>().raycastTarget = false;
+        clockCenterImage = centerObject.GetComponent<Image>();
+        clockCenterImage.color = new Color(0.08f, 0.06f, 0.03f);
+        clockCenterImage.raycastTarget = false;
     }
 
     private void UpdateChoreList()
@@ -234,13 +283,248 @@ public class GameHUD : MonoBehaviour
         if (pointsText != null)
             pointsText.text = "Points: " + choreManager.totalPoints;
 
-        EconomyManager economyManager = EconomyManager.Instance != null
-            ? EconomyManager.Instance
-            : FindFirstObjectByType<EconomyManager>();
-        if (coinsText != null && economyManager != null)
-            coinsText.text = "Coins: " + economyManager.Coins;
-
         if (successRateText != null)
             successRateText.text = "Success: " + choreManager.SuccessRate.ToString("0") + "%";
+    }
+
+    private void CreateCoinCounter()
+    {
+        if (currencyCanvas == null)
+            currencyCanvas = FindFirstObjectByType<Canvas>();
+
+        if (coinsText == null && currencyCanvas != null)
+        {
+            TMP_Text[] canvasTexts =
+                currencyCanvas.GetComponentsInChildren<TMP_Text>(false);
+            foreach (TMP_Text canvasText in canvasTexts)
+            {
+                if (canvasText.gameObject.name == "Coins")
+                {
+                    coinsText = canvasText;
+                    break;
+                }
+            }
+        }
+
+        if (coinsText != null)
+        {
+            RectTransform textRect = coinsText.rectTransform;
+            Image icon = CreateImage("Coin Icon", textRect, coinSprite);
+            icon.rectTransform.anchorMin = new Vector2(0f, 0.5f);
+            icon.rectTransform.anchorMax = new Vector2(0f, 0.5f);
+            icon.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            icon.rectTransform.anchoredPosition = new Vector2(22f, 0f);
+            icon.rectTransform.sizeDelta = new Vector2(36f, 36f);
+            coinsText.alignment = TextAlignmentOptions.MidlineLeft;
+            Vector4 margin = coinsText.margin;
+            margin.x = 48f;
+            coinsText.margin = margin;
+            return;
+        }
+
+        if (currencyCanvas == null)
+        {
+            Debug.LogWarning(
+                "Coin display could not be created because no Canvas was found.",
+                this);
+            return;
+        }
+
+        GameObject counterObject = new GameObject(
+            "Coin Counter",
+            typeof(RectTransform));
+        counterObject.layer = currencyCanvas.gameObject.layer;
+        RectTransform counterRect = counterObject.GetComponent<RectTransform>();
+        counterRect.SetParent(currencyCanvas.transform, false);
+        counterRect.anchorMin = new Vector2(0f, 1f);
+        counterRect.anchorMax = new Vector2(0f, 1f);
+        counterRect.pivot = new Vector2(0f, 1f);
+        counterRect.anchoredPosition = new Vector2(24f, -24f);
+        counterRect.sizeDelta = new Vector2(150f, 48f);
+
+        Image counterIcon = CreateImage("Coin Icon", counterRect, coinSprite);
+        counterIcon.rectTransform.anchorMin = new Vector2(0f, 0.5f);
+        counterIcon.rectTransform.anchorMax = new Vector2(0f, 0.5f);
+        counterIcon.rectTransform.anchoredPosition = new Vector2(20f, 0f);
+        counterIcon.rectTransform.sizeDelta = new Vector2(36f, 36f);
+
+        GameObject amountObject = new GameObject(
+            "Coin Amount",
+            typeof(RectTransform));
+        amountObject.layer = currencyCanvas.gameObject.layer;
+        RectTransform amountRect = amountObject.GetComponent<RectTransform>();
+        amountRect.SetParent(counterRect, false);
+        amountRect.anchorMin = new Vector2(0f, 0f);
+        amountRect.anchorMax = new Vector2(1f, 1f);
+        amountRect.offsetMin = new Vector2(48f, 0f);
+        amountRect.offsetMax = Vector2.zero;
+        coinsText = amountObject.AddComponent<TextMeshProUGUI>();
+        coinsText.font = TMP_Settings.defaultFontAsset;
+        coinsText.fontSize = 30f;
+        coinsText.color = Color.white;
+        coinsText.alignment = TextAlignmentOptions.MidlineLeft;
+        coinsText.raycastTarget = false;
+    }
+
+    private Image CreateImage(string objectName, Transform parent, Sprite sprite)
+    {
+        GameObject imageObject = new GameObject(
+            objectName,
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        imageObject.layer = parent.gameObject.layer;
+        imageObject.transform.SetParent(parent, false);
+        Image image = imageObject.GetComponent<Image>();
+        image.sprite = sprite;
+        image.preserveAspect = true;
+        image.raycastTarget = false;
+        return image;
+    }
+
+    private void ResolveEconomyManager()
+    {
+        EconomyManager currentManager = EconomyManager.Instance != null
+            ? EconomyManager.Instance
+            : FindFirstObjectByType<EconomyManager>();
+        if (currentManager == economyManager)
+            return;
+
+        if (economyManager != null)
+            economyManager.CoinsEarned -= OnCoinsEarned;
+
+        economyManager = currentManager;
+        if (economyManager != null)
+            economyManager.CoinsEarned += OnCoinsEarned;
+    }
+
+    private void UpdateCoinCounter()
+    {
+        if (coinsText == null || economyManager == null)
+            return;
+
+        coinsText.text = economyManager.Coins.ToString();
+    }
+
+    private void OnCoinsEarned(int amount)
+    {
+        if (amount <= 0)
+            return;
+
+        if (currencyCanvas == null)
+        {
+            Debug.LogWarning(
+                "Coin reward popup could not be shown because no Canvas was found.",
+                this);
+            return;
+        }
+
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        Camera worldCamera = Camera.main;
+        if (player == null || worldCamera == null)
+        {
+            Debug.LogWarning(
+                "Coin reward popup could not be shown because the player or main camera was not found.",
+                this);
+            return;
+        }
+
+        GameObject popupObject = new GameObject(
+            "Coin Reward Popup",
+            typeof(RectTransform),
+            typeof(CanvasGroup));
+        popupObject.layer = currencyCanvas.gameObject.layer;
+        RectTransform popupRect = popupObject.GetComponent<RectTransform>();
+        popupRect.SetParent(currencyCanvas.transform, false);
+        popupRect.anchorMin = new Vector2(0.5f, 0.5f);
+        popupRect.anchorMax = new Vector2(0.5f, 0.5f);
+        popupRect.pivot = new Vector2(0.5f, 0.5f);
+        popupRect.sizeDelta = new Vector2(132f, 44f);
+
+        Image popupIcon = CreateImage("Coin Icon", popupRect, coinSprite);
+        popupIcon.rectTransform.anchorMin = new Vector2(0f, 0.5f);
+        popupIcon.rectTransform.anchorMax = new Vector2(0f, 0.5f);
+        popupIcon.rectTransform.anchoredPosition = new Vector2(20f, 0f);
+        popupIcon.rectTransform.sizeDelta = new Vector2(34f, 34f);
+
+        GameObject amountObject = new GameObject(
+            "Reward Amount",
+            typeof(RectTransform));
+        amountObject.layer = currencyCanvas.gameObject.layer;
+        RectTransform amountRect = amountObject.GetComponent<RectTransform>();
+        amountRect.SetParent(popupRect, false);
+        amountRect.anchorMin = new Vector2(0f, 0f);
+        amountRect.anchorMax = new Vector2(1f, 1f);
+        amountRect.offsetMin = new Vector2(44f, 0f);
+        amountRect.offsetMax = Vector2.zero;
+        TMP_Text amountText = amountObject.AddComponent<TextMeshProUGUI>();
+        amountText.font = coinsText.font;
+        amountText.text = "+" + amount;
+        amountText.fontSize = 30f;
+        amountText.fontStyle = FontStyles.Bold;
+        amountText.color = new Color(1f, 0.9f, 0.45f);
+        amountText.alignment = TextAlignmentOptions.MidlineLeft;
+        amountText.raycastTarget = false;
+
+        coinPopups.Add(new CoinPopup
+        {
+            player = player,
+            rect = popupRect,
+            group = popupObject.GetComponent<CanvasGroup>(),
+            icon = popupIcon
+        });
+    }
+
+    private void UpdateCoinPopups()
+    {
+        Camera worldCamera = Camera.main;
+        Camera canvasCamera = currencyCanvas != null &&
+            currencyCanvas.renderMode != RenderMode.ScreenSpaceOverlay
+            ? currencyCanvas.worldCamera
+            : null;
+        RectTransform canvasRect = currencyCanvas != null
+            ? currencyCanvas.transform as RectTransform
+            : null;
+
+        for (int index = coinPopups.Count - 1; index >= 0; index--)
+        {
+            CoinPopup popup = coinPopups[index];
+            popup.elapsed += Time.unscaledDeltaTime;
+            if (popup.elapsed >= 1.2f || popup.player == null ||
+                worldCamera == null || canvasRect == null)
+            {
+                if (popup.rect != null)
+                    Destroy(popup.rect.gameObject);
+                coinPopups.RemoveAt(index);
+                continue;
+            }
+
+            Vector3 headPosition = popup.player.transform.position + Vector3.up;
+            SpriteRenderer playerSprite =
+                popup.player.GetComponentInChildren<SpriteRenderer>();
+            if (playerSprite != null)
+                headPosition.y = playerSprite.bounds.max.y + 0.1f;
+
+            Vector3 screenPosition = worldCamera.WorldToScreenPoint(headPosition);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRect,
+                screenPosition,
+                canvasCamera,
+                out Vector2 localPosition);
+            float progress = popup.elapsed / 1.2f;
+            popup.rect.anchoredPosition =
+                localPosition + Vector2.up * (48f * progress);
+            popup.group.alpha = 1f - Mathf.SmoothStep(0f, 1f, progress);
+            float spin = Mathf.Max(
+                0.12f,
+                Mathf.Abs(Mathf.Cos(popup.elapsed * 12f)));
+            popup.icon.rectTransform.localScale = new Vector3(spin, 1f, 1f);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (economyManager != null)
+            economyManager.CoinsEarned -= OnCoinsEarned;
     }
 }

@@ -121,9 +121,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9198406421332382359}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 4551880769407926883}
+        m_TargetAssemblyTypeName: FeedDogMiniGame, Assembly-CSharp
+        m_MethodName: FeedDog
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -344,7 +344,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: SPACE / TAP
 --- !u!1 &3480285242911927692
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +423,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: FEED!
 --- !u!1 &3623563714881348836
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,8 +714,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 134, y: 288}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: 288}
+  m_SizeDelta: {x: 270, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6036689498563532522
 CanvasRenderer:
@@ -758,7 +758,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: FEED THE DOG!
 --- !u!1 &6703052613580631141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,3 +1079,4 @@ MonoBehaviour:
   panel: {fileID: 9198406421332382359}
   tutorial: {fileID: 0}
   slider: {fileID: 2928617822028590915}
+  statusText: {fileID: 2944701342594140054}

@@ -5,7 +5,7 @@ using UnityEngine;
 public enum BunsoBoostType
 {
     Chocolate,
-    ExtraTime
+    TimeFreezer
 }
 
 public class BunsoBoostInventory : MonoBehaviour
@@ -14,12 +14,12 @@ public class BunsoBoostInventory : MonoBehaviour
 
     [SerializeField, Min(1f)] private float chocolateSpeedMultiplier = 1.5f;
     [SerializeField, Min(0f)] private float chocolateDuration = 8f;
-    [SerializeField, Min(1f)] private float extraTimeSeconds = 30f;
+    [SerializeField, Min(0.1f)] private float timeFreezeDuration = 7f;
     [SerializeField, Min(1)] private int capacity = 7;
 
     private readonly List<BunsoBoostType> items = new();
     private PlayerMovement playerMovement;
-    private DayManager dayManager;
+    private TimeManager timeManager;
 
     public event Action InventoryChanged;
     public int Count => items.Count;
@@ -34,9 +34,7 @@ public class BunsoBoostInventory : MonoBehaviour
 
         Instance = this;
         playerMovement = GetComponent<PlayerMovement>();
-        dayManager = DayManager.Instance != null
-            ? DayManager.Instance
-            : FindFirstObjectByType<DayManager>();
+        timeManager = FindFirstObjectByType<TimeManager>();
     }
 
     private void OnDestroy()
@@ -97,42 +95,15 @@ public class BunsoBoostInventory : MonoBehaviour
         }
         else
         {
-            if (dayManager == null)
-                dayManager = DayManager.Instance != null
-                    ? DayManager.Instance
-                    : FindFirstObjectByType<DayManager>();
+            if (timeManager == null)
+                timeManager = FindFirstObjectByType<TimeManager>();
 
-            Chore lowestTimerChore = FindLowestTimerChore();
-            if (lowestTimerChore == null)
+            if (timeManager == null || !timeManager.FreezeTime(timeFreezeDuration))
                 return false;
-
-            lowestTimerChore.ExtendDeadline(extraTimeSeconds);
         }
 
         items.RemoveAt(index);
         InventoryChanged?.Invoke();
         return true;
-    }
-
-    private Chore FindLowestTimerChore()
-    {
-        if (dayManager == null)
-            return null;
-
-        Chore lowest = null;
-        Chore[] chores = dayManager.GetActiveChores();
-        if (chores == null)
-            return null;
-
-        foreach (Chore chore in chores)
-        {
-            if (chore == null || chore.IsCompleted || chore.IsMissed)
-                continue;
-
-            if (lowest == null || chore.RemainingDeadline < lowest.RemainingDeadline)
-                lowest = chore;
-        }
-
-        return lowest;
     }
 }

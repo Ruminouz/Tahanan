@@ -17,6 +17,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private Color nightTint = new Color(0.38f, 0.46f, 0.7f, 1f);
 
     private float currentTime;
+    private float frozenTimeRemaining;
     private bool timeRunning = false;
     private SpriteRenderer[] outdoorSprites = new SpriteRenderer[0];
     private Color[] originalSpriteColors = new Color[0];
@@ -32,6 +33,8 @@ public class TimeManager : MonoBehaviour
     }
 
     public float DayLength => dayLength;
+    public bool IsTimeFrozen => frozenTimeRemaining > 0f;
+    public float FreezeTimeRemaining => frozenTimeRemaining;
     public DayPhase CurrentDayPhase => GetDayPhase(GetDayProgress());
 
     public string GetDayPhaseLabel()
@@ -78,6 +81,15 @@ public class TimeManager : MonoBehaviour
         timeRunning = true;
     }
 
+    public bool FreezeTime(float seconds)
+    {
+        if (!timeRunning || seconds <= 0f)
+            return false;
+
+        frozenTimeRemaining += seconds;
+        return true;
+    }
+
 
 
     private void Start()
@@ -90,7 +102,11 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
-        if (timeRunning)
+        if (IsTimeFrozen)
+        {
+            frozenTimeRemaining = Mathf.Max(0f, frozenTimeRemaining - Time.deltaTime);
+        }
+        else if (timeRunning)
         {
             currentTime += Time.deltaTime;
 
@@ -242,6 +258,7 @@ public class TimeManager : MonoBehaviour
     public void StartDayTime()
     {
         currentTime = 0f;
+        frozenTimeRemaining = 0f;
         timeRunning = true;
 
         Debug.Log("Day timer reset and started.");
@@ -252,6 +269,7 @@ public class TimeManager : MonoBehaviour
     public void ResetDayTimer()
     {
         currentTime = 0f;
+        frozenTimeRemaining = 0f;
         timeRunning = true;
 
         Debug.Log("New day timer started.");

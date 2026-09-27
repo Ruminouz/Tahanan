@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BunsoAI : MonoBehaviour
 {
@@ -11,9 +12,10 @@ public class BunsoAI : MonoBehaviour
 
     [Header("Good Mood Rewards")]
     [SerializeField] private BunsoBoostType[] possibleBoosts =
-        { BunsoBoostType.Chocolate, BunsoBoostType.ExtraTime };
+        { BunsoBoostType.Chocolate, BunsoBoostType.TimeFreezer };
     [SerializeField] private GameObject chocolatePrefab;
-    [SerializeField] private GameObject extraTimePrefab;
+    [FormerlySerializedAs("extraTimePrefab")]
+    [SerializeField] private GameObject timeFreezerPrefab;
 
     [Header("Bad Mood Chore")]
     [SerializeField] private SegregateWasteChore segregateWastePrefab;
@@ -161,7 +163,7 @@ public class BunsoAI : MonoBehaviour
         BunsoBoostType boost = possibleBoosts[Random.Range(0, possibleBoosts.Length)];
         GameObject prefab = boost == BunsoBoostType.Chocolate
             ? chocolatePrefab
-            : extraTimePrefab;
+            : timeFreezerPrefab;
         if (prefab == null)
         {
             Debug.LogWarning("Bunso reward prefab is not assigned for " + boost + ".", this);

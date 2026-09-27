@@ -26,17 +26,15 @@ public class FeedDogSlider : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
         baseSpeed = speed;
         baseSuccessRange = successRange;
+    }
 
-        miniGame = FindFirstObjectByType<FeedDogMiniGame>();
-
-        if(miniGame == null)
-        {
-            Debug.LogError("FeedDogMiniGame not found!");
-        }
+    public void SetMiniGame(FeedDogMiniGame miniGame)
+    {
+        this.miniGame = miniGame;
     }
 
     public void ApplyDifficulty(int difficulty)
@@ -58,12 +56,12 @@ public class FeedDogSlider : MonoBehaviour
 
 
 
-    public void StartSlider()
+    public bool StartSlider()
     {
         if(foodIndicator == null || targetZone == null)
         {
             Debug.LogError("FeedDogSlider references missing!");
-            return;
+            return false;
         }
 
 
@@ -78,6 +76,20 @@ public class FeedDogSlider : MonoBehaviour
 
 
         Debug.Log("Feed Dog Slider Started!");
+        return true;
+    }
+
+    public void StopSlider()
+    {
+        active = false;
+    }
+
+    public void TryFeed()
+    {
+        if(active)
+        {
+            CheckPosition();
+        }
     }
 
 
@@ -100,7 +112,7 @@ public class FeedDogSlider : MonoBehaviour
         {
             Debug.Log("SPACE PRESSED");
 
-            CheckPosition();
+            TryFeed();
         }
     }
 

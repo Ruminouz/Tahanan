@@ -280,3 +280,4 @@ MonoBehaviour:
   pointsText: {fileID: 0}
   coinsText: {fileID: 0}
   successRateText: {fileID: 0}
+  coinSprite: {fileID: -3338749442709606003, guid: 0e67087d59961184282f29666ad62a46, type: 3}

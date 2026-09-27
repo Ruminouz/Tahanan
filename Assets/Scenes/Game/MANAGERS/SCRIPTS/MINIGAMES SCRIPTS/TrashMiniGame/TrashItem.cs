@@ -24,6 +24,7 @@ IEndDragHandler
     private Vector2 startPosition;
 
     private Vector2 offset;
+    private TrashBin hoveredBin;
 
 
 
@@ -44,7 +45,6 @@ IEndDragHandler
             " Type = " +
             trashType
         );
-
     }
 
 
@@ -64,7 +64,7 @@ IEndDragHandler
             fallingTrash.enabled = false;
         }
 
-
+        UpdateHoveredBin(null);
 
         Vector2 localPoint;
 
@@ -117,6 +117,11 @@ IEndDragHandler
         rectTransform.anchoredPosition =
         localPoint + offset;
 
+        TrashBin bin = eventData.pointerCurrentRaycast.gameObject != null
+            ? eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<TrashBin>()
+            : null;
+        UpdateHoveredBin(bin);
+
     }
 
 
@@ -143,61 +148,32 @@ IEndDragHandler
 
         Debug.Log("Released trash");
 
+        UpdateHoveredBin(null);
 
-
-        PointerEventData pointerData =
-        new PointerEventData(EventSystem.current);
-
-
-
-        pointerData.position =
-        eventData.position;
-
-
-
-        List<RaycastResult> results =
-        new List<RaycastResult>();
-
-
-
-        EventSystem.current.RaycastAll(
-            pointerData,
-            results
-        );
-
-
-
-        foreach(RaycastResult result in results)
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
         {
+            position = eventData.position
+        };
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
 
-            Debug.Log(
-                "Hit UI: "
-                + result.gameObject.name
-            );
+        foreach (RaycastResult result in results)
+        {
+            TrashBin bin = result.gameObject.GetComponentInParent<TrashBin>();
+            if (bin == null)
+                continue;
 
+            bool wasCorrect = trashType == bin.binType;
+            bin.PlayDropFeedback(wasCorrect);
 
+            if (GarbageSortingMiniGame.Instance != null)
+                GarbageSortingMiniGame.Instance.CheckTrash(this, bin);
 
-            TrashBin bin =
-            result.gameObject.GetComponentInParent<TrashBin>();
-
-
-            if(bin != null)
-            {
-
-                Debug.Log(
-                    "Dropped on BIN: "
-                    + bin.name
-                );
-
-
-                GarbageSortingMiniGame.Instance
-                .CheckTrash(this, bin);
-
-
+            if (wasCorrect)
                 return;
 
-            }
-
+            rectTransform.anchoredPosition = startPosition;
+            return;
         }
 
 
@@ -209,6 +185,21 @@ IEndDragHandler
         rectTransform.anchoredPosition =
         startPosition;
 
+    }
+
+
+    private void UpdateHoveredBin(TrashBin nextBin)
+    {
+        if (hoveredBin == nextBin)
+            return;
+
+        if (hoveredBin != null)
+            hoveredBin.SetDropTarget(false);
+
+        hoveredBin = nextBin;
+
+        if (hoveredBin != null)
+            hoveredBin.SetDropTarget(true);
     }
 
 }

@@ -1,19 +1,29 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FeedDogMiniGame : MonoBehaviour
 {
+    private const int AttemptsPerMeal = 3;
+    private const int BitesNeeded = 2;
+    private const float ResultDisplayDuration = 0.9f;
+
     [SerializeField] private GameObject panel;
     [SerializeField] private ChoreTutorial tutorial;
     [SerializeField] private FeedDogSlider slider;
-
+    [SerializeField] private Component statusText;
 
     private Chore currentChore;
     private TutorialManager tutorialManager;
     private DayManager dayManager;
-
     private bool feedingStarted = false;
-
-
+    private int attemptsMade;
+    private int successfulBites;
+    private int combo;
+    private int score;
+    private Coroutine resultCoroutine;
+    private Vector3 resultTextBaseScale;
 
     private void Start()
     {
@@ -30,22 +40,31 @@ public class FeedDogMiniGame : MonoBehaviour
         if (chore == null || panel == null)
             return;
 
+        if(resultCoroutine != null)
+        {
+            StopCoroutine(resultCoroutine);
+            if(statusText != null)
+            {
+                statusText.transform.localScale = resultTextBaseScale;
+            }
+
+            resultCoroutine = null;
+        }
+
         currentChore = chore;
         feedingStarted = false;
+        attemptsMade = 0;
+        successfulBites = 0;
+        combo = 0;
+        score = 0;
 
         panel.SetActive(true);
 
-
         bool alreadyLearned = false;
-
-
         if(tutorialManager != null)
         {
-            alreadyLearned =
-                tutorialManager.HasLearned(chore.ChoreName);
+            alreadyLearned = tutorialManager.HasLearned(chore.ChoreName);
         }
-
-
 
         if(alreadyLearned)
         {
@@ -70,9 +89,8 @@ public class FeedDogMiniGame : MonoBehaviour
 
         tutorial.ShowTutorial(
             "FEED THE DOG",
-            "1. Watch the slider.\n" +
-            "2. Press SPACE when the food is inside the marked area.\n" +
-            "3. Feed the dog successfully.",
+            "Watch the slider and press SPACE or tap FEED when the food is in the bowl.\n" +
+            "Land at least 2 of 3 bites to finish the meal. Consecutive bites build your combo!",
             FinishTutorial
         );
     }
@@ -84,25 +102,15 @@ public class FeedDogMiniGame : MonoBehaviour
     {
         if(tutorialManager != null)
         {
-            tutorialManager.MarkAsLearned(
-                currentChore.ChoreName
-            );
+            tutorialManager.MarkAsLearned(currentChore.ChoreName);
         }
-
 
         StartFeeding();
     }
 
-
-
-
     private void StartFeeding()
     {
         feedingStarted = true;
-
-
-        Debug.Log("Feed Dog Mini Game Started");
-
 
         if(slider != null)
         {
@@ -116,76 +124,186 @@ public class FeedDogMiniGame : MonoBehaviour
                 ? resolvedDayManager.CurrentDifficulty
                 : 0;
 
+            slider.SetMiniGame(this);
             slider.ApplyDifficulty(difficulty);
-            slider.StartSlider();
-        }
-    }
-
-
-
-
-    public void CheckResult(bool success)
-    {
-        if(!feedingStarted)
-            return;
-
-
-
-        if(success)
-        {
-            CompleteGame();
+            UpdateStatusText();
+            if(!slider.StartSlider())
+            {
+                ClosePanel();
+            }
         }
         else
         {
-            MissGame();
+            Debug.LogError("FeedDogMiniGame is missing its slider reference.");
+            feedingStarted = false;
         }
     }
 
+    public void CheckResult(bool success)
+    {
+        if(!feedingStarted || attemptsMade >= AttemptsPerMeal)
+            return;
 
+        attemptsMade++;
 
+        if(success)
+        {
+            successfulBites++;
+            combo++;
+            score += 100 * combo;
+        }
+        else
+        {
+            combo = 0;
+        }
 
+        if(attemptsMade >= AttemptsPerMeal)
+        {
+            feedingStarted = false;
+
+            if(successfulBites >= BitesNeeded)
+            {
+                CompleteGame();
+            }
+            else
+            {
+                MissGame();
+            }
+
+            return;
+        }
+
+        UpdateStatusText(success);
+        if(!slider.StartSlider())
+        {
+            ClosePanel();
+        }
+    }
+
+    public void FeedDog()
+    {
+        if(feedingStarted && slider != null)
+        {
+            slider.TryFeed();
+        }
+    }
+
+    private void UpdateStatusText(bool lastAttemptSucceeded = false)
+    {
+        string feedback = lastAttemptSucceeded
+            ? "Yum! Bite landed."
+            : attemptsMade > 0
+                ? "Missed! Try the next toss."
+                : "Press SPACE or tap FEED!";
+
+        SetStatusText(
+            $"BOWL [{(successfulBites > 0 ? "X" : " ")}][{(successfulBites > 1 ? "X" : " ")}] {successfulBites}/{BitesNeeded}\n" +
+            $"TOSS {attemptsMade}/{AttemptsPerMeal} | COMBO x{combo} | {score} pts\n" +
+            feedback
+        );
+    }
 
     private void CompleteGame()
     {
-        Debug.Log("DOG FED SUCCESS!");
+        SetStatusText(successfulBites == AttemptsPerMeal
+            ? $"PERFECT MEAL!\n3 bites | Score: {score}"
+            : $"HAPPY PUP!\nMeal complete | Score: {score}");
 
         if(currentChore != null)
         {
             currentChore.Complete();
         }
 
-
-        ClosePanel();
+        ShowResultThenClose();
     }
-
-
-
-
 
     private void MissGame()
     {
-        Debug.Log("DOG FOOD DROPPED!");
+        SetStatusText($"PUP IS STILL HUNGRY!\nYou landed {successfulBites}/{BitesNeeded} bites.");
 
-        ChoreManager manager =
-            FindFirstObjectByType<ChoreManager>();
-
-
-        if(manager != null)
+        ChoreManager manager = FindFirstObjectByType<ChoreManager>();
+        if(manager != null && currentChore != null)
         {
             manager.MissChore(currentChore);
         }
+        else
+        {
+            Debug.LogError("FeedDogMiniGame could not find a ChoreManager to record the missed chore.", this);
+        }
 
+        ShowResultThenClose();
+    }
 
+    private void SetStatusText(string message)
+    {
+        if(statusText is Text legacyText)
+        {
+            legacyText.text = message;
+        }
+        else if(statusText is TMP_Text tmpText)
+        {
+            tmpText.text = message;
+        }
+        else if(statusText != null)
+        {
+            Debug.LogError("FeedDogMiniGame status text must be a Unity UI Text or TMP_Text.", this);
+        }
+    }
+
+    private void ShowResultThenClose()
+    {
+        if(panel != null)
+        {
+            if(statusText != null)
+            {
+                resultTextBaseScale = statusText.transform.localScale;
+            }
+
+            resultCoroutine = StartCoroutine(ClosePanelAfterResult());
+        }
+        else
+        {
+            ClosePanel();
+        }
+    }
+
+    private IEnumerator ClosePanelAfterResult()
+    {
+        if(statusText != null)
+        {
+            Transform resultTextTransform = statusText.transform;
+            float elapsed = 0f;
+
+            while(elapsed < ResultDisplayDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float pulse = 1f + Mathf.Sin(elapsed * 18f) * 0.06f;
+                resultTextTransform.localScale = resultTextBaseScale * pulse;
+                yield return null;
+            }
+
+            resultTextTransform.localScale = resultTextBaseScale;
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(ResultDisplayDuration);
+        }
+
+        resultCoroutine = null;
         ClosePanel();
     }
 
-
-
-
-
     private void ClosePanel()
     {
-        panel.SetActive(false);
+        if(slider != null)
+        {
+            slider.StopSlider();
+        }
+
+        if(panel != null)
+        {
+            panel.SetActive(false);
+        }
 
         currentChore = null;
         feedingStarted = false;

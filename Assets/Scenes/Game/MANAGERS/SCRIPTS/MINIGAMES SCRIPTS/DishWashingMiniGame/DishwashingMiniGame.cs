@@ -1,9 +1,17 @@
 using TMPro;
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 public class DishwashingMiniGame : MonoBehaviour
 {
+    private enum DailyChallenge
+    {
+        RushFinish,
+        ComboStreak,
+        LeftoverDash
+    }
+
     public enum WashStage
     {
         RemoveLeftovers,
@@ -16,7 +24,7 @@ public class DishwashingMiniGame : MonoBehaviour
    [Header("Mini Game Timer")]
 [SerializeField] private float dishwashingTime = 90f;
 
-[SerializeField] private TMP_Text timerText;
+[SerializeField] private Component timerText;
    [SerializeField] private TMP_Text scoreText;
    [SerializeField] private TMP_Text comboText;
    [SerializeField] private float comboWindow = 2.5f;
@@ -51,9 +59,19 @@ public class DishwashingMiniGame : MonoBehaviour
 
 [Header("Day Scaling")]
 
+[SerializeField, Min(0)] private int dailyChallengeRewardCoins = 5;
 
 private int currentPlateAmount;
 private int currentLeftoverAmount;
+private DailyChallenge dailyChallenge;
+private string dailyChallengeLabel;
+private string dailyChallengeResult;
+private float elapsedRunTime;
+private bool dailyChallengeResolved;
+private GameObject dailyChallengeCard;
+private TMP_Text dailyChallengeText;
+private Coroutine resultCoroutine;
+private const float ResultDisplayDuration = 1.5f;
 
     [Header("Rinsing")]
     [SerializeField] private Transform rinsingArea;
@@ -84,12 +102,22 @@ private void Start()
     dayManager = DayManager.Instance != null
         ? DayManager.Instance
         : FindFirstObjectByType<DayManager>();
+
+    ApplyDayDifficulty();
+    EnsureDailyChallengeCard();
+    UpdateDailyChallengeCard();
 }
 
 public void StartGame(Chore chore)
 {
     if (chore == null)
         return;
+
+    if (resultCoroutine != null)
+    {
+        StopCoroutine(resultCoroutine);
+        resultCoroutine = null;
+    }
 
     currentChore = chore;
 
@@ -104,6 +132,8 @@ public void StartGame(Chore chore)
     {
         panel.SetActive(true);
     }
+
+    EnsureDailyChallengeCard();
 
 
 
@@ -242,8 +272,9 @@ public void StartGame(Chore chore)
     if(!timerRunning)
         return;
 
+        elapsedRunTime += Time.deltaTime;
 
-    currentTimer -= Time.deltaTime;
+        currentTimer -= Time.deltaTime;
 
         if(comboTimer > 0f)
         {
@@ -272,6 +303,7 @@ public void StartGame(Chore chore)
 private void FailDishwashing()
 {
     timerRunning = false;
+    ResolveDailyChallenge(false);
 
 
     Debug.Log(
@@ -300,10 +332,7 @@ if(manager != null)
     {
         panel.SetActive(false);
     }
-    if(timerText != null)
-{
-    timerText.text = "";
-}
+    SetTimerText("");
 
 
     currentChore = null;
@@ -323,6 +352,7 @@ if(manager != null)
 
     private void StartDishwashing()
     {
+        elapsedRunTime = 0f;
         currentStage = WashStage.RemoveLeftovers;
 
         Debug.Log("Dishwashing started!");
@@ -350,6 +380,11 @@ if(manager != null)
 
         if (leftoversRemaining <= 0)
         {
+            if (dailyChallenge == DailyChallenge.LeftoverDash)
+            {
+                ResolveDailyChallenge(elapsedRunTime <= 12f);
+            }
+
             StartAddSoap();
         }
     }
@@ -771,6 +806,15 @@ private void ResetSponge()
  public void CompleteGame()
 {
 
+    if (dailyChallenge == DailyChallenge.RushFinish)
+    {
+        ResolveDailyChallenge(currentTimer >= 30f);
+    }
+    else if (!dailyChallengeResolved)
+    {
+        ResolveDailyChallenge(false);
+    }
+
     timerRunning = false;
 
 
@@ -783,12 +827,6 @@ private void ResetSponge()
 
     // RESET SPONGE
     ResetSponge();
-
-
-    if(timerText != null)
-    {
-        timerText.text = "";
-    }
 
 
     if(dishSponge != null)
@@ -813,48 +851,189 @@ private void ResetSponge()
 
 
 
-    // ============================
-    // CLOSE PANEL
-    // ============================
-
-    if(panel != null)
+    if (panel != null)
     {
-
-        panel.SetActive(false);
-
-
-        Debug.Log(
-            "Dishwashing Panel Closed"
-        );
-
+        resultCoroutine = StartCoroutine(ClosePanelAfterResult());
     }
-
-
-
-    currentChore = null;
+    else
+    {
+        currentChore = null;
+    }
 
 }
-private void UpdateTimerUI()
+
+private IEnumerator ClosePanelAfterResult()
 {
-    if(timerText != null)
+    yield return new WaitForSecondsRealtime(ResultDisplayDuration);
+
+    if (panel != null)
     {
-        int minutes =
-            Mathf.FloorToInt(currentTimer / 60);
-
-
-        int seconds =
-            Mathf.FloorToInt(currentTimer % 60);
-
-
-        timerText.text =
-            string.Format(
-                "{0:00}:{1:00}",
-                minutes,
-                seconds
-            );
+        panel.SetActive(false);
     }
 
+    currentChore = null;
+    resultCoroutine = null;
+}
+
+private void UpdateTimerUI()
+{
+    int minutes = Mathf.FloorToInt(currentTimer / 60);
+    int seconds = Mathf.FloorToInt(currentTimer % 60);
+    SetTimerText(string.Format("{0:00}:{1:00}", minutes, seconds));
+    UpdateDailyChallengeCard();
+
     UpdateScoreUI();
+}
+
+private void SetTimerText(string value)
+{
+    if (timerText is Text legacyText)
+    {
+        legacyText.text = value;
+    }
+    else if (timerText is TMP_Text tmpText)
+    {
+        tmpText.text = value;
+    }
+}
+
+private void EnsureDailyChallengeCard()
+{
+    if (dailyChallengeCard != null)
+        return;
+
+    Canvas canvas = panel != null ? panel.GetComponentInParent<Canvas>() : null;
+    if (canvas == null)
+    {
+        Debug.LogError(
+            "DishwashingMiniGame cannot display the optional challenge because it is not under a Canvas.",
+            this
+        );
+        return;
+    }
+
+    Transform existingCard = canvas.transform.Find("OptionalDailyChallengeCard");
+    if (existingCard != null)
+    {
+        dailyChallengeCard = existingCard.gameObject;
+        dailyChallengeText = existingCard.Find("ChallengeText")
+            ?.GetComponent<TMP_Text>();
+        return;
+    }
+
+    dailyChallengeCard = new GameObject(
+        "OptionalDailyChallengeCard",
+        typeof(RectTransform),
+        typeof(CanvasRenderer),
+        typeof(Image)
+    );
+    dailyChallengeCard.transform.SetParent(canvas.transform, false);
+    dailyChallengeCard.transform.SetAsLastSibling();
+
+    RectTransform cardRect = dailyChallengeCard.GetComponent<RectTransform>();
+    cardRect.anchorMin = new Vector2(0f, 1f);
+    cardRect.anchorMax = new Vector2(0f, 1f);
+    cardRect.pivot = new Vector2(0f, 1f);
+    cardRect.anchoredPosition = new Vector2(24f, -24f);
+    cardRect.sizeDelta = new Vector2(350f, 112f);
+
+    Image background = dailyChallengeCard.GetComponent<Image>();
+    background.color = new Color(0.07f, 0.12f, 0.14f, 0.96f);
+    background.raycastTarget = false;
+
+    dailyChallengeText = CreateChallengeText(
+        "ChallengeText",
+        dailyChallengeCard.transform,
+        16f,
+        FontStyles.Normal,
+        new Vector2(14f, -12f),
+        new Vector2(322f, 88f)
+    );
+}
+
+private static TMP_Text CreateChallengeText(
+    string objectName,
+    Transform parent,
+    float fontSize,
+    FontStyles fontStyle,
+    Vector2 anchoredPosition,
+    Vector2 size
+)
+{
+    GameObject textObject = new GameObject(
+        objectName,
+        typeof(RectTransform),
+        typeof(CanvasRenderer),
+        typeof(TextMeshProUGUI)
+    );
+    textObject.transform.SetParent(parent, false);
+
+    RectTransform rect = textObject.GetComponent<RectTransform>();
+    rect.anchorMin = new Vector2(0f, 1f);
+    rect.anchorMax = new Vector2(0f, 1f);
+    rect.pivot = new Vector2(0f, 1f);
+    rect.anchoredPosition = anchoredPosition;
+    rect.sizeDelta = size;
+
+    TextMeshProUGUI text = textObject.GetComponent<TextMeshProUGUI>();
+    if (TMP_Settings.defaultFontAsset != null)
+        text.font = TMP_Settings.defaultFontAsset;
+    text.fontSize = fontSize;
+    text.fontStyle = fontStyle;
+    text.color = Color.white;
+    text.alignment = TextAlignmentOptions.TopLeft;
+    text.enableWordWrapping = true;
+    text.raycastTarget = false;
+    return text;
+}
+
+private void UpdateDailyChallengeCard()
+{
+    if (dailyChallengeText == null)
+        return;
+
+    if (!string.IsNullOrEmpty(dailyChallengeResult))
+    {
+        dailyChallengeText.text = "DAILY CHALLENGE: " +
+            dailyChallengeLabel.ToUpperInvariant() + "\n" +
+            dailyChallengeResult;
+        return;
+    }
+
+    if (!timerRunning)
+    {
+        dailyChallengeText.text = "DAILY CHALLENGE: " +
+            dailyChallengeLabel.ToUpperInvariant() +
+            "\nOptional dishwashing bonus\nReward: +" +
+            dailyChallengeRewardCoins + " coins";
+        return;
+    }
+
+    switch (dailyChallenge)
+    {
+        case DailyChallenge.RushFinish:
+            dailyChallengeText.text =
+                "DAILY CHALLENGE: " + dailyChallengeLabel.ToUpperInvariant() +
+                "\nFinish with 30+ seconds left\nTime remaining: " +
+                Mathf.CeilToInt(currentTimer) + "s | Reward: +" +
+                dailyChallengeRewardCoins + " coins";
+            break;
+        case DailyChallenge.ComboStreak:
+            dailyChallengeText.text =
+                "DAILY CHALLENGE: " + dailyChallengeLabel.ToUpperInvariant() +
+                "\nBuild a combo of 3\nCurrent streak: " +
+                Mathf.Min(currentCombo, 3) + "/3 | Reward: +" +
+                dailyChallengeRewardCoins + " coins";
+            break;
+        case DailyChallenge.LeftoverDash:
+            dailyChallengeText.text =
+                "DAILY CHALLENGE: " + dailyChallengeLabel.ToUpperInvariant() +
+                "\nClear leftovers in 12 seconds\nLeft: " +
+                leftoversRemaining + " | Time: " +
+                Mathf.FloorToInt(elapsedRunTime) + "s | Reward: +" +
+                dailyChallengeRewardCoins + " coins";
+            break;
+    }
 }
 
 private void UpdateScoreUI()
@@ -891,6 +1070,12 @@ private void AwardComboScore(int baseScore, string message)
         currentCombo++;
     }
 
+    if (dailyChallenge == DailyChallenge.ComboStreak &&
+        currentCombo >= 3)
+    {
+        ResolveDailyChallenge(true);
+    }
+
     comboTimer = comboWindow;
 
     float multiplier = 1f + (currentCombo - 1) * 0.35f;
@@ -898,6 +1083,7 @@ private void AwardComboScore(int baseScore, string message)
 
     currentScore += awardedScore;
     currentTimer = Mathf.Min(dishwashingTime, currentTimer + 0.2f + currentCombo * 0.12f);
+    UpdateDailyChallengeCard();
 
     if(!string.IsNullOrEmpty(message))
     {
@@ -920,6 +1106,11 @@ private void ResetMiniGameState()
     currentScore = 0;
     currentCombo = 0;
     comboTimer = 0f;
+    elapsedRunTime = 0f;
+    dailyChallengeLabel = "";
+    dailyChallengeResult = "";
+    dailyChallengeResolved = false;
+    dailyChallenge = DailyChallenge.RushFinish;
 
 
     currentScrubbingPlate = null;
@@ -1018,6 +1209,23 @@ private void ApplyDayDifficulty()
             break;
     }
 
+    switch ((day - 1) % 3)
+    {
+        case 0:
+            dailyChallenge = DailyChallenge.RushFinish;
+            dailyChallengeLabel = "Rush Finish";
+            break;
+        case 1:
+            dailyChallenge = DailyChallenge.ComboStreak;
+            dailyChallengeLabel = "Combo Streak";
+            break;
+        default:
+            dailyChallenge = DailyChallenge.LeftoverDash;
+            dailyChallengeLabel = "Leftover Dash";
+            break;
+    }
+
+    UpdateTimerUI();
 
     Debug.Log(
         "Dishwashing Difficulty Applied. Day: " 
@@ -1025,6 +1233,38 @@ private void ApplyDayDifficulty()
         " Plates: " +
         currentPlateAmount
     );
+}
+
+private void ResolveDailyChallenge(bool completed)
+{
+    if (dailyChallengeResolved)
+        return;
+
+    dailyChallengeResolved = true;
+    if (completed)
+    {
+        EconomyManager economyManager = EconomyManager.Instance;
+        if (economyManager != null)
+        {
+            economyManager.AddCoins(dailyChallengeRewardCoins);
+            dailyChallengeResult = "COMPLETED! +" +
+                dailyChallengeRewardCoins + " coins";
+        }
+        else
+        {
+            dailyChallengeResult = "COMPLETED! Reward unavailable";
+            Debug.LogError(
+                "Daily dishwashing challenge completed, but EconomyManager is unavailable.",
+                this
+            );
+        }
+    }
+    else
+    {
+        dailyChallengeResult = "Not completed - no penalty";
+    }
+
+    UpdateDailyChallengeCard();
 }
 
 }
