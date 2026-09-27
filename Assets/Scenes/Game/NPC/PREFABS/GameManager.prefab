@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoodManager
   moodSlider: {fileID: 0}
-  startingMood: 60
+  startingMood: 35.4
   concernedThreshold: 65
   angryThreshold: 13.5
   moodLossPerMissedChore: 20
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b33e59b2e0d71498e5369b5271faaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  currentDay: 1
+  currentDay: 7
   washDishes: {fileID: 0}
   mopFloor: {fileID: 0}
   sweepDust: {fileID: 0}
@@ -191,6 +191,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
   dayLength: 250
+  morningTint: {r: 1, g: 0.96, b: 0.88, a: 1}
+  afternoonTint: {r: 1, g: 1, b: 1, a: 1}
+  eveningTint: {r: 0.6320754, g: 0.4372633, b: 0.25342646, a: 1}
+  nightTint: {r: 0.15459237, g: 0.15844083, b: 0.16981131, a: 1}
 --- !u!114 &8772743511935121104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ab9aec46de3bb4c8d353a3ed73165a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EconomyManager
-  startingCoins: 0
+  startingCoins: 100
   startingPoints: 0
   coinsPerChorePoint: 1
   movementSpeedMultiplier: 1.25

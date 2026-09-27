@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3437314185477644270}
   - component: {fileID: 6353061651659396789}
   - component: {fileID: 3894196194493591246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Walkinfront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6590,7 +6590,7 @@ GameObject:
   - component: {fileID: 8815874252612867316}
   - component: {fileID: 6076909700185779584}
   - component: {fileID: 6045441743445143680}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Walkbehind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8041,7 +8041,7 @@ GameObject:
   - component: {fileID: 4704108236987477691}
   - component: {fileID: 4243691531136326575}
   - component: {fileID: 3040267728264070639}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

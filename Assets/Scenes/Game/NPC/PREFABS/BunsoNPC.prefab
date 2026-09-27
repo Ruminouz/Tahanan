@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4129807742957930677}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.38, y: -18.94, z: 0}
   m_LocalScale: {x: 0.23674686, y: 0.23674686, z: 0.23674686}
   m_ConstrainProportionsScale: 0
@@ -210,7 +210,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   collisionPadding: 0.02
-  stuckTimeout: 0.2
+  stuckTimeout: 0.05
   minimumProgress: 0.001
   navigationCellSize: 0.35
   navigationBoundsPadding: 2
@@ -230,12 +230,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BunsoAI
   actionInterval: 30
   actionChance: 60
-  badMoodLine: Pick up the trash!
+  badMoodLine: MWEHEHEHE
   possibleBoosts: 0000000001000000
   chocolatePrefab: {fileID: 2093951337509963342, guid: 86d7c508fe0eba54eb85686efa87b206, type: 3}
-  extraTimePrefab: {fileID: 6014960946341728753, guid: c313d8be4311359489f1b34ed95ac3a8, type: 3}
+  timeFreezerPrefab: {fileID: 6014960946341728753, guid: c313d8be4311359489f1b34ed95ac3a8, type: 3}
   segregateWastePrefab: {fileID: 0}
   choreLifetime: 120
+  moveSpeed: 1.25
+  followTriggerDistance: 4.5
+  followStopDistance: 2.25
+  wanderRadius: 1.75
+  arriveDistance: 0.2
+  minimumWanderWait: 1
+  maximumWanderWait: 3
   topAnchor: {fileID: 7061169537706405242}
   moodBubblePrefab: {fileID: 0}
   bubbleDuration: 3
@@ -255,9 +262,9 @@ MonoBehaviour:
   displayName: Bunso
   speechAnchor: {fileID: 7061169537706405242}
   waypointMover: {fileID: 2955472342297103682}
-  calmLine: It feels peaceful today.
-  concernedLine: We should take care of the house.
-  angryLine: Something needs to change.
+  calmLine: Maamaa!
+  concernedLine: Tamad naman ni kuya
+  angryLine: Madadamay nanaman ako pag nagalit si mama.
 --- !u!1 &7435635158677249477
 GameObject:
   m_ObjectHideFlags: 0

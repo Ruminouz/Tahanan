@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 3.5
-  dailySpawnPoint: {fileID: 5316736416854358460}
+  dailySpawnPoint: {fileID: 290058707333873765}
   footstepSpeed: 0.5
 --- !u!95 &4171294094092885655
 Animator:
