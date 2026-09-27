@@ -11,6 +11,7 @@ TagManager:
   - Ground
   - Sponge
   - NPCS
+  - NPC
   layers:
   - Default
   - TransparentFX
