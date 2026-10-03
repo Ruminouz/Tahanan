@@ -1,0 +1,4147 @@
+fileFormatVersion: 2
+guid: 5bcbaa55e08a34341ab8aa7fbff8cc15
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6969704245299749672
+    second: DustFading_0
+  - first:
+      213: 6101880880282605535
+    second: DustFading_1
+  - first:
+      213: 2258510165771371519
+    second: DustFading_2
+  - first:
+      213: 1879094548021899366
+    second: DustFading_3
+  - first:
+      213: 7112993864465872320
+    second: DustFading_4
+  - first:
+      213: -6116770888310003420
+    second: DustFading_5
+  - first:
+      213: 163117223766273464
+    second: DustFading_6
+  - first:
+      213: -8317741257831006300
+    second: DustFading_7
+  - first:
+      213: 4809885257185717446
+    second: DustFading_8
+  - first:
+      213: -5582931971713231088
+    second: DustFading_9
+  - first:
+      213: -4237093146216028345
+    second: DustFading_10
+  - first:
+      213: 5611971565502697618
+    second: DustFading_11
+  - first:
+      213: 4824974850937078717
+    second: DustFading_12
+  - first:
+      213: 8154999462085511143
+    second: DustFading_13
+  - first:
+      213: 4835521143619767083
+    second: DustFading_14
+  - first:
+      213: 6173420859511017675
+    second: DustFading_15
+  - first:
+      213: -2436023442817344808
+    second: DustFading_16
+  - first:
+      213: -6963901137509124833
+    second: DustFading_17
+  - first:
+      213: -9048539066169337353
+    second: DustFading_18
+  - first:
+      213: -1424508883070070327
+    second: DustFading_19
+  - first:
+      213: 2611138448634613553
+    second: DustFading_20
+  - first:
+      213: 6179111276578670466
+    second: DustFading_21
+  - first:
+      213: -1724863913800563138
+    second: DustFading_22
+  - first:
+      213: -8463600169594432917
+    second: DustFading_23
+  - first:
+      213: 138721655287024282
+    second: DustFading_24
+  - first:
+      213: -3505048981730509097
+    second: DustFading_25
+  - first:
+      213: 397256591085114238
+    second: DustFading_26
+  - first:
+      213: 1854903458001204455
+    second: DustFading_27
+  - first:
+      213: 6617821462863439459
+    second: DustFading_28
+  - first:
+      213: -6425705198055304357
+    second: DustFading_29
+  - first:
+      213: -1291816185976552794
+    second: DustFading_30
+  - first:
+      213: 2715224657388775417
+    second: DustFading_31
+  - first:
+      213: 8842374082731974689
+    second: DustFading_32
+  - first:
+      213: -156029501674470001
+    second: DustFading_33
+  - first:
+      213: 3431243077674814189
+    second: DustFading_34
+  - first:
+      213: 5407801119584822688
+    second: DustFading_35
+  - first:
+      213: 4387687343970168895
+    second: DustFading_36
+  - first:
+      213: 8491660781175544135
+    second: DustFading_37
+  - first:
+      213: 4265766619258603905
+    second: DustFading_38
+  - first:
+      213: -6800408887186090127
+    second: DustFading_39
+  - first:
+      213: -3660737227728567366
+    second: DustFading_40
+  - first:
+      213: 4437000063430970300
+    second: DustFading_41
+  - first:
+      213: -1662526337158674033
+    second: DustFading_42
+  - first:
+      213: 2855927837945003898
+    second: DustFading_43
+  - first:
+      213: -1175476518099546547
+    second: DustFading_44
+  - first:
+      213: -7037892633141631204
+    second: DustFading_45
+  - first:
+      213: 7464677751186399427
+    second: DustFading_46
+  - first:
+      213: -7247444991839781914
+    second: DustFading_47
+  - first:
+      213: -8812417878456931757
+    second: DustFading_48
+  - first:
+      213: 3265932270465718978
+    second: DustFading_49
+  - first:
+      213: 9031675329907570869
+    second: DustFading_50
+  - first:
+      213: -2471830016545283684
+    second: DustFading_51
+  - first:
+      213: 906769100289443535
+    second: DustFading_52
+  - first:
+      213: -1676868526388327333
+    second: DustFading_53
+  - first:
+      213: 2444555156031579824
+    second: DustFading_54
+  - first:
+      213: -2354996421622375201
+    second: DustFading_55
+  - first:
+      213: -1426225223006084774
+    second: DustFading_56
+  - first:
+      213: -4240962662014890351
+    second: DustFading_57
+  - first:
+      213: -6091097897061979840
+    second: DustFading_58
+  - first:
+      213: 7800749146707719793
+    second: DustFading_59
+  - first:
+      213: 8484339514115483524
+    second: DustFading_60
+  - first:
+      213: 7546848291806754418
+    second: DustFading_61
+  - first:
+      213: -8677332231224234534
+    second: DustFading_62
+  - first:
+      213: -3337569894232908906
+    second: DustFading_63
+  - first:
+      213: 1365656490384303896
+    second: DustFading_64
+  - first:
+      213: 1890368344218459477
+    second: DustFading_65
+  - first:
+      213: 5011010918864408890
+    second: DustFading_66
+  - first:
+      213: -5155970258072063613
+    second: DustFading_67
+  - first:
+      213: 2603062208138069461
+    second: DustFading_68
+  - first:
+      213: -5005807017629312677
+    second: DustFading_69
+  - first:
+      213: 2944213633623412024
+    second: DustFading_70
+  - first:
+      213: -2001476786280055370
+    second: DustFading_71
+  - first:
+      213: -876129995512850729
+    second: DustFading_72
+  - first:
+      213: 961545378398607597
+    second: DustFading_73
+  - first:
+      213: 837311205284774118
+    second: DustFading_74
+  - first:
+      213: -8358255342205961193
+    second: DustFading_75
+  - first:
+      213: 6927389279702377377
+    second: DustFading_76
+  - first:
+      213: 3731468895752321660
+    second: DustFading_77
+  - first:
+      213: -1266177837510045727
+    second: DustFading_78
+  - first:
+      213: 8657358241098494786
+    second: DustFading_79
+  - first:
+      213: 8957842179178836945
+    second: DustFading_80
+  - first:
+      213: -3341379343360256383
+    second: DustFading_81
+  - first:
+      213: 118447051179560549
+    second: DustFading_82
+  - first:
+      213: -6051335992018453517
+    second: DustFading_83
+  - first:
+      213: 7077618372643899921
+    second: DustFading_84
+  - first:
+      213: -8082162813695117248
+    second: DustFading_85
+  - first:
+      213: -2654443784348009521
+    second: DustFading_86
+  - first:
+      213: -1455427609468324518
+    second: DustFading_87
+  - first:
+      213: 6713303909116368277
+    second: DustFading_88
+  - first:
+      213: -2186147386951526858
+    second: DustFading_89
+  - first:
+      213: -5121911446183486859
+    second: DustFading_90
+  - first:
+      213: -7591254409447023344
+    second: DustFading_91
+  - first:
+      213: -7118290006187867587
+    second: DustFading_92
+  - first:
+      213: -1046001376613947854
+    second: DustFading_93
+  - first:
+      213: -2213893309927964469
+    second: DustFading_94
+  - first:
+      213: -631862427805767256
+    second: DustFading_95
+  - first:
+      213: 4283088003815963578
+    second: DustFading_96
+  - first:
+      213: 4370506172759621329
+    second: DustFading_97
+  - first:
+      213: -5082497473221929479
+    second: DustFading_98
+  - first:
+      213: -6318658830918784945
+    second: DustFading_99
+  - first:
+      213: 6887047095887380477
+    second: DustFading_100
+  - first:
+      213: 6951986416751900447
+    second: DustFading_101
+  - first:
+      213: -4379154062771636055
+    second: DustFading_102
+  - first:
+      213: -6033568866035065523
+    second: DustFading_103
+  - first:
+      213: 6292093840156939513
+    second: DustFading_104
+  - first:
+      213: 5517254750625794280
+    second: DustFading_105
+  - first:
+      213: -1842316631890455554
+    second: DustFading_106
+  - first:
+      213: -8357011455186066553
+    second: DustFading_107
+  - first:
+      213: -1961067144495257153
+    second: DustFading_108
+  - first:
+      213: 7172990356413816257
+    second: DustFading_109
+  - first:
+      213: 8224677470206995020
+    second: DustFading_110
+  - first:
+      213: 9005873320400173139
+    second: DustFading_111
+  - first:
+      213: -1651231948076720325
+    second: DustFading_112
+  - first:
+      213: -1633243592175420961
+    second: DustFading_113
+  - first:
+      213: 2822004799411217370
+    second: DustFading_114
+  - first:
+      213: -5401402192588418797
+    second: DustFading_115
+  - first:
+      213: -885836302115094797
+    second: DustFading_116
+  - first:
+      213: 6695473557216130167
+    second: DustFading_117
+  - first:
+      213: 7787943148047400808
+    second: DustFading_118
+  - first:
+      213: 1638066469985702459
+    second: DustFading_119
+  - first:
+      213: -3133392205835887126
+    second: DustFading_120
+  - first:
+      213: -6707138045926675923
+    second: DustFading_121
+  - first:
+      213: -380490074522050867
+    second: DustFading_122
+  - first:
+      213: 5683307410964922230
+    second: DustFading_123
+  - first:
+      213: -801435146431513822
+    second: DustFading_124
+  - first:
+      213: 2317685864265557769
+    second: DustFading_125
+  - first:
+      213: -898336615288267902
+    second: DustFading_126
+  - first:
+      213: -7511704833111638877
+    second: DustFading_127
+  - first:
+      213: -7754781100287522903
+    second: DustFading_128
+  - first:
+      213: -1087253676068550853
+    second: DustFading_129
+  - first:
+      213: 3439786129687283890
+    second: DustFading_130
+  - first:
+      213: -3677862976588024350
+    second: DustFading_131
+  - first:
+      213: -4920549563083855433
+    second: DustFading_132
+  - first:
+      213: 4915863957391883778
+    second: DustFading_133
+  - first:
+      213: -3150371850987053423
+    second: DustFading_134
+  - first:
+      213: 4521357274041029696
+    second: DustFading_135
+  - first:
+      213: 629834142667171325
+    second: DustFading_136
+  - first:
+      213: -4871045844472938963
+    second: DustFading_137
+  - first:
+      213: -4319100144759058260
+    second: DustFading_138
+  - first:
+      213: -7565894784664300325
+    second: DustFading_139
+  - first:
+      213: 4062068497524488516
+    second: DustFading_140
+  - first:
+      213: -5251281538311252724
+    second: DustFading_141
+  - first:
+      213: -8472537613206514042
+    second: DustFading_142
+  - first:
+      213: -8433383321573259631
+    second: DustFading_143
+  - first:
+      213: 7150493793088090994
+    second: DustFading_144
+  - first:
+      213: 3338643095935199797
+    second: DustFading_145
+  - first:
+      213: 4817533662697156409
+    second: DustFading_146
+  - first:
+      213: 2822940109312806747
+    second: DustFading_147
+  - first:
+      213: 7192829246418367701
+    second: DustFading_148
+  - first:
+      213: -8208032150461107957
+    second: DustFading_149
+  - first:
+      213: 2805178828869391317
+    second: DustFading_150
+  - first:
+      213: 4740729231539014980
+    second: DustFading_151
+  - first:
+      213: 3261170924232355165
+    second: DustFading_152
+  - first:
+      213: 8148775003738355329
+    second: DustFading_153
+  - first:
+      213: -876177675746628389
+    second: DustFading_154
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 850
+        width: 194
+        height: 303
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dc506d7ae2a64f90800000000000000
+      internalID: -6969704245299749672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_1
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 1133
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd71efad45c3ea450800000000000000
+      internalID: 6101880880282605535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_2
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 1094
+        width: 136
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff349689707d75f10800000000000000
+      internalID: 2258510165771371519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_3
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 1100
+        width: 166
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 660f73a1982e31a10800000000000000
+      internalID: 1879094548021899366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_4
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 1126
+        width: 221
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c57505cb3e66b260800000000000000
+      internalID: 7112993864465872320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 846
+        width: 152
+        height: 305
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 429e4ddf84ddc1ba0800000000000000
+      internalID: -6116770888310003420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 843
+        width: 114
+        height: 306
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd26533042834200800000000000000
+      internalID: 163117223766273464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_7
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 1025
+        width: 68
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4af3f513562719c80800000000000000
+      internalID: -8317741257831006300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 852
+        width: 164
+        height: 299
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cc61f4582520c240800000000000000
+      internalID: 4809885257185717446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_9
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 1068
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0179cdc83f07582b0800000000000000
+      internalID: -5582931971713231088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 853
+        width: 168
+        height: 298
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7472d8b8b32d235c0800000000000000
+      internalID: -4237093146216028345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_11
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 1041
+        width: 35
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2909163c76ab1ed40800000000000000
+      internalID: 5611971565502697618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_12
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 1046
+        width: 39
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db34c482011c5f240800000000000000
+      internalID: 4824974850937078717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 848
+        width: 177
+        height: 305
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e7cb11cdc06c2170800000000000000
+      internalID: 8154999462085511143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_14
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 968
+        width: 66
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2bc8554cd83b1340800000000000000
+      internalID: 4835521143619767083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_15
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 998
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc0142440956ca550800000000000000
+      internalID: 6173420859511017675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_16
+      rect:
+        serializedVersion: 2
+        x: 980
+        y: 1016
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8da195ad591813ed0800000000000000
+      internalID: -2436023442817344808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_17
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 972
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1574dfcfc04b5f90800000000000000
+      internalID: -6963901137509124833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_18
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 1004
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f95bb819a12d6280800000000000000
+      internalID: -9048539066169337353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_19
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 1001
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c1583dd7b02b3ce0800000000000000
+      internalID: -1424508883070070327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_20
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 992
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13f0b3aa590ac3420800000000000000
+      internalID: 2611138448634613553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_21
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 846
+        width: 190
+        height: 306
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 287051cb7fc90c550800000000000000
+      internalID: 6179111276578670466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_22
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 977
+        width: 23
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e36070cb86d0018e0800000000000000
+      internalID: -1724863913800563138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 6
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 850
+        width: 131
+        height: 299
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b625362ec704b8a80800000000000000
+      internalID: -8463600169594432917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_24
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 915
+        width: 67
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9a890a4c96dce100800000000000000
+      internalID: 138721655287024282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_25
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 949
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7debb9b85809b5fc0800000000000000
+      internalID: -3505048981730509097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_26
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 938
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e739f4cc3c6538500800000000000000
+      internalID: 397256591085114238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_27
+      rect:
+        serializedVersion: 2
+        x: 921
+        y: 921
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e43eca0ed0fdb910800000000000000
+      internalID: 1854903458001204455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_28
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 921
+        width: 26
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3666ee8ce8937db50800000000000000
+      internalID: 6617821462863439459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_29
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 873
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b53588eca2f43d6a0800000000000000
+      internalID: -6425705198055304357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_30
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 895
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a284cfe50c821ee0800000000000000
+      internalID: -1291816185976552794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_31
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 867
+        width: 57
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f72a05a07a6ea520800000000000000
+      internalID: 2715224657388775417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_32
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 895
+        width: 24
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1202c5c116c66ba70800000000000000
+      internalID: 8842374082731974689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_33
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 883
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f854632befba5ddf0800000000000000
+      internalID: -156029501674470001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_34
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 839
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dea43de46693e9f20800000000000000
+      internalID: 3431243077674814189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_35
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 819
+        width: 92
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a520dc677e5c0b40800000000000000
+      internalID: 5407801119584822688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_36
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 789
+        width: 47
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f30b1d2746234ec30800000000000000
+      internalID: 4387687343970168895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_37
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 831
+        width: 30
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 749951f5d7078d570800000000000000
+      internalID: 8491660781175544135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_38
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 864
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 189c0a3a32c033b30800000000000000
+      internalID: 4265766619258603905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 465
+        width: 224
+        height: 337
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1771ddfa52810a1a0800000000000000
+      internalID: -6800408887186090127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_40
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 787
+        width: 24
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab3c03503e2723dc0800000000000000
+      internalID: -3660737227728567366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_41
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 531
+        width: 185
+        height: 261
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbb4039ac04639d30800000000000000
+      internalID: 4437000063430970300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_42
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 730
+        width: 47
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f890de3da158de8e0800000000000000
+      internalID: -1662526337158674033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_43
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 755
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7f7cdcbc3b42a720800000000000000
+      internalID: 2855927837945003898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_44
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 771
+        width: 20
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4e0dd0b55edfafe0800000000000000
+      internalID: -1175476518099546547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_45
+      rect:
+        serializedVersion: 2
+        x: 1174
+        y: 724
+        width: 61
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c17214240f1645e90800000000000000
+      internalID: -7037892633141631204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_46
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 757
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c02a3a7ddcd79760800000000000000
+      internalID: 7464677751186399427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_47
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 411
+        width: 201
+        height: 351
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ebb434bd27eb6b90800000000000000
+      internalID: -7247444991839781914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_48
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 694
+        width: 113
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35ae54631a004b580800000000000000
+      internalID: -8812417878456931757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_49
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 748
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ca1899a81ce25d20800000000000000
+      internalID: 3265932270465718978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_50
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 722
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b8bcc55cd4f65d70800000000000000
+      internalID: 9031675329907570869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_51
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 738
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c91abae32bb42bdd0800000000000000
+      internalID: -2471830016545283684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_52
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 727
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc68d0441bd759c00800000000000000
+      internalID: 906769100289443535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_53
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 694
+        width: 39
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5c479da5f09ab8e0800000000000000
+      internalID: -1676868526388327333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_54
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 602
+        width: 78
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b6ac1d66fdcce120800000000000000
+      internalID: 2444555156031579824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_55
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 706
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdcd1e95b3f515fd0800000000000000
+      internalID: -2354996421622375201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_56
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 706
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a51250557b7053ce0800000000000000
+      internalID: -1426225223006084774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_57
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 634
+        width: 66
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19e48e0bde21525c0800000000000000
+      internalID: -4240962662014890351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_58
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 667
+        width: 30
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 049ed711cb2187ba0800000000000000
+      internalID: -6091097897061979840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_59
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 393
+        width: 206
+        height: 293
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 176f17fc404d14c60800000000000000
+      internalID: 7800749146707719793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_60
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 681
+        width: 24
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 487e9ac06dd6eb570800000000000000
+      internalID: 8484339514115483524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_61
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 648
+        width: 39
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 276b7e6598acbb860800000000000000
+      internalID: 7546848291806754418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_62
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 409
+        width: 149
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adde4d76f4ce39780800000000000000
+      internalID: -8677332231224234534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_63
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 644
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69b95394dd19ea1d0800000000000000
+      internalID: -3337569894232908906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_64
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 648
+        width: 38
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 817209aa759c3f210800000000000000
+      internalID: 1365656490384303896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_65
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 642
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55dd8c35effeb3a10800000000000000
+      internalID: 1890368344218459477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_66
+      rect:
+        serializedVersion: 2
+        x: 969
+        y: 635
+        width: 27
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a31548891efaa8540800000000000000
+      internalID: 5011010918864408890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_67
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 650
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 381b2272e505278b0800000000000000
+      internalID: -5155970258072063613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_68
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 612
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d54054694fef1420800000000000000
+      internalID: 2603062208138069461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_69
+      rect:
+        serializedVersion: 2
+        x: 884
+        y: 575
+        width: 42
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b591c041a0dc78ab0800000000000000
+      internalID: -5005807017629312677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_70
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 604
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83d4cfe53b2fbd820800000000000000
+      internalID: 2944213633623412024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_71
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 618
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd369797735934e0800000000000000
+      internalID: -2001476786280055370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_72
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 576
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d65468396c57d3f0800000000000000
+      internalID: -876129995512850729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_73
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 563
+        width: 22
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de81eda5d68185d00800000000000000
+      internalID: 961545378398607597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_74
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 575
+        width: 31
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e0047dda1abe9b00800000000000000
+      internalID: 837311205284774118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_75
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 514
+        width: 72
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71c7dc9dc03810c80800000000000000
+      internalID: -8358255342205961193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_76
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 537
+        width: 24
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a36285d8d7032060800000000000000
+      internalID: 6927389279702377377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_77
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 546
+        width: 26
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7a7cb5c037d8c330800000000000000
+      internalID: 3731468895752321660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_78
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 544
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1efcdbc17f1ad6ee0800000000000000
+      internalID: -1266177837510045727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_79
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 546
+        width: 33
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 243f9fd937d152870800000000000000
+      internalID: 8657358241098494786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_80
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 391
+        width: 85
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d337f35006a05c70800000000000000
+      internalID: 8957842179178836945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_81
+      rect:
+        serializedVersion: 2
+        x: 1059
+        y: 404
+        width: 59
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1861f2bc03901a1d0800000000000000
+      internalID: -3341379343360256383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_82
+      rect:
+        serializedVersion: 2
+        x: 1124
+        y: 463
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56e004a27fec4a100800000000000000
+      internalID: 118447051179560549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_83
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 449
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fb34330af5550ca0800000000000000
+      internalID: -6051335992018453517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_84
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 464
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11ac73d3960c83260800000000000000
+      internalID: 7077618372643899921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_85
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 357
+        width: 82
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 048b4d8fdb366df80800000000000000
+      internalID: -8082162813695117248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_86
+      rect:
+        serializedVersion: 2
+        x: 1161
+        y: 449
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcb71b52175892bd0800000000000000
+      internalID: -2654443784348009521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_87
+      rect:
+        serializedVersion: 2
+        x: 1172
+        y: 451
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a553855ec484dcbe0800000000000000
+      internalID: -1455427609468324518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_88
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 409
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5955f1436527a2d50800000000000000
+      internalID: 6713303909116368277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_89
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 398
+        width: 33
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6361b16c88e39a1e0800000000000000
+      internalID: -2186147386951526858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_90
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 407
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57ad93f3da05be8b0800000000000000
+      internalID: -5121911446183486859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_91
+      rect:
+        serializedVersion: 2
+        x: 1216
+        y: 417
+        width: 23
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01dda45b55276a690800000000000000
+      internalID: -7591254409447023344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_92
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 156
+        width: 212
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3285f424f0c63d90800000000000000
+      internalID: -7118290006187867587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_93
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 375
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2362b583a4bdb71f0800000000000000
+      internalID: -1046001376613947854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_94
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 160
+        width: 166
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc0412ba3cba641e0800000000000000
+      internalID: -2213893309927964469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_95
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 385
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a9a8bb387c2b37f0800000000000000
+      internalID: -631862427805767256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_96
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 385
+        width: 23
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abbff21c8d5907b30800000000000000
+      internalID: 4283088003815963578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_97
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 375
+        width: 44
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1de3dfb453827ac30800000000000000
+      internalID: 4370506172759621329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_98
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 389
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f559c0f9775779b0800000000000000
+      internalID: -5082497473221929479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_99
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 393
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f48633e554d9f48a0800000000000000
+      internalID: -6318658830918784945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_100
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 262
+        width: 191
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dffb0c538d4b39f50800000000000000
+      internalID: 6887047095887380477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_101
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 111
+        width: 162
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1776d510da6a7060800000000000000
+      internalID: 6951986416751900447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_102
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 164
+        width: 144
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a8b9c7e49e1a33c0800000000000000
+      internalID: -4379154062771636055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_103
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 353
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4d9f146515744ca0800000000000000
+      internalID: -6033568866035065523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_104
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 349
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f45afbb202025750800000000000000
+      internalID: 6292093840156939513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_105
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 298
+        width: 57
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e8036ac6f9319c40800000000000000
+      internalID: 5517254750625794280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_106
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 327
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef31068c8c6ce66e0800000000000000
+      internalID: -1842316631890455554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_107
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 278
+        width: 43
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 783a3cddb5ee50c80800000000000000
+      internalID: -8357011455186066553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_108
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 301
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb9abaf72d3e8c4e0800000000000000
+      internalID: -1961067144495257153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_109
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 297
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cd195b99b49b8360800000000000000
+      internalID: 7172990356413816257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_110
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 280
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4aa8db359ce32270800000000000000
+      internalID: 8224677470206995020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_111
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 302
+        width: 31
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 358be9ad11a4bfc70800000000000000
+      internalID: 9005873320400173139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_112
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 299
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3f5c15ba45a519e0800000000000000
+      internalID: -1651231948076720325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_113
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 304
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd973b03b9d8559e0800000000000000
+      internalID: -1633243592175420961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_114
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 296
+        width: 26
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad36a57d966c92720800000000000000
+      internalID: 2822004799411217370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_115
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 266
+        width: 32
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31150cdd25d5a05b0800000000000000
+      internalID: -5401402192588418797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_116
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 242
+        width: 79
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3feb84b9390e4b3f0800000000000000
+      internalID: -885836302115094797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_117
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 170
+        width: 160
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77473e4e9b91bec50800000000000000
+      internalID: 6695473557216130167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_118
+      rect:
+        serializedVersion: 2
+        x: 1076
+        y: 274
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86f7d46e705541c60800000000000000
+      internalID: 7787943148047400808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_119
+      rect:
+        serializedVersion: 2
+        x: 1123
+        y: 277
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b32d9fd86c49bb610800000000000000
+      internalID: 1638066469985702459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_120
+      rect:
+        serializedVersion: 2
+        x: 1231
+        y: 270
+        width: 23
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aed9c25e364f384d0800000000000000
+      internalID: -3133392205835887126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_121
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 176
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2a6801bb757be2a0800000000000000
+      internalID: -6707138045926675923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_122
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 168
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dce1d8b0b4a38baf0800000000000000
+      internalID: -380490074522050867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_123
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 162
+        width: 58
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67fb8e39af92fde40800000000000000
+      internalID: 5683307410964922230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_124
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 141
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22bbf620bfab0e4f0800000000000000
+      internalID: -801435146431513822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_125
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 86
+        width: 67
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9072e7093031a2020800000000000000
+      internalID: 2317685864265557769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_126
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 103
+        width: 59
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28b1405ab977883f0800000000000000
+      internalID: -898336615288267902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_127
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 156
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3acbbc4c04011c790800000000000000
+      internalID: -7511704833111638877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_128
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 115
+        width: 45
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a703760dab716490800000000000000
+      internalID: -7754781100287522903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_129
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 41
+        width: 154
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b374239ca8c49e0f0800000000000000
+      internalID: -1087253676068550853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_130
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 136
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b8835b92439cbf20800000000000000
+      internalID: 3439786129687283890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_131
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 146
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e5f8e3eb1b95fcc0800000000000000
+      internalID: -3677862976588024350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_132
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 167
+        height: 134
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b9eea81e32b6bbb0800000000000000
+      internalID: -4920549563083855433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_133
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 115
+        width: 24
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20e3d705938a83440800000000000000
+      internalID: 4915863957391883778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_134
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 33
+        width: 134
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19ed68f2e71a744d0800000000000000
+      internalID: -3150371850987053423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_135
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 96
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04418dd4c761fbe30800000000000000
+      internalID: 4521357274041029696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_136
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 119
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df5e615d0de9db800800000000000000
+      internalID: 629834142667171325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_137
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 101
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2e3c83cc91966cb0800000000000000
+      internalID: -4871045844472938963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_138
+      rect:
+        serializedVersion: 2
+        x: 610
+        y: 111
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca05c4a4d497f04c0800000000000000
+      internalID: -4319100144759058260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_139
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 109
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd49a1877ca800790800000000000000
+      internalID: -7565894784664300325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_140
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 75
+        width: 27
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4497048d6cd5f5830800000000000000
+      internalID: 4062068497524488516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_141
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 39
+        width: 95
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c05146d6343bf17b0800000000000000
+      internalID: -5251281538311252724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_142
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 85
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68690b22eef7b6a80800000000000000
+      internalID: -8472537613206514042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_143
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 49
+        width: 58
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1960cee0d8a96fa80800000000000000
+      internalID: -8433383321573259631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_144
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 47
+        width: 33
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 273b6a94838ab3360800000000000000
+      internalID: 7150493793088090994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_145
+      rect:
+        serializedVersion: 2
+        x: 914
+        y: 44
+        width: 96
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53a2705f43e355e20800000000000000
+      internalID: 3338643095935199797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_146
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 18
+        width: 38
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93fec8287515bd240800000000000000
+      internalID: 4817533662697156409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_147
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 83
+        width: 28
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5fcac5a2191d2720800000000000000
+      internalID: 2822940109312806747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_148
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 41
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d4bec2271012d360800000000000000
+      internalID: 7192829246418367701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_149
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 41
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b01b7c64f36371e80800000000000000
+      internalID: -8208032150461107957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_150
+      rect:
+        serializedVersion: 2
+        x: 814
+        y: 41
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d3d43a484ffde620800000000000000
+      internalID: 2805178828869391317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_151
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 55
+        width: 34
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44d813e5e147ac140800000000000000
+      internalID: 4740729231539014980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_152
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 43
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5da3ba5da1024d20800000000000000
+      internalID: 3261170924232355165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_153
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 23
+        width: 23
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 186386c11b3461170800000000000000
+      internalID: 8148775003738355329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustFading_154
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 33
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdcaefccb0137d3f0800000000000000
+      internalID: -876177675746628389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 48f7d3914e6ee5944b6b349985056735
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      1: -6969704245299749672
+      2: 8154999462085511143
+      3: 4809885257185717446
+      4: -4237093146216028345
+      5: -6116770888310003420
+      6: -8463600169594432917
+      7: 163117223766273464
+      DustFading_1: 6101880880282605535
+      DustFading_100: 6887047095887380477
+      DustFading_101: 6951986416751900447
+      DustFading_102: -4379154062771636055
+      DustFading_103: -6033568866035065523
+      DustFading_104: 6292093840156939513
+      DustFading_105: 5517254750625794280
+      DustFading_106: -1842316631890455554
+      DustFading_107: -8357011455186066553
+      DustFading_108: -1961067144495257153
+      DustFading_109: 7172990356413816257
+      DustFading_11: 5611971565502697618
+      DustFading_110: 8224677470206995020
+      DustFading_111: 9005873320400173139
+      DustFading_112: -1651231948076720325
+      DustFading_113: -1633243592175420961
+      DustFading_114: 2822004799411217370
+      DustFading_115: -5401402192588418797
+      DustFading_116: -885836302115094797
+      DustFading_117: 6695473557216130167
+      DustFading_118: 7787943148047400808
+      DustFading_119: 1638066469985702459
+      DustFading_12: 4824974850937078717
+      DustFading_120: -3133392205835887126
+      DustFading_121: -6707138045926675923
+      DustFading_122: -380490074522050867
+      DustFading_123: 5683307410964922230
+      DustFading_124: -801435146431513822
+      DustFading_125: 2317685864265557769
+      DustFading_126: -898336615288267902
+      DustFading_127: -7511704833111638877
+      DustFading_128: -7754781100287522903
+      DustFading_129: -1087253676068550853
+      DustFading_130: 3439786129687283890
+      DustFading_131: -3677862976588024350
+      DustFading_132: -4920549563083855433
+      DustFading_133: 4915863957391883778
+      DustFading_134: -3150371850987053423
+      DustFading_135: 4521357274041029696
+      DustFading_136: 629834142667171325
+      DustFading_137: -4871045844472938963
+      DustFading_138: -4319100144759058260
+      DustFading_139: -7565894784664300325
+      DustFading_14: 4835521143619767083
+      DustFading_140: 4062068497524488516
+      DustFading_141: -5251281538311252724
+      DustFading_142: -8472537613206514042
+      DustFading_143: -8433383321573259631
+      DustFading_144: 7150493793088090994
+      DustFading_145: 3338643095935199797
+      DustFading_146: 4817533662697156409
+      DustFading_147: 2822940109312806747
+      DustFading_148: 7192829246418367701
+      DustFading_149: -8208032150461107957
+      DustFading_15: 6173420859511017675
+      DustFading_150: 2805178828869391317
+      DustFading_151: 4740729231539014980
+      DustFading_152: 3261170924232355165
+      DustFading_153: 8148775003738355329
+      DustFading_154: -876177675746628389
+      DustFading_16: -2436023442817344808
+      DustFading_17: -6963901137509124833
+      DustFading_18: -9048539066169337353
+      DustFading_19: -1424508883070070327
+      DustFading_2: 2258510165771371519
+      DustFading_20: 2611138448634613553
+      DustFading_21: 6179111276578670466
+      DustFading_22: -1724863913800563138
+      DustFading_24: 138721655287024282
+      DustFading_25: -3505048981730509097
+      DustFading_26: 397256591085114238
+      DustFading_27: 1854903458001204455
+      DustFading_28: 6617821462863439459
+      DustFading_29: -6425705198055304357
+      DustFading_3: 1879094548021899366
+      DustFading_30: -1291816185976552794
+      DustFading_31: 2715224657388775417
+      DustFading_32: 8842374082731974689
+      DustFading_33: -156029501674470001
+      DustFading_34: 3431243077674814189
+      DustFading_35: 5407801119584822688
+      DustFading_36: 4387687343970168895
+      DustFading_37: 8491660781175544135
+      DustFading_38: 4265766619258603905
+      DustFading_39: -6800408887186090127
+      DustFading_4: 7112993864465872320
+      DustFading_40: -3660737227728567366
+      DustFading_41: 4437000063430970300
+      DustFading_42: -1662526337158674033
+      DustFading_43: 2855927837945003898
+      DustFading_44: -1175476518099546547
+      DustFading_45: -7037892633141631204
+      DustFading_46: 7464677751186399427
+      DustFading_47: -7247444991839781914
+      DustFading_48: -8812417878456931757
+      DustFading_49: 3265932270465718978
+      DustFading_50: 9031675329907570869
+      DustFading_51: -2471830016545283684
+      DustFading_52: 906769100289443535
+      DustFading_53: -1676868526388327333
+      DustFading_54: 2444555156031579824
+      DustFading_55: -2354996421622375201
+      DustFading_56: -1426225223006084774
+      DustFading_57: -4240962662014890351
+      DustFading_58: -6091097897061979840
+      DustFading_59: 7800749146707719793
+      DustFading_60: 8484339514115483524
+      DustFading_61: 7546848291806754418
+      DustFading_62: -8677332231224234534
+      DustFading_63: -3337569894232908906
+      DustFading_64: 1365656490384303896
+      DustFading_65: 1890368344218459477
+      DustFading_66: 5011010918864408890
+      DustFading_67: -5155970258072063613
+      DustFading_68: 2603062208138069461
+      DustFading_69: -5005807017629312677
+      DustFading_7: -8317741257831006300
+      DustFading_70: 2944213633623412024
+      DustFading_71: -2001476786280055370
+      DustFading_72: -876129995512850729
+      DustFading_73: 961545378398607597
+      DustFading_74: 837311205284774118
+      DustFading_75: -8358255342205961193
+      DustFading_76: 6927389279702377377
+      DustFading_77: 3731468895752321660
+      DustFading_78: -1266177837510045727
+      DustFading_79: 8657358241098494786
+      DustFading_80: 8957842179178836945
+      DustFading_81: -3341379343360256383
+      DustFading_82: 118447051179560549
+      DustFading_83: -6051335992018453517
+      DustFading_84: 7077618372643899921
+      DustFading_85: -8082162813695117248
+      DustFading_86: -2654443784348009521
+      DustFading_87: -1455427609468324518
+      DustFading_88: 6713303909116368277
+      DustFading_89: -2186147386951526858
+      DustFading_9: -5582931971713231088
+      DustFading_90: -5121911446183486859
+      DustFading_91: -7591254409447023344
+      DustFading_92: -7118290006187867587
+      DustFading_93: -1046001376613947854
+      DustFading_94: -2213893309927964469
+      DustFading_95: -631862427805767256
+      DustFading_96: 4283088003815963578
+      DustFading_97: 4370506172759621329
+      DustFading_98: -5082497473221929479
+      DustFading_99: -6318658830918784945
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

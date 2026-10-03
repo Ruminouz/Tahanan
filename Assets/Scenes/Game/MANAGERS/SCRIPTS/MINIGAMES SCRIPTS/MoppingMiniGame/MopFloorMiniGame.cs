@@ -13,11 +13,19 @@ public class MoppingMinigame : MonoBehaviour
     [SerializeField] private Sprite wetAreaSprite;
     [Tooltip("Recommended display size for the wet-area sprite in the minigame, in UI pixels.")]
     [SerializeField] private Vector2 wetAreaSpriteSize = new Vector2(256f, 160f);
+    [Tooltip("Optional sprites ordered from a full puddle to a completely transparent, mopped floor. Assign all eight frames.")]
+    [SerializeField] private Sprite[] wetAreaFadeSprites = new Sprite[8];
 
     [Header("Mop")]
     [SerializeField] private RectTransform mop;
     [SerializeField] private RectTransform moppingArea;
     [SerializeField] private GameObject upgradedMopVisual;
+    [Header("Mop Movement Sprites")]
+    [Tooltip("Optional classic mop movement frames in playback order. Assign up to eight sprites.")]
+    [SerializeField] private Sprite[] classicMopMovementSprites = new Sprite[8];
+    [Tooltip("Optional upgraded mop movement frames in playback order. Assign up to eight sprites.")]
+    [SerializeField] private Sprite[] upgradedMopMovementSprites = new Sprite[8];
+    [SerializeField, Min(1f)] private float mopMovementFramesPerSecond = 12f;
 
     [Header("Cleaning")]
     [SerializeField] private float baseMopDuration = 8f;
@@ -30,8 +38,6 @@ public class MoppingMinigame : MonoBehaviour
     [SerializeField] private float mopBobSpeed = 14f;
     [Tooltip("Wet-area opacity at the start of the minigame.")]
     [SerializeField, Range(0f, 1f)] private float wetAreaStartAlpha = 0.65f;
-    [Tooltip("Wet-area opacity when the floor is almost clean.")]
-    [SerializeField, Range(0f, 1f)] private float wetAreaEndAlpha = 0.08f;
     [Header("Speed Reward")]
     [SerializeField, Min(0)] private int baseSpeedRewardCoins = 2;
     [SerializeField, Min(0)] private int maximumSpeedBonusCoins = 8;
@@ -42,6 +48,9 @@ public class MoppingMinigame : MonoBehaviour
     private bool isMopping;
     private bool mouseIsDown;
     private RectTransform activeMop;
+    private Image activeMopImage;
+    private Sprite activeMopIdleSprite;
+    private Sprite[] activeMopMovementSprites;
     private Vector2 lastMousePosition;
     private float currentMomentum;
     private float currentStrokeDistance;
@@ -49,6 +58,7 @@ public class MoppingMinigame : MonoBehaviour
     private int currentStrokeDirection;
     private int expectedStrokeDirection;
     private float mopAnimationTime;
+    private float mopMovementAnimationTime;
     private Quaternion mopBaseRotation;
     private Vector3 mopBaseScale = Vector3.one;
 
@@ -57,10 +67,12 @@ public class MoppingMinigame : MonoBehaviour
 
     private void Awake()
     {
-        if (moppingAreaImage == null && moppingArea != null)
-            moppingAreaImage = moppingArea.GetComponent<Image>();
-
-        ResetMopping();
+        if (moppingArea != null)
+        {
+            Image areaImage = moppingArea.GetComponent<Image>();
+            if (areaImage != null)
+                moppingAreaImage = areaImage;
+        }
     }
 
     private void Start()
@@ -79,6 +91,7 @@ public class MoppingMinigame : MonoBehaviour
 
     public void ResetMopping()
     {
+        SetMopMovementSprite(false);
         RestoreMopTransform();
         currentWetArea = null;
         progress = 0f;
@@ -93,11 +106,17 @@ public class MoppingMinigame : MonoBehaviour
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
         mopAnimationTime = 0f;
+        mopMovementAnimationTime = 0f;
+        activeMopImage = null;
+        activeMopIdleSprite = null;
+        activeMopMovementSprites = null;
 
         if (minigamePanel != null)
             minigamePanel.SetActive(false);
+        if (moppingArea != null)
+            moppingArea.gameObject.SetActive(false);
         if (progressBar != null)
-            progressBar.value = 0f;
+            progressBar.gameObject.SetActive(false);
         if (mop != null)
             mop.gameObject.SetActive(false);
         if (upgradedMopVisual != null)
@@ -106,7 +125,7 @@ public class MoppingMinigame : MonoBehaviour
         {
             ApplyWetAreaSprite();
             ApplyWetAreaSpriteSize();
-            SetAreaAlpha(wetAreaEndAlpha);
+            SetAreaAlpha(0f);
         }
 
     }
@@ -148,14 +167,15 @@ public class MoppingMinigame : MonoBehaviour
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
         mopAnimationTime = 0f;
+        mopMovementAnimationTime = 0f;
 
         ApplyMopVisual(GetCurrentMopLevel());
         ApplyDifficulty();
 
-        if (activeMop == null || moppingArea == null || minigamePanel == null)
+        if (activeMop == null || moppingArea == null || moppingAreaImage == null || minigamePanel == null)
         {
             Debug.LogWarning(
-                "Mopping minigame could not start because its panel, mop visual, or mopping area is not assigned."
+                "Mopping minigame could not start because its panel, mop visual, mopping area, or water image is not assigned."
             );
             ResetMopping();
             return;
@@ -163,8 +183,9 @@ public class MoppingMinigame : MonoBehaviour
 
         if (minigamePanel != null)
             minigamePanel.SetActive(true);
+        moppingArea.gameObject.SetActive(true);
         if (progressBar != null)
-            progressBar.value = 0f;
+            progressBar.gameObject.SetActive(false);
         if (moppingAreaImage != null)
         {
             ApplyWetAreaSprite();
@@ -207,6 +228,7 @@ public class MoppingMinigame : MonoBehaviour
 
     private void ApplyMopVisual(int level)
     {
+        SetMopMovementSprite(false);
         RestoreMopTransform();
 
         if (mop != null)
@@ -225,6 +247,15 @@ public class MoppingMinigame : MonoBehaviour
 
         selectedVisual.SetActive(true);
         activeMop = selectedVisual.GetComponent<RectTransform>();
+        activeMopImage = selectedVisual.GetComponent<Image>();
+        if (activeMopImage == null)
+            activeMopImage = selectedVisual.GetComponentInChildren<Image>();
+        activeMopIdleSprite = activeMopImage != null ? activeMopImage.sprite : null;
+        activeMopMovementSprites = level == 1
+            ? upgradedMopMovementSprites
+            : classicMopMovementSprites;
+        mopAnimationTime = 0f;
+        mopMovementAnimationTime = 0f;
         if (activeMop != null)
         {
             mopBaseRotation = activeMop.localRotation;
@@ -258,6 +289,7 @@ public class MoppingMinigame : MonoBehaviour
         {
             mouseIsDown = false;
             currentStrokeDistance = 0f;
+            SetMopMovementSprite(false);
         }
 
         if (!mouseIsDown)
@@ -269,7 +301,7 @@ public class MoppingMinigame : MonoBehaviour
         currentMomentum = mouseDelta.magnitude / Mathf.Max(Time.deltaTime, 0.016f);
 
         MoveMop(mousePosition);
-        AnimateMop();
+        AnimateMop(mouseDelta);
 
         bool insideArea = IsMopOverlappingMoppingArea();
         bool validStroke = UpdateStroke(mouseDelta);
@@ -277,7 +309,7 @@ public class MoppingMinigame : MonoBehaviour
         {
             float speedBonus = 1f + Mathf.Clamp01(currentMomentum / dragMomentumThreshold);
             float upgradeBonus = GetCurrentMopLevel() == 1 ? 1.2f : 1f;
-            progress += speedBonus * upgradeBonus / mopDuration * Time.deltaTime;
+            progress = Mathf.Clamp01(progress + speedBonus * upgradeBonus / mopDuration * Time.deltaTime);
         }
         else
         {
@@ -287,9 +319,7 @@ public class MoppingMinigame : MonoBehaviour
 
         UpdateWetAreaVisual();
 
-        if (progressBar != null)
-            progressBar.value = progress;
-        if (progress >= 1f)
+        if (IsWetAreaFullyFaded())
             CompleteMopping();
     }
 
@@ -325,13 +355,46 @@ public class MoppingMinigame : MonoBehaviour
         activeMop.localPosition = localPosition;
     }
 
-    private void AnimateMop()
+    private void AnimateMop(Vector2 mouseDelta)
     {
         mopAnimationTime += Time.deltaTime;
         float swing = Mathf.Clamp(currentMomentum / dragMomentumThreshold, 0f, 1f) * mopSwingAngle;
         activeMop.localRotation = mopBaseRotation * Quaternion.Euler(0f, 0f, -swing);
         activeMop.localScale = mopBaseScale *
             (1f + Mathf.Sin(mopAnimationTime * mopBobSpeed) * mopBobAmount * 0.01f);
+        bool isMoving = mouseDelta.sqrMagnitude > 0.01f;
+        if (isMoving)
+            mopMovementAnimationTime += Time.deltaTime;
+
+        SetMopMovementSprite(isMoving);
+    }
+
+    private void SetMopMovementSprite(bool isMoving)
+    {
+        if (activeMopImage == null || activeMopMovementSprites == null
+            || activeMopMovementSprites.Length == 0)
+            return;
+
+        if (!isMoving)
+        {
+            activeMopImage.sprite = activeMopIdleSprite;
+            return;
+        }
+
+        int frameCount = activeMopMovementSprites.Length;
+        int firstFrame = Mathf.FloorToInt(
+            mopMovementAnimationTime * mopMovementFramesPerSecond) % frameCount;
+        for (int offset = 0; offset < frameCount; offset++)
+        {
+            Sprite movementSprite = activeMopMovementSprites[(firstFrame + offset) % frameCount];
+            if (movementSprite == null)
+                continue;
+
+            activeMopImage.sprite = movementSprite;
+            return;
+        }
+
+        activeMopImage.sprite = activeMopIdleSprite;
     }
 
     private bool IsMopOverlappingMoppingArea()
@@ -372,20 +435,53 @@ public class MoppingMinigame : MonoBehaviour
             return;
 
         float cleanAmount = Mathf.Clamp01(progress);
-        float alpha = Mathf.Lerp(wetAreaStartAlpha, wetAreaEndAlpha, cleanAmount);
+        ApplyWetAreaSprite(cleanAmount);
+        float alpha = Mathf.Lerp(wetAreaStartAlpha, 0f, cleanAmount);
         SetAreaAlpha(alpha);
     }
 
     private void ApplyWetAreaSprite()
     {
-        if (wetAreaSprite != null)
-            moppingAreaImage.sprite = wetAreaSprite;
+        ApplyWetAreaSprite(progress);
+    }
+
+    private void ApplyWetAreaSprite(float cleanAmount)
+    {
+        if (moppingAreaImage == null)
+            return;
+
+        Sprite selectedSprite = wetAreaSprite;
+        if (wetAreaFadeSprites != null && wetAreaFadeSprites.Length > 0)
+        {
+            float boundedCleanAmount = Mathf.Clamp01(cleanAmount);
+            int lastFrameIndex = wetAreaFadeSprites.Length - 1;
+            int frameIndex = lastFrameIndex == 0 || boundedCleanAmount >= 1f
+                ? lastFrameIndex
+                : Mathf.Min(
+                    Mathf.FloorToInt(boundedCleanAmount * lastFrameIndex),
+                    lastFrameIndex - 1);
+            if (wetAreaFadeSprites[frameIndex] != null)
+                selectedSprite = wetAreaFadeSprites[frameIndex];
+        }
+
+        if (selectedSprite != null)
+            moppingAreaImage.sprite = selectedSprite;
+    }
+
+    private bool IsWetAreaFullyFaded()
+    {
+        return moppingAreaImage != null
+            ? moppingAreaImage.color.a <= Mathf.Epsilon
+            : progress >= 1f;
     }
 
     private void ApplyWetAreaSpriteSize()
     {
         if (wetAreaSpriteSize.x > 0f && wetAreaSpriteSize.y > 0f)
+        {
+            moppingAreaImage.rectTransform.localScale = Vector3.one;
             moppingAreaImage.rectTransform.sizeDelta = wetAreaSpriteSize;
+        }
     }
 
     private void CompleteMopping()
@@ -393,9 +489,7 @@ public class MoppingMinigame : MonoBehaviour
         isMopping = false;
         mouseIsDown = false;
         progress = 1f;
-
-        if (progressBar != null)
-            progressBar.value = 1f;
+        UpdateWetAreaVisual();
         ShowFeedback("Spotless!");
 
         if (currentWetArea != null)

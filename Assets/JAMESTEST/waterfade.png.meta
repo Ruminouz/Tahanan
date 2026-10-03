@@ -1,0 +1,6153 @@
+fileFormatVersion: 2
+guid: 13bd4a1143a73c640bc97179afe8a44c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7746914559482883983
+    second: waterfade_0
+  - first:
+      213: -8335239787849819744
+    second: waterfade_1
+  - first:
+      213: 6744242961061527742
+    second: waterfade_2
+  - first:
+      213: 2371638165903247892
+    second: waterfade_3
+  - first:
+      213: 598509643204677801
+    second: waterfade_4
+  - first:
+      213: -4386089109389696530
+    second: waterfade_5
+  - first:
+      213: 9137339893544719334
+    second: waterfade_6
+  - first:
+      213: -7547373834907073380
+    second: waterfade_7
+  - first:
+      213: 8307265970734723557
+    second: waterfade_8
+  - first:
+      213: 2291454185641649168
+    second: waterfade_9
+  - first:
+      213: -5176547351229152727
+    second: waterfade_10
+  - first:
+      213: -1193127951828199487
+    second: waterfade_11
+  - first:
+      213: -1394535367666371476
+    second: waterfade_12
+  - first:
+      213: -1433683681039720510
+    second: waterfade_13
+  - first:
+      213: 5563155365293009106
+    second: waterfade_14
+  - first:
+      213: -1019198765612773877
+    second: waterfade_15
+  - first:
+      213: -1863676130775556897
+    second: waterfade_16
+  - first:
+      213: -4418180169206811919
+    second: waterfade_17
+  - first:
+      213: 8638984412235550582
+    second: waterfade_18
+  - first:
+      213: 7775810758736513294
+    second: waterfade_19
+  - first:
+      213: 6767973649110732178
+    second: waterfade_20
+  - first:
+      213: -4894662454833781922
+    second: waterfade_21
+  - first:
+      213: 1471588066795362380
+    second: waterfade_22
+  - first:
+      213: -5436111148544562103
+    second: waterfade_23
+  - first:
+      213: -9167762529102262679
+    second: waterfade_24
+  - first:
+      213: -2265034087844621696
+    second: waterfade_25
+  - first:
+      213: -5379701388587168495
+    second: waterfade_26
+  - first:
+      213: -5370392312883547682
+    second: waterfade_27
+  - first:
+      213: 6457505513480188381
+    second: waterfade_28
+  - first:
+      213: -7991010528685568488
+    second: waterfade_29
+  - first:
+      213: 8335130203027158073
+    second: waterfade_30
+  - first:
+      213: -2857714794847963237
+    second: waterfade_31
+  - first:
+      213: -4353986990982022402
+    second: waterfade_32
+  - first:
+      213: -8003183005327836461
+    second: waterfade_33
+  - first:
+      213: 6826959328280036211
+    second: waterfade_34
+  - first:
+      213: -2328972814626734080
+    second: waterfade_35
+  - first:
+      213: -1975558327206264733
+    second: waterfade_36
+  - first:
+      213: 6693305949073539264
+    second: waterfade_37
+  - first:
+      213: -10004042849411939
+    second: waterfade_38
+  - first:
+      213: -4311683528269710419
+    second: waterfade_39
+  - first:
+      213: 4788612981410007631
+    second: waterfade_40
+  - first:
+      213: -1304027108100912144
+    second: waterfade_41
+  - first:
+      213: -5856250980760974466
+    second: waterfade_42
+  - first:
+      213: 8690202944031314405
+    second: waterfade_43
+  - first:
+      213: 4769381810932880474
+    second: waterfade_44
+  - first:
+      213: 8647908604343822998
+    second: waterfade_45
+  - first:
+      213: -4616853849599575444
+    second: waterfade_46
+  - first:
+      213: 1606739234907622531
+    second: waterfade_47
+  - first:
+      213: -4773102735051551678
+    second: waterfade_48
+  - first:
+      213: -4756464826388289988
+    second: waterfade_49
+  - first:
+      213: 1749953882335349565
+    second: waterfade_50
+  - first:
+      213: 1136790046037698762
+    second: waterfade_51
+  - first:
+      213: -7154277304267472635
+    second: waterfade_52
+  - first:
+      213: -8103838998074080543
+    second: waterfade_53
+  - first:
+      213: -346806040868711223
+    second: waterfade_54
+  - first:
+      213: -6600847374956811953
+    second: waterfade_55
+  - first:
+      213: -5819417983543810628
+    second: waterfade_56
+  - first:
+      213: 795454679487996106
+    second: waterfade_57
+  - first:
+      213: 5693742315221835893
+    second: waterfade_58
+  - first:
+      213: -8645287835908757558
+    second: waterfade_59
+  - first:
+      213: 7606930737300248487
+    second: waterfade_60
+  - first:
+      213: -1327442772634568093
+    second: waterfade_61
+  - first:
+      213: -4013730479138021235
+    second: waterfade_62
+  - first:
+      213: -6497698810477928030
+    second: waterfade_63
+  - first:
+      213: 6743624928595583297
+    second: waterfade_64
+  - first:
+      213: -6786584130231821682
+    second: waterfade_65
+  - first:
+      213: -1529679559738982943
+    second: waterfade_66
+  - first:
+      213: -8521952360856827450
+    second: waterfade_67
+  - first:
+      213: -155860395778333379
+    second: waterfade_68
+  - first:
+      213: -1247195685998672155
+    second: waterfade_69
+  - first:
+      213: 4629123935303587301
+    second: waterfade_70
+  - first:
+      213: 7283798078400178823
+    second: waterfade_71
+  - first:
+      213: -1082839595859025872
+    second: waterfade_72
+  - first:
+      213: 2196944377062884675
+    second: waterfade_73
+  - first:
+      213: -8220536672657737981
+    second: waterfade_74
+  - first:
+      213: -600797640489008834
+    second: waterfade_75
+  - first:
+      213: 5699128414665995706
+    second: waterfade_76
+  - first:
+      213: -3933758241313164945
+    second: waterfade_77
+  - first:
+      213: -2971257172061832441
+    second: waterfade_78
+  - first:
+      213: -4119850911277755541
+    second: waterfade_79
+  - first:
+      213: -6505974003666239618
+    second: waterfade_80
+  - first:
+      213: -2338975376882693313
+    second: waterfade_81
+  - first:
+      213: 1609165892097923751
+    second: waterfade_82
+  - first:
+      213: 4498499580622151836
+    second: waterfade_83
+  - first:
+      213: -4466437427985136802
+    second: waterfade_84
+  - first:
+      213: -5257317709957932611
+    second: waterfade_85
+  - first:
+      213: 4806610942728636032
+    second: waterfade_86
+  - first:
+      213: 6865910937310050443
+    second: waterfade_87
+  - first:
+      213: -5845715065372477389
+    second: waterfade_88
+  - first:
+      213: 3085712972528706867
+    second: waterfade_89
+  - first:
+      213: -856484591850245786
+    second: waterfade_90
+  - first:
+      213: 551505002710436832
+    second: waterfade_91
+  - first:
+      213: 8773916854888991433
+    second: waterfade_92
+  - first:
+      213: 390803080846499603
+    second: waterfade_93
+  - first:
+      213: -9052573577929765704
+    second: waterfade_94
+  - first:
+      213: -1697661690150478476
+    second: waterfade_95
+  - first:
+      213: -3372680121034726587
+    second: waterfade_96
+  - first:
+      213: -3684108182711299593
+    second: waterfade_97
+  - first:
+      213: 2381900982239445205
+    second: waterfade_98
+  - first:
+      213: -7478926166676851523
+    second: waterfade_99
+  - first:
+      213: 749947130920577076
+    second: waterfade_100
+  - first:
+      213: -6015743623083464535
+    second: waterfade_101
+  - first:
+      213: -346662061302600171
+    second: waterfade_102
+  - first:
+      213: 2286907360282535881
+    second: waterfade_103
+  - first:
+      213: 1297220458813889677
+    second: waterfade_104
+  - first:
+      213: 7099548217140900916
+    second: waterfade_105
+  - first:
+      213: 7238325317508159830
+    second: waterfade_106
+  - first:
+      213: -224531236504882215
+    second: waterfade_107
+  - first:
+      213: -7500190538482387979
+    second: waterfade_108
+  - first:
+      213: -646509591628195204
+    second: waterfade_109
+  - first:
+      213: -1200811970831938705
+    second: waterfade_110
+  - first:
+      213: -7792369550158507174
+    second: waterfade_111
+  - first:
+      213: -7176453788329447687
+    second: waterfade_112
+  - first:
+      213: -1732457096100118780
+    second: waterfade_113
+  - first:
+      213: -7202724105286348965
+    second: waterfade_114
+  - first:
+      213: 585587104383376698
+    second: waterfade_115
+  - first:
+      213: 6734875731796267728
+    second: waterfade_116
+  - first:
+      213: -3821604851536185264
+    second: waterfade_117
+  - first:
+      213: -1513234762756284568
+    second: waterfade_118
+  - first:
+      213: -426872152224339553
+    second: waterfade_119
+  - first:
+      213: -6699773750961558337
+    second: waterfade_120
+  - first:
+      213: -1888905025487879688
+    second: waterfade_121
+  - first:
+      213: 8143598527481248751
+    second: waterfade_122
+  - first:
+      213: 5405283885369567315
+    second: waterfade_123
+  - first:
+      213: -7521412204229108513
+    second: waterfade_124
+  - first:
+      213: -1348130102584974067
+    second: waterfade_125
+  - first:
+      213: 2220113794803837776
+    second: waterfade_126
+  - first:
+      213: 726481758373567733
+    second: waterfade_127
+  - first:
+      213: -4146576092222955046
+    second: waterfade_128
+  - first:
+      213: -3905893896701438183
+    second: waterfade_129
+  - first:
+      213: 1559529003637757322
+    second: waterfade_130
+  - first:
+      213: -7998190920852113529
+    second: waterfade_131
+  - first:
+      213: -6037561592568331522
+    second: waterfade_132
+  - first:
+      213: 3205085726662250251
+    second: waterfade_133
+  - first:
+      213: -6468775442656177414
+    second: waterfade_134
+  - first:
+      213: -6853837334397706929
+    second: waterfade_135
+  - first:
+      213: -340274219108434458
+    second: waterfade_136
+  - first:
+      213: 5908923990929903255
+    second: waterfade_137
+  - first:
+      213: -4878880325334330460
+    second: waterfade_138
+  - first:
+      213: -6450491498495229415
+    second: waterfade_139
+  - first:
+      213: -6829460896273326503
+    second: waterfade_140
+  - first:
+      213: -4968916584867827991
+    second: waterfade_141
+  - first:
+      213: 8003707848863851326
+    second: waterfade_142
+  - first:
+      213: 9070141678184063047
+    second: waterfade_143
+  - first:
+      213: -2585491330999267342
+    second: waterfade_144
+  - first:
+      213: 5280390482525518088
+    second: waterfade_145
+  - first:
+      213: 3649762194110471952
+    second: waterfade_146
+  - first:
+      213: -7989991806472788005
+    second: waterfade_147
+  - first:
+      213: 6383891104916326912
+    second: waterfade_148
+  - first:
+      213: 3522758527146572919
+    second: waterfade_149
+  - first:
+      213: 7084482786133947760
+    second: waterfade_150
+  - first:
+      213: -3246180031404204801
+    second: waterfade_151
+  - first:
+      213: -1032531266593458766
+    second: waterfade_152
+  - first:
+      213: 6027108922164946818
+    second: waterfade_153
+  - first:
+      213: 3376693739540337096
+    second: waterfade_154
+  - first:
+      213: -3784433968945587117
+    second: waterfade_155
+  - first:
+      213: 9008339155405021247
+    second: waterfade_156
+  - first:
+      213: -8426407597893041381
+    second: waterfade_157
+  - first:
+      213: 8438628872994313081
+    second: waterfade_158
+  - first:
+      213: 4905719596328250525
+    second: waterfade_159
+  - first:
+      213: 4598898579606523736
+    second: waterfade_160
+  - first:
+      213: 1668760220322281039
+    second: waterfade_161
+  - first:
+      213: 1794678293485918127
+    second: waterfade_162
+  - first:
+      213: -1800044470552247170
+    second: waterfade_163
+  - first:
+      213: -4946282576931764734
+    second: waterfade_164
+  - first:
+      213: 2855391291618526364
+    second: waterfade_165
+  - first:
+      213: -2404855637626651664
+    second: waterfade_166
+  - first:
+      213: -5091119950339697341
+    second: waterfade_167
+  - first:
+      213: 3729041004691409241
+    second: waterfade_168
+  - first:
+      213: 902537926786662652
+    second: waterfade_169
+  - first:
+      213: 5880788376293463010
+    second: waterfade_170
+  - first:
+      213: -1999218065082352711
+    second: waterfade_171
+  - first:
+      213: -1348554068332257717
+    second: waterfade_172
+  - first:
+      213: 3168956676141556771
+    second: waterfade_173
+  - first:
+      213: 1885507805182180239
+    second: waterfade_174
+  - first:
+      213: 7949542697246515852
+    second: waterfade_175
+  - first:
+      213: -5750795838361530770
+    second: waterfade_176
+  - first:
+      213: -2673585051314736459
+    second: waterfade_177
+  - first:
+      213: 4047431416396279987
+    second: waterfade_178
+  - first:
+      213: 8984236682804233000
+    second: waterfade_179
+  - first:
+      213: -83844136795657237
+    second: waterfade_180
+  - first:
+      213: 8199771455028476663
+    second: waterfade_181
+  - first:
+      213: -2390816677698854931
+    second: waterfade_182
+  - first:
+      213: -2383282002904093491
+    second: waterfade_183
+  - first:
+      213: -1520851569743320285
+    second: waterfade_184
+  - first:
+      213: 7721599125482363642
+    second: waterfade_185
+  - first:
+      213: -8803924042599685058
+    second: waterfade_186
+  - first:
+      213: 1733755661491616674
+    second: waterfade_187
+  - first:
+      213: 4129740196107762116
+    second: waterfade_188
+  - first:
+      213: 6166166416278595882
+    second: waterfade_189
+  - first:
+      213: -189110976519140600
+    second: waterfade_190
+  - first:
+      213: -962512702471694703
+    second: waterfade_191
+  - first:
+      213: 8669936748095387197
+    second: waterfade_192
+  - first:
+      213: 8060132270943707529
+    second: waterfade_193
+  - first:
+      213: -2232901065068132024
+    second: waterfade_194
+  - first:
+      213: -2036165058547748770
+    second: waterfade_195
+  - first:
+      213: -4133101299474075071
+    second: waterfade_196
+  - first:
+      213: -2085704256540675275
+    second: waterfade_197
+  - first:
+      213: -3647621279321706079
+    second: waterfade_198
+  - first:
+      213: 3210612234227468418
+    second: waterfade_199
+  - first:
+      213: 7050383660744945955
+    second: waterfade_200
+  - first:
+      213: -1263634882094962813
+    second: waterfade_201
+  - first:
+      213: -4457839991324481031
+    second: waterfade_202
+  - first:
+      213: 9146606423994849438
+    second: waterfade_203
+  - first:
+      213: 1029285100686518413
+    second: waterfade_204
+  - first:
+      213: 1329170035449099080
+    second: waterfade_205
+  - first:
+      213: -1930274718022327138
+    second: waterfade_206
+  - first:
+      213: -3967728219336167054
+    second: waterfade_207
+  - first:
+      213: 6655525211447998523
+    second: waterfade_208
+  - first:
+      213: 8014306997759202246
+    second: waterfade_209
+  - first:
+      213: -6333946601461970402
+    second: waterfade_210
+  - first:
+      213: -5153078931622564513
+    second: waterfade_211
+  - first:
+      213: -5065570624510885304
+    second: waterfade_212
+  - first:
+      213: 4186370631861965630
+    second: waterfade_213
+  - first:
+      213: 28485170634637814
+    second: waterfade_214
+  - first:
+      213: 1939722565096117011
+    second: waterfade_215
+  - first:
+      213: 8214802408426786538
+    second: waterfade_216
+  - first:
+      213: 3269183627556675990
+    second: waterfade_217
+  - first:
+      213: -2707725998297623319
+    second: waterfade_218
+  - first:
+      213: -5423044664859529058
+    second: waterfade_219
+  - first:
+      213: 6733496448249136071
+    second: waterfade_220
+  - first:
+      213: -8702194541211270959
+    second: waterfade_221
+  - first:
+      213: -6900960747876375834
+    second: waterfade_222
+  - first:
+      213: -5880198189036265013
+    second: waterfade_223
+  - first:
+      213: -4132580363951575058
+    second: waterfade_224
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: waterfade_0
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 990
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8f67473fb1928b60800000000000000
+      internalID: 7746914559482883983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_1
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 933
+        width: 41
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a9528f2397435c80800000000000000
+      internalID: -8335239787849819744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_2
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 945
+        width: 38
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb040059d3d589d50800000000000000
+      internalID: 6744242961061527742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_3
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 919
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41a0c6ea850c9e020800000000000000
+      internalID: 2371638165903247892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_4
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 912
+        width: 66
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a05cd579555e4800800000000000000
+      internalID: 598509643204677801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_5
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 947
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee12e99813b7123c0800000000000000
+      internalID: -4386089109389696530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_6
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 881
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e31db2b83a5ece70800000000000000
+      internalID: 9137339893544719334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_7
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 897
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c94494f1c77524790800000000000000
+      internalID: -7547373834907073380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_8
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 906
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e17558f266594370800000000000000
+      internalID: 8307265970734723557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_9
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 879
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 014a042f071eccf10800000000000000
+      internalID: 2291454185641649168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_10
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 853
+        width: 63
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9224ffe4c953928b0800000000000000
+      internalID: -5176547351229152727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_11
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 906
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c7d0b30378217fe0800000000000000
+      internalID: -1193127951828199487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_12
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 919
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c64f68fb87d95ace0800000000000000
+      internalID: -1394535367666371476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_13
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 899
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cf5a5fb9488a1ce0800000000000000
+      internalID: -1433683681039720510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_14
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 919
+        width: 4
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d82992745c443d40800000000000000
+      internalID: 5563155365293009106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_15
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 934
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0e42246f141bd1f0800000000000000
+      internalID: -1019198765612773877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_16
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 919
+        width: 4
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdc9fb8ee64e226e0800000000000000
+      internalID: -1863676130775556897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_17
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 899
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f2b0cc6b887fa2c0800000000000000
+      internalID: -4418180169206811919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_18
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 932
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67fcf673d86d3e770800000000000000
+      internalID: 8638984412235550582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_19
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 907
+        width: 12
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e098623efaa39eb60800000000000000
+      internalID: 7775810758736513294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_20
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 871
+        width: 38
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29d0374fc2caced50800000000000000
+      internalID: 6767973649110732178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_21
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 912
+        width: 11
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e53e03c2e6aa21cb0800000000000000
+      internalID: -4894662454833781922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_22
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 866
+        width: 105
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c489a09cc812c6410800000000000000
+      internalID: 1471588066795362380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_23
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 881
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94ce57f46bd0f84b0800000000000000
+      internalID: -5436111148544562103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_24
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 822
+        width: 108
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96e09bb7d8095c080800000000000000
+      internalID: -9167762529102262679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_25
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 866
+        width: 14
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 082dedd6f7bf090e0800000000000000
+      internalID: -2265034087844621696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_26
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 858
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11d069707167755b0800000000000000
+      internalID: -5379701388587168495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 636
+        width: 227
+        height: 210
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed1761e15a88875b0800000000000000
+      internalID: -5370392312883547682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_28
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 873
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd1fc1a1d0bad9950800000000000000
+      internalID: 6457505513480188381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_29
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 866
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81e4a49234a3a1190800000000000000
+      internalID: -7991010528685568488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_30
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 858
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 934301c12c45ca370800000000000000
+      internalID: 8335130203027158073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 637
+        width: 194
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9775bfe88b5758d0800000000000000
+      internalID: -2857714794847963237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_32
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 827
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efa38dd66e78393c0800000000000000
+      internalID: -4353986990982022402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_33
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 822
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dabdf6957bfee090800000000000000
+      internalID: -8003183005327836461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_34
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 818
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 373cb2a965b3ebe50800000000000000
+      internalID: 6826959328280036211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_35
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 817
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 000c1a48093ddafd0800000000000000
+      internalID: -2328972814626734080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 634
+        width: 203
+        height: 213
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3604ec91b286594e0800000000000000
+      internalID: -1975558327206264733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_37
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 817
+        width: 8
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c0898b4c4663ec50800000000000000
+      internalID: 6693305949073539264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_38
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 802
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9c94a340657cdff0800000000000000
+      internalID: -10004042849411939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_39
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 806
+        width: 54
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dabb491eca2d924c0800000000000000
+      internalID: -4311683528269710419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_40
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 717
+        width: 180
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4a84cba222947240800000000000000
+      internalID: 4788612981410007631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_41
+      rect:
+        serializedVersion: 2
+        x: 846
+        y: 632
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fb4a24114a27ede0800000000000000
+      internalID: -1304027108100912144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_42
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 603
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7b8530c2ca6abea0800000000000000
+      internalID: -5856250980760974466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_43
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 607
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e15a01f88dc99870800000000000000
+      internalID: 8690202944031314405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_44
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 608
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a541ddedc7f303240800000000000000
+      internalID: 4769381810932880474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_45
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 610
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69a25fb9e0b830870800000000000000
+      internalID: 8647908604343822998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_46
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 603
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6af8ba82e3adefb0800000000000000
+      internalID: -4616853849599575444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_47
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 602
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38c0a5f32d84c4610800000000000000
+      internalID: 1606739234907622531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_48
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 607
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24c8ec8f95882cdb0800000000000000
+      internalID: -4773102735051551678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_49
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 589
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c366c74f074adfdb0800000000000000
+      internalID: -4756464826388289988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_50
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 608
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3b0ae9c8c5194810800000000000000
+      internalID: 1749953882335349565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_51
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 603
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac8e64e1680b6cf00800000000000000
+      internalID: 1136790046037698762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_52
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 608
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5018f7e52b6e6bc90800000000000000
+      internalID: -7154277304267472635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_53
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 580
+        width: 16
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e246d20e51698f80800000000000000
+      internalID: -8103838998074080543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_54
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 604
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c49f084eb5ef2bf0800000000000000
+      internalID: -346806040868711223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_55
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 590
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f49212709441564a0800000000000000
+      internalID: -6600847374956811953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_56
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 581
+        width: 48
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb5e9533d264d3fa0800000000000000
+      internalID: -5819417983543810628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_57
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 600
+        width: 4
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac0edc501d50a0b00800000000000000
+      internalID: 795454679487996106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_58
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 597
+        width: 35
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 570686d087c340f40800000000000000
+      internalID: 5693742315221835893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_59
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 589
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac727a79484c50880800000000000000
+      internalID: -8645287835908757558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_60
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 571
+        width: 35
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a718cbc33f319960800000000000000
+      internalID: 7606930737300248487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_61
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 577
+        width: 39
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36af475d4d9f39de0800000000000000
+      internalID: -1327442772634568093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_62
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 591
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d80e1d6156d5c48c0800000000000000
+      internalID: -4013730479138021235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_63
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 596
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a12cffab5983d5a0800000000000000
+      internalID: -6497698810477928030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_64
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 579
+        width: 4
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 141a86fa42b269d50800000000000000
+      internalID: 6743624928595583297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_65
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 577
+        width: 27
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8a9a3fb0b531d1a0800000000000000
+      internalID: -6786584130231821682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_66
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 580
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1edf4958b8c75cae0800000000000000
+      internalID: -1529679559738982943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_67
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 597
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c9c352aa71fbb980800000000000000
+      internalID: -8521952360856827450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_68
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 595
+        width: 5
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d35a41bbbc546ddf0800000000000000
+      internalID: -155860395778333379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_69
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 597
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e646aaa12211bee0800000000000000
+      internalID: -1247195685998672155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_70
+      rect:
+        serializedVersion: 2
+        x: 747
+        y: 592
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e5570961b3fd3040800000000000000
+      internalID: 4629123935303587301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_71
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 592
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78a27b6d2cf351560800000000000000
+      internalID: 7283798078400178823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_72
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 597
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 030681cef1bf8f0f0800000000000000
+      internalID: -1082839595859025872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_73
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 479
+        width: 75
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3450022654d1d7e10800000000000000
+      internalID: 2196944377062884675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_74
+      rect:
+        serializedVersion: 2
+        x: 981
+        y: 590
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 307f9235379caed80800000000000000
+      internalID: -8220536672657737981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_75
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 574
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3182c8aab989a7f0800000000000000
+      internalID: -600797640489008834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_76
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 579
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab5708d091f571f40800000000000000
+      internalID: 5699128414665995706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_77
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 573
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f617342b8bb7869c0800000000000000
+      internalID: -3933758241313164945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_78
+      rect:
+        serializedVersion: 2
+        x: 771
+        y: 587
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70b3cea2859f3c6d0800000000000000
+      internalID: -2971257172061832441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_79
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 550
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6358b19c6953d6c0800000000000000
+      internalID: -4119850911277755541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_80
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 577
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7f3c812d1326b5a0800000000000000
+      internalID: -6505974003666239618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_81
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 564
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3b8582894a4a8fd0800000000000000
+      internalID: -2338975376882693313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_82
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 571
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aadb276ad7e45610800000000000000
+      internalID: 1609165892097923751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_83
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 566
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c902a35d881ed6e30800000000000000
+      internalID: 4498499580622151836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_84
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 558
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e53cf6dc2d60402c0800000000000000
+      internalID: -4466437427985136802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_85
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 566
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db95692b5614a07b0800000000000000
+      internalID: -5257317709957932611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 6
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 364
+        width: 225
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08688d69f2384b240800000000000000
+      internalID: 4806610942728636032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 377
+        width: 205
+        height: 229
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b88b5ddce9d984f50800000000000000
+      internalID: 6865910937310050443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_88
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 553
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 338f256be19dfdea0800000000000000
+      internalID: -5845715065372477389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 8
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 374
+        width: 173
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33563668997a2da20800000000000000
+      internalID: 3085712972528706867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_90
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 515
+        width: 30
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 661bb233dc72d14f0800000000000000
+      internalID: -856484591850245786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_91
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 551
+        width: 4
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0eb0862c0e657a700800000000000000
+      internalID: 551505002710436832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_92
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 528
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ca8870b4e633c970800000000000000
+      internalID: 8773916854888991433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_93
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 507
+        width: 30
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31fdbfad4596c6500800000000000000
+      internalID: 390803080846499603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 9
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 358
+        width: 227
+        height: 254
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bcc8602b4cce5280800000000000000
+      internalID: -9052573577929765704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_95
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 538
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47d9ac9ffa1b078e0800000000000000
+      internalID: -1697661690150478476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_96
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 515
+        width: 17
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54324b49c45d131d0800000000000000
+      internalID: -3372680121034726587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_97
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 511
+        width: 32
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f11267802b6fdcc0800000000000000
+      internalID: -3684108182711299593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_98
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 524
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d04980d2563e0120800000000000000
+      internalID: 2381900982239445205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_99
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 501
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db43ad5c644853890800000000000000
+      internalID: -7478926166676851523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_100
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 504
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43828d231f8586a00800000000000000
+      internalID: 749947130920577076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_101
+      rect:
+        serializedVersion: 2
+        x: 419
+        y: 473
+        width: 18
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a8e94e2c09c38ca0800000000000000
+      internalID: -6015743623083464535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_102
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 433
+        width: 24
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51e24f221b8603bf0800000000000000
+      internalID: -346662061302600171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_103
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 499
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c7eddba02abcbf10800000000000000
+      internalID: 2286907360282535881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_104
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 499
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8c98f26227a00210800000000000000
+      internalID: 1297220458813889677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_105
+      rect:
+        serializedVersion: 2
+        x: 839
+        y: 433
+        width: 70
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 434f07c0d79a68260800000000000000
+      internalID: 7099548217140900916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_106
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 502
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6595ac6a682b37460800000000000000
+      internalID: 7238325317508159830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_107
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 474
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d3b52fa70e42ecf0800000000000000
+      internalID: -224531236504882215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_108
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 407
+        width: 53
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f3f2066178f9e790800000000000000
+      internalID: -7500190538482387979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_109
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 432
+        width: 30
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7a5e17a3f22707f0800000000000000
+      internalID: -646509591628195204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_110
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 433
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6b868cefdbd55fe0800000000000000
+      internalID: -1200811970831938705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_111
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 368
+        width: 29
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a535b3c0e21fbd390800000000000000
+      internalID: -7792369550158507174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_112
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 381
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9feed9f4d4d186c90800000000000000
+      internalID: -7176453788329447687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_113
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 367
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40ff856337315f7e0800000000000000
+      internalID: -1732457096100118780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_114
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 356
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5f83418698ca0c90800000000000000
+      internalID: -7202724105286348965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_115
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 353
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3d12dd6e5c602800800000000000000
+      internalID: 585587104383376698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_116
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 371
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d29d109bc5177d50800000000000000
+      internalID: 6734875731796267728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_117
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 340
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 058b640a2aee6fac0800000000000000
+      internalID: -3821604851536185264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_118
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 351
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86f93203009effae0800000000000000
+      internalID: -1513234762756284568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_119
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 328
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f99692a0a02731af0800000000000000
+      internalID: -426872152224339553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_120
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 341
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbc237a354f9503a0800000000000000
+      internalID: -6699773750961558337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_121
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 343
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f1485d13e249c5e0800000000000000
+      internalID: -1888905025487879688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_122
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 335
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: febf9efc6bfd30170800000000000000
+      internalID: 8143598527481248751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_123
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 333
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 358a8992e0d630b40800000000000000
+      internalID: 5405283885369567315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_124
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 254
+        width: 20
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdcd2ad43739e9790800000000000000
+      internalID: -7521412204229108513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_125
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 213
+        width: 118
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d05696c70da7a4de0800000000000000
+      internalID: -1348130102584974067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_126
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 221
+        width: 162
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05b2a34dbbd6fce10800000000000000
+      internalID: 2220113794803837776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_127
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 248
+        width: 87
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fc58a76f4bf41a00800000000000000
+      internalID: 726481758373567733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_128
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 210
+        width: 60
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad16cec73076476c0800000000000000
+      internalID: -4146576092222955046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_129
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 274
+        width: 54
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9179ebcf13a7bc9c0800000000000000
+      internalID: -3905893896701438183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_130
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 269
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a855fb6bd5f84a510800000000000000
+      internalID: 1559529003637757322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_131
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 269
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 787fad4dbb7b00190800000000000000
+      internalID: -7998190920852113529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_132
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 249
+        width: 19
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef24c6d48b5463ca0800000000000000
+      internalID: -6037561592568331522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_133
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 226
+        width: 53
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0fc064bc70ca7c20800000000000000
+      internalID: 3205085726662250251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_134
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 223
+        width: 26
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af255b8020b4a36a0800000000000000
+      internalID: -6468775442656177414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_135
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 265
+        width: 34
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4d1aeee14742e0a0800000000000000
+      internalID: -6853837334397706929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_136
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 247
+        width: 23
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ed71db866a174bf0800000000000000
+      internalID: -340274219108434458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_137
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 233
+        width: 47
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79e092c1017b00250800000000000000
+      internalID: 5908923990929903255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_138
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 265
+        width: 31
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a31eca813cba4cb0800000000000000
+      internalID: -4878880325334330460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_139
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 251
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 912c38588204b76a0800000000000000
+      internalID: -6450491498495229415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_140
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 243
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95e1536bf71e831a0800000000000000
+      internalID: -6829460896273326503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_141
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 252
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9eee76841bcda0bb0800000000000000
+      internalID: -4968916584867827991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_142
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 241
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e33298112e1e21f60800000000000000
+      internalID: 8003707848863851326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_143
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 134
+        width: 85
+        height: 117
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74060a6fccd9fdd70800000000000000
+      internalID: 9070141678184063047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_144
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 248
+        width: 24
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ffcfed355d7e1cd0800000000000000
+      internalID: -2585491330999267342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_145
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 221
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 809794aca27b74940800000000000000
+      internalID: 5280390482525518088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_146
+      rect:
+        serializedVersion: 2
+        x: 394
+        y: 197
+        width: 33
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01fda96d06f86a230800000000000000
+      internalID: 3649762194110471952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_147
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 223
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd768e8e8c8dd1190800000000000000
+      internalID: -7989991806472788005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_148
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 224
+        width: 18
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00a4059f223289850800000000000000
+      internalID: 6383891104916326912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_149
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 200
+        width: 9
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77cbc00573a53e030800000000000000
+      internalID: 3522758527146572919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_150
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 198
+        width: 28
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07532ec0f83215260800000000000000
+      internalID: 7084482786133947760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_151
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 183
+        width: 24
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffc9f2fd57043f2d0800000000000000
+      internalID: -3246180031404204801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_152
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 223
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b5763b9846bba1f0800000000000000
+      internalID: -1032531266593458766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_153
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 213
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 287aa38b1a794a350800000000000000
+      internalID: 6027108922164946818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_154
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 184
+        width: 16
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c1569cc01d6cde20800000000000000
+      internalID: 3376693739540337096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_155
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 197
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c93152b5dfa7bc0800000000000000
+      internalID: -3784433968945587117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_156
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 118
+        width: 60
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f30a82ecbbc040d70800000000000000
+      internalID: 9008339155405021247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_157
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 174
+        width: 26
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b13ceea4fe26f0b80800000000000000
+      internalID: -8426407597893041381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_158
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 171
+        width: 16
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9735e2e00480c1570800000000000000
+      internalID: 8438628872994313081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_159
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 197
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9c61d23bfd941440800000000000000
+      internalID: 4905719596328250525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_160
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 155
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85fce7364e192df30800000000000000
+      internalID: 4598898579606523736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_161
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 185
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f46bc933490a82710800000000000000
+      internalID: 1668760220322281039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_162
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 184
+        width: 4
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa71559366af7e810800000000000000
+      internalID: 1794678293485918127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_163
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 146
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e74c3d05715f407e0800000000000000
+      internalID: -1800044470552247170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_164
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 133
+        width: 89
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 206474be3364b5bb0800000000000000
+      internalID: -4946282576931764734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_165
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 143
+        width: 22
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c948aaf404360a720800000000000000
+      internalID: 2855391291618526364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_166
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 158
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fbfa2ff98c30aed0800000000000000
+      internalID: -2404855637626651664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_167
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 174
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 345191b0165b859b0800000000000000
+      internalID: -5091119950339697341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_168
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 164
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9594f75590730c330800000000000000
+      internalID: 3729041004691409241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_169
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 146
+        width: 17
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf0cf6a6675768c00800000000000000
+      internalID: 902537926786662652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_170
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 103
+        width: 55
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3d738ded1cc9150800000000000000
+      internalID: 5880788376293463010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_171
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 104
+        width: 69
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bbf83a13c95144e0800000000000000
+      internalID: -1999218065082352711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_172
+      rect:
+        serializedVersion: 2
+        x: 626
+        y: 151
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4ed5a44839f84de0800000000000000
+      internalID: -1348554068332257717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_173
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 159
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 324250e9e456afb20800000000000000
+      internalID: 3168956676141556771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_174
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 125
+        width: 21
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8b3c15eb5baa2a10800000000000000
+      internalID: 1885507805182180239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_175
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 162
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c82ed24f6f2725e60800000000000000
+      internalID: 7949542697246515852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_176
+      rect:
+        serializedVersion: 2
+        x: 921
+        y: 158
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6e8aae67a11130b0800000000000000
+      internalID: -5750795838361530770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_177
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 105
+        width: 38
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b23793af8485ead0800000000000000
+      internalID: -2673585051314736459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_178
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 145
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b07e03dd6d5b2830800000000000000
+      internalID: 4047431416396279987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_179
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 146
+        width: 31
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 823849899ab6eac70800000000000000
+      internalID: 8984236682804233000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_180
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 145
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bebabc9a33026def0800000000000000
+      internalID: -83844136795657237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_181
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 133
+        width: 9
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fa3c50b1b07bc170800000000000000
+      internalID: 8199771455028476663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_182
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 150
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: def1ea216ec12ded0800000000000000
+      internalID: -2390816677698854931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_183
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 154
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcce15145a1eceed0800000000000000
+      internalID: -2383282002904093491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_184
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 171
+        height: 153
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32baa5d1e89d4eae0800000000000000
+      internalID: -1520851569743320285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_185
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 130
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afad75c6e71a82b60800000000000000
+      internalID: 7721599125482363642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_186
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 144
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e34235b7abd22d580800000000000000
+      internalID: -8803924042599685058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_187
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 107
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2abb78a96998f0810800000000000000
+      internalID: 1733755661491616674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_188
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 72
+        width: 91
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c9b7abf3d8cf4930800000000000000
+      internalID: 4129740196107762116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_189
+      rect:
+        serializedVersion: 2
+        x: 778
+        y: 137
+        width: 25
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a29aa349faf929550800000000000000
+      internalID: 6166166416278595882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_190
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 146
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80b037d9194206df0800000000000000
+      internalID: -189110976519140600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_191
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 146
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1969f55fbc774a2f0800000000000000
+      internalID: -962512702471694703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_192
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 146
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d36b45f798dc15870800000000000000
+      internalID: 8669936748095387197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_193
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 131
+        width: 31
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 981234498975bdf60800000000000000
+      internalID: 8060132270943707529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_194
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 118
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 849c50ecf442301e0800000000000000
+      internalID: -2232901065068132024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_195
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 117
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e50f235daa61eb3e0800000000000000
+      internalID: -2036165058547748770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_196
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 123
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1427428244644a6c0800000000000000
+      internalID: -4133101299474075071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_197
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 105
+        width: 45
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5337f5a77071e03e0800000000000000
+      internalID: -2085704256540675275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_198
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 105
+        width: 28
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a1bfdab5cb016dc0800000000000000
+      internalID: -3647621279321706079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_199
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 96
+        width: 40
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 288c6a401d26e8c20800000000000000
+      internalID: 3210612234227468418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_200
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 85
+        width: 58
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 321bbecb59ef7d160800000000000000
+      internalID: 7050383660744945955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_201
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 123
+        width: 4
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 387efee05caa67ee0800000000000000
+      internalID: -1263634882094962813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_202
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 124
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f9e29385229222c0800000000000000
+      internalID: -4457839991324481031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_203
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 120
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e98d482f4164fee70800000000000000
+      internalID: 9146606423994849438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_204
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 103
+        width: 33
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d88a50f7851c84e00800000000000000
+      internalID: 1029285100686518413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_205
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 128
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8437901ea19227210800000000000000
+      internalID: 1329170035449099080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_206
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 117
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e94ac59fe594635e0800000000000000
+      internalID: -1930274718022327138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_207
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 131
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 271bc29d43ccfe8c0800000000000000
+      internalID: -3967728219336167054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_208
+      rect:
+        serializedVersion: 2
+        x: 821
+        y: 118
+        width: 24
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b38b306daec2d5c50800000000000000
+      internalID: 6655525211447998523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_209
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 123
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c35d5ab0c9883f60800000000000000
+      internalID: 8014306997759202246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_210
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 93
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1a0199ef1d4918a0800000000000000
+      internalID: -6333946601461970402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_211
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 95
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5d661d83069c78b0800000000000000
+      internalID: -5153078931622564513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_212
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 83
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84200650b5a73b9b0800000000000000
+      internalID: -5065570624510885304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_213
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 79
+        width: 14
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e33924ac8e9f81a30800000000000000
+      internalID: 4186370631861965630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_214
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 70
+        width: 71
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f14b0d9c13356000800000000000000
+      internalID: 28485170634637814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_215
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 105
+        width: 24
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3131d5755674bea10800000000000000
+      internalID: 1939722565096117011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_216
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 90
+        width: 32
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aee4d4e3447d00270800000000000000
+      internalID: 8214802408426786538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_217
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 91
+        width: 5
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 691e90a30397e5d20800000000000000
+      internalID: 3269183627556675990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_218
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 94
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e4516afc893c6ad0800000000000000
+      internalID: -2707725998297623319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_219
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 95
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9078fd1c997db4b0800000000000000
+      internalID: -5423044664859529058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_220
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 93
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c38e36185f227d50800000000000000
+      internalID: 6733496448249136071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_221
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 97
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d042c4cb289b3780800000000000000
+      internalID: -8702194541211270959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_222
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 92
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e22aed33ccda30a0800000000000000
+      internalID: -6900960747876375834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_223
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 85
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc12995d6e6556ea0800000000000000
+      internalID: -5880198189036265013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterfade_224
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 46
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eef69e8ed0026a6c0800000000000000
+      internalID: -4132580363951575058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 638
+        width: 205
+        height: 211
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61373d804a87f5647baf735976fc27a3
+      internalID: 1365365734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 643
+        width: 202
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3b116fd17daf9d44830025042c43982
+      internalID: 1839298734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 10
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 362
+        width: 190
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11ce7481156b52b429ef3f10da3e4e2f
+      internalID: 1337168411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 11
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 121
+        width: 220
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bb9ba109f1e8314eb2a3b22d603699c
+      internalID: 68182454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 12
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 115
+        width: 198
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e36b55e4ac3019488d27dd9e6d4eb9d
+      internalID: 735081762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 13
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 105
+        width: 185
+        height: 261
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87d715143922e2f4db3aa6c8ba3803f2
+      internalID: -1941841119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 126
+        width: 110
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5957defc21459f64fbba25df74cd53de
+      internalID: 418310271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 134
+        width: 155
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd370eed25723924993e436a969b948e
+      internalID: 1328193303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 0c61d526cc4510f42bc3d6ada50af050
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      1: -5370392312883547682
+      10: 1337168411
+      11: 68182454
+      12: 735081762
+      13: -1941841119
+      14: 418310271
+      15: 1328193303
+      2: 1365365734
+      3: 1839298734
+      4: -1975558327206264733
+      5: -2857714794847963237
+      6: 4806610942728636032
+      7: 6865910937310050443
+      8: 3085712972528706867
+      9: -9052573577929765704
+      waterfade_0: 7746914559482883983
+      waterfade_1: -8335239787849819744
+      waterfade_10: -5176547351229152727
+      waterfade_100: 749947130920577076
+      waterfade_101: -6015743623083464535
+      waterfade_102: -346662061302600171
+      waterfade_103: 2286907360282535881
+      waterfade_104: 1297220458813889677
+      waterfade_105: 7099548217140900916
+      waterfade_106: 7238325317508159830
+      waterfade_107: -224531236504882215
+      waterfade_108: -7500190538482387979
+      waterfade_109: -646509591628195204
+      waterfade_11: -1193127951828199487
+      waterfade_110: -1200811970831938705
+      waterfade_111: -7792369550158507174
+      waterfade_112: -7176453788329447687
+      waterfade_113: -1732457096100118780
+      waterfade_114: -7202724105286348965
+      waterfade_115: 585587104383376698
+      waterfade_116: 6734875731796267728
+      waterfade_117: -3821604851536185264
+      waterfade_118: -1513234762756284568
+      waterfade_119: -426872152224339553
+      waterfade_12: -1394535367666371476
+      waterfade_120: -6699773750961558337
+      waterfade_121: -1888905025487879688
+      waterfade_122: 8143598527481248751
+      waterfade_123: 5405283885369567315
+      waterfade_124: -7521412204229108513
+      waterfade_125: -1348130102584974067
+      waterfade_126: 2220113794803837776
+      waterfade_127: 726481758373567733
+      waterfade_128: -4146576092222955046
+      waterfade_129: -3905893896701438183
+      waterfade_13: -1433683681039720510
+      waterfade_130: 1559529003637757322
+      waterfade_131: -7998190920852113529
+      waterfade_132: -6037561592568331522
+      waterfade_133: 3205085726662250251
+      waterfade_134: -6468775442656177414
+      waterfade_135: -6853837334397706929
+      waterfade_136: -340274219108434458
+      waterfade_137: 5908923990929903255
+      waterfade_138: -4878880325334330460
+      waterfade_139: -6450491498495229415
+      waterfade_14: 5563155365293009106
+      waterfade_140: -6829460896273326503
+      waterfade_141: -4968916584867827991
+      waterfade_142: 8003707848863851326
+      waterfade_143: 9070141678184063047
+      waterfade_144: -2585491330999267342
+      waterfade_145: 5280390482525518088
+      waterfade_146: 3649762194110471952
+      waterfade_147: -7989991806472788005
+      waterfade_148: 6383891104916326912
+      waterfade_149: 3522758527146572919
+      waterfade_15: -1019198765612773877
+      waterfade_150: 7084482786133947760
+      waterfade_151: -3246180031404204801
+      waterfade_152: -1032531266593458766
+      waterfade_153: 6027108922164946818
+      waterfade_154: 3376693739540337096
+      waterfade_155: -3784433968945587117
+      waterfade_156: 9008339155405021247
+      waterfade_157: -8426407597893041381
+      waterfade_158: 8438628872994313081
+      waterfade_159: 4905719596328250525
+      waterfade_16: -1863676130775556897
+      waterfade_160: 4598898579606523736
+      waterfade_161: 1668760220322281039
+      waterfade_162: 1794678293485918127
+      waterfade_163: -1800044470552247170
+      waterfade_164: -4946282576931764734
+      waterfade_165: 2855391291618526364
+      waterfade_166: -2404855637626651664
+      waterfade_167: -5091119950339697341
+      waterfade_168: 3729041004691409241
+      waterfade_169: 902537926786662652
+      waterfade_17: -4418180169206811919
+      waterfade_170: 5880788376293463010
+      waterfade_171: -1999218065082352711
+      waterfade_172: -1348554068332257717
+      waterfade_173: 3168956676141556771
+      waterfade_174: 1885507805182180239
+      waterfade_175: 7949542697246515852
+      waterfade_176: -5750795838361530770
+      waterfade_177: -2673585051314736459
+      waterfade_178: 4047431416396279987
+      waterfade_179: 8984236682804233000
+      waterfade_18: 8638984412235550582
+      waterfade_180: -83844136795657237
+      waterfade_181: 8199771455028476663
+      waterfade_182: -2390816677698854931
+      waterfade_183: -2383282002904093491
+      waterfade_184: -1520851569743320285
+      waterfade_185: 7721599125482363642
+      waterfade_186: -8803924042599685058
+      waterfade_187: 1733755661491616674
+      waterfade_188: 4129740196107762116
+      waterfade_189: 6166166416278595882
+      waterfade_19: 7775810758736513294
+      waterfade_190: -189110976519140600
+      waterfade_191: -962512702471694703
+      waterfade_192: 8669936748095387197
+      waterfade_193: 8060132270943707529
+      waterfade_194: -2232901065068132024
+      waterfade_195: -2036165058547748770
+      waterfade_196: -4133101299474075071
+      waterfade_197: -2085704256540675275
+      waterfade_198: -3647621279321706079
+      waterfade_199: 3210612234227468418
+      waterfade_2: 6744242961061527742
+      waterfade_20: 6767973649110732178
+      waterfade_200: 7050383660744945955
+      waterfade_201: -1263634882094962813
+      waterfade_202: -4457839991324481031
+      waterfade_203: 9146606423994849438
+      waterfade_204: 1029285100686518413
+      waterfade_205: 1329170035449099080
+      waterfade_206: -1930274718022327138
+      waterfade_207: -3967728219336167054
+      waterfade_208: 6655525211447998523
+      waterfade_209: 8014306997759202246
+      waterfade_21: -4894662454833781922
+      waterfade_210: -6333946601461970402
+      waterfade_211: -5153078931622564513
+      waterfade_212: -5065570624510885304
+      waterfade_213: 4186370631861965630
+      waterfade_214: 28485170634637814
+      waterfade_215: 1939722565096117011
+      waterfade_216: 8214802408426786538
+      waterfade_217: 3269183627556675990
+      waterfade_218: -2707725998297623319
+      waterfade_219: -5423044664859529058
+      waterfade_22: 1471588066795362380
+      waterfade_220: 6733496448249136071
+      waterfade_221: -8702194541211270959
+      waterfade_222: -6900960747876375834
+      waterfade_223: -5880198189036265013
+      waterfade_224: -4132580363951575058
+      waterfade_23: -5436111148544562103
+      waterfade_24: -9167762529102262679
+      waterfade_25: -2265034087844621696
+      waterfade_26: -5379701388587168495
+      waterfade_28: 6457505513480188381
+      waterfade_29: -7991010528685568488
+      waterfade_3: 2371638165903247892
+      waterfade_30: 8335130203027158073
+      waterfade_32: -4353986990982022402
+      waterfade_33: -8003183005327836461
+      waterfade_34: 6826959328280036211
+      waterfade_35: -2328972814626734080
+      waterfade_37: 6693305949073539264
+      waterfade_38: -10004042849411939
+      waterfade_39: -4311683528269710419
+      waterfade_4: 598509643204677801
+      waterfade_40: 4788612981410007631
+      waterfade_41: -1304027108100912144
+      waterfade_42: -5856250980760974466
+      waterfade_43: 8690202944031314405
+      waterfade_44: 4769381810932880474
+      waterfade_45: 8647908604343822998
+      waterfade_46: -4616853849599575444
+      waterfade_47: 1606739234907622531
+      waterfade_48: -4773102735051551678
+      waterfade_49: -4756464826388289988
+      waterfade_5: -4386089109389696530
+      waterfade_50: 1749953882335349565
+      waterfade_51: 1136790046037698762
+      waterfade_52: -7154277304267472635
+      waterfade_53: -8103838998074080543
+      waterfade_54: -346806040868711223
+      waterfade_55: -6600847374956811953
+      waterfade_56: -5819417983543810628
+      waterfade_57: 795454679487996106
+      waterfade_58: 5693742315221835893
+      waterfade_59: -8645287835908757558
+      waterfade_6: 9137339893544719334
+      waterfade_60: 7606930737300248487
+      waterfade_61: -1327442772634568093
+      waterfade_62: -4013730479138021235
+      waterfade_63: -6497698810477928030
+      waterfade_64: 6743624928595583297
+      waterfade_65: -6786584130231821682
+      waterfade_66: -1529679559738982943
+      waterfade_67: -8521952360856827450
+      waterfade_68: -155860395778333379
+      waterfade_69: -1247195685998672155
+      waterfade_7: -7547373834907073380
+      waterfade_70: 4629123935303587301
+      waterfade_71: 7283798078400178823
+      waterfade_72: -1082839595859025872
+      waterfade_73: 2196944377062884675
+      waterfade_74: -8220536672657737981
+      waterfade_75: -600797640489008834
+      waterfade_76: 5699128414665995706
+      waterfade_77: -3933758241313164945
+      waterfade_78: -2971257172061832441
+      waterfade_79: -4119850911277755541
+      waterfade_8: 8307265970734723557
+      waterfade_80: -6505974003666239618
+      waterfade_81: -2338975376882693313
+      waterfade_82: 1609165892097923751
+      waterfade_83: 4498499580622151836
+      waterfade_84: -4466437427985136802
+      waterfade_85: -5257317709957932611
+      waterfade_88: -5845715065372477389
+      waterfade_9: 2291454185641649168
+      waterfade_90: -856484591850245786
+      waterfade_91: 551505002710436832
+      waterfade_92: 8773916854888991433
+      waterfade_93: 390803080846499603
+      waterfade_95: -1697661690150478476
+      waterfade_96: -3372680121034726587
+      waterfade_97: -3684108182711299593
+      waterfade_98: 2381900982239445205
+      waterfade_99: -7478926166676851523
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -16,6 +16,8 @@ public class SweepingMinigame : MonoBehaviour
     [SerializeField] private Sprite dustSprite;
 
     [Header("Dust")]
+    [Tooltip("Optional sprites ordered from full dust to fully swept. Assign all seven frames here.")]
+    [SerializeField] private Sprite[] dustFadeSprites = new Sprite[7];
     [SerializeField] private Vector2 dustParticleSizeMin = new Vector2(100f, 100f);
     [SerializeField] private Vector2 dustParticleSizeMax = new Vector2(150f, 150f);
 
@@ -38,7 +40,6 @@ public class SweepingMinigame : MonoBehaviour
     [SerializeField] private float minimumSweepSpeed = 80f;
 
     [Header("Cleaning")]
-    [SerializeField] private float baseSweepDuration = 12f;
     [SerializeField] private float sweepBonusMultiplier = 1.75f;
     [SerializeField] private float dragMomentumThreshold = 400f;
     [SerializeField] private float sweepAreaDrift = 40f;
@@ -58,7 +59,6 @@ public class SweepingMinigame : MonoBehaviour
     private bool mouseIsDown;
     private RectTransform activeBroom;
     private Image activeBroomImage;
-    private Image activeAreaImage;
     private Vector2 lastMousePosition;
     private float currentMomentum;
     private float sweepStartTime;
@@ -105,7 +105,6 @@ public class SweepingMinigame : MonoBehaviour
         isSweeping = false;
         mouseIsDown = false;
         activeBroom = null;
-        activeAreaImage = null;
         lastMousePosition = Vector2.zero;
         currentMomentum = 0f;
         sweepStartTime = 0f;
@@ -133,16 +132,7 @@ public class SweepingMinigame : MonoBehaviour
             upgradedBroomVisual.gameObject.SetActive(false);
 
         if (sweepingArea != null)
-        {
             baseSweepingAreaPosition = sweepingArea.anchoredPosition;
-            Image areaImage = sweepingArea.GetComponent<Image>();
-            if (areaImage != null)
-            {
-                var color = areaImage.color;
-                color.a = 0.2f;
-                areaImage.color = color;
-            }
-        }
     }
 
     private void Update()
@@ -175,7 +165,6 @@ public class SweepingMinigame : MonoBehaviour
         CreateDustVisuals();
         EnsureBroomOnTop();
         lastBrushWorldPosition = GetBrushWorldPosition();
-        activeAreaImage = sweepingArea != null ? sweepingArea.GetComponent<Image>() : null;
 
         if (sweepingArea != null)
             baseSweepingAreaPosition = sweepingArea.anchoredPosition;
@@ -187,13 +176,6 @@ public class SweepingMinigame : MonoBehaviour
             progressBar.value = 0f;
         if (speedGradeText != null)
             speedGradeText.text = "Ready!";
-
-        if (activeAreaImage != null)
-        {
-            var color = activeAreaImage.color;
-            color.a = 0.35f;
-            activeAreaImage.color = color;
-        }
 
         Debug.Log("SWEEPING STARTED");
     }
@@ -269,7 +251,7 @@ public class SweepingMinigame : MonoBehaviour
             dustRect.localRotation = Quaternion.Euler(0f, 0f, randomRotation);
             dustRect.anchoredPosition = GetDustPositionInsideArea(dustRect.sizeDelta, randomRotation);
 
-            dustImage.sprite = dustSprite;
+            dustImage.sprite = GetDustFadeSprite(1f);
             dustImage.color = new Color(0.74f, 0.56f, 0.2f, 1f);
             dustImage.raycastTarget = false;
 
@@ -384,35 +366,13 @@ public class SweepingMinigame : MonoBehaviour
 
         bool insideArea = IsInsideArea();
         bool validSweepStroke = UpdateSweepStroke(brushDelta);
-        float upgradeBonus = GetCurrentBroomLevel() == 1 ? UpgradeBroomBoost : 1f;
-        float baseCleanRate = 1f / baseSweepDuration;
         float rewardMultiplier = insideArea && validSweepStroke
             ? 1f + Mathf.Clamp01(currentMomentum / dragMomentumThreshold) * sweepBonusMultiplier
             : 0.2f;
 
-        if (insideArea && validSweepStroke && currentMomentum >= minimumSweepSpeed)
-        {
-            progress += baseCleanRate * rewardMultiplier * upgradeBonus * Time.deltaTime;
-        }
-        else
-        {
-            progress = Mathf.Max(0f, progress - Time.deltaTime * 0.18f);
-        }
-
         UpdateDustVisuals(insideArea && validSweepStroke && currentMomentum >= minimumSweepSpeed, rewardMultiplier);
 
-        if (activeAreaImage != null)
-        {
-            float targetAlpha = insideArea ? 0.7f : 0.25f;
-            Color color = activeAreaImage.color;
-            color.a = Mathf.Lerp(color.a, targetAlpha, Time.deltaTime * 8f);
-            activeAreaImage.color = color;
-        }
-
-        if (progressBar != null)
-            progressBar.value = progress;
-
-        if (progress >= 1f)
+        if (UpdateProgressFromDust())
         {
             CompleteSweeping();
         }
@@ -443,14 +403,49 @@ public class SweepingMinigame : MonoBehaviour
                 float cleanAmount = (Time.deltaTime * (0.85f + rewardMultiplier * 0.55f)) * Mathf.Clamp01(fade + 0.5f);
                 color.a = Mathf.Max(0f, color.a - cleanAmount);
                 dustImage.color = color;
+                dustImage.sprite = GetDustFadeSprite(color.a);
                 dustImage.transform.localScale = Vector3.one * Mathf.Lerp(1f, 0.25f, 1f - color.a);
             }
-            else if (color.a < 1f)
-            {
-                color.a = Mathf.Min(1f, color.a + Time.deltaTime * 0.2f);
-                dustImage.color = color;
-            }
         }
+    }
+
+    private bool UpdateProgressFromDust()
+    {
+        int activeDustCount = 0;
+        float remainingDust = 0f;
+        bool allDustFaded = true;
+
+        for (int i = 0; i < dustVisuals.Count; i++)
+        {
+            Image dustImage = dustVisuals[i];
+            if (dustImage == null)
+                continue;
+
+            activeDustCount++;
+            float alpha = Mathf.Clamp01(dustImage.color.a);
+            remainingDust += alpha;
+            if (alpha > 0f)
+                allDustFaded = false;
+        }
+
+        progress = activeDustCount > 0
+            ? 1f - remainingDust / activeDustCount
+            : 0f;
+
+        if (progressBar != null)
+            progressBar.value = progress;
+
+        return activeDustCount > 0 && allDustFaded;
+    }
+
+    private Sprite GetDustFadeSprite(float alpha)
+    {
+        if (dustFadeSprites == null || dustFadeSprites.Length == 0)
+            return dustSprite;
+
+        int frameIndex = Mathf.RoundToInt((1f - Mathf.Clamp01(alpha)) * (dustFadeSprites.Length - 1));
+        Sprite fadeSprite = dustFadeSprites[frameIndex];
+        return fadeSprite != null ? fadeSprite : dustSprite;
     }
 
     private Vector3 GetBrushWorldPosition()
@@ -608,13 +603,6 @@ public class SweepingMinigame : MonoBehaviour
         if (minigamePanel != null)
             minigamePanel.SetActive(false);
 
-        if (activeAreaImage != null)
-        {
-            Color color = activeAreaImage.color;
-            color.a = 0.2f;
-            activeAreaImage.color = color;
-        }
-
         if (sweepingArea != null)
             sweepingArea.anchoredPosition = baseSweepingAreaPosition;
 
@@ -622,7 +610,6 @@ public class SweepingMinigame : MonoBehaviour
         currentDustSpot = null;
         activeBroom = null;
         activeBroomImage = null;
-        activeAreaImage = null;
 
         Debug.Log("SWEEPING COMPLETE! +" + rewardCoins + " speed reward coins");
     }

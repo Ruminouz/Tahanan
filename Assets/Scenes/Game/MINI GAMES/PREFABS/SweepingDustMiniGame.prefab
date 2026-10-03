@@ -206,6 +206,14 @@ MonoBehaviour:
   progressBar: {fileID: 799223236641726022}
   broom: {fileID: 7606106805196422555}
   sweepingArea: {fileID: 3682552274446527712}
+  dustFadeSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   cleaningSpeed: 0.5
 --- !u!1 &5402989466448487002
 GameObject:

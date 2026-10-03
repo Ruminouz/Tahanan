@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoodManager
   moodSlider: {fileID: 0}
-  startingMood: 35.4
+  startingMood: 40.8
   concernedThreshold: 65
   angryThreshold: 13.5
   moodLossPerMissedChore: 20
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b33e59b2e0d71498e5369b5271faaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  currentDay: 7
+  currentDay: 1
   washDishes: {fileID: 0}
   mopFloor: {fileID: 0}
   sweepDust: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   summarySuccessRateText: {fileID: 0}
   summaryPointsText: {fileID: 0}
   transitionDuration: 0.5
-  summaryLineDelay: 0.25
+  summaryLineDelay: 0.4
   missedChoresGameOverThresholdByDay: 05000000050000000500000005000000050000000500000005000000
 --- !u!114 &5398279178114419586
 MonoBehaviour:

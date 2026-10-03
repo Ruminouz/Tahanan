@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1040" viewBox="0 0 2000 1040">
+  <rect width="2000" height="1040" fill="#101a2b"/>
+  <text x="80" y="82" fill="#f3f7ff" font-family="Arial, sans-serif" font-size="42" font-weight="700">WATER SPRITE — MOPPING FADE (8 FRAMES)</text>
+  <text x="80" y="126" fill="#aab8cc" font-family="Arial, sans-serif" font-size="22">Export each numbered frame as a centered 256 × 160 transparent PNG. Keep the same canvas and anchor in every frame.</text>
+
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g transform="translate(70 170)">
+      <rect width="450" height="360" rx="22" fill="#1d2b40" stroke="#40536d" stroke-width="2"/>
+      <text x="225" y="48" fill="#e8f1ff" font-size="25" font-weight="700">01 — FULL</text>
+      <text x="225" y="82" fill="#91a6c2" font-size="18">0% cleaned</text>
+      <g transform="translate(225 220)">
+        <path d="M-164 10 L-151 -36 L-120 -49 L-105 -80 L-69 -88 L-45 -109 L-4 -103 L22 -122 L67 -105 L103 -94 L119 -66 L151 -57 L161 -26 L179 -5 L165 29 L140 42 L127 70 L91 78 L68 98 L28 88 L1 107 L-39 88 L-76 91 L-94 66 L-129 57 L-144 34 Z" fill="#43afd8" stroke="#9de8ff" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M-86 -21 L-56 -48 L-12 -53 L15 -69 L63 -51 L84 -25 L52 -9 L9 -17 L-19 2 L-59 -4 Z" fill="#b9f1ff" opacity=".82"/>
+        <path d="M-118 23 L-91 8 L-57 18 L-47 39 L-76 48 L-105 42 Z M49 42 L80 24 L112 35 L105 59 L76 63 Z" fill="#d9f8ff" opacity=".72"/>
+      </g>
+    </g>
+    <g transform="translate(555 170)">
+      <rect width="450" height="360" rx="22" fill="#1d2b40" stroke="#40536d" stroke-width="2"/>
+      <text x="225" y="48" fill="#e8f1ff" font-size="25" font-weight="700">02 — STARTING TO LIFT</text>
+      <text x="225" y="82" fill="#91a6c2" font-size="18">14% cleaned</text>
+      <g transform="translate(225 220) scale(.88)" opacity=".94">
+        <path d="M-164 10 L-151 -36 L-120 -49 L-105 -80 L-69 -88 L-45 -109 L-4 -103 L22 -122 L67 -105 L103 -94 L119 -66 L151 -57 L161 -26 L179 -5 L165 29 L140 42 L127 70 L91 78 L68 98 L28 88 L1 107 L-39 88 L-76 91 L-94 66 L-129 57 L-144 34 Z" fill="#43afd8" stroke="#9de8ff" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M-86 -21 L-56 -48 L-12 -53 L15 -69 L63 -51 L84 -25 L52 -9 L9 -17 L-19 2 L-59 -4 Z" fill="#b9f1ff" opacity=".82"/>
+        <path d="M-118 23 L-91 8 L-57 18 L-47 39 L-76 48 L-105 42 Z M49 42 L80 24 L112 35 L105 59 L76 63 Z" fill="#d9f8ff" opacity=".72"/>
+      </g>
+    </g>
+    <g transform="translate(1040 170)">
+      <rect width="450" height="360" rx="22" fill="#1d2b40" stroke="#40536d" stroke-width="2"/>
+      <text x="225" y="48" fill="#e8f1ff" font-size="25" font-weight="700">03 — SMALLER POOL</text>
+      <text x="225" y="82" fill="#91a6c2" font-size="18">29% cleaned</text>
+      <g transform="translate(225 220) scale(.76)" opacity=".87">
+        <path d="M-164 10 L-151 -36 L-120 -49 L-105 -80 L-69 -88 L-45 -109 L-4 -103 L22 -122 L67 -105 L103 -94 L119 -66 L151 -57 L161 -26 L179 -5 L165 29 L140 42 L127 70 L91 78 L68 98 L28 88 L1 107 L-39 88 L-76 91 L-94 66 L-129 57 L-144 34 Z" fill="#43afd8" stroke="#9de8ff" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M-86 -21 L-56 -48 L-12 -53 L15 -69 L63 -51 L84 -25 L52 -9 L9 -17 L-19 2 L-59 -4 Z" fill="#b9f1ff" opacity=".82"/>
+        <path d="M-118 23 L-91 8 L-57 18 L-47 39 L-76 48 L-105 42 Z M49 42 L80 24 L112 35 L105 59 L76 63 Z" fill="#d9f8ff" opacity=".72"/>
+      </g>
+    </g>
+    <g transform="translate(1525 170)">
+      <rect width="450" height="360" rx="22" fill="#1d2b40" stroke="#40536d" stroke-width="2"/>
+      <text x="225" y="48" fill="#e8f1ff" font-size="25" font-weight="700">04 — HALF PUDDLE</text>
+      <text x="225" y="82" fill="#91a6c2" font-size="18">43% cleaned</text>
+      <g transform="translate(225 220) scale(.64)" opacity=".78">
+        <path d="M-164 10 L-151 -36 L-120 -49 L-105 -80 L-69 -88 L-45 -109 L-4 -103 L22 -122 L67 -105 L103 -94 L119 -66 L151 -57 L161 -26 L179 -5 L165 29 L140 42 L127 70 L91 78 L68 98 L28 88 L1 107 L-39 88 L-76 91 L-94 66 L-129 57 L-144 34 Z" fill="#43afd8" stroke="#9de8ff" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M-86 -21 L-56 -48 L-12 -53 L15 -69 L63 -51 L84 -25 L52 -9 L9 -17 L-19 2 L-59 -4 Z" fill="#b9f1ff" opacity=".82"/>
+        <path d="M-118 23 L-91 8 L-57 18 L-47 39 L-76 48 L-105 42 Z M49 42 L80 24 L112 35 L105 59 L76 63 Z" fill="#d9f8ff" opacity=".72"/>
+      </g>
+    </g>
+
+    <g transform="translate(70 570)">
+      <rect width="450" height="360" rx="22" fill="#1d2b40" stroke="#40536d" stroke-width="2"/>
+      <text x="225" y="48" fill="#e8f1ff" font-size="25" font-weight="700">05 — THIN EDGES</text>
+      <text x="225" y="82" fill="#91a6c2" font-size="18">57% cleaned</text>
+      <g transform="translate(225 220) scale(.52)" opacity=".65">
+        <path d="M-164 10 L-151 -36 L-120 -49 L-105 -80 L-69 -88 L-45 -109 L-4 -103 L22 -122 L67 -105 L103 -94 L119 -66 L151 -57 L161 -26 L179 -5 L165 29 L140 42 L127 70 L91 78 L68 98 L28 88 L1 107 L-39 88 L-76 91 L-94 66 L-129 57 L-144 34 Z" fill="#43afd8" stroke="#9de8ff" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M-86 -21 L-56 -48 L-12 -53 L15 -69 L63 -51 L84 -25 L52 -9 L9 -17 L-19 2 L-59 -4 Z" fill="#b9f1ff" opacity=".82"/>
+        <path d="M-118 23 L-91 8 L-57 18 L-47 39 L-76 48 L-105 42 Z M49 42 L80 24 L112 35 L105 59 L76 63 Z" fill="#d9f8ff" opacity=".72"/>
+      </g>
+    </g>
+    <g transform="translate(555 570)">
+      <rect width="450" height="360" rx="22" fill="#1d2b40" stroke="#40536d" stroke-width="2"/>
+      <text x="225" y="48" fill="#e8f1ff" font-size="25" font-weight="700">06 — FEW PATCHES</text>
+      <text x="225" y="82" fill="#91a6c2" font-size="18">71% cleaned</text>
+      <g transform="translate(225 220) scale(.40)" opacity=".5">
+        <path d="M-164 10 L-151 -36 L-120 -49 L-105 -80 L-69 -88 L-45 -109 L-4 -103 L22 -122 L67 -105 L103 -94 L119 -66 L151 -57 L161 -26 L179 -5 L165 29 L140 42 L127 70 L91 78 L68 98 L28 88 L1 107 L-39 88 L-76 91 L-94 66 L-129 57 L-144 34 Z" fill="#43afd8" stroke="#9de8ff" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M-86 -21 L-56 -48 L-12 -53 L15 -69 L63 -51 L84 -25 L52 -9 L9 -17 L-19 2 L-59 -4 Z" fill="#b9f1ff" opacity=".82"/>
+        <path d="M-118 23 L-91 8 L-57 18 L-47 39 L-76 48 L-105 42 Z M49 42 L80 24 L112 35 L105 59 L76 63 Z" fill="#d9f8ff" opacity=".72"/>
+      </g>
+    </g>
+    <g transform="translate(1040 570)">
+      <rect width="450" height="360" rx="22" fill="#1d2b40" stroke="#40536d" stroke-width="2"/>
+      <text x="225" y="48" fill="#e8f1ff" font-size="25" font-weight="700">07 — LAST DROPS</text>
+      <text x="225" y="82" fill="#91a6c2" font-size="18">86% cleaned</text>
+      <g transform="translate(225 220) scale(.27)" opacity=".34">
+        <path d="M-164 10 L-151 -36 L-120 -49 L-105 -80 L-69 -88 L-45 -109 L-4 -103 L22 -122 L67 -105 L103 -94 L119 -66 L151 -57 L161 -26 L179 -5 L165 29 L140 42 L127 70 L91 78 L68 98 L28 88 L1 107 L-39 88 L-76 91 L-94 66 L-129 57 L-144 34 Z" fill="#43afd8" stroke="#9de8ff" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M-86 -21 L-56 -48 L-12 -53 L15 -69 L63 -51 L84 -25 L52 -9 L9 -17 L-19 2 L-59 -4 Z" fill="#b9f1ff" opacity=".82"/>
+        <path d="M-118 23 L-91 8 L-57 18 L-47 39 L-76 48 L-105 42 Z M49 42 L80 24 L112 35 L105 59 L76 63 Z" fill="#d9f8ff" opacity=".72"/>
+      </g>
+    </g>
+    <g transform="translate(1525 570)">
+      <rect width="450" height="360" rx="22" fill="#1d2b40" stroke="#40536d" stroke-width="2"/>
+      <text x="225" y="48" fill="#e8f1ff" font-size="25" font-weight="700">08 — DRY / INVISIBLE</text>
+      <text x="225" y="82" fill="#91a6c2" font-size="18">100% cleaned — fully transparent</text>
+      <rect x="95" y="150" width="260" height="112" rx="14" fill="#263a52" stroke="#6c829d" stroke-width="2" stroke-dasharray="10 10"/>
+      <text x="225" y="215" fill="#91a6c2" font-size="18">No puddle sprite</text>
+    </g>
+  </g>
+  <text x="80" y="990" fill="#aab8cc" font-family="Arial, sans-serif" font-size="18">Frame 08 must contain no visible water pixels; the minigame completes only when the displayed water reaches zero opacity.</text>
+</svg>
