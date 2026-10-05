@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 1783231392314788191}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1991232933655296888, guid: 462d6d28955c7b647adad13e9b0101d6, type: 3}
+  m_Sprite: {fileID: -8577736610812422469, guid: a39b56e62439a054781039cd4bd86c37, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 891dedd6f4db3534086fa7f97fefa744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WasteObject
-  wasteType: 1
+  wasteType: 0
   canvasGroup: {fileID: 1231747487571168511}
 --- !u!225 &1231747487571168511
 CanvasGroup:

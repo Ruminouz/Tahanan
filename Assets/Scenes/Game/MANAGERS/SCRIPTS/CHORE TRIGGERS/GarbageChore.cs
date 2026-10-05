@@ -89,13 +89,13 @@ public class GarbageChore : Chore
 
         hasGarbageBag = false;
 
+        if (garbageBag == null)
+            garbageBag = FindFirstObjectByType<GarbageBag>(FindObjectsInactive.Include);
 
-
-        if(garbageBag != null)
+        if (garbageBag != null)
         {
-
+            garbageBag.ConfigureSpawnedBag(this);
             garbageBag.gameObject.SetActive(true);
-
 
             Debug.Log(
                 "Garbage Bag Spawned Day "
@@ -107,7 +107,8 @@ public class GarbageChore : Chore
         {
 
             Debug.LogWarning(
-                "Garbage Bag Reference Missing!"
+                "Garbage Bag Reference Missing!",
+                this
             );
 
         }
@@ -135,14 +136,16 @@ public class GarbageChore : Chore
         if (IsCompleted || IsMissed)
             return;
 
-        if (GarbageCarry.Instance != null)
-            GarbageCarry.Instance.ClearBag();
+        ConsumeCarriedBag();
+        base.Complete();
+    }
 
-        if (garbageBag != null)
-            garbageBag.gameObject.SetActive(false);
+    public void ConsumeCarriedBag()
+    {
+        if (GarbageCarry.Instance != null)
+            GarbageCarry.Instance.ConsumeBag();
 
         hasGarbageBag = false;
-        base.Complete();
     }
 
 
@@ -168,18 +171,25 @@ public class GarbageChore : Chore
 
     public override void Interact()
     {
-        Debug.Log("Starting Garbage Sorting Mini Game");
+        if (!CanInteract())
+        {
+            Debug.Log("Garbage sorting is not available until a garbage bag is picked up.");
+            return;
+        }
 
-        if (miniGame != null)
+        if (miniGame == null)
+            miniGame = GarbageSortingMiniGame.Instance != null
+                ? GarbageSortingMiniGame.Instance
+                : FindFirstObjectByType<GarbageSortingMiniGame>();
+
+        if (miniGame == null)
         {
-            miniGame.StartGame(this);
-            GarbageCarry.Instance.RemoveBag();
-            hasGarbageBag = false;
+            Debug.LogWarning("Garbage Sorting MiniGame is missing from the scene.", this);
+            return;
         }
-        else
-        {
-            Debug.LogWarning("Garbage Sorting MiniGame missing!");
-        }
+
+        Debug.Log("Starting Garbage Sorting Mini Game");
+        miniGame.StartGame(this);
     }
 
 

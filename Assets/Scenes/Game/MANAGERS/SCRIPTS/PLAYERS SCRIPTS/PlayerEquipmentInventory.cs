@@ -142,6 +142,42 @@ public class PlayerEquipmentInventory : MonoBehaviour
         InventoryChanged?.Invoke();
     }
 
+    public void Remove(EquipmentType equipment, bool destroyVisual)
+    {
+        if (!ownedItems.TryGetValue(equipment, out GameObject visual))
+            return;
+
+        if (visual != null)
+        {
+            visual.transform.SetParent(null, true);
+            if (destroyVisual)
+                Destroy(visual);
+            else
+                visual.SetActive(false);
+        }
+
+        ownedItems.Remove(equipment);
+        itemHandPoints.Remove(equipment);
+        originalParents.Remove(equipment);
+        originalPositions.Remove(equipment);
+        originalRotations.Remove(equipment);
+        itemColliders.Remove(equipment);
+        originalColliderStates.Remove(equipment);
+        originalInteractableStates.Remove(equipment);
+
+        if (SelectedEquipment == equipment)
+        {
+            SelectedEquipment = null;
+            foreach (EquipmentType remainingEquipment in ownedItems.Keys)
+            {
+                Select(remainingEquipment);
+                break;
+            }
+        }
+
+        InventoryChanged?.Invoke();
+    }
+
     private void ResolveEquipmentHandPoint()
     {
         if (equipmentHandPoint != null)

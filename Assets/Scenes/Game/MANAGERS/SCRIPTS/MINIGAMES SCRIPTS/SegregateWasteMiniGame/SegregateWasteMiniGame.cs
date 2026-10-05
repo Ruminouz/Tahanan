@@ -1,12 +1,14 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class SegregateWasteMiniGame : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private Transform spawnArea;
     [SerializeField] private DropZone[] dropZones;
-    [SerializeField] private TextMeshProUGUI mistakesText;
+    [FormerlySerializedAs("mistakesText")]
+    [SerializeField] private TextMeshProUGUI toysRemainingText;
     [SerializeField] private TextMeshProUGUI progressText;
     [SerializeField] private WasteSpawner spawner;
     [SerializeField] private ChoreTutorial tutorial;
@@ -17,8 +19,6 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
     private WasteObject[] spawnedWaste;
     private int correctlySegregatedCount = 0;
-    private int mistakeCount = 0;
-    private int maxMistakes = 3;
     private int totalItemsNeeded = 0;
     private bool gameStarted = false;
 
@@ -32,7 +32,6 @@ public class SegregateWasteMiniGame : MonoBehaviour
     {
         currentChore = chore;
         correctlySegregatedCount = 0;
-        mistakeCount = 0;
         gameStarted = false;
 
         panel.SetActive(true);
@@ -65,39 +64,31 @@ public class SegregateWasteMiniGame : MonoBehaviour
         {
             case 1:
                 totalItemsNeeded = 3;
-                maxMistakes = 3;
                 break;
             case 2:
                 totalItemsNeeded = 5;
-                maxMistakes = 3;
                 break;
             case 3:
                 totalItemsNeeded = 7;
-                maxMistakes = 3;
                 break;
             case 4:
                 totalItemsNeeded = 9;
-                maxMistakes = 3;
                 break;
             case 5:
                 totalItemsNeeded = 10;
-                maxMistakes = 2;
                 break;
             case 6:
                 totalItemsNeeded = 12;
-                maxMistakes = 2;
                 break;
             case 7:
                 totalItemsNeeded = 14;
-                maxMistakes = 2;
                 break;
             default:
                 totalItemsNeeded = 5;
-                maxMistakes = 3;
                 break;
         }
 
-        Debug.Log($"Day {day} - Total Items: {totalItemsNeeded}, Max Mistakes: {maxMistakes}");
+        Debug.Log($"Day {day} - Total Toys: {totalItemsNeeded}");
     }
 
     private void ShowTutorial()
@@ -109,13 +100,9 @@ public class SegregateWasteMiniGame : MonoBehaviour
         }
 
         tutorial.ShowTutorial(
-            "SEGREGATE WASTE",
-            "1. Drag waste items to correct bins:\n" +
-            "   - Leaves → Leaves Bin\n" +
-            "   - Bottles → Bottles Bin\n" +
-            "   - Wrappers → Wrappers Bin\n" +
-            "2. Avoid wrong bins!\n" +
-            "3. Complete before mistakes run out.",
+            "TOY COLLECTION",
+            "1. Pick up each toy and drag it into the box.\n" +
+            "2. Move quickly to collect all the toys.",
             FinishTutorial
         );
     }
@@ -136,7 +123,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
         SpawnWaste();
         UpdateUI();
 
-        Debug.Log("Segregate Waste game started!");
+        Debug.Log("Toy collection game started!");
     }
 
     private void SpawnWaste()
@@ -159,41 +146,24 @@ public class SegregateWasteMiniGame : MonoBehaviour
         }
     }
 
-    public void OnWasteSegregated(WasteObject waste)
+    public void OnWasteSegregated(WasteObject waste, DropZone dropZone)
     {
         if (!gameStarted)
             return;
 
+        dropZone.StackToy(waste, correctlySegregatedCount);
         correctlySegregatedCount++;
-        Destroy(waste.gameObject);
 
-        Debug.Log($"Waste segregated! Progress: {correctlySegregatedCount}/{totalItemsNeeded}");
+        Debug.Log($"Toy collected! Progress: {correctlySegregatedCount}/{totalItemsNeeded}");
 
         UpdateUI();
         CheckCompletion();
     }
 
-    public void OnMistake()
-    {
-        if (!gameStarted)
-            return;
-
-        mistakeCount++;
-
-        Debug.Log($"Mistake! {mistakeCount}/{maxMistakes}");
-
-        UpdateUI();
-
-        if (mistakeCount >= maxMistakes)
-        {
-            FailGame();
-        }
-    }
-
     private void UpdateUI()
     {
-        if (mistakesText != null)
-            mistakesText.text = $"Mistakes: {mistakeCount}/{maxMistakes}";
+        if (toysRemainingText != null)
+            toysRemainingText.text = $"Toys left: {totalItemsNeeded - correctlySegregatedCount}";
 
         if (progressText != null)
             progressText.text = $"Progress: {correctlySegregatedCount}/{totalItemsNeeded}";
@@ -211,37 +181,11 @@ public class SegregateWasteMiniGame : MonoBehaviour
     {
         gameStarted = false;
 
-        Debug.Log("Segregate Waste complete!");
+        Debug.Log("Toy collection complete!");
 
         if (currentChore != null)
         {
             currentChore.Complete();
-        }
-
-        panel.SetActive(false);
-        CleanupWaste();
-
-        currentChore = null;
-    }
-
-    private void FailGame()
-    {
-        gameStarted = false;
-
-        Debug.Log("Segregate Waste failed - too many mistakes!");
-
-        if (currentChore != null)
-        {
-            ChoreManager choreManager = FindFirstObjectByType<ChoreManager>();
-
-            if (choreManager != null)
-            {
-                choreManager.MissChore(currentChore);
-            }
-            else
-            {
-                currentChore.MarkAsMissed();
-            }
         }
 
         panel.SetActive(false);

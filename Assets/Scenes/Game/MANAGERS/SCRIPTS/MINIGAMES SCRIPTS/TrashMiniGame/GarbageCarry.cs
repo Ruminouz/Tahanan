@@ -12,11 +12,6 @@ public class GarbageCarry : MonoBehaviour
 
     private GameObject currentBag;
 
-
-    private Vector3 originalPosition;
-
-
-
     private void Awake()
     {
         Instance = this;
@@ -30,9 +25,6 @@ public class GarbageCarry : MonoBehaviour
     {
         if (bag == null)
             return;
-
-        originalPosition =
-        bag.transform.position;
 
         PlayerEquipmentInventory inventory = GetComponent<PlayerEquipmentInventory>();
         if (inventory == null)
@@ -63,32 +55,26 @@ public class GarbageCarry : MonoBehaviour
 
     public void RemoveBag()
     {
-
-        if(currentBag == null)
+        if (currentBag == null)
             return;
 
+        PlayerEquipmentInventory inventory = GetComponent<PlayerEquipmentInventory>();
+        inventory?.Remove(EquipmentType.GarbageBag, false);
+        currentBag = null;
+    }
 
+    public void ConsumeBag()
+    {
+        if (currentBag == null)
+            return;
 
-        currentBag.transform.SetParent(null);
-
-
-        currentBag.transform.position =
-        originalPosition;
-
-
-
-        currentBag.SetActive(false);
-
-
+        PlayerEquipmentInventory inventory = GetComponent<PlayerEquipmentInventory>();
+        if (inventory != null)
+            inventory.Remove(EquipmentType.GarbageBag, true);
+        else
+            Destroy(currentBag);
 
         currentBag = null;
-
-
-
-        Debug.Log(
-        "Garbage bag returned"
-        );
-
     }
 
     public void ClearBag()
@@ -96,9 +82,7 @@ public class GarbageCarry : MonoBehaviour
         if (currentBag == null)
             return;
 
-        currentBag.transform.SetParent(null);
-        currentBag.SetActive(false);
-        currentBag = null;
+        ConsumeBag();
     }
 
     public void ResetForDay()

@@ -230,11 +230,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BunsoAI
   actionInterval: 30
   actionChance: 60
-  badMoodLine: MWEHEHEHE
+  dustBadMoodLine: Pakiwalisan to kuya! bwhahaah!
+  waterBadMoodLine: paki mop to kuya! bwhaahah!
+  segregateBadMoodLine: pakiligpit to kuya! bwahahah!
+  garbageBagBadMoodLine: pakitapon to sa basura kuya! bwaahha!
   possibleBoosts: 0000000001000000
   chocolatePrefab: {fileID: 2093951337509963342, guid: 86d7c508fe0eba54eb85686efa87b206, type: 3}
   timeFreezerPrefab: {fileID: 6014960946341728753, guid: c313d8be4311359489f1b34ed95ac3a8, type: 3}
   segregateWastePrefab: {fileID: 0}
+  dustSpotPrefab: {fileID: 6552050211545809342, guid: 10c7e0e6b72a2f24aab7c74fa974ab65, type: 3}
+  wetAreaPrefab: {fileID: 6995687946688838214, guid: 40bb8feffb046fe43aaf2162cb2e562e, type: 3}
+  garbageBagPrefab: {fileID: 1536422020932868943, guid: 22f1d286bcd5f4c4c80aedbe6bb2e753, type: 3}
   choreLifetime: 120
   moveSpeed: 1.25
   followTriggerDistance: 4.5

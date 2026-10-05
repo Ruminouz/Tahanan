@@ -14831,6 +14831,8 @@ MonoBehaviour:
   garbageBag: {fileID: 0}
   garbageSpawnPoint: {fileID: 0}
   platePrefab: {fileID: 4921860481487065061, guid: 4a42f269474bcb84e89b454be0320e97, type: 3}
+  alternateDishSprites: []
+  fryingPanSprite: {fileID: 4918051729378971685, guid: 78a10fff77d59434789230dc9c5427ab, type: 3}
   washingArea: {fileID: 5368345673418656739}
   plateCount: 3
   leftoverPrefab: {fileID: 5083802007111107006, guid: a19eed55b25458f458cebbf8ac637208, type: 3}
@@ -14840,6 +14842,13 @@ MonoBehaviour:
   dishSponge: {fileID: 1293909760221316530}
   soap: {fileID: 7790154647851300767}
   dailyChallengeRewardCoins: 5
+  fryingPanStartDay: 2
+  fryingPanChancePerDay: 0.12
+  maximumFryingPanChance: 0.4
+  lateDayMessPerDay: 0.08
+  maximumLateDayMess: 0.5
+  fryingPanScrubRateMultiplier: 0.72
+  maximumDishScatter: 18
   rinsingArea: {fileID: 9162444331776049948}
   dryingRack: {fileID: 3815363860785365162}
   tutorial: {fileID: 0}

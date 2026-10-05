@@ -4,7 +4,9 @@ using UnityEngine.UI;
 
 public class DropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private WasteType acceptedWasteType;
+    private const float StackHorizontalOffset = 7f;
+    private const float StackVerticalOffset = 5f;
+
     [SerializeField] private Image zoneImage;
 
     private Color originalColor;
@@ -22,9 +24,33 @@ public class DropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         }
     }
 
-    public bool CanAccept(WasteType wasteType)
+    public bool CanAccept(WasteType _)
     {
-        return wasteType == acceptedWasteType;
+        return true;
+    }
+
+    public void StackToy(WasteObject toy, int stackIndex)
+    {
+        RectTransform toyRect = toy.transform as RectTransform;
+        if (toyRect == null)
+        {
+            toy.transform.SetParent(transform, false);
+            toy.transform.localPosition = new Vector3(
+                (stackIndex % 3 - 1) * StackHorizontalOffset,
+                stackIndex * StackVerticalOffset,
+                0f);
+        }
+        else
+        {
+            toyRect.SetParent(transform, false);
+            toyRect.anchoredPosition = new Vector2(
+                (stackIndex % 3 - 1) * StackHorizontalOffset,
+                stackIndex * StackVerticalOffset);
+            toyRect.localRotation = Quaternion.identity;
+        }
+
+        toy.SetCollected();
+        toy.transform.SetAsLastSibling();
     }
 
     public void OnDrop(PointerEventData eventData)

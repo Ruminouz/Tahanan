@@ -9,6 +9,7 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
     [SerializeField] private Image dishImage;
     [SerializeField] private Color dirtyColor = Color.gray;
     [SerializeField] private Color cleanColor = Color.white;
+    [SerializeField] private Color lateDayDirtyColor = new Color(0.55f, 0.43f, 0.32f, 1f);
 
 
     [Header("Scrubbing")]
@@ -34,6 +35,8 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
     private bool canScrub;
     private bool canRinse;
     private Vector2 lastPointerPosition;
+    private Color baseDirtyColor;
+    private float scrubDifficultyMultiplier = 1f;
 
 
 
@@ -42,7 +45,10 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
     private AudioSource audioSource;
 
-
+    private void Awake()
+    {
+        baseDirtyColor = dirtyColor;
+    }
 
     public bool IsClean => isClean;
 
@@ -80,6 +86,21 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
     // =========================================
     // SCRUB CONTROL
     // =========================================
+
+    public void SetDishAppearance(Sprite dishSprite, float messLevel, float scrubRateMultiplier)
+    {
+        if (dishImage != null && dishSprite != null)
+        {
+            dishImage.sprite = dishSprite;
+            dishImage.preserveAspect = true;
+        }
+
+        dirtyColor = Color.Lerp(baseDirtyColor, lateDayDirtyColor, Mathf.Clamp01(messLevel));
+        scrubDifficultyMultiplier = Mathf.Clamp(scrubRateMultiplier, 0.5f, 1f);
+
+        if (!isClean && dishImage != null)
+            dishImage.color = dirtyColor;
+    }
 
 
     public void EnableScrubbing()
@@ -187,7 +208,7 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
     private void Scrub(float bonusMultiplier = 1f)
     {
-        progress += scrubAmount * bonusMultiplier;
+        progress += scrubAmount * scrubDifficultyMultiplier * bonusMultiplier;
 
         progress =
             Mathf.Clamp01(progress);

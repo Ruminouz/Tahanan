@@ -296,10 +296,17 @@ private void CompleteGame()
 
     if (currentChore != null)
     {
-        ChoreManager choreManager = FindFirstObjectByType<ChoreManager>();
+        if (currentChore is GarbageChore garbageChore)
+        {
+            garbageChore.ConsumeCarriedBag();
+        }
+        else
+        {
+            ChoreManager choreManager = FindFirstObjectByType<ChoreManager>();
 
-        if (choreManager != null)
-            choreManager.MissChore(currentChore);
+            if (choreManager != null)
+                choreManager.MissChore(currentChore);
+        }
     }
 
 

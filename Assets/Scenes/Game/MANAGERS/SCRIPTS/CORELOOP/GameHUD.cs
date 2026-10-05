@@ -39,6 +39,17 @@ public class GameHUD : MonoBehaviour
         public float elapsed;
     }
 
+    private sealed class ChoreGroup
+    {
+        public readonly string name;
+        public readonly List<Chore> chores = new();
+
+        public ChoreGroup(string name)
+        {
+            this.name = name;
+        }
+    }
+
     private void Start()
     {
         timeManager = FindFirstObjectByType<TimeManager>();
@@ -209,26 +220,31 @@ public class GameHUD : MonoBehaviour
         choreListText.text = "CHORES\n";
         Chore[] chores = dayManager.GetActiveChores();
         bool sweepListed = false;
-        HashSet<Chore> listedChores = new HashSet<Chore>();
+        HashSet<Chore> seenChores = new HashSet<Chore>();
+        Dictionary<string, ChoreGroup> choreGroups =
+            new Dictionary<string, ChoreGroup>(System.StringComparer.OrdinalIgnoreCase);
+        List<ChoreGroup> orderedGroups = new List<ChoreGroup>();
 
         if (chores != null)
         {
             foreach (Chore chore in chores)
             {
-                if (chore == null)
+                if (chore == null || !seenChores.Add(chore))
                     continue;
 
                 if (chore == dayManager.SweepDustChore)
                     sweepListed = true;
 
-                if (listedChores.Add(chore))
-                    AppendChore(chore);
+                AddChoreToGroup(chore, choreGroups, orderedGroups);
             }
         }
 
         if (!sweepListed && dayManager.SweepDustChore != null &&
-            listedChores.Add(dayManager.SweepDustChore))
-            AppendChore(dayManager.SweepDustChore);
+            seenChores.Add(dayManager.SweepDustChore))
+            AddChoreToGroup(dayManager.SweepDustChore, choreGroups, orderedGroups);
+
+        foreach (ChoreGroup choreGroup in orderedGroups)
+            AppendChoreGroup(choreGroup);
 
         if (!sweepListed && dayManager.SweepDustChore == null && sweepingManager != null)
         {
@@ -261,18 +277,73 @@ public class GameHUD : MonoBehaviour
         }
     }
 
-    private void AppendChore(Chore chore)
+    private void AddChoreToGroup(
+        Chore chore,
+        Dictionary<string, ChoreGroup> choreGroups,
+        List<ChoreGroup> orderedGroups)
     {
-        string marker = chore.IsCompleted ? "✓ " : chore.IsMissed ? "- " : "○ ";
-        string status = chore.IsCompleted
-            ? choreManager != null && choreManager.WasCompletedByHelper(chore)
-                ? " (HELPER)"
-                : string.Empty
-            : chore.IsMissed
-                ? " (MISSED)"
-                : " (" + timeManager.FormatClockTime(chore.DeadlineTime) + ")";
+        string key = string.IsNullOrWhiteSpace(chore.ChoreName)
+            ? "#" + chore.GetInstanceID()
+            : chore.ChoreName;
 
-        choreListText.text += marker + chore.ChoreName + status + "\n";
+        if (!choreGroups.TryGetValue(key, out ChoreGroup choreGroup))
+        {
+            choreGroup = new ChoreGroup(chore.ChoreName);
+            choreGroups.Add(key, choreGroup);
+            orderedGroups.Add(choreGroup);
+        }
+
+        choreGroup.chores.Add(chore);
+    }
+
+    private void AppendChoreGroup(ChoreGroup choreGroup)
+    {
+        int remainingCount = 0;
+        int completedCount = 0;
+        int missedCount = 0;
+        float nextDeadline = float.MaxValue;
+        bool allCompletedByHelper = true;
+
+        foreach (Chore chore in choreGroup.chores)
+        {
+            if (chore.IsCompleted)
+            {
+                completedCount++;
+                allCompletedByHelper &= choreManager != null &&
+                    choreManager.WasCompletedByHelper(chore);
+            }
+            else if (chore.IsMissed)
+            {
+                missedCount++;
+            }
+            else
+            {
+                remainingCount++;
+                nextDeadline = Mathf.Min(nextDeadline, chore.DeadlineTime);
+            }
+        }
+
+        if (remainingCount > 0)
+        {
+            choreListText.text += "○ " + choreGroup.name + " ("
+                + remainingCount + " remaining, "
+                + timeManager.FormatClockTime(nextDeadline) + ")\n";
+        }
+        else if (completedCount == choreGroup.chores.Count)
+        {
+            string helperStatus = allCompletedByHelper ? " (HELPER)" : string.Empty;
+            choreListText.text += "✓ " + choreGroup.name + helperStatus + "\n";
+        }
+        else if (missedCount == choreGroup.chores.Count)
+        {
+            choreListText.text += "- " + choreGroup.name + " (MISSED)\n";
+        }
+        else
+        {
+            choreListText.text += "- " + choreGroup.name + " ("
+                + completedCount + " completed, "
+                + missedCount + " missed)\n";
+        }
     }
 
     private void UpdateDailyStats()

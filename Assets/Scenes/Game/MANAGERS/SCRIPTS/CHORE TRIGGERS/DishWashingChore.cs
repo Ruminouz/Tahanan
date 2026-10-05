@@ -29,10 +29,19 @@ public class DishwashingChore : Chore
             ? DayManager.Instance
             : FindFirstObjectByType<DayManager>();
 
-        if (resolvedDayManager != null && resolvedDayManager.CurrentDay >= 2 &&
-            GarbageChore.Instance != null)
+        if (resolvedDayManager == null || resolvedDayManager.CurrentDay < 2)
+            return;
+
+        GarbageChore garbageChore = GarbageChore.Instance != null
+            ? GarbageChore.Instance
+            : FindFirstObjectByType<GarbageChore>(FindObjectsInactive.Include);
+
+        if (garbageChore == null)
         {
-            GarbageChore.Instance.SpawnGarbageBag();
+            Debug.LogWarning("Dishwashing completed, but no GarbageChore is available to spawn the bag.", this);
+            return;
         }
+
+        garbageChore.SpawnGarbageBag();
     }
 }

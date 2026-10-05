@@ -16,6 +16,7 @@ public class WasteObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     private SegregateWasteMiniGame miniGame;
     private Vector3 originalPosition;
+    private bool isCollected;
 
     private void Awake()
     {
@@ -40,8 +41,21 @@ public class WasteObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         return wasteType;
     }
 
+    public void SetCollected()
+    {
+        isCollected = true;
+
+        if (canvasGroup != null)
+        {
+            canvasGroup.blocksRaycasts = false;
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (isCollected)
+            return;
+
         originalPosition = transform.position;
 
         if (canvasGroup != null)
@@ -53,11 +67,17 @@ public class WasteObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (isCollected)
+            return;
+
         transform.position += (Vector3)eventData.delta;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (isCollected)
+            return;
+
         if (canvasGroup != null)
         {
             canvasGroup.alpha = 1f;
@@ -75,15 +95,10 @@ public class WasteObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         {
             if (miniGame != null)
             {
-                miniGame.OnWasteSegregated(this);
+                miniGame.OnWasteSegregated(this, dropZone);
             }
 
             return;
-        }
-
-        if (dropZone != null && miniGame != null)
-        {
-            miniGame.OnMistake();
         }
 
         transform.position = originalPosition;

@@ -41,6 +41,8 @@ public class DishwashingMiniGame : MonoBehaviour
 [SerializeField] private Transform garbageSpawnPoint;
     [Header("Dish Setup")]
     [SerializeField] private GameObject platePrefab;
+    [SerializeField] private Sprite[] alternateDishSprites;
+    [SerializeField] private Sprite fryingPanSprite;
     [SerializeField] private Transform washingArea;
     [SerializeField] private int plateCount = 3;
     private WashableDish currentScrubbingPlate;
@@ -60,9 +62,17 @@ public class DishwashingMiniGame : MonoBehaviour
 [Header("Day Scaling")]
 
 [SerializeField, Min(0)] private int dailyChallengeRewardCoins = 5;
+[SerializeField, Min(2)] private int fryingPanStartDay = 2;
+[SerializeField, Min(0f)] private float fryingPanChancePerDay = 0.12f;
+[SerializeField, Range(0f, 1f)] private float maximumFryingPanChance = 0.4f;
+[SerializeField, Range(0f, 1f)] private float lateDayMessPerDay = 0.08f;
+[SerializeField, Range(0f, 1f)] private float maximumLateDayMess = 0.5f;
+[SerializeField, Range(0.5f, 1f)] private float fryingPanScrubRateMultiplier = 0.72f;
+[SerializeField, Min(0f)] private float maximumDishScatter = 18f;
 
 private int currentPlateAmount;
 private int currentLeftoverAmount;
+private int currentDay = 1;
 private DailyChallenge dailyChallenge;
 private string dailyChallengeLabel;
 private string dailyChallengeResult;
@@ -653,64 +663,71 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
         // SPAWN
         // =========================================================
 
-    private void SpawnPlates()
-{
-    if (platePrefab == null || washingArea == null)
-        return;
-
-
-    spawnedPlates.Clear();
-
-
-    for (int i = 0; i < currentPlateAmount; i++)
-    {
-        GameObject plate =
-            Instantiate(
-                platePrefab,
-                washingArea
-            );
-
-
-        float verticalOffset = i * 12f;
-        float horizontalOffset = i * 4f;
-
-
-        plate.transform.localPosition =
-            new Vector3(
-                horizontalOffset,
-                verticalOffset,
-                0f
-            );
-
-
-        float rotation =
-            (i % 2 == 0) ? -2f : 2f;
-
-
-        plate.transform.localRotation =
-            Quaternion.Euler(
-                0f,
-                0f,
-                rotation
-            );
-
-
-        WashableDish dish =
-            plate.GetComponent<WashableDish>();
-
-
-        if(dish != null)
+        private void SpawnPlates()
         {
-            spawnedPlates.Add(dish);
+            if (platePrefab == null || washingArea == null)
+                return;
+
+            spawnedPlates.Clear();
+
+            float messLevel = Mathf.Clamp01((currentDay - 1) * lateDayMessPerDay);
+            messLevel = Mathf.Min(messLevel, maximumLateDayMess);
+            float scrubRateMultiplier = 1f - messLevel * 0.35f;
+            float panChance = currentDay < fryingPanStartDay
+                ? 0f
+                : Mathf.Min((currentDay - fryingPanStartDay + 1) * fryingPanChancePerDay,
+                    maximumFryingPanChance);
+
+            for (int i = 0; i < currentPlateAmount; i++)
+            {
+                GameObject plate = Instantiate(platePrefab, washingArea);
+                WashableDish dish = plate.GetComponent<WashableDish>();
+
+                if (dish != null)
+                {
+                    bool isFryingPan = fryingPanSprite != null && Random.value < panChance;
+                    Sprite dishSprite = isFryingPan
+                        ? fryingPanSprite
+                        : GetRandomDishVariant();
+                    float dishScrubRate = isFryingPan
+                        ? scrubRateMultiplier * fryingPanScrubRateMultiplier
+                        : scrubRateMultiplier;
+
+                    dish.SetDishAppearance(dishSprite, messLevel, dishScrubRate);
+                    spawnedPlates.Add(dish);
+                }
+
+                Vector2 scatter = Random.insideUnitCircle * (maximumDishScatter * messLevel);
+                plate.transform.localPosition = new Vector3(
+                    i * 4f + scatter.x,
+                    i * 12f + scatter.y,
+                    0f
+                );
+                plate.transform.localRotation = Quaternion.Euler(
+                    0f,
+                    0f,
+                    Random.Range(-5f, 5f)
+                );
+            }
+
+            Debug.Log("Spawned plates: " + spawnedPlates.Count);
         }
-    }
 
+        private Sprite GetRandomDishVariant()
+        {
+            if (alternateDishSprites == null || alternateDishSprites.Length == 0)
+                return null;
 
-    Debug.Log(
-        "Spawned plates: " +
-        spawnedPlates.Count
-    );
-}
+            int startIndex = Random.Range(0, alternateDishSprites.Length);
+            for (int offset = 0; offset < alternateDishSprites.Length; offset++)
+            {
+                Sprite variant = alternateDishSprites[(startIndex + offset) % alternateDishSprites.Length];
+                if (variant != null)
+                    return variant;
+            }
+
+            return null;
+        }
 
 
 
@@ -1157,6 +1174,7 @@ private void ApplyDayDifficulty()
         : 1;
 
     day = Mathf.Max(1, day);
+    currentDay = day;
 
 
     switch(day)

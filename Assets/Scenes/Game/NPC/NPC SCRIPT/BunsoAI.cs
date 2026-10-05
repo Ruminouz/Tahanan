@@ -5,10 +5,21 @@ using UnityEngine.Serialization;
 
 public class BunsoAI : MonoBehaviour
 {
+    private enum BadMoodChoreType
+    {
+        Dust,
+        WaterArea,
+        Segregate,
+        GarbageBag
+    }
+
     [Header("Mood")]
     [SerializeField, Min(0f)] private float actionInterval = 12f;
     [SerializeField, Range(0f, 100f)] private float actionChance = 60f;
-    [SerializeField] private string badMoodLine = "Pick up the trash!";
+    [SerializeField] private string dustBadMoodLine = "Pakiwalisan to kuya! bwhahaah!";
+    [SerializeField] private string waterBadMoodLine = "paki mop to kuya! bwhaahah!";
+    [SerializeField] private string segregateBadMoodLine = "pakiligpit to kuya! bwahahah!";
+    [SerializeField] private string garbageBagBadMoodLine = "pakitapon to sa basura kuya! bwaahha!";
 
     [Header("Good Mood Rewards")]
     [SerializeField] private BunsoBoostType[] possibleBoosts =
@@ -19,6 +30,9 @@ public class BunsoAI : MonoBehaviour
 
     [Header("Bad Mood Chore")]
     [SerializeField] private SegregateWasteChore segregateWastePrefab;
+    [SerializeField] private DustSpot dustSpotPrefab;
+    [SerializeField] private WetArea wetAreaPrefab;
+    [SerializeField] private GarbageBag garbageBagPrefab;
     [SerializeField, Min(0f)] private float choreLifetime = 120f;
 
     [Header("Movement")]
@@ -46,6 +60,7 @@ public class BunsoAI : MonoBehaviour
     private float nextWanderTime;
     private float nextActionTime;
     private readonly List<SegregateWasteChore> spawnedChores = new();
+    private readonly List<GameObject> spawnedBadMoodObjects = new();
 
     private void Start()
     {
@@ -85,7 +100,6 @@ public class BunsoAI : MonoBehaviour
             case HouseholdMood.Angry:
             case HouseholdMood.Concerned:
                 SpawnBadMoodChore();
-                ShowBadMoodBubble();
                 break;
         }
     }
@@ -181,8 +195,78 @@ public class BunsoAI : MonoBehaviour
 
     private void SpawnBadMoodChore()
     {
-        if (segregateWastePrefab == null || dayManager.CurrentDay < 2)
+        if (dayManager.CurrentDay < 2)
             return;
+
+        if (segregateWastePrefab == null)
+            segregateWastePrefab = FindFirstObjectByType<SegregateWasteChore>(
+                FindObjectsInactive.Include);
+
+        BadMoodChoreType choreType = (BadMoodChoreType)Random.Range(0, 4);
+        string dialogue;
+        bool spawned;
+
+        switch (choreType)
+        {
+            case BadMoodChoreType.Dust:
+                dialogue = dustBadMoodLine;
+                spawned = SpawnDustSpot();
+                break;
+            case BadMoodChoreType.WaterArea:
+                dialogue = waterBadMoodLine;
+                spawned = SpawnWetArea();
+                break;
+            case BadMoodChoreType.Segregate:
+                dialogue = segregateBadMoodLine;
+                spawned = SpawnSegregateChore();
+                break;
+            default:
+                dialogue = garbageBagBadMoodLine;
+                spawned = SpawnGarbageBag();
+                break;
+        }
+
+        if (spawned)
+            ShowBadMoodBubble(dialogue);
+    }
+
+    private bool SpawnDustSpot()
+    {
+        SweepingMinigame minigame = FindFirstObjectByType<SweepingMinigame>();
+        if (dustSpotPrefab == null || minigame == null)
+        {
+            Debug.LogWarning("Bunso cannot spawn a dust spot because its prefab or sweeping minigame is missing.", this);
+            return false;
+        }
+
+        DustSpot dustSpot = Instantiate(dustSpotPrefab, transform.position, Quaternion.identity);
+        dustSpot.SetSweepingMinigame(minigame);
+        TrackSpawnedObject(dustSpot.gameObject);
+        return true;
+    }
+
+    private bool SpawnWetArea()
+    {
+        MoppingMinigame minigame = FindFirstObjectByType<MoppingMinigame>();
+        if (wetAreaPrefab == null || minigame == null)
+        {
+            Debug.LogWarning("Bunso cannot spawn a wet area because its prefab or mopping minigame is missing.", this);
+            return false;
+        }
+
+        WetArea wetArea = Instantiate(wetAreaPrefab, transform.position, Quaternion.identity);
+        wetArea.SetMoppingMinigame(minigame);
+        TrackSpawnedObject(wetArea.gameObject);
+        return true;
+    }
+
+    private bool SpawnSegregateChore()
+    {
+        if (segregateWastePrefab == null)
+        {
+            Debug.LogWarning("Bunso cannot spawn a segregation chore because its prefab or scene chore is missing.", this);
+            return false;
+        }
 
         SegregateWasteChore chore = Instantiate(
             segregateWastePrefab,
@@ -191,26 +275,60 @@ public class BunsoAI : MonoBehaviour
         chore.ConfigureSpawnedChore("PickUp");
         dayManager.RegisterDynamicChore(chore);
         spawnedChores.Add(chore);
+        TrackSpawnedObject(chore.gameObject);
 
-        if (choreLifetime > 0f)
-            Destroy(chore.gameObject, choreLifetime);
+        return true;
     }
 
-    private void ShowBadMoodBubble()
+    private bool SpawnGarbageBag()
+    {
+        GarbageChore garbageChore = GarbageChore.Instance != null
+            ? GarbageChore.Instance
+            : FindFirstObjectByType<GarbageChore>();
+        if (garbageBagPrefab == null || garbageChore == null)
+        {
+            Debug.LogWarning("Bunso cannot spawn a garbage bag because its prefab or garbage chore is missing.", this);
+            return false;
+        }
+
+        GarbageBag garbageBag = Instantiate(
+            garbageBagPrefab,
+            transform.position,
+            Quaternion.identity);
+        garbageBag.ConfigureSpawnedBag(garbageChore);
+        garbageBag.gameObject.SetActive(true);
+        TrackSpawnedObject(garbageBag.gameObject);
+        return true;
+    }
+
+    private void TrackSpawnedObject(GameObject spawnedObject)
+    {
+        spawnedBadMoodObjects.Add(spawnedObject);
+        if (choreLifetime > 0f)
+            Destroy(spawnedObject, choreLifetime);
+    }
+
+    private void ShowBadMoodBubble(string dialogue)
     {
         Transform anchor = topAnchor != null ? topAnchor : transform;
-        SpeechBubbleCanvas.Show(anchor, badMoodLine, bubbleDuration);
+        SpeechBubbleCanvas.Show(anchor, dialogue, bubbleDuration);
     }
 
     private void OnDestroy()
     {
-        if (dayManager == null)
-            return;
-
-        foreach (SegregateWasteChore chore in spawnedChores)
+        if (dayManager != null)
         {
-            if (chore != null)
-                dayManager.UnregisterDynamicChore(chore);
+            foreach (SegregateWasteChore chore in spawnedChores)
+            {
+                if (chore != null)
+                    dayManager.UnregisterDynamicChore(chore);
+            }
+        }
+
+        foreach (GameObject spawnedObject in spawnedBadMoodObjects)
+        {
+            if (spawnedObject != null)
+                Destroy(spawnedObject);
         }
     }
 }

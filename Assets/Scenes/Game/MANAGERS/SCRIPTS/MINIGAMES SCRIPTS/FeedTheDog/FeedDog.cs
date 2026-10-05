@@ -221,15 +221,7 @@ public class FeedDogMiniGame : MonoBehaviour
     {
         SetStatusText($"PUP IS STILL HUNGRY!\nYou landed {successfulBites}/{BitesNeeded} bites.");
 
-        ChoreManager manager = FindFirstObjectByType<ChoreManager>();
-        if(manager != null && currentChore != null)
-        {
-            manager.MissChore(currentChore);
-        }
-        else
-        {
-            Debug.LogError("FeedDogMiniGame could not find a ChoreManager to record the missed chore.", this);
-        }
+        Debug.Log("Feeding attempt failed. The dog and chore remain available for another try.", this);
 
         ShowResultThenClose();
     }
