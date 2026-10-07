@@ -7111,7 +7111,7 @@ PrefabInstance:
       objectReference: {fileID: -5634083210673189743, guid: 3d3949a7cf065f04587cc0dd30f18716, type: 3}
     - target: {fileID: 1761256321450212711, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1850598864451693568, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_fontSize
@@ -7163,7 +7163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2307038596186233219, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2335338234585437486, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_Sprite
@@ -8059,7 +8059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8417548664145031252, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8428151582081993156, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_fontSize
