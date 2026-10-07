@@ -300,7 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c55a557319e764fbefce38a4c2aeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
-  acceptedWasteType: 0
   zoneImage: {fileID: 0}
 --- !u!1 &173759191628897558
 GameObject:
@@ -1181,6 +1180,7 @@ MonoBehaviour:
   dishImage: {fileID: 0}
   dirtyColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   cleanColor: {r: 1, g: 1, b: 1, a: 1}
+  lateDayDirtyColor: {r: 0.55, g: 0.43, b: 0.32, a: 1}
   progressBar: {fileID: 0}
   scrubAmount: 0.05
   scrubFoam: {fileID: 0}
@@ -2774,7 +2774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c55a557319e764fbefce38a4c2aeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
-  acceptedWasteType: 0
   zoneImage: {fileID: 0}
 --- !u!1 &1304205705516904805
 GameObject:
@@ -4093,7 +4092,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c55a557319e764fbefce38a4c2aeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
-  acceptedWasteType: 0
   zoneImage: {fileID: 0}
 --- !u!1 &2268840267628555530
 GameObject:
@@ -4713,7 +4711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c55a557319e764fbefce38a4c2aeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
-  acceptedWasteType: 0
   zoneImage: {fileID: 0}
 --- !u!1 &2396824189836232582
 GameObject:
@@ -5494,7 +5491,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c55a557319e764fbefce38a4c2aeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
-  acceptedWasteType: 0
   zoneImage: {fileID: 0}
 --- !u!1 &3058847713350305482
 GameObject:
@@ -9118,7 +9114,7 @@ MonoBehaviour:
   - {fileID: 6171876389134960119}
   - {fileID: 916608756704502880}
   - {fileID: 430091738577364782}
-  mistakesText: {fileID: 8427550492095708600}
+  toysRemainingText: {fileID: 8427550492095708600}
   progressText: {fileID: 3275122856824347903}
   spawner: {fileID: 6671465501330811638}
   tutorial: {fileID: 0}
@@ -11417,7 +11413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c55a557319e764fbefce38a4c2aeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
-  acceptedWasteType: 0
   zoneImage: {fileID: 0}
 --- !u!1 &6375916019958154686
 GameObject:
@@ -11892,7 +11887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c55a557319e764fbefce38a4c2aeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
-  acceptedWasteType: 0
   zoneImage: {fileID: 0}
 --- !u!1 &6656866212894033536
 GameObject:
@@ -12159,7 +12153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c55a557319e764fbefce38a4c2aeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
-  acceptedWasteType: 0
   zoneImage: {fileID: 0}
 --- !u!1 &6821053078275971803
 GameObject:
@@ -12499,6 +12492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8f82537d90f5647937e0dad26f813e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WasteSpawner
+  minimumDistanceBetweenToys: 80
   leafPrefab: {fileID: 3657187560689947137, guid: d5260a27d07caef43b6149fb2e52bf4e, type: 3}
   bottlePrefab: {fileID: 1783231392314788191, guid: da81aab4ca987a74688e6f1e142de6bb, type: 3}
   wrapperPrefab: {fileID: 2423061027922943701, guid: f4da892c31edd864c828fa47d7b1642b, type: 3}
@@ -13306,6 +13300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8f82537d90f5647937e0dad26f813e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WasteSpawner
+  minimumDistanceBetweenToys: 80
   leafPrefab: {fileID: 3657187560689947137, guid: d5260a27d07caef43b6149fb2e52bf4e, type: 3}
   bottlePrefab: {fileID: 1783231392314788191, guid: da81aab4ca987a74688e6f1e142de6bb, type: 3}
   wrapperPrefab: {fileID: 2423061027922943701, guid: f4da892c31edd864c828fa47d7b1642b, type: 3}
@@ -14363,7 +14358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000006921}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8041408713839289435
@@ -16937,8 +16932,8 @@ RectTransform:
   m_Children:
   - {fileID: 6088274759246721034}
   - {fileID: 7885800789660379858}
-  - {fileID: 874558815892814132}
   - {fileID: 3802673181342845195}
+  - {fileID: 874558815892814132}
   m_Father: {fileID: 1887809924927946667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

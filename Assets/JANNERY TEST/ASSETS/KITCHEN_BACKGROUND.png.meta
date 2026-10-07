@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a09e2fdc97a5e18459fdd80fe6dd0edc
+guid: 3a2b8e7380026dc4b89666906434cada
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7349907987363507438
-    second: Untitled79_20260411101940_0
+      213: 4763071428028575199
+    second: KITCHEN_BACKGROUND_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Untitled79_20260411101940_0
+      name: KITCHEN_BACKGROUND_0
       rect:
         serializedVersion: 2
-        x: 207
-        y: 143
-        width: 1666
-        height: 1666
+        x: 0
+        y: 0
+        width: 2880
+        height: 1620
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eecab9e7f5e100660800000000000000
-      internalID: 7349907987363507438
+      spriteID: fdda47b5a34d91240800000000000000
+      internalID: 4763071428028575199
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Untitled79_20260411101940_0: 7349907987363507438
+      KITCHEN_BACKGROUND_0: 4763071428028575199
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
