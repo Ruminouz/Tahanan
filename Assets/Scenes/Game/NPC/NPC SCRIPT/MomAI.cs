@@ -183,36 +183,32 @@ public class MomAI : MonoBehaviour
 
         float elapsed = 0f;
         float maxApproachTime = Mathf.Max(approachTimeout, spankApproachTimeout);
-        Vector2 previousPosition = transform.position;
+        chaseStuckTimer = 0f;
+        bool useDirectPursuit = waypointMover == null;
         while (player != null && !IsPlayerWithinSpankRange() && elapsed < maxApproachTime)
         {
-            Vector2 movement = waypointMover != null
-                ? waypointMover.GetMovementAlongWaypointRoute(
-                    player.position,
-                    spankApproachSpeed,
-                    waypointArrivalDistance)
-                : Vector2.MoveTowards(
-                    transform.position,
-                    player.position,
-                    spankApproachSpeed * Time.deltaTime) - (Vector2)transform.position;
-            Vector2 nextPosition = (Vector2)transform.position + movement;
+            Vector2 currentPosition = transform.position;
+            float distanceBeforeMove = Vector2.Distance(currentPosition, player.position);
+            Vector2 movement = useDirectPursuit
+                ? GetUnblockedPursuitMovement(currentPosition)
+                : waypointMover.GetMovementTowards(player.position, spankApproachSpeed);
+            Vector2 nextPosition = currentPosition + movement;
 
-            UpdateMovementAnimation(nextPosition - (Vector2)transform.position);
-            transform.position = nextPosition;
-
-            if ((nextPosition - previousPosition).sqrMagnitude <= 0.000001f)
+            if (distanceBeforeMove - Vector2.Distance(nextPosition, player.position) <= 0.001f)
                 chaseStuckTimer += Time.deltaTime;
             else
                 chaseStuckTimer = 0f;
 
-            if (chaseStuckTimer >= chaseStuckTimeout)
+            if (!useDirectPursuit && chaseStuckTimer >= chaseStuckTimeout)
             {
-                if (waypointMover != null)
-                    waypointMover.ResetWaypointRoute();
-                chaseStuckTimer = 0f;
+                useDirectPursuit = true;
+                movement = GetUnblockedPursuitMovement(currentPosition);
+                nextPosition = currentPosition + movement;
             }
 
-            previousPosition = transform.position;
+            UpdateMovementAnimation(nextPosition - currentPosition);
+            transform.position = nextPosition;
+
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -250,6 +246,12 @@ public class MomAI : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
         if (waypointMover != null)
             waypointMover.SetMovementEnabled(true);
+    }
+
+    private Vector2 GetUnblockedPursuitMovement(Vector2 currentPosition)
+    {
+        Vector2 toPlayer = (Vector2)player.position - currentPosition;
+        return Vector2.ClampMagnitude(toPlayer, spankApproachSpeed * Time.deltaTime);
     }
 
     private bool IsPlayerWithinSpankRange()

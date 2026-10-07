@@ -4821,8 +4821,8 @@ MonoBehaviour:
   reprimandCooldown: 2
   bubbleDuration: 3
   angryBubbleInterval: 8
-  approachSpeed: 2
-  spankApproachSpeed: 4
+  approachSpeed: 3
+  spankApproachSpeed: 6
   spankDistance: 0.8
   approachTimeout: 5
   spankApproachTimeout: 60
@@ -6459,7 +6459,7 @@ GameObject:
   - component: {fileID: 45329314281733686}
   - component: {fileID: 1592104305}
   m_Layer: 7
-  m_Name: Tatay NPC
+  m_Name: MOMnpc
   m_TagString: NPCS
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6603,7 +6603,7 @@ MonoBehaviour:
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 64
-  collisionPadding: 1
+  collisionPadding: 0.02
   stuckTimeout: 0.05
   minimumProgress: 0.001
   navigationCellSize: 0.35
@@ -7375,6 +7375,10 @@ PrefabInstance:
     - target: {fileID: 1887628046965437404, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057265241442615452, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.19281
       objectReference: {fileID: 0}
     - target: {fileID: 2108812589259809414, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8474,7 +8478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8990434206355056715, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -20.190796
+      value: -20.190857
       objectReference: {fileID: 0}
     - target: {fileID: 9005527653008895860, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
       propertyPath: m_Sprite
@@ -9827,10 +9831,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53d8b1a63c473d46945d85ccac980d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HelperNPC
-  minimumMood: 60.3
+  minimumMood: 60
   helpChance: 100
-  checkInterval: 2
-  maximumChoresPerDay: 00000000020000000200000003000000030000000400000006000000
+  checkInterval: 30
+  maximumChoresPerDay: 03000000030000000300000003000000040000000400000006000000
   defaultMaximumChoresPerDay: 2
   moveSpeed: 1.5
   arriveDistance: 0.2
