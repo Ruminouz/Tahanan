@@ -72,9 +72,7 @@ public class WetArea : Interactable
 
         if (!playerState.HasMop)
         {
-            Debug.Log(
-                "You need to pick up the mop first!"
-            );
+            SpeechBubbleCanvas.Show(player.transform, "You need to pick up the mop first!", 2f);
 
             return;
         }
@@ -82,9 +80,7 @@ public class WetArea : Interactable
         PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
         if (inventory == null || inventory.SelectedEquipment != EquipmentType.Mop)
         {
-            Debug.Log(
-                "Equip the mop before mopping."
-            );
+            SpeechBubbleCanvas.Show(player.transform, "Equip the mop before mopping.", 2f);
 
             return;
         }

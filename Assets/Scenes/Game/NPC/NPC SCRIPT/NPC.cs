@@ -15,12 +15,13 @@ public class NPC : MonoBehaviour, IInteractable
 
     public bool CanInteract()
     {
-        return !isDialogueActive;
+        return dialogueData != null &&
+            (!PauseController.IsGamePaused || isDialogueActive);
     }
 
     public void Interact()
     {
-        if (dialogueData == null || (PauseController.IsGamePaused && !isDialogueActive)) 
+        if (!CanInteract())
             return;
 
         if (!isDialogueActive)
@@ -35,6 +36,12 @@ public class NPC : MonoBehaviour, IInteractable
 
     void StartDialogue()
     {
+        if (dialogueData.dialogueLines == null || dialogueData.dialogueLines.Length == 0)
+        {
+            Debug.LogWarning($"NPC '{name}' has no dialogue lines.", this);
+            return;
+        }
+
         isDialogueActive = true;
         dialogueIndex = 0;
 
@@ -84,7 +91,9 @@ public class NPC : MonoBehaviour, IInteractable
 
     isTyping = false;
 
-    if (dialogueData.autoProgressLines.Length > dialogueIndex && dialogueData.autoProgressLines[dialogueIndex])
+    if (dialogueData.autoProgressLines != null &&
+        dialogueData.autoProgressLines.Length > dialogueIndex &&
+        dialogueData.autoProgressLines[dialogueIndex])
     {
         yield return new WaitForSeconds(dialogueData.autoProgressDelay);
         NextLine();

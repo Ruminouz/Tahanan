@@ -45,6 +45,7 @@ public class MomAI : MonoBehaviour
     private bool gameOverRequested;
     private int pendingReprimands;
     private Collider2D bodyCollider;
+    private Collider2D playerCollider;
     private float chaseStuckTimer;
     private Color normalSpriteColor = Color.white;
     private bool hasNormalSpriteColor;
@@ -78,6 +79,12 @@ public class MomAI : MonoBehaviour
         }
 
         bodyCollider = GetComponent<Collider2D>();
+        if (player != null)
+        {
+            playerCollider = player.GetComponent<Collider2D>();
+            if (playerCollider == null)
+                playerCollider = player.GetComponentInChildren<Collider2D>();
+        }
 
         if (waypointMover == null)
             waypointMover = GetComponent<WaypointMover>();
@@ -177,16 +184,13 @@ public class MomAI : MonoBehaviour
         float elapsed = 0f;
         float maxApproachTime = Mathf.Max(approachTimeout, spankApproachTimeout);
         Vector2 previousPosition = transform.position;
-        while (player != null && Vector2.Distance(transform.position, player.position) > spankDistance &&
-               elapsed < maxApproachTime)
+        while (player != null && !IsPlayerWithinSpankRange() && elapsed < maxApproachTime)
         {
             Vector2 movement = waypointMover != null
                 ? waypointMover.GetMovementAlongWaypointRoute(
                     player.position,
                     spankApproachSpeed,
                     waypointArrivalDistance)
-                : waypointMover != null
-                    ? waypointMover.GetMovementTowards(player.position, spankApproachSpeed)
                 : Vector2.MoveTowards(
                     transform.position,
                     player.position,
@@ -213,9 +217,7 @@ public class MomAI : MonoBehaviour
             yield return null;
         }
 
-        bool isInSpankRange = player != null &&
-            Vector2.Distance(transform.position, player.position) <= spankDistance;
-        if (!isInSpankRange)
+        if (player == null || !IsPlayerWithinSpankRange())
         {
             StopMovementAnimation();
             RestoreSpriteColor();
@@ -248,6 +250,20 @@ public class MomAI : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
         if (waypointMover != null)
             waypointMover.SetMovementEnabled(true);
+    }
+
+    private bool IsPlayerWithinSpankRange()
+    {
+        if (player == null)
+            return false;
+
+        if (Vector2.Distance(transform.position, player.position) <= spankDistance)
+            return true;
+
+        return bodyCollider != null && bodyCollider.enabled &&
+            playerCollider != null && playerCollider.enabled &&
+            bodyCollider.Distance(playerCollider).distance <=
+                collisionPadding + Physics2D.defaultContactOffset;
     }
 
     private void SetAngrySpriteColor()
