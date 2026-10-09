@@ -822,7 +822,7 @@ private void ResetSponge()
     
  public void CompleteGame()
 {
-
+    SoundEffectManager.Play("ChoreFinished");
     if (dailyChallenge == DailyChallenge.RushFinish)
     {
         ResolveDailyChallenge(currentTimer >= 30f);
