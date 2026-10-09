@@ -61,8 +61,6 @@ public class MoppingMinigame : MonoBehaviour
     private float mopMovementAnimationTime;
     private Quaternion mopBaseRotation;
     private Vector3 mopBaseScale = Vector3.one;
-    private float lastMopSfxTime;
-    private const float MopSfxCooldown = 0.7f;
 
     private DayManager dayManager;
     private SuddenTaskManager suddenTaskManager;
@@ -109,7 +107,6 @@ public class MoppingMinigame : MonoBehaviour
         expectedStrokeDirection = 0;
         mopAnimationTime = 0f;
         mopMovementAnimationTime = 0f;
-        lastMopSfxTime = -999f;
         activeMopImage = null;
         activeMopIdleSprite = null;
         activeMopMovementSprites = null;
@@ -171,7 +168,6 @@ public class MoppingMinigame : MonoBehaviour
         expectedStrokeDirection = 0;
         mopAnimationTime = 0f;
         mopMovementAnimationTime = 0f;
-        lastMopSfxTime = -999f;
 
         ApplyMopVisual(GetCurrentMopLevel());
         ApplyDifficulty();
@@ -311,13 +307,6 @@ public class MoppingMinigame : MonoBehaviour
         bool validStroke = UpdateStroke(mouseDelta);
         if (insideArea && validStroke && currentMomentum >= minimumMopSpeed)
         {
-            float timeSinceLastMopSfx = Time.time - lastMopSfxTime;
-            if (timeSinceLastMopSfx >= MopSfxCooldown)
-            {
-                SoundEffectManager.Play("Mop");
-                lastMopSfxTime = Time.time;
-            }
-
             float speedBonus = 1f + Mathf.Clamp01(currentMomentum / dragMomentumThreshold);
             float upgradeBonus = GetCurrentMopLevel() == 1 ? 1.2f : 1f;
             progress = Mathf.Clamp01(progress + speedBonus * upgradeBonus / mopDuration * Time.deltaTime);
@@ -502,7 +491,6 @@ public class MoppingMinigame : MonoBehaviour
         progress = 1f;
         UpdateWetAreaVisual();
         ShowFeedback("Spotless!");
-        SoundEffectManager.Play("ChoreFinished");
 
         if (currentWetArea != null)
             currentWetArea.Clean();
