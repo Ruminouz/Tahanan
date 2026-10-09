@@ -9503,6 +9503,7 @@ PrefabInstance:
       objectReference: {fileID: 172758209}
     - target: {fileID: 2185080593934125634, guid: 6411d194b01356e418c8a51e8f47a3d5, type: 3}
       propertyPath: currentDay
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2185080593934125634, guid: 6411d194b01356e418c8a51e8f47a3d5, type: 3}
       propertyPath: throwTrash
