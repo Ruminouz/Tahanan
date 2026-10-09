@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -140,6 +141,32 @@ public class DishSponge : MonoBehaviour,
         lastMousePosition =
             eventData.position;
 
+        TryScrubPlateUnderPointer(eventData);
+    }
+
+    private void TryScrubPlateUnderPointer(PointerEventData eventData)
+    {
+        if (!hasSoap)
+            return;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            WashableDish dish = result.gameObject != null
+                ? result.gameObject.GetComponentInParent<WashableDish>()
+                : null;
+
+            if (dish == null)
+                continue;
+
+            if (miniGame != null && !miniGame.CanScrubThisPlate(dish))
+                continue;
+
+            dish.SpongeScrub();
+            return;
+        }
     }
 
 
