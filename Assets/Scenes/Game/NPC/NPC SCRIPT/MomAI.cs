@@ -45,7 +45,6 @@ public class MomAI : MonoBehaviour
     private bool gameOverRequested;
     private int pendingReprimands;
     private Collider2D bodyCollider;
-    private Collider2D playerCollider;
     private float chaseStuckTimer;
     private Color normalSpriteColor = Color.white;
     private bool hasNormalSpriteColor;
@@ -79,12 +78,6 @@ public class MomAI : MonoBehaviour
         }
 
         bodyCollider = GetComponent<Collider2D>();
-        if (player != null)
-        {
-            playerCollider = player.GetComponent<Collider2D>();
-            if (playerCollider == null)
-                playerCollider = player.GetComponentInChildren<Collider2D>();
-        }
 
         if (waypointMover == null)
             waypointMover = GetComponent<WaypointMover>();
@@ -183,37 +176,46 @@ public class MomAI : MonoBehaviour
 
         float elapsed = 0f;
         float maxApproachTime = Mathf.Max(approachTimeout, spankApproachTimeout);
-        chaseStuckTimer = 0f;
-        bool useDirectPursuit = waypointMover == null;
-        while (player != null && !IsPlayerWithinSpankRange() && elapsed < maxApproachTime)
+        Vector2 previousPosition = transform.position;
+        while (player != null && Vector2.Distance(transform.position, player.position) > spankDistance &&
+               elapsed < maxApproachTime)
         {
-            Vector2 currentPosition = transform.position;
-            float distanceBeforeMove = Vector2.Distance(currentPosition, player.position);
-            Vector2 movement = useDirectPursuit
-                ? GetUnblockedPursuitMovement(currentPosition)
-                : waypointMover.GetMovementTowards(player.position, spankApproachSpeed);
-            Vector2 nextPosition = currentPosition + movement;
+            Vector2 movement = waypointMover != null
+                ? waypointMover.GetMovementAlongWaypointRoute(
+                    player.position,
+                    spankApproachSpeed,
+                    waypointArrivalDistance)
+                : waypointMover != null
+                    ? waypointMover.GetMovementTowards(player.position, spankApproachSpeed)
+                : Vector2.MoveTowards(
+                    transform.position,
+                    player.position,
+                    spankApproachSpeed * Time.deltaTime) - (Vector2)transform.position;
+            Vector2 nextPosition = (Vector2)transform.position + movement;
 
-            if (distanceBeforeMove - Vector2.Distance(nextPosition, player.position) <= 0.001f)
+            UpdateMovementAnimation(nextPosition - (Vector2)transform.position);
+            transform.position = nextPosition;
+
+            if ((nextPosition - previousPosition).sqrMagnitude <= 0.000001f)
                 chaseStuckTimer += Time.deltaTime;
             else
                 chaseStuckTimer = 0f;
 
-            if (!useDirectPursuit && chaseStuckTimer >= chaseStuckTimeout)
+            if (chaseStuckTimer >= chaseStuckTimeout)
             {
-                useDirectPursuit = true;
-                movement = GetUnblockedPursuitMovement(currentPosition);
-                nextPosition = currentPosition + movement;
+                if (waypointMover != null)
+                    waypointMover.ResetWaypointRoute();
+                chaseStuckTimer = 0f;
             }
 
-            UpdateMovementAnimation(nextPosition - currentPosition);
-            transform.position = nextPosition;
-
+            previousPosition = transform.position;
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        if (player == null || !IsPlayerWithinSpankRange())
+        bool isInSpankRange = player != null &&
+            Vector2.Distance(transform.position, player.position) <= spankDistance;
+        if (!isInSpankRange)
         {
             StopMovementAnimation();
             RestoreSpriteColor();
@@ -246,26 +248,6 @@ public class MomAI : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
         if (waypointMover != null)
             waypointMover.SetMovementEnabled(true);
-    }
-
-    private Vector2 GetUnblockedPursuitMovement(Vector2 currentPosition)
-    {
-        Vector2 toPlayer = (Vector2)player.position - currentPosition;
-        return Vector2.ClampMagnitude(toPlayer, spankApproachSpeed * Time.deltaTime);
-    }
-
-    private bool IsPlayerWithinSpankRange()
-    {
-        if (player == null)
-            return false;
-
-        if (Vector2.Distance(transform.position, player.position) <= spankDistance)
-            return true;
-
-        return bodyCollider != null && bodyCollider.enabled &&
-            playerCollider != null && playerCollider.enabled &&
-            bodyCollider.Distance(playerCollider).distance <=
-                collisionPadding + Physics2D.defaultContactOffset;
     }
 
     private void SetAngrySpriteColor()

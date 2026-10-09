@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
 
 public class GameHUD : MonoBehaviour
 {
@@ -30,9 +29,6 @@ public class GameHUD : MonoBehaviour
     private Image clockCenterImage;
     private Canvas currencyCanvas;
     private readonly List<CoinPopup> coinPopups = new();
-    private RectTransform hoverTooltipRect;
-    private TMP_Text hoverTooltipText;
-    private GameObject hoverTooltipPanel;
 
     private sealed class CoinPopup
     {
@@ -71,7 +67,6 @@ public class GameHUD : MonoBehaviour
             CreateClockDisplay();
 
         CreateCoinCounter();
-        SetupHoverTooltips();
         ResolveEconomyManager();
 
         if (GetComponent<PlayerInventoryUI>() == null)
@@ -440,136 +435,6 @@ public class GameHUD : MonoBehaviour
         coinsText.color = Color.white;
         coinsText.alignment = TextAlignmentOptions.MidlineLeft;
         coinsText.raycastTarget = false;
-    }
-
-    private void SetupHoverTooltips()
-    {
-        if (currencyCanvas == null)
-            currencyCanvas = FindFirstObjectByType<Canvas>();
-
-        if (currencyCanvas == null)
-            return;
-
-        CreateHoverTooltip();
-
-        if (coinsText != null)
-        {
-            coinsText.raycastTarget = true;
-            AddHoverTooltip(
-                coinsText.gameObject,
-                "Coins are used to buy household upgrades.");
-        }
-
-        MoodManager moodManager = MoodManager.Instance != null
-            ? MoodManager.Instance
-            : FindFirstObjectByType<MoodManager>();
-        if (moodManager != null && moodManager.MoodSlider != null)
-        {
-            AddHoverTooltip(
-                moodManager.MoodSlider.gameObject,
-                "Shows the household's mood. Completing chores raises it; missed chores lower it.");
-        }
-    }
-
-    private void CreateHoverTooltip()
-    {
-        GameObject panelObject = new GameObject(
-            "HUD Hover Tooltip",
-            typeof(RectTransform),
-            typeof(CanvasRenderer),
-            typeof(Image));
-        panelObject.layer = currencyCanvas.gameObject.layer;
-        hoverTooltipRect = panelObject.GetComponent<RectTransform>();
-        hoverTooltipRect.SetParent(currencyCanvas.transform, false);
-        hoverTooltipRect.anchorMin = new Vector2(0.5f, 0.5f);
-        hoverTooltipRect.anchorMax = new Vector2(0.5f, 0.5f);
-        hoverTooltipRect.pivot = new Vector2(0.5f, 0.5f);
-        hoverTooltipRect.sizeDelta = new Vector2(300f, 72f);
-
-        Image background = panelObject.GetComponent<Image>();
-        background.color = new Color(0.08f, 0.08f, 0.08f, 0.92f);
-        background.raycastTarget = false;
-
-        GameObject textObject = new GameObject(
-            "Tooltip Text",
-            typeof(RectTransform),
-            typeof(CanvasRenderer),
-            typeof(TextMeshProUGUI));
-        textObject.layer = currencyCanvas.gameObject.layer;
-        RectTransform textRect = textObject.GetComponent<RectTransform>();
-        textRect.SetParent(hoverTooltipRect, false);
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = new Vector2(10f, 6f);
-        textRect.offsetMax = new Vector2(-10f, -6f);
-
-        hoverTooltipText = textObject.GetComponent<TextMeshProUGUI>();
-        hoverTooltipText.font = coinsText != null && coinsText.font != null
-            ? coinsText.font
-            : TMP_Settings.defaultFontAsset;
-        hoverTooltipText.fontSize = 16f;
-        hoverTooltipText.color = Color.white;
-        hoverTooltipText.alignment = TextAlignmentOptions.Center;
-        hoverTooltipText.enableWordWrapping = true;
-        hoverTooltipText.raycastTarget = false;
-
-        hoverTooltipPanel = panelObject;
-        hoverTooltipPanel.SetActive(false);
-    }
-
-    private void AddHoverTooltip(GameObject target, string message)
-    {
-        EventTrigger trigger = target.GetComponent<EventTrigger>();
-        if (trigger == null)
-            trigger = target.AddComponent<EventTrigger>();
-
-        EventTrigger.Entry pointerEnter = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerEnter
-        };
-        pointerEnter.callback.AddListener(eventData =>
-            ShowHoverTooltip(message, (PointerEventData)eventData));
-        trigger.triggers.Add(pointerEnter);
-
-        EventTrigger.Entry pointerExit = new EventTrigger.Entry
-        {
-            eventID = EventTriggerType.PointerExit
-        };
-        pointerExit.callback.AddListener(_ => HideHoverTooltip());
-        trigger.triggers.Add(pointerExit);
-    }
-
-    private void ShowHoverTooltip(string message, PointerEventData eventData)
-    {
-        if (hoverTooltipPanel == null || currencyCanvas == null)
-            return;
-
-        RectTransform canvasRect = currencyCanvas.transform as RectTransform;
-        if (canvasRect == null)
-            return;
-
-        Camera eventCamera = currencyCanvas.renderMode == RenderMode.ScreenSpaceOverlay
-            ? null
-            : currencyCanvas.worldCamera;
-        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,
-                eventData.position,
-                eventCamera,
-                out Vector2 localPoint))
-        {
-            return;
-        }
-
-        hoverTooltipText.text = message;
-        hoverTooltipRect.anchoredPosition = localPoint + new Vector2(0f, 48f);
-        hoverTooltipRect.SetAsLastSibling();
-        hoverTooltipPanel.SetActive(true);
-    }
-
-    private void HideHoverTooltip()
-    {
-        if (hoverTooltipPanel != null)
-            hoverTooltipPanel.SetActive(false);
     }
 
     private Image CreateImage(string objectName, Transform parent, Sprite sprite)

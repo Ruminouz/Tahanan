@@ -25,7 +25,6 @@ public class MoodManager : MonoBehaviour
     private float mood;
 
     public float Mood => mood;
-    public Slider MoodSlider => moodSlider;
     public HouseholdMood CurrentMood => mood <= angryThreshold
         ? HouseholdMood.Angry
         : mood <= concernedThreshold

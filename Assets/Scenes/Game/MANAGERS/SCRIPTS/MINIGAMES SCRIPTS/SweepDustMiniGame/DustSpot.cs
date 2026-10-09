@@ -48,14 +48,14 @@ public class DustSpot : Interactable
 
         if (!playerState.HasBroom)
         {
-            SpeechBubbleCanvas.Show(player.transform, "You need to pick up the broom first!", 2f);
+            Debug.Log("You need to pick up the broom first!");
             return;
         }
 
         PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
         if (inventory == null || inventory.SelectedEquipment != EquipmentType.Broom)
         {
-            SpeechBubbleCanvas.Show(player.transform, "Equip the broom before sweeping.", 2f);
+            Debug.Log("Equip the broom before sweeping.");
             return;
         }
 
