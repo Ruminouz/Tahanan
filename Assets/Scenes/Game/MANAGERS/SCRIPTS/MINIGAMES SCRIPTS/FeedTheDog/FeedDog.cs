@@ -148,12 +148,14 @@ public class FeedDogMiniGame : MonoBehaviour
 
         if(success)
         {
+            SoundEffectManager.Play("HappyDog");
             successfulBites++;
             combo++;
             score += 100 * combo;
         }
         else
         {
+            SoundEffectManager.Play("SadDog");
             combo = 0;
         }
 
@@ -212,6 +214,7 @@ public class FeedDogMiniGame : MonoBehaviour
         if(currentChore != null)
         {
             currentChore.Complete();
+            SoundEffectManager.Play("ChoreFinished");
         }
 
         ShowResultThenClose();

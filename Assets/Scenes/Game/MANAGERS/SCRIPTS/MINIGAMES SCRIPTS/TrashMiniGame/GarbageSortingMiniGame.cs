@@ -152,6 +152,7 @@ private void CorrectTrash(TrashItem trash)
 {
 
     correct++;
+    SoundEffectManager.Play("ChoreFinished");
 
     
 
@@ -181,6 +182,7 @@ private void CorrectTrash(TrashItem trash)
     {
 
         mistakes++;
+        SoundEffectManager.Play("Wrong");
 
 
         Debug.Log(
@@ -264,6 +266,7 @@ private void CompleteGame()
 
 
     currentChore.Complete();
+    SoundEffectManager.Play("ChoreFinished");
 
 
     if(spawner != null)

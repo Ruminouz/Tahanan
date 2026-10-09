@@ -151,6 +151,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
         if (!gameStarted)
             return;
 
+        SoundEffectManager.Play("Toys");
         dropZone.StackToy(waste, correctlySegregatedCount);
         correctlySegregatedCount++;
 
@@ -186,6 +187,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
         if (currentChore != null)
         {
             currentChore.Complete();
+            SoundEffectManager.Play("ChoreFinished");
         }
 
         panel.SetActive(false);
