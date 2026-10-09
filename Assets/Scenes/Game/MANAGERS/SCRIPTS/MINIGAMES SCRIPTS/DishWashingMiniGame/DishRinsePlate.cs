@@ -21,7 +21,8 @@ public class DishRinsePlate : MonoBehaviour,
 
 
     private bool countedForRinse = false;
-
+    private float lastRackSfxTime = -999f;
+    private const float RackSfxCooldown = 0.12f;
 
     private DishwashingMiniGame miniGame;
 
@@ -316,6 +317,12 @@ public class DishRinsePlate : MonoBehaviour,
         if(alreadyDried)
             return;
 
+        float timeSinceLastRackSfx = Time.time - lastRackSfxTime;
+        if (timeSinceLastRackSfx >= RackSfxCooldown)
+        {
+            SoundEffectManager.Play("Rack");
+            lastRackSfxTime = Time.time;
+        }
 
         alreadyDried = true;
 
