@@ -13,8 +13,6 @@ public class DishLeftOver : MonoBehaviour,
 
     private Vector2 dragOffset;
     private Vector2 spawnPosition;
-    private float lastTrashSfxTime = -999f;
-    private const float TrashSfxCooldown = 0.12f;
 
     private void Awake()
     {
@@ -116,13 +114,6 @@ public class DishLeftOver : MonoBehaviour,
 
     public void ThrowIntoTrash()
     {
-        float timeSinceLastTrashSfx = Time.time - lastTrashSfxTime;
-        if (timeSinceLastTrashSfx >= TrashSfxCooldown)
-        {
-            SoundEffectManager.Play("Trash");
-            lastTrashSfxTime = Time.time;
-        }
-
         Debug.Log("Leftover thrown into trash!");
 
         if (miniGame != null)

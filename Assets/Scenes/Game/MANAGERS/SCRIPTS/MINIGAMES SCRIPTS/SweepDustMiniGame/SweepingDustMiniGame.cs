@@ -75,8 +75,6 @@ public class SweepingMinigame : MonoBehaviour
     private float currentStrokeDistance;
     private int currentStrokeDirection;
     private int expectedStrokeDirection;
-    private float lastSweepSfxTime;
-    private const float SweepSfxCooldown = .8f;
 
     private const float UpgradeBroomBoost = 1.15f;
 
@@ -116,7 +114,6 @@ public class SweepingMinigame : MonoBehaviour
         currentStrokeDistance = 0f;
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
-        lastSweepSfxTime = -999f;
 
         ClearDustVisuals();
 
@@ -150,7 +147,7 @@ public class SweepingMinigame : MonoBehaviour
     {
         if (dustSpot == null)
             return;
-        
+
         currentDustSpot = dustSpot;
         progress = 0f;
         isSweeping = true;
@@ -163,7 +160,6 @@ public class SweepingMinigame : MonoBehaviour
         currentStrokeDistance = 0f;
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
-        lastSweepSfxTime = -999f;
 
         ApplyBroomVisual(GetCurrentBroomLevel());
         CreateDustVisuals();
@@ -321,9 +317,7 @@ public class SweepingMinigame : MonoBehaviour
         {
             if (dustVisuals[i] != null)
                 Destroy(dustVisuals[i].gameObject);
-                 
         }
-       
 
         dustVisuals.Clear();
         dustBrightness.Clear();
@@ -333,11 +327,9 @@ public class SweepingMinigame : MonoBehaviour
     {
         if (Mouse.current == null)
             return;
-        
+
         bool pressThisFrame = Mouse.current.leftButton.wasPressedThisFrame;
         bool releaseThisFrame = Mouse.current.leftButton.wasReleasedThisFrame;
-
-       
 
         if (pressThisFrame)
         {
@@ -374,17 +366,6 @@ public class SweepingMinigame : MonoBehaviour
 
         bool insideArea = IsInsideArea();
         bool validSweepStroke = UpdateSweepStroke(brushDelta);
-
-        if (insideArea && validSweepStroke && currentMomentum >= minimumSweepSpeed)
-        {
-            float timeSinceLastSweepSfx = Time.time - lastSweepSfxTime;
-            if (timeSinceLastSweepSfx >= SweepSfxCooldown)
-            {
-                SoundEffectManager.Play("Sweep");
-                lastSweepSfxTime = Time.time;
-            }
-        }
-
         float rewardMultiplier = insideArea && validSweepStroke
             ? 1f + Mathf.Clamp01(currentMomentum / dragMomentumThreshold) * sweepBonusMultiplier
             : 0.2f;
@@ -478,7 +459,6 @@ public class SweepingMinigame : MonoBehaviour
     private bool UpdateSweepStroke(Vector3 brushDelta)
     {
         UpdateBroomSprite(brushDelta);
-      
 
         float verticalDistance = Mathf.Abs(brushDelta.y);
         if (verticalDistance < 0.01f)
@@ -539,7 +519,7 @@ public class SweepingMinigame : MonoBehaviour
     {
         if (activeBroom == null || minigamePanel == null)
             return;
-        
+
         Vector2 mousePosition = Mouse.current.position.ReadValue();
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -609,7 +589,6 @@ public class SweepingMinigame : MonoBehaviour
     {
         isSweeping = false;
         mouseIsDown = false;
-        SoundEffectManager.Play("ChoreFinished");
 
         if (progressBar != null)
             progressBar.value = 1f;
