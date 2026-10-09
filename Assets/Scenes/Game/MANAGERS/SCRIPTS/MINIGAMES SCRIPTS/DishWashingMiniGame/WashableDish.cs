@@ -43,6 +43,9 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
     private DishwashingMiniGame miniGame;
     private DishRinsePlate rinsePlate;
 
+    private float lastScrubSfxTime;
+    private const float ScrubSfxCooldown = 0.12f;
+
     private AudioSource audioSource;
 
     private void Awake()
@@ -75,7 +78,7 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
 
         audioSource.playOnAwake = false;
-
+        lastScrubSfxTime = -999f;
 
         ResetDish();
     }
@@ -206,6 +209,14 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
 
 
+    public void SpongeScrub()
+    {
+        if (!canScrub || isClean)
+            return;
+
+        Scrub(1.4f);
+    }
+
     private void Scrub(float bonusMultiplier = 1f)
     {
         progress += scrubAmount * scrubDifficultyMultiplier * bonusMultiplier;
@@ -249,7 +260,12 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
             audioSource.PlayOneShot(scrubSound);
         }
 
-
+        float timeSinceLastScrubSfx = Time.time - lastScrubSfxTime;
+        if (timeSinceLastScrubSfx >= ScrubSfxCooldown)
+        {
+            SoundEffectManager.Play("Scrub");
+            lastScrubSfxTime = Time.time;
+        }
 
         if(dishImage != null)
         {
