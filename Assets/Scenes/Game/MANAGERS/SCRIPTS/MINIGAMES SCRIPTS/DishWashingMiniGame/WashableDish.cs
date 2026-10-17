@@ -53,7 +53,7 @@ public class WashableDish : MonoBehaviour
     private DishRinsePlate rinsePlate;
 
     private float lastScrubSfxTime;
-    private const float ScrubSfxCooldown = 0.12f;
+    private const float ScrubSfxCooldown = 0.7f;
 
     private AudioSource audioSource;
     private const int MaxActiveScrubBubbles = 10;
@@ -201,15 +201,12 @@ public class WashableDish : MonoBehaviour
 
 
 
-        if(scrubSound != null &&
-           audioSource != null)
-        {
-            audioSource.PlayOneShot(scrubSound);
-        }
-
         float timeSinceLastScrubSfx = Time.time - lastScrubSfxTime;
         if (timeSinceLastScrubSfx >= ScrubSfxCooldown)
         {
+            if (scrubSound != null && audioSource != null)
+                audioSource.PlayOneShot(scrubSound);
+
             SoundEffectManager.Play("Scrub");
             lastScrubSfxTime = Time.time;
         }
@@ -390,6 +387,8 @@ public class WashableDish : MonoBehaviour
         Sprite sparkleSprite = rinseSparkleSprite != null
             ? rinseSparkleSprite
             : GetGeneratedRinseSparkleSprite();
+
+        SoundEffectManager.Play("Clean");
 
         for (int i = 0; i < rinseSparkleCount; i++)
         {

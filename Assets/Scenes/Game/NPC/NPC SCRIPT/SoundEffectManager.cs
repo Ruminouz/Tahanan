@@ -8,6 +8,7 @@ public class SoundEffectManager : MonoBehaviour
     private AudioSource audioSource;
     private AudioSource randomPitchAudioSource;
     private AudioSource voiceAudioSource;
+    private AudioSource faucetAudioSource;
     private SoundEffectLibrary soundEffectLibrary;
     [SerializeField] private Slider sfxSlider;
 
@@ -36,6 +37,13 @@ public class SoundEffectManager : MonoBehaviour
             AudioClip audioClip = Instance.soundEffectLibrary.GetRandomClip(soundName);
             if (audioClip != null)
             {
+                if (soundName == "Faucet")
+                {
+                    AudioSource source = Instance.GetFaucetAudioSource();
+                    source.PlayOneShot(audioClip);
+                    return;
+                }
+
                 if (randomPitch && Instance.randomPitchAudioSource != null)
                 {
                     Instance.randomPitchAudioSource.pitch = Random.Range(0.8f, 1.2f);
@@ -47,6 +55,36 @@ public class SoundEffectManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public static void Stop(string soundName)
+    {
+        if (soundName == "Faucet" &&
+            Instance != null &&
+            Instance.faucetAudioSource != null)
+        {
+            Instance.faucetAudioSource.Stop();
+        }
+    }
+
+    private AudioSource GetFaucetAudioSource()
+    {
+        if (faucetAudioSource != null)
+            return faucetAudioSource;
+
+        faucetAudioSource = gameObject.AddComponent<AudioSource>();
+        faucetAudioSource.playOnAwake = false;
+        if (audioSource != null)
+        {
+            faucetAudioSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+            faucetAudioSource.volume = audioSource.volume;
+            faucetAudioSource.pitch = audioSource.pitch;
+            faucetAudioSource.mute = audioSource.mute;
+            faucetAudioSource.priority = audioSource.priority;
+            faucetAudioSource.spatialBlend = audioSource.spatialBlend;
+        }
+
+        return faucetAudioSource;
     }
 
     public static void PlayVoice(AudioClip audioClip, float pitch = 1f)
@@ -83,6 +121,7 @@ public class SoundEffectManager : MonoBehaviour
             if (Instance.audioSource != null) Instance.audioSource.volume = volume;
             if (Instance.randomPitchAudioSource != null) Instance.randomPitchAudioSource.volume = volume;
             if (Instance.voiceAudioSource != null) Instance.voiceAudioSource.volume = volume;
+            if (Instance.faucetAudioSource != null) Instance.faucetAudioSource.volume = volume;
         }
     }
 

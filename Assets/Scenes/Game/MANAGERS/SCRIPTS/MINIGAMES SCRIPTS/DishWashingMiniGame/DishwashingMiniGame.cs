@@ -135,6 +135,8 @@ private void Start()
 
 private void OnDisable()
 {
+    SoundEffectManager.Stop("Faucet");
+
     if (economyManager != null)
         economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
 }
@@ -706,6 +708,8 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
 private IEnumerator FillRinsingArea()
 {
     waterFilled = false;
+    SoundEffectManager.Play("Faucet");
+
     float fillDuration = Mathf.Max(0.1f, waterFillDuration);
     RectTransform rinseRect = rinsingArea as RectTransform;
     RectTransform parentRect = rinsingArea != null
@@ -757,6 +761,8 @@ private IEnumerator FillRinsingArea()
 
     if (waterStreamImage != null)
         waterStreamImage.gameObject.SetActive(false);
+
+    SoundEffectManager.Stop("Faucet");
 
     if (waterFillImage != null)
         waterFillImage.gameObject.SetActive(false);
@@ -1061,6 +1067,8 @@ private void UpdateFaucetCue()
 
 private void ResetRinseState()
 {
+    SoundEffectManager.Stop("Faucet");
+
     if (waterFillCoroutine != null)
     {
         StopCoroutine(waterFillCoroutine);

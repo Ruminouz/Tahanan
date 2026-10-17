@@ -211,6 +211,13 @@ public class DishRinsePlate : MonoBehaviour,
                     .anchoredPosition =
                         Vector2.zero;
 
+                    float timeSinceLastRackSfx = Time.time - lastRackSfxTime;
+                    if (timeSinceLastRackSfx >= RackSfxCooldown)
+                    {
+                        SoundEffectManager.Play("Rack");
+                        lastRackSfxTime = Time.time;
+                    }
+
 
 
                     if(!countedForRinse)

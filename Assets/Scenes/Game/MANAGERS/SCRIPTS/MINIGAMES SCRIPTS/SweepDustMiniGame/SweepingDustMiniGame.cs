@@ -386,7 +386,7 @@ public class SweepingMinigame : MonoBehaviour
             float timeSinceLastSweepSfx = Time.time - lastSweepSfxTime;
             if (timeSinceLastSweepSfx >= SweepSfxCooldown)
             {
-                SoundEffectManager.Play("Sweep");
+                SoundEffectManager.Play(isVacuumUpgrade ? "Vacuum" : "Sweep");
                 lastSweepSfxTime = Time.time;
             }
         }
