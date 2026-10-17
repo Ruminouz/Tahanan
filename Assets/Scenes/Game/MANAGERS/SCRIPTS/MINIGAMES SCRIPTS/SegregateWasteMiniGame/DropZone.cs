@@ -55,7 +55,12 @@ public class DropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     public void OnDrop(PointerEventData eventData)
     {
-        // WasteObject handles validation in OnEndDrag.
+        if (eventData.pointerDrag == null)
+            return;
+
+        WasteObject toy = eventData.pointerDrag.GetComponent<WasteObject>();
+        if (toy != null)
+            toy.TryCollectInto(this);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -6,6 +6,17 @@ public class SegregateWasteChore : Chore
 
     private DayManager dayManager;
 
+    private void Awake()
+    {
+        SetChoreName("Clean Leaves");
+
+        if (miniGame == null)
+        {
+            miniGame = FindFirstObjectByType<SegregateWasteMiniGame>(
+                FindObjectsInactive.Include);
+        }
+    }
+
     private DayManager ResolveDayManager()
     {
         if (dayManager == null)
@@ -22,7 +33,7 @@ public class SegregateWasteChore : Chore
     {
         DayManager resolvedDayManager = ResolveDayManager();
         int day = resolvedDayManager != null ? resolvedDayManager.CurrentDay : 1;
-        return day >= 2 && day <= 7;
+        return day >= 2;
     }
 
     public override bool CanInteract()
@@ -43,11 +54,11 @@ public class SegregateWasteChore : Chore
     {
         if (!IsAvailableToday())
         {
-            Debug.Log("Segregate Waste is available from Day 2 to Day 7 only.");
+            Debug.Log("Clean Leaves is available from Day 2 onward.");
             return;
         }
 
-        Debug.Log("Starting Segregate Waste Mini-Game!");
+        Debug.Log("Starting Clean Leaves toy-pickup mini-game!");
 
         if (miniGame != null)
         {
@@ -55,7 +66,7 @@ public class SegregateWasteChore : Chore
         }
         else
         {
-            Debug.LogWarning("Segregate Waste Mini-Game is not assigned!");
+            Debug.LogWarning("Toy-pickup mini-game is not assigned!");
         }
     }
 

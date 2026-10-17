@@ -7,7 +7,7 @@ public class Chore : Interactable
     [Header("Chore Scoring")]
     [Tooltip("Elapsed game seconds after 8 AM when due (21 = 9 AM, 63 = 11 AM, 208 = 6 PM, 250 = 8 PM).")]
     [Min(1f)]
-    [SerializeField] private float deadlineSeconds = 250f;
+    [SerializeField] private float deadlineSeconds = 180f;
     [Tooltip("Extra points awarded when this chore is completed before its deadline.")]
     [Min(0)]
     [SerializeField] private int earlyBonusPoints = 1;
@@ -16,6 +16,10 @@ public class Chore : Interactable
     private bool isCompleted = false;
     private bool isMissed = false;
     private float deadlineBonusSeconds;
+    private float dailyDeadlineSeconds;
+    private float previousDailyDeadlineSeconds;
+    private bool hasDailyDeadline;
+    private bool hasPreviousDailyDeadline;
 
     
 
@@ -25,9 +29,11 @@ public class Chore : Interactable
 
     public bool IsMissed => isMissed;
 
-    public float DeadlineSeconds => deadlineSeconds;
+    public float DeadlineSeconds => hasDailyDeadline
+        ? dailyDeadlineSeconds
+        : deadlineSeconds;
 
-    public float DeadlineTime => deadlineSeconds + deadlineBonusSeconds;
+    public float DeadlineTime => DeadlineSeconds + deadlineBonusSeconds;
 
     public float RemainingDeadline
     {
@@ -35,9 +41,9 @@ public class Chore : Interactable
         {
             TimeManager timeManager = FindFirstObjectByType<TimeManager>();
             if (timeManager == null)
-                return deadlineSeconds;
+                return DeadlineSeconds;
 
-            return Mathf.Max(0f, deadlineSeconds + deadlineBonusSeconds - timeManager.GetTime());
+            return Mathf.Max(0f, DeadlineTime - timeManager.GetTime());
         }
     }
 
@@ -58,6 +64,19 @@ public class Chore : Interactable
         SetChoreName(name);
     }
 
+    public void SetDailyDeadline(float seconds)
+    {
+        float nextDeadline = Mathf.Max(1f, seconds);
+        if (hasPreviousDailyDeadline &&
+            Mathf.Approximately(nextDeadline, previousDailyDeadlineSeconds))
+            nextDeadline += 1f;
+
+        dailyDeadlineSeconds = nextDeadline;
+        previousDailyDeadlineSeconds = nextDeadline;
+        hasDailyDeadline = true;
+        hasPreviousDailyDeadline = true;
+    }
+
 
 
 
@@ -70,8 +89,10 @@ public class Chore : Interactable
     isCompleted = false;
     isMissed = false;
     deadlineBonusSeconds = 0f;
+    dailyDeadlineSeconds = deadlineSeconds;
+    hasDailyDeadline = false;
 
-    gameObject.SetActive(true);
+  gameObject.SetActive(true);
 
     Debug.Log(choreName + " reset.");
 }
@@ -138,8 +159,6 @@ public class Chore : Interactable
         {
             manager.CompleteChore(this, points, earlyBonusPoints);
         }
-
-
 
         Debug.Log(
             choreName 

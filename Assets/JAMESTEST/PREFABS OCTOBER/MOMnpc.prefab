@@ -841,6 +841,7 @@ MonoBehaviour:
   dialogueText: {fileID: 0}
   nameText: {fileID: 0}
   portraitImage: {fileID: 0}
+  dialoguePanelBackgroundSprite: {fileID: -5987048354905392170, guid: 7d753b77b22267c4a83ee3c01c7ed864, type: 3}
 --- !u!61 &4242501177318616666
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -903,11 +904,12 @@ MonoBehaviour:
   moveSpeed: 2
   waitTime: 1
   loopWaypoints: 1
+  waypointOrderOverride: 
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 64
   collisionPadding: 0.02
-  stuckTimeout: 0.05
+  stuckTimeout: 0.35
   minimumProgress: 0.001
   navigationCellSize: 0.35
   navigationBoundsPadding: 2
@@ -942,7 +944,8 @@ MonoBehaviour:
   spankApproachSpeed: 6
   spankDistance: 0.8
   approachTimeout: 5
-  spankApproachTimeout: 60
+  spankApproachTimeout: 15
+  reprimandDialogueDuration: 2
   waypointArrivalDistance: 0.15
   chaseStuckTimeout: 0.5
   spankTrigger: Spank

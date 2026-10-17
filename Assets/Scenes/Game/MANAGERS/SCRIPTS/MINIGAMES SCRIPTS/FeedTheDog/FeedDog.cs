@@ -33,11 +33,9 @@ public class FeedDogMiniGame : MonoBehaviour
             : FindFirstObjectByType<DayManager>();
     }
 
-
-
     public void StartGame(Chore chore)
     {
-        if (chore == null || panel == null)
+        if (chore == null || !chore.CanInteract() || panel == null)
             return;
 
         if(resultCoroutine != null)
@@ -76,9 +74,6 @@ public class FeedDogMiniGame : MonoBehaviour
         }
     }
 
-
-
-
     private void ShowTutorial()
     {
         if (tutorial == null)
@@ -94,9 +89,6 @@ public class FeedDogMiniGame : MonoBehaviour
             FinishTutorial
         );
     }
-
-
-
 
     private void FinishTutorial()
     {
@@ -207,6 +199,15 @@ public class FeedDogMiniGame : MonoBehaviour
 
     private void CompleteGame()
     {
+        if (dayManager == null)
+            dayManager = DayManager.Instance != null
+                ? DayManager.Instance
+                : FindFirstObjectByType<DayManager>();
+        if (dayManager != null)
+            dayManager.ResolveDailyAdditionalQuest(
+                currentChore,
+                successfulBites == AttemptsPerMeal);
+
         SetStatusText(successfulBites == AttemptsPerMeal
             ? $"PERFECT MEAL!\n3 bites | Score: {score}"
             : $"HAPPY PUP!\nMeal complete | Score: {score}");
@@ -222,10 +223,25 @@ public class FeedDogMiniGame : MonoBehaviour
 
     private void MissGame()
     {
-        SetStatusText($"PUP IS STILL HUNGRY!\nYou landed {successfulBites}/{BitesNeeded} bites.");
+        if(currentChore != null)
+        {
+            ChoreManager choreManager = FindFirstObjectByType<ChoreManager>();
+            if(choreManager != null)
+            {
+                choreManager.MissChore(currentChore);
+            }
+            else
+            {
+                currentChore.MarkAsMissed();
+            }
+        }
 
-        Debug.Log("Feeding attempt failed. The dog and chore remain available for another try.", this);
+        SetStatusText(
+            $"PUP IS STILL HUNGRY!\nYou landed {successfulBites}/{BitesNeeded} bites.\n" +
+            "CHORE MISSED FOR TODAY."
+        );
 
+        Debug.Log("Feeding attempt failed. The chore has been marked as missed.", this);
         ShowResultThenClose();
     }
 

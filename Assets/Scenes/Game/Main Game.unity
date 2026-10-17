@@ -4845,7 +4845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteChore
   choreName: PickUp
   points: 1
-  deadlineSeconds: 250
+  deadlineSeconds: 180
   earlyBonusPoints: 1
   miniGame: {fileID: 1734432312}
 --- !u!1 &1568940653
@@ -5097,6 +5097,7 @@ MonoBehaviour:
   spankDistance: 0.8
   approachTimeout: 5
   spankApproachTimeout: 60
+  reprimandDialogueDuration: 2
   waypointArrivalDistance: 0.15
   chaseStuckTimeout: 0.5
   spankTrigger: Spank
@@ -8868,6 +8869,8 @@ MonoBehaviour:
   choreStuckTimeout: 0.5
   choreSpeedMultiplier: 2
   playerChoreDistance: 2
+  sweepingIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  moppingIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
   bubbleAnchor: {fileID: 1895825523723791353}
   moodBubblePrefab: {fileID: 0}
   badMoodBubbleInterval: 8

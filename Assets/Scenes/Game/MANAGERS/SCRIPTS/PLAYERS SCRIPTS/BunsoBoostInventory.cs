@@ -16,10 +16,12 @@ public class BunsoBoostInventory : MonoBehaviour
     [SerializeField, Min(0f)] private float chocolateDuration = 8f;
     [SerializeField, Min(0.1f)] private float timeFreezeDuration = 7f;
     [SerializeField, Min(1)] private int capacity = 7;
+    [SerializeField, Min(0f)] private float chocolateMoodPenalty = 10f;
 
     private readonly List<BunsoBoostType> items = new();
     private PlayerMovement playerMovement;
     private TimeManager timeManager;
+    private MoodManager moodManager;
 
     public event Action InventoryChanged;
     public int Count => items.Count;
@@ -35,6 +37,9 @@ public class BunsoBoostInventory : MonoBehaviour
         Instance = this;
         playerMovement = GetComponent<PlayerMovement>();
         timeManager = FindFirstObjectByType<TimeManager>();
+        moodManager = MoodManager.Instance != null
+            ? MoodManager.Instance
+            : FindFirstObjectByType<MoodManager>();
     }
 
     private void OnDestroy()
@@ -104,6 +109,26 @@ public class BunsoBoostInventory : MonoBehaviour
 
         items.RemoveAt(index);
         InventoryChanged?.Invoke();
+
+        if (boost == BunsoBoostType.Chocolate)
+        {
+            if (moodManager == null)
+                moodManager = MoodManager.Instance != null
+                    ? MoodManager.Instance
+                    : FindFirstObjectByType<MoodManager>();
+
+            if (moodManager != null)
+                moodManager.AddMood(-chocolateMoodPenalty);
+            else
+                Debug.LogWarning("Chocolate was consumed, but no MoodManager was found.", this);
+
+            BunsoAI bunso = FindFirstObjectByType<BunsoAI>();
+            if (bunso != null)
+                bunso.ReactToChocolateConsumed();
+            else
+                Debug.LogWarning("Chocolate was consumed, but no BunsoAI was found.", this);
+        }
+
         return true;
     }
 }

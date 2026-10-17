@@ -5,14 +5,13 @@ public static class NPCNavigation2D
 {
     private struct Node
     {
-        public int x;
-        public int y;
         public float cost;
         public float priority;
         public int parent;
     }
 
     private static readonly Collider2D[] OverlapResults = new Collider2D[32];
+    private static readonly RaycastHit2D[] PathCastResults = new RaycastHit2D[32];
 
     public static List<Vector2> FindPath(
         Vector2 start,
@@ -45,8 +44,9 @@ public static class NPCNavigation2D
         int width = Mathf.Clamp(Mathf.CeilToInt(bounds.size.x / cellSize), 2, 128);
         int height = Mathf.Clamp(Mathf.CeilToInt(bounds.size.y / cellSize), 2, 128);
         Vector2 origin = bounds.min;
-        int startIndex = ToIndex(FindNearestWalkable(start), width);
-        int targetIndex = ToIndex(FindNearestWalkable(target), width);
+        var walkabilityCache = new byte[width * height];
+        int startIndex = FindNearestWalkable(start);
+        int targetIndex = FindNearestWalkable(target);
 
         if (startIndex < 0 || targetIndex < 0 || startIndex == targetIndex)
         {
@@ -69,7 +69,15 @@ public static class NPCNavigation2D
             }
 
             if (currentIndex == targetIndex)
-                return ReconstructPath(nodes, currentIndex, width, origin, cellSize, target);
+                return ReconstructPath(
+                    nodes,
+                    currentIndex,
+                    width,
+                    origin,
+                    cellSize,
+                    target,
+                    mover,
+                    obstacleFilter);
 
             open.Remove(currentIndex);
             Node current = nodes[currentIndex];
@@ -89,14 +97,14 @@ public static class NPCNavigation2D
                         continue;
 
                     int nextIndex = nextY * width + nextX;
-                    if (!IsWalkable(nextIndex, width, origin, cellSize, mover, obstacleFilter))
+                    if (!IsCellWalkable(nextIndex))
                         continue;
                     if (x != 0 && y != 0 &&
-                        (!IsWalkable(currentY * width + nextX, width, origin, cellSize, mover, obstacleFilter) ||
-                         !IsWalkable(nextY * width + currentX, width, origin, cellSize, mover, obstacleFilter)))
+                        (!IsCellWalkable(currentY * width + nextX) ||
+                         !IsCellWalkable(nextY * width + currentX)))
                         continue;
 
-                    float moveCost = x != 0 && y != 0 ? 1.4142f : 1f;
+                    float moveCost = x != 0 && y != 0 ? Mathf.Sqrt(2f) : 1f;
                     float nextCost = current.cost + moveCost;
                     if (nodes.TryGetValue(nextIndex, out Node existing) && existing.cost <= nextCost)
                         continue;
@@ -118,6 +126,24 @@ public static class NPCNavigation2D
         path.Add(target);
         return path;
 
+        bool IsCellWalkable(int index)
+        {
+            if (walkabilityCache[index] == 0)
+            {
+                walkabilityCache[index] = IsWalkable(
+                    index,
+                    width,
+                    origin,
+                    cellSize,
+                    mover,
+                    obstacleFilter)
+                    ? (byte)1
+                    : (byte)2;
+            }
+
+            return walkabilityCache[index] == 1;
+        }
+
         int FindNearestWalkable(Vector2 position)
         {
             int nearest = -1;
@@ -127,7 +153,7 @@ public static class NPCNavigation2D
                 for (int x = 0; x < width; x++)
                 {
                     int index = y * width + x;
-                    if (!IsWalkable(index, width, origin, cellSize, mover, obstacleFilter))
+                    if (!IsCellWalkable(index))
                         continue;
 
                     float distance = (GridPosition(index, width, origin, cellSize) - position).sqrMagnitude;
@@ -156,11 +182,13 @@ public static class NPCNavigation2D
         int y = index / width;
         int targetX = targetIndex % width;
         int targetY = targetIndex / width;
-        float heuristic = Mathf.Abs(targetX - x) + Mathf.Abs(targetY - y);
+        int deltaX = Mathf.Abs(targetX - x);
+        int deltaY = Mathf.Abs(targetY - y);
+        int diagonalSteps = Mathf.Min(deltaX, deltaY);
+        int straightSteps = Mathf.Max(deltaX, deltaY) - diagonalSteps;
+        float heuristic = diagonalSteps * Mathf.Sqrt(2f) + straightSteps;
         return new Node
         {
-            x = x,
-            y = y,
             cost = cost,
             priority = cost + heuristic,
             parent = parent
@@ -176,15 +204,38 @@ public static class NPCNavigation2D
         ContactFilter2D obstacleFilter)
     {
         Vector2 position = GridPosition(index, width, origin, cellSize);
-        int count = Physics2D.OverlapCircle(
-            position,
-            Mathf.Max(mover.bounds.extents.x, mover.bounds.extents.y) + cellSize * 0.45f,
-            obstacleFilter,
-            OverlapResults);
+        int count;
+        if (mover is BoxCollider2D boxCollider)
+        {
+            Vector3 scale = boxCollider.transform.lossyScale;
+            Vector2 size = Vector2.Scale(
+                boxCollider.size,
+                new Vector2(Mathf.Abs(scale.x), Mathf.Abs(scale.y))) +
+                Vector2.one * cellSize * 0.9f;
+            Vector2 colliderOffset = (Vector2)mover.bounds.center - (Vector2)mover.transform.position;
+            count = Physics2D.OverlapBox(
+                position + colliderOffset,
+                size,
+                boxCollider.transform.eulerAngles.z,
+                obstacleFilter,
+                OverlapResults);
+        }
+        else
+        {
+            count = Physics2D.OverlapCircle(
+                position,
+                Mathf.Max(mover.bounds.extents.x, mover.bounds.extents.y) + cellSize * 0.45f,
+                obstacleFilter,
+                OverlapResults);
+        }
 
         for (int i = 0; i < count; i++)
         {
-            if (OverlapResults[i] != null && OverlapResults[i] != mover)
+            Collider2D hitCollider = OverlapResults[i];
+            if (hitCollider != null &&
+                hitCollider != mover &&
+                (mover.attachedRigidbody == null ||
+                 hitCollider.attachedRigidbody != mover.attachedRigidbody))
                 return false;
         }
 
@@ -196,18 +247,15 @@ public static class NPCNavigation2D
         return origin + new Vector2(index % width + 0.5f, index / width + 0.5f) * cellSize;
     }
 
-    private static int ToIndex(int index, int width)
-    {
-        return index < 0 ? -1 : index;
-    }
-
     private static List<Vector2> ReconstructPath(
         Dictionary<int, Node> nodes,
         int currentIndex,
         int width,
         Vector2 origin,
         float cellSize,
-        Vector2 target)
+        Vector2 target,
+        Collider2D mover,
+        ContactFilter2D obstacleFilter)
     {
         var path = new List<Vector2>();
         while (currentIndex >= 0 && nodes.TryGetValue(currentIndex, out Node node))
@@ -217,7 +265,95 @@ public static class NPCNavigation2D
         }
 
         path.Reverse();
+        path = SmoothPath(path, mover, obstacleFilter, cellSize * 0.45f);
         path.Add(target);
         return path;
+    }
+
+    private static List<Vector2> SmoothPath(
+        List<Vector2> path,
+        Collider2D mover,
+        ContactFilter2D obstacleFilter,
+        float clearancePadding)
+    {
+        if (path.Count < 3 || mover == null)
+            return path;
+
+        var smoothedPath = new List<Vector2> { path[0] };
+        int currentIndex = 0;
+        while (currentIndex < path.Count - 1)
+        {
+            int furthestVisibleIndex = path.Count - 1;
+            while (furthestVisibleIndex > currentIndex + 1 &&
+                   !HasClearPath(
+                       path[currentIndex],
+                       path[furthestVisibleIndex],
+                       mover,
+                       obstacleFilter,
+                       clearancePadding))
+            {
+                furthestVisibleIndex--;
+            }
+
+            smoothedPath.Add(path[furthestVisibleIndex]);
+            currentIndex = furthestVisibleIndex;
+        }
+
+        return smoothedPath;
+    }
+
+    private static bool HasClearPath(
+        Vector2 start,
+        Vector2 target,
+        Collider2D mover,
+        ContactFilter2D obstacleFilter,
+        float clearancePadding)
+    {
+        Vector2 direction = target - start;
+        float distance = direction.magnitude;
+        if (distance <= 0.0001f)
+            return true;
+
+        int hitCount;
+        if (mover is BoxCollider2D boxCollider)
+        {
+            Vector3 scale = boxCollider.transform.lossyScale;
+            Vector2 size = Vector2.Scale(
+                boxCollider.size,
+                new Vector2(Mathf.Abs(scale.x), Mathf.Abs(scale.y))) +
+                Vector2.one * clearancePadding * 2f;
+            Vector2 colliderOffset = (Vector2)mover.bounds.center - (Vector2)mover.transform.position;
+            hitCount = Physics2D.BoxCast(
+                start + colliderOffset,
+                size,
+                boxCollider.transform.eulerAngles.z,
+                direction / distance,
+                obstacleFilter,
+                PathCastResults,
+                distance);
+        }
+        else
+        {
+            float radius = Mathf.Max(mover.bounds.extents.x, mover.bounds.extents.y) + clearancePadding;
+            hitCount = Physics2D.CircleCast(
+                start,
+                radius,
+                direction / distance,
+                obstacleFilter,
+                PathCastResults,
+                distance);
+        }
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            Collider2D hitCollider = PathCastResults[i].collider;
+            if (hitCollider != null &&
+                hitCollider != mover &&
+                (mover.attachedRigidbody == null ||
+                 hitCollider.attachedRigidbody != mover.attachedRigidbody))
+                return false;
+        }
+
+        return true;
     }
 }

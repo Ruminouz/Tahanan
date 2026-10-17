@@ -49,7 +49,10 @@ MonoBehaviour:
   concernedThreshold: 65
   angryThreshold: 50.7
   moodLossPerMissedChore: 20
+  dailyMoodLoss: 20
   moodRecoveryPerCompletedChore: 10
+  moodGainSprite: {fileID: 5951587013162271021, guid: 4ab192c131e22bd40bd4dab15b920f7d, type: 3}
+  moodLossSprite: {fileID: -3151740070689166471, guid: 08c6851420614cd4d83e1ec64aa46e38, type: 3}
 --- !u!1 &4084431142148791782
 GameObject:
   m_ObjectHideFlags: 0

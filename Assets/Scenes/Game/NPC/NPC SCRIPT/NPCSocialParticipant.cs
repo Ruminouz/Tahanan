@@ -12,8 +12,11 @@ public class NPCSocialParticipant : MonoBehaviour
     [SerializeField] private string calmLine = "It feels peaceful today.";
     [SerializeField] private string concernedLine = "We should take care of the house.";
     [SerializeField] private string angryLine = "Something needs to change.";
+    private HouseholdHelperAI householdHelperAI;
 
-    public bool CanSocialize => canSocialize && waypointMover != null;
+    public bool CanSocialize => canSocialize &&
+        waypointMover != null &&
+        (householdHelperAI == null || !householdHelperAI.IsHelping);
     public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
     public Transform SpeechAnchor => speechAnchor != null ? speechAnchor : transform;
     public WaypointMover WaypointMover => waypointMover;
@@ -22,6 +25,8 @@ public class NPCSocialParticipant : MonoBehaviour
     {
         if (waypointMover == null)
             waypointMover = GetComponent<WaypointMover>();
+
+        householdHelperAI = GetComponent<HouseholdHelperAI>();
     }
 
     public string GetLine(HouseholdMood mood)

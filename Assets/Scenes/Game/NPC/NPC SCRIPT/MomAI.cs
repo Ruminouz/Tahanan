@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ public class MomAI : MonoBehaviour
     [SerializeField, Min(0.1f)] private float spankDistance = 0.8f;
     [SerializeField, Min(0.1f)] private float approachTimeout = 5f;
     [SerializeField, Min(0.1f)] private float spankApproachTimeout = 15f;
+    [SerializeField, Min(0f)] private float reprimandDialogueDuration = 2f;
     [SerializeField, Min(0.01f)] private float waypointArrivalDistance = 0.15f;
     [SerializeField, Min(0.05f)] private float chaseStuckTimeout = 0.5f;
     [SerializeField] private string spankTrigger = "Spank";
@@ -39,13 +41,20 @@ public class MomAI : MonoBehaviour
 
     private MoodManager moodManager;
     private ChoreManager choreManager;
+    private ChoreManager subscribedChoreManager;
     private DayManager dayManager;
+    private WaterSpawner waterSpawner;
     private float nextAngryBubbleTime;
     private bool reprimanding;
     private bool gameOverRequested;
-    private int pendingReprimands;
+    private readonly Queue<Chore> pendingMissedChores = new Queue<Chore>();
     private Collider2D bodyCollider;
     private Collider2D playerCollider;
+    private Rigidbody2D body;
+    private bool restoreBodyColliderAfterReprimand;
+    private bool bodyColliderWasEnabled;
+    private bool restoreWaypointMovementAfterReprimand;
+    private bool waypointMovementSuspendedForReprimand;
     private float chaseStuckTimer;
     private Color normalSpriteColor = Color.white;
     private bool hasNormalSpriteColor;
@@ -59,12 +68,9 @@ public class MomAI : MonoBehaviour
         dayManager = DayManager.Instance != null
             ? DayManager.Instance
             : FindFirstObjectByType<DayManager>();
+        waterSpawner = FindFirstObjectByType<WaterSpawner>();
 
-        if (player == null)
-            player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
-        if (playerMovement == null && player != null)
-            playerMovement = player.GetComponent<PlayerMovement>();
+        ResolvePlayerReferences();
 
         if (animator == null)
             animator = GetComponent<Animator>();
@@ -79,12 +85,7 @@ public class MomAI : MonoBehaviour
         }
 
         bodyCollider = GetComponent<Collider2D>();
-        if (player != null)
-        {
-            playerCollider = player.GetComponent<Collider2D>();
-            if (playerCollider == null)
-                playerCollider = player.GetComponentInChildren<Collider2D>();
-        }
+        body = GetComponent<Rigidbody2D>();
 
         if (waypointMover == null)
             waypointMover = GetComponent<WaypointMover>();
@@ -103,11 +104,17 @@ public class MomAI : MonoBehaviour
 
     private void Update()
     {
+        if (choreManager == null)
+            SubscribeToChoreManager();
+
         if (moodManager == null || moodManager.CurrentMood != HouseholdMood.Angry)
         {
             RestoreSpriteColor();
             return;
         }
+
+        if (reprimanding)
+            return;
 
         if (Time.time >= nextAngryBubbleTime)
         {
@@ -118,140 +125,221 @@ public class MomAI : MonoBehaviour
 
     private void OnDisable()
     {
-        ChoreManager choreManager = FindFirstObjectByType<ChoreManager>();
-        if (choreManager != null)
-            choreManager.ChoreMissed -= ReprimandPlayer;
+        if (subscribedChoreManager != null)
+            subscribedChoreManager.ChoreMissed -= ReprimandPlayer;
+
+        subscribedChoreManager = null;
+        RestoreBodyCollider();
+        if (waypointMovementSuspendedForReprimand && waypointMover != null)
+            waypointMover.SetMovementEnabled(restoreWaypointMovementAfterReprimand);
+        waypointMover?.ResetWaypointRoute();
+        restoreWaypointMovementAfterReprimand = false;
+        waypointMovementSuspendedForReprimand = false;
+        reprimanding = false;
     }
 
     private void SubscribeToChoreManager()
     {
-        ChoreManager choreManager = FindFirstObjectByType<ChoreManager>();
-        if (choreManager != null)
-        {
-            choreManager.ChoreMissed -= ReprimandPlayer;
-            choreManager.ChoreMissed += ReprimandPlayer;
-        }
+        if (choreManager == null)
+            choreManager = FindFirstObjectByType<ChoreManager>();
+
+        if (subscribedChoreManager == choreManager)
+            return;
+
+        if (subscribedChoreManager != null)
+            subscribedChoreManager.ChoreMissed -= ReprimandPlayer;
+
+        subscribedChoreManager = choreManager;
+        if (subscribedChoreManager != null)
+            subscribedChoreManager.ChoreMissed += ReprimandPlayer;
     }
 
     private void ReprimandPlayer(Chore chore)
     {
-        pendingReprimands++;
+        if (chore != null && (!chore.IsMissed || chore.IsCompleted))
+            return;
+
+        if (gameOverRequested)
+            return;
+
+        pendingMissedChores.Enqueue(chore);
 
         if (!gameOverRequested && dayManager != null &&
             dayManager.HasReachedMissedChoreGameOverThreshold)
         {
             gameOverRequested = true;
-            StartCoroutine(TriggerGameOverAfterMissEvent());
         }
 
         if (!reprimanding)
             StartCoroutine(ProcessReprimands());
     }
 
-    private IEnumerator TriggerGameOverAfterMissEvent()
-    {
-        yield return null;
-
-        if (dayManager != null)
-            dayManager.TriggerGameOver();
-    }
-
     private IEnumerator ProcessReprimands()
     {
         reprimanding = true;
 
-        while (pendingReprimands > 0)
+        while (pendingMissedChores.Count > 0)
         {
-            pendingReprimands--;
-            yield return ApproachAndReprimand();
+            Chore missedChore = pendingMissedChores.Dequeue();
+            yield return ApproachAndReprimand(missedChore);
+
+            if (gameOverRequested)
+            {
+                pendingMissedChores.Clear();
+                break;
+            }
 
             if (reprimandCooldown > 0f)
                 yield return new WaitForSeconds(reprimandCooldown);
         }
 
         reprimanding = false;
+
+        if (gameOverRequested && dayManager != null)
+            dayManager.TriggerGameOver();
     }
 
-    private IEnumerator ApproachAndReprimand()
+    private IEnumerator ApproachAndReprimand(Chore missedChore)
     {
-        if (waypointMover != null)
-            waypointMover.SetMovementEnabled(false);
+        ResolvePlayerReferences();
 
-        SetAngrySpriteColor();
+        restoreWaypointMovementAfterReprimand =
+            waypointMover != null && waypointMover.MovementEnabled;
         if (waypointMover != null)
-            waypointMover.ResetWaypointRoute();
-
-        float elapsed = 0f;
-        float maxApproachTime = Mathf.Max(approachTimeout, spankApproachTimeout);
-        chaseStuckTimer = 0f;
-        bool useDirectPursuit = waypointMover == null;
-        while (player != null && !IsPlayerWithinSpankRange() && elapsed < maxApproachTime)
         {
-            Vector2 currentPosition = transform.position;
-            float distanceBeforeMove = Vector2.Distance(currentPosition, player.position);
-            Vector2 movement = useDirectPursuit
-                ? GetUnblockedPursuitMovement(currentPosition)
-                : waypointMover.GetMovementTowards(player.position, spankApproachSpeed);
-            Vector2 nextPosition = currentPosition + movement;
-
-            if (distanceBeforeMove - Vector2.Distance(nextPosition, player.position) <= 0.001f)
-                chaseStuckTimer += Time.deltaTime;
-            else
-                chaseStuckTimer = 0f;
-
-            if (!useDirectPursuit && chaseStuckTimer >= chaseStuckTimeout)
-            {
-                useDirectPursuit = true;
-                movement = GetUnblockedPursuitMovement(currentPosition);
-                nextPosition = currentPosition + movement;
-            }
-
-            UpdateMovementAnimation(nextPosition - currentPosition);
-            transform.position = nextPosition;
-
-            elapsed += Time.deltaTime;
-            yield return null;
+            waypointMovementSuspendedForReprimand = true;
+            waypointMover.SetMovementEnabled(false);
         }
 
-        if (player == null || !IsPlayerWithinSpankRange())
+        try
         {
-            StopMovementAnimation();
-            RestoreSpriteColor();
+            SetAngrySpriteColor();
             if (waypointMover != null)
                 waypointMover.ResetWaypointRoute();
-            if (waypointMover != null)
-                waypointMover.SetMovementEnabled(true);
-            yield break;
+
+            float elapsed = 0f;
+            float maxApproachTime = Mathf.Max(approachTimeout, spankApproachTimeout);
+            chaseStuckTimer = 0f;
+            Vector2 previousPosition = body != null ? body.position : (Vector2)transform.position;
+            while (player != null && !IsPlayerWithinSpankRange() && elapsed < maxApproachTime)
+            {
+                Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
+                Vector2 movement = waypointMover != null
+                    ? waypointMover.GetMovementTowards(player.position, spankApproachSpeed, false)
+                    : GetUnblockedPursuitMovement(currentPosition);
+                if (movement.sqrMagnitude <= 0.000001f)
+                    movement = GetUnblockedPursuitMovement(currentPosition);
+
+                Vector2 nextPosition = currentPosition + movement;
+
+                UpdateMovementAnimation(nextPosition - currentPosition);
+                if (body != null)
+                    body.MovePosition(nextPosition);
+                else
+                    transform.position = nextPosition;
+
+                elapsed += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+
+                Vector2 actualPosition = body != null ? body.position : (Vector2)transform.position;
+                if ((actualPosition - previousPosition).sqrMagnitude <= 0.000001f)
+                    chaseStuckTimer += Time.fixedDeltaTime;
+                else
+                    chaseStuckTimer = 0f;
+
+                if (chaseStuckTimer >= chaseStuckTimeout)
+                {
+                    waypointMover?.ResetWaypointRoute();
+                    chaseStuckTimer = 0f;
+                }
+
+                previousPosition = actualPosition;
+            }
+
+            if (player != null && !IsPlayerWithinSpankRange())
+                Debug.LogWarning(name + " could not reach the player; performing the missed-chore reprimand anyway.", this);
+
+            StopMovementAnimation();
+
+            NPC dialogue = FindFirstObjectByType<NPC>();
+            if (dialogue != null)
+            {
+                bool dialogueClosed = false;
+                bool dialogueStarted = false;
+                string line = GetMissedChoreLine(missedChore);
+                while (!dialogueStarted)
+                {
+                    dialogueStarted = dialogue.StartAutomaticDialogue(
+                        "Nanay",
+                        line,
+                        spriteRenderer != null ? spriteRenderer.sprite : null,
+                        reprimandDialogueDuration,
+                        () => dialogueClosed = true);
+
+                    if (!dialogueStarted)
+                        yield return null;
+                }
+
+                while (!dialogueClosed)
+                    yield return null;
+            }
+            else
+            {
+                Debug.LogWarning(name + " cannot display reprimand dialogue because no NPC dialogue component was found.", this);
+                ShowMoodDialogue();
+            }
+
+            if (animator != null && !string.IsNullOrEmpty(spankTrigger))
+                animator.SetTrigger(spankTrigger);
+
+            if (slipperPrefab != null)
+            {
+                Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
+                Vector3 spawnPosition = player != null ? player.position : anchor.position;
+                Destroy(Instantiate(slipperPrefab, spawnPosition, anchor.rotation), 1.5f);
+            }
+
+            if (playerMovement != null)
+                StartCoroutine(SlowPlayer());
+
+            yield return new WaitForSeconds(0.75f);
         }
-
-        StopMovementAnimation();
-        ShowMoodDialogue();
-
-        if (animator != null && !string.IsNullOrEmpty(spankTrigger))
-            animator.SetTrigger(spankTrigger);
-
-        if (slipperPrefab != null)
+        finally
         {
-            Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
-            Vector3 spawnPosition = player != null ? player.position : anchor.position;
-            Destroy(Instantiate(slipperPrefab, spawnPosition, anchor.rotation), 1.5f);
+            RestoreSpriteColor();
+            RestoreBodyCollider();
+            if (waypointMover != null)
+            {
+                waypointMover.ResetWaypointRoute();
+                if (waypointMovementSuspendedForReprimand)
+                    waypointMover.SetMovementEnabled(restoreWaypointMovementAfterReprimand);
+            }
+
+            restoreWaypointMovementAfterReprimand = false;
+            waypointMovementSuspendedForReprimand = false;
         }
+    }
 
-        if (playerMovement != null)
-            StartCoroutine(SlowPlayer());
+    private void RestoreBodyCollider()
+    {
+        if (!restoreBodyColliderAfterReprimand)
+            return;
 
-        RestoreSpriteColor();
-        if (waypointMover != null)
-            waypointMover.ResetWaypointRoute();
-        yield return new WaitForSeconds(0.75f);
-        if (waypointMover != null)
-            waypointMover.SetMovementEnabled(true);
+        if (bodyCollider != null)
+            bodyCollider.enabled = bodyColliderWasEnabled;
+        restoreBodyColliderAfterReprimand = false;
     }
 
     private Vector2 GetUnblockedPursuitMovement(Vector2 currentPosition)
     {
         Vector2 toPlayer = (Vector2)player.position - currentPosition;
-        return Vector2.ClampMagnitude(toPlayer, spankApproachSpeed * Time.deltaTime);
+        Vector2 movement = Vector2.ClampMagnitude(toPlayer, spankApproachSpeed * Time.fixedDeltaTime);
+        return NPCMovement2D.GetCollisionSafeMovement(
+            bodyCollider,
+            movement,
+            toPlayer,
+            obstacleLayers,
+            collisionPadding);
     }
 
     private bool IsPlayerWithinSpankRange()
@@ -272,6 +360,25 @@ public class MomAI : MonoBehaviour
     {
         if (spriteRenderer != null)
             spriteRenderer.color = angrySpriteColor;
+    }
+
+    private void ResolvePlayerReferences()
+    {
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if (player == null)
+            return;
+
+        if (playerMovement == null)
+            playerMovement = player.GetComponent<PlayerMovement>();
+
+        if (playerCollider == null)
+        {
+            playerCollider = player.GetComponent<Collider2D>();
+            if (playerCollider == null)
+                playerCollider = player.GetComponentInChildren<Collider2D>();
+        }
     }
 
     private void RestoreSpriteColor()
@@ -311,6 +418,38 @@ public class MomAI : MonoBehaviour
         Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
         string line = GetMoodLine();
         SpeechBubbleCanvas.Show(anchor, line, bubbleDuration);
+    }
+
+    private string GetMissedChoreLine(Chore chore)
+    {
+        if (chore == null && waterSpawner != null && waterSpawner.IsMoppingMissed)
+            return "Yung basa pag may nadulas dito";
+
+        if (chore is DishwashingChore)
+            return "Yung hugasin!";
+
+        if (chore is FeedDogChore)
+            return "Di mo napakain yung aso!";
+
+        if (chore is GarbageChore)
+            return "Di mo na segregate ng tama!";
+
+        string choreName = chore != null ? chore.ChoreName ?? string.Empty : string.Empty;
+        if (choreName.IndexOf("mop", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            choreName.IndexOf("wet", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            return "Yung basa pag may nadulas dito";
+
+        if (choreName.IndexOf("sweep", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            (dayManager != null && chore == dayManager.SweepDustChore))
+            return "Yung pinapawalis ko sayo!";
+
+        if (chore is CleanLeavesChore ||
+            chore is SegregateWasteChore ||
+            choreName.IndexOf("toy", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            choreName.IndexOf("pickup", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            return "yung laruan ng kapatid mo di mo niligpit!";
+
+        return GetMoodLine();
     }
 
     private string GetMoodLine()

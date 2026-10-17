@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class NPCInteractionManager : MonoBehaviour
 {
+    [Header("Speech Bubble Appearance")]
+    [SerializeField] private TMP_FontAsset speechBubbleFontAsset;
+    [SerializeField] private Sprite speechBubbleBackgroundSprite;
+
     [Header("Timing")]
     [SerializeField, Min(0.1f)] private float checkInterval = 5f;
     [SerializeField, Min(0.1f)] private float conversationDuration = 4f;
@@ -20,6 +25,11 @@ public class NPCInteractionManager : MonoBehaviour
     private float nextCheckTime;
     private float nextInteractionTime;
     private bool interactionActive;
+
+    private void Awake()
+    {
+        SpeechBubbleCanvas.SetAppearance(speechBubbleFontAsset, speechBubbleBackgroundSprite);
+    }
 
     private void Start()
     {

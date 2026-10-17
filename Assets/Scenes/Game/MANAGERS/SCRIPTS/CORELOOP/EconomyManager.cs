@@ -33,18 +33,25 @@ public class EconomyManager : MonoBehaviour
     [Header("Shop - Cat")]
     [SerializeField, Min(1)] private int catBaseCost = 10;
 
+    [Header("Shop - Dishwashing Liquid")]
+    [SerializeField, Min(1)] private int dishwashingLiquidBaseCost = 10;
+    [SerializeField, Min(1f)] private float dishwashingLiquidScrubSpeedMultiplier = 1.5f;
+
     private int coins;
     private int points;
     private float movementBoostEndTime;
     private int mopUpgradeLevel;
     private int broomUpgradeLevel;
     private bool catPurchased;
+    private bool dishwashingLiquidPurchased;
+    private Sprite dishwashingLiquidSprite;
 
     public event Action<int> CoinsChanged;
     public event Action<int> CoinsEarned;
     public event Action<int> MopUpgradeChanged;
     public event Action<int> BroomUpgradeChanged;
     public event Action<bool> CatPurchaseChanged;
+    public event Action<bool> DishwashingLiquidPurchaseChanged;
 
     public int Coins => coins;
     public int Points => points;
@@ -56,6 +63,12 @@ public class EconomyManager : MonoBehaviour
     public bool CanUpgradeBroom => !HasUpgradedBroom;
     public bool HasPurchasedCat => catPurchased;
     public bool CanPurchaseCat => !catPurchased;
+    public bool HasPurchasedDishwashingLiquid => dishwashingLiquidPurchased;
+    public bool CanPurchaseDishwashingLiquid => !dishwashingLiquidPurchased;
+    public Sprite DishwashingLiquidSprite => dishwashingLiquidSprite;
+    public float DishwashingScrubSpeedMultiplier => dishwashingLiquidPurchased
+        ? Mathf.Max(1f, dishwashingLiquidScrubSpeedMultiplier)
+        : 1f;
     public float MopCleaningSpeedMultiplier => HasUpgradedMop
         ? Mathf.Max(1f, upgradedMopCleaningSpeedMultiplier)
         : 1f;
@@ -78,6 +91,7 @@ public class EconomyManager : MonoBehaviour
         mopUpgradeLevel = 0;
         broomUpgradeLevel = 0;
         catPurchased = false;
+        dishwashingLiquidPurchased = false;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -172,6 +186,29 @@ public class EconomyManager : MonoBehaviour
 
         catPurchased = true;
         CatPurchaseChanged?.Invoke(catPurchased);
+        return true;
+    }
+
+    public int GetDishwashingLiquidCost()
+    {
+        return CanPurchaseDishwashingLiquid ? dishwashingLiquidBaseCost : -1;
+    }
+
+    public bool TryPurchaseDishwashingLiquid(Sprite liquidSprite)
+    {
+        if (liquidSprite == null)
+        {
+            Debug.LogWarning("Cannot purchase dishwashing liquid because its shop sprite is not assigned.", this);
+            return false;
+        }
+
+        int cost = GetDishwashingLiquidCost();
+        if (cost < 0 || !TrySpendCoins(cost))
+            return false;
+
+        dishwashingLiquidSprite = liquidSprite;
+        dishwashingLiquidPurchased = true;
+        DishwashingLiquidPurchaseChanged?.Invoke(dishwashingLiquidPurchased);
         return true;
     }
 

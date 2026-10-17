@@ -262,7 +262,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   collisionPadding: 0.02
-  stuckTimeout: 0.05
+  stuckTimeout: 0.35
   minimumProgress: 0.001
   navigationCellSize: 0.35
   navigationBoundsPadding: 2
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HelperNPC
   minimumMood: 60
   helpChance: 100
-  checkInterval: 30
+  checkInterval: 5
   maximumChoresPerDay: 03000000030000000300000003000000040000000400000006000000
   defaultMaximumChoresPerDay: 2
   moveSpeed: 1.5

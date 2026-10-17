@@ -45,11 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoodManager
   moodSlider: {fileID: 0}
-  startingMood: 60
+  startingMood: 30
   concernedThreshold: 65
   angryThreshold: 13.5
   moodLossPerMissedChore: 20
+  dailyMoodLoss: 20
   moodRecoveryPerCompletedChore: 5
+  moodGainSprite: {fileID: 5951587013162271021, guid: 4ab192c131e22bd40bd4dab15b920f7d, type: 3}
+  moodLossSprite: {fileID: -3151740070689166471, guid: 08c6851420614cd4d83e1ec64aa46e38, type: 3}
 --- !u!1 &3448818962546764555
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +114,6 @@ MonoBehaviour:
   cleanLeaves: {fileID: 0}
   throwTrash: {fileID: 0}
   garbageChore: {fileID: 0}
-  segregateWasteChore: {fileID: 0}
   transitionFade: {fileID: 0}
   daySummaryPanel: {fileID: 0}
   continueButton: {fileID: 0}

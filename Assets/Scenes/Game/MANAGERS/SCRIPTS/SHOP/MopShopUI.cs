@@ -20,10 +20,12 @@ public class MopShopUI : MonoBehaviour
     [Header("Shop Icons")]
     [SerializeField] private Sprite mopUpgradeIcon;
     [SerializeField] private Sprite catIcon;
+    [SerializeField] private Sprite dishwashingLiquidIcon;
 
     private EconomyManager economyManager;
     private ShopItemCardUI mopCard;
     private ShopItemCardUI catCard;
+    private ShopItemCardUI dishwashingLiquidCard;
 
     private void OnEnable()
     {
@@ -55,6 +57,14 @@ public class MopShopUI : MonoBehaviour
             "Adopt a Cat",
             "Bring a friendly cat companion home.",
             BuyCat);
+        dishwashingLiquidCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "DishwashingLiquid",
+            3,
+            dishwashingLiquidIcon,
+            "Dishwashing Liquid",
+            "Scrub plates faster with dishwashing liquid.",
+            BuyDishwashingLiquid);
 
         Refresh();
     }
@@ -71,6 +81,7 @@ public class MopShopUI : MonoBehaviour
         {
             economyManager.CoinsChanged -= OnEconomyChanged;
             economyManager.MopUpgradeChanged -= OnEconomyChanged;
+            economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
         }
 
         if (buyButton != null)
@@ -88,6 +99,11 @@ public class MopShopUI : MonoBehaviour
         Refresh();
     }
 
+    private void OnDishwashingLiquidPurchaseChanged(bool purchased)
+    {
+        Refresh();
+    }
+
     private void SubscribeToEconomy()
     {
         EconomyManager currentEconomyManager = EconomyManager.Instance;
@@ -98,13 +114,16 @@ public class MopShopUI : MonoBehaviour
         {
             economyManager.CoinsChanged -= OnEconomyChanged;
             economyManager.MopUpgradeChanged -= OnEconomyChanged;
+            economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
         }
 
         economyManager = currentEconomyManager;
         economyManager.CoinsChanged -= OnEconomyChanged;
         economyManager.MopUpgradeChanged -= OnEconomyChanged;
+        economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
         economyManager.CoinsChanged += OnEconomyChanged;
         economyManager.MopUpgradeChanged += OnEconomyChanged;
+        economyManager.DishwashingLiquidPurchaseChanged += OnDishwashingLiquidPurchaseChanged;
     }
 
     public void BuyMopUpgrade()
@@ -141,6 +160,18 @@ public class MopShopUI : MonoBehaviour
         Refresh();
     }
 
+    public void BuyDishwashingLiquid()
+    {
+        if (economyManager == null)
+            economyManager = EconomyManager.Instance;
+
+        if (economyManager == null)
+            return;
+
+        economyManager.TryPurchaseDishwashingLiquid(dishwashingLiquidIcon);
+        Refresh();
+    }
+
     private void Refresh()
     {
         if (economyManager == null)
@@ -156,6 +187,9 @@ public class MopShopUI : MonoBehaviour
 
             if (catCard != null)
                 catCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
+            if (dishwashingLiquidCard != null)
+                dishwashingLiquidCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
 
             return;
         }
@@ -212,6 +246,21 @@ public class MopShopUI : MonoBehaviour
                 canBuyCat ? catCost + " COINS" : "OWNED",
                 !canBuyCat ? "OWNED" : catPrefab == null ? "NOT SET UP" : economyManager.Coins >= catCost ? "ADOPT" : "NEED COINS",
                 canBuyCat && catPrefab != null && economyManager.Coins >= catCost);
+        }
+
+        bool canBuyDishwashingLiquid = economyManager.CanPurchaseDishwashingLiquid;
+        int dishwashingLiquidCost = economyManager.GetDishwashingLiquidCost();
+        if (dishwashingLiquidCard != null)
+        {
+            bool hasDishwashingLiquidIcon = dishwashingLiquidIcon != null;
+            dishwashingLiquidCard.SetPurchaseState(
+                canBuyDishwashingLiquid ? dishwashingLiquidCost + " COINS" : "OWNED",
+                !canBuyDishwashingLiquid
+                    ? "OWNED"
+                    : !hasDishwashingLiquidIcon
+                        ? "NOT SET UP"
+                        : economyManager.Coins >= dishwashingLiquidCost ? "BUY" : "NEED COINS",
+                canBuyDishwashingLiquid && hasDishwashingLiquidIcon && economyManager.Coins >= dishwashingLiquidCost);
         }
     }
 }

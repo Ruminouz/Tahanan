@@ -10,11 +10,13 @@ public class PlayerInventoryUI : MonoBehaviour
     [SerializeField] private Sprite chocolateSprite;
     [SerializeField] private Sprite extraTimeSprite;
     [SerializeField] private Sprite broomSprite;
+    [SerializeField] private Sprite vacuumSprite;
     [SerializeField] private Sprite mopSprite;
     [SerializeField] private Sprite garbageBagSprite;
 
     private BunsoBoostInventory boostInventory;
     private PlayerEquipmentInventory equipmentInventory;
+    private EconomyManager economyManager;
     private GameObject playerObject;
     private readonly List<Image> itemIcons = new();
 
@@ -36,6 +38,7 @@ public class PlayerInventoryUI : MonoBehaviour
         if (boostInventory == null)
             boostInventory = playerObject.AddComponent<BunsoBoostInventory>();
         ResolveEquipmentInventory();
+        ResolveEconomyManager();
 
         boostInventory.InventoryChanged += Refresh;
         Refresh();
@@ -44,6 +47,7 @@ public class PlayerInventoryUI : MonoBehaviour
     private void Update()
     {
         ResolveEquipmentInventory();
+        ResolveEconomyManager();
     }
 
     private void OnDestroy()
@@ -51,6 +55,31 @@ public class PlayerInventoryUI : MonoBehaviour
         if (boostInventory != null)
             boostInventory.InventoryChanged -= Refresh;
         UnsubscribeEquipmentInventory();
+        UnsubscribeEconomyManager();
+    }
+
+    private void ResolveEconomyManager()
+    {
+        EconomyManager currentEconomyManager = EconomyManager.Instance;
+        if (currentEconomyManager == economyManager)
+            return;
+
+        UnsubscribeEconomyManager();
+        economyManager = currentEconomyManager;
+        if (economyManager != null)
+            economyManager.BroomUpgradeChanged += OnBroomUpgradeChanged;
+        Refresh();
+    }
+
+    private void UnsubscribeEconomyManager()
+    {
+        if (economyManager != null)
+            economyManager.BroomUpgradeChanged -= OnBroomUpgradeChanged;
+    }
+
+    private void OnBroomUpgradeChanged(int level)
+    {
+        Refresh();
     }
 
     private void ResolveEquipmentInventory()
@@ -172,7 +201,9 @@ public class PlayerInventoryUI : MonoBehaviour
         switch (equipment)
         {
             case EquipmentType.Broom:
-                assignedSprite = broomSprite;
+                assignedSprite = economyManager != null && economyManager.HasUpgradedBroom
+                    ? vacuumSprite
+                    : broomSprite;
                 break;
             case EquipmentType.Mop:
                 assignedSprite = mopSprite;

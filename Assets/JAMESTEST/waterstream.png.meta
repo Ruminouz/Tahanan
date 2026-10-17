@@ -1,0 +1,4511 @@
+fileFormatVersion: 2
+guid: 14cec9d13fdf7a140b195bd8e65a9b05
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4655977673074917394
+    second: waterstream_0
+  - first:
+      213: 4561821917354620829
+    second: waterstream_1
+  - first:
+      213: 5145542634093921325
+    second: waterstream_2
+  - first:
+      213: -6350259528504139262
+    second: waterstream_3
+  - first:
+      213: -7286517475375592482
+    second: waterstream_4
+  - first:
+      213: 7033322277838376510
+    second: waterstream_5
+  - first:
+      213: -1142600975425464191
+    second: waterstream_6
+  - first:
+      213: -417963115889611584
+    second: waterstream_7
+  - first:
+      213: -3200995231082456158
+    second: waterstream_8
+  - first:
+      213: 7765711397914889089
+    second: waterstream_9
+  - first:
+      213: -3668767340744847363
+    second: waterstream_10
+  - first:
+      213: -8075195981818653191
+    second: waterstream_11
+  - first:
+      213: -3436600493007260436
+    second: waterstream_12
+  - first:
+      213: -6486637853296392007
+    second: waterstream_13
+  - first:
+      213: 8033803868653453603
+    second: waterstream_14
+  - first:
+      213: 6804705156416620642
+    second: waterstream_15
+  - first:
+      213: 6385104868151437338
+    second: waterstream_16
+  - first:
+      213: -4535157368343501020
+    second: waterstream_17
+  - first:
+      213: -2023306210711714849
+    second: waterstream_18
+  - first:
+      213: 911106260002836661
+    second: waterstream_19
+  - first:
+      213: -434971755965204543
+    second: waterstream_20
+  - first:
+      213: 3335949510681522143
+    second: waterstream_21
+  - first:
+      213: 2575599920744449345
+    second: waterstream_22
+  - first:
+      213: 6987551656248470120
+    second: waterstream_23
+  - first:
+      213: 7835158991230022013
+    second: waterstream_24
+  - first:
+      213: -7430825903933994206
+    second: waterstream_25
+  - first:
+      213: 6605781776590675513
+    second: waterstream_26
+  - first:
+      213: -5316844556227168284
+    second: waterstream_27
+  - first:
+      213: 4595142012831251799
+    second: waterstream_28
+  - first:
+      213: 764275368042569705
+    second: waterstream_29
+  - first:
+      213: -963663397251871410
+    second: waterstream_30
+  - first:
+      213: -7729497214160915997
+    second: waterstream_31
+  - first:
+      213: 109955486544243088
+    second: waterstream_32
+  - first:
+      213: -3610176876163071865
+    second: waterstream_33
+  - first:
+      213: 7773405353588864535
+    second: waterstream_34
+  - first:
+      213: -5735840389001864868
+    second: waterstream_35
+  - first:
+      213: -2675442123779626447
+    second: waterstream_36
+  - first:
+      213: -4424888272680916009
+    second: waterstream_37
+  - first:
+      213: -6501317089205042299
+    second: waterstream_38
+  - first:
+      213: 6050784617571806616
+    second: waterstream_39
+  - first:
+      213: -8433939245593985467
+    second: waterstream_40
+  - first:
+      213: -3964123759606746044
+    second: waterstream_41
+  - first:
+      213: -6759349055288096560
+    second: waterstream_42
+  - first:
+      213: -314900566986480744
+    second: waterstream_43
+  - first:
+      213: 2395696530637835691
+    second: waterstream_44
+  - first:
+      213: 462276164402760463
+    second: waterstream_45
+  - first:
+      213: -3068649428120156446
+    second: waterstream_46
+  - first:
+      213: 7675976445452138486
+    second: waterstream_47
+  - first:
+      213: -888867764562787727
+    second: waterstream_48
+  - first:
+      213: 4008583555392272515
+    second: waterstream_49
+  - first:
+      213: 1260826903430020971
+    second: waterstream_50
+  - first:
+      213: 3149920508751724239
+    second: waterstream_51
+  - first:
+      213: -3737211095448857280
+    second: waterstream_52
+  - first:
+      213: 2704853934316585498
+    second: waterstream_53
+  - first:
+      213: 3788011155473989422
+    second: waterstream_54
+  - first:
+      213: -7881381516574924749
+    second: waterstream_55
+  - first:
+      213: -8883795816172827233
+    second: waterstream_56
+  - first:
+      213: -5496081381961010053
+    second: waterstream_57
+  - first:
+      213: -7779490008018575051
+    second: waterstream_58
+  - first:
+      213: 8328950730993199679
+    second: waterstream_59
+  - first:
+      213: -2775844968367190302
+    second: waterstream_60
+  - first:
+      213: -7739813875549798680
+    second: waterstream_61
+  - first:
+      213: 1012896881013116139
+    second: waterstream_62
+  - first:
+      213: 3849972573046760359
+    second: waterstream_63
+  - first:
+      213: 7206059980280502666
+    second: waterstream_64
+  - first:
+      213: -5002330584873392760
+    second: waterstream_65
+  - first:
+      213: -598533385883060304
+    second: waterstream_66
+  - first:
+      213: 874477149451917123
+    second: waterstream_67
+  - first:
+      213: 11730548570074273
+    second: waterstream_68
+  - first:
+      213: -1219250349755650736
+    second: waterstream_69
+  - first:
+      213: -4683199465905239618
+    second: waterstream_70
+  - first:
+      213: -2961529396625982539
+    second: waterstream_71
+  - first:
+      213: -3768544016934557245
+    second: waterstream_72
+  - first:
+      213: -6619873121649327511
+    second: waterstream_73
+  - first:
+      213: -4349187363552633206
+    second: waterstream_74
+  - first:
+      213: 8559763238331888480
+    second: waterstream_75
+  - first:
+      213: 7539361021353880190
+    second: waterstream_76
+  - first:
+      213: -1766840045597016389
+    second: waterstream_77
+  - first:
+      213: -5631026128829707383
+    second: waterstream_78
+  - first:
+      213: -2621566169477728883
+    second: waterstream_79
+  - first:
+      213: 5097741826002141110
+    second: waterstream_80
+  - first:
+      213: -1253269497553380496
+    second: waterstream_81
+  - first:
+      213: 7996154778796786373
+    second: waterstream_82
+  - first:
+      213: 824064681845508024
+    second: waterstream_83
+  - first:
+      213: 1115615514019366160
+    second: waterstream_84
+  - first:
+      213: 2858508376756169852
+    second: waterstream_85
+  - first:
+      213: 382502004964911656
+    second: waterstream_86
+  - first:
+      213: -2595661733244755243
+    second: waterstream_87
+  - first:
+      213: 2370711769357704854
+    second: waterstream_88
+  - first:
+      213: 8225556272646409408
+    second: waterstream_89
+  - first:
+      213: 8670892922983806926
+    second: waterstream_90
+  - first:
+      213: -1315032076564296604
+    second: waterstream_91
+  - first:
+      213: -2974062274320035878
+    second: waterstream_92
+  - first:
+      213: -1819280083228866548
+    second: waterstream_93
+  - first:
+      213: -7642122644717682322
+    second: waterstream_94
+  - first:
+      213: -2535513062487866071
+    second: waterstream_95
+  - first:
+      213: -7732865905611921481
+    second: waterstream_96
+  - first:
+      213: -818027430976983130
+    second: waterstream_97
+  - first:
+      213: -1468727168184978753
+    second: waterstream_98
+  - first:
+      213: 3995261587706267099
+    second: waterstream_99
+  - first:
+      213: -3053671674397314310
+    second: waterstream_100
+  - first:
+      213: -3074909383478379512
+    second: waterstream_101
+  - first:
+      213: -3267009633280416407
+    second: waterstream_102
+  - first:
+      213: -5839824003612466063
+    second: waterstream_103
+  - first:
+      213: -9046282580370422471
+    second: waterstream_104
+  - first:
+      213: -5393391760130211569
+    second: waterstream_105
+  - first:
+      213: 5823971409634619181
+    second: waterstream_106
+  - first:
+      213: 6076626834028021974
+    second: waterstream_107
+  - first:
+      213: 6500767954022509352
+    second: waterstream_108
+  - first:
+      213: 7671277376418032903
+    second: waterstream_109
+  - first:
+      213: 2220399603783057761
+    second: waterstream_110
+  - first:
+      213: 4141575196418683888
+    second: waterstream_111
+  - first:
+      213: 4584911175687521685
+    second: waterstream_112
+  - first:
+      213: -2080459502981765144
+    second: waterstream_113
+  - first:
+      213: 4280832824570321574
+    second: waterstream_114
+  - first:
+      213: -7913403830996129905
+    second: waterstream_115
+  - first:
+      213: -349133304661739575
+    second: waterstream_116
+  - first:
+      213: 1058698675751351210
+    second: waterstream_117
+  - first:
+      213: 1838348317126546909
+    second: waterstream_118
+  - first:
+      213: 2019287473824665539
+    second: waterstream_119
+  - first:
+      213: -5405959619189266816
+    second: waterstream_120
+  - first:
+      213: -5813940564605790679
+    second: waterstream_121
+  - first:
+      213: 1773407122134995194
+    second: waterstream_122
+  - first:
+      213: -7782194974501971136
+    second: waterstream_123
+  - first:
+      213: -8380366530360522190
+    second: waterstream_124
+  - first:
+      213: -4561493105146709903
+    second: waterstream_125
+  - first:
+      213: -3179467656362533837
+    second: waterstream_126
+  - first:
+      213: -1895252350008528337
+    second: waterstream_127
+  - first:
+      213: -1469635168957063674
+    second: waterstream_128
+  - first:
+      213: 8625085286340693415
+    second: waterstream_129
+  - first:
+      213: -26459580982607961
+    second: waterstream_130
+  - first:
+      213: 7828026932241146998
+    second: waterstream_131
+  - first:
+      213: -4911853771215529017
+    second: waterstream_132
+  - first:
+      213: 232029269977206892
+    second: waterstream_133
+  - first:
+      213: -5675946580987812652
+    second: waterstream_134
+  - first:
+      213: -8252942990923734360
+    second: waterstream_135
+  - first:
+      213: -4272003091495071032
+    second: waterstream_136
+  - first:
+      213: 2509292251422684961
+    second: waterstream_137
+  - first:
+      213: -5168630067810650762
+    second: waterstream_138
+  - first:
+      213: -3890891827280566236
+    second: waterstream_139
+  - first:
+      213: -8806434880481897297
+    second: waterstream_140
+  - first:
+      213: -4380644555682190034
+    second: waterstream_141
+  - first:
+      213: -8801603729609378610
+    second: waterstream_142
+  - first:
+      213: -3403308758789123040
+    second: waterstream_143
+  - first:
+      213: -1267702532254217379
+    second: waterstream_144
+  - first:
+      213: 504573461650651257
+    second: waterstream_145
+  - first:
+      213: -3833581366586506785
+    second: waterstream_146
+  - first:
+      213: 8455113010124319881
+    second: waterstream_147
+  - first:
+      213: -2565512408981795000
+    second: waterstream_148
+  - first:
+      213: -8547223294052867649
+    second: waterstream_149
+  - first:
+      213: 2512054031714855394
+    second: waterstream_150
+  - first:
+      213: 5068828437925568553
+    second: waterstream_151
+  - first:
+      213: 4873398781601188515
+    second: waterstream_152
+  - first:
+      213: -1034581303964398669
+    second: waterstream_153
+  - first:
+      213: 1584646942867302958
+    second: waterstream_154
+  - first:
+      213: 1971890993322875928
+    second: waterstream_155
+  - first:
+      213: -5101052351870022829
+    second: waterstream_156
+  - first:
+      213: -275059598482277971
+    second: waterstream_157
+  - first:
+      213: -547702481754298412
+    second: waterstream_158
+  - first:
+      213: 4650618471066412588
+    second: waterstream_159
+  - first:
+      213: -1680951203414920519
+    second: waterstream_160
+  - first:
+      213: -8814333626864779835
+    second: waterstream_161
+  - first:
+      213: 4863395986487722900
+    second: waterstream_162
+  - first:
+      213: -5287492682952451964
+    second: waterstream_163
+  - first:
+      213: 1007375506615220198
+    second: waterstream_164
+  - first:
+      213: -4790398057253317233
+    second: waterstream_165
+  - first:
+      213: 3700001155127447568
+    second: waterstream_166
+  - first:
+      213: -2215679671687076628
+    second: waterstream_167
+  - first:
+      213: 4602590604108918174
+    second: waterstream_168
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: waterstream_0
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 640
+        width: 64
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eef383a89f4a26fb0800000000000000
+      internalID: -4655977673074917394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_1
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 600
+        width: 59
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9773804dd8de4f30800000000000000
+      internalID: 4561821917354620829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_2
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 659
+        width: 59
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d24cbc173c3a86740800000000000000
+      internalID: 5145542634093921325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_3
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 602
+        width: 78
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 202a8fb9a985fd7a0800000000000000
+      internalID: -6350259528504139262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_4
+      rect:
+        serializedVersion: 2
+        x: 943
+        y: 651
+        width: 64
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edbcf8636f611ea90800000000000000
+      internalID: -7286517475375592482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_5
+      rect:
+        serializedVersion: 2
+        x: 1098
+        y: 624
+        width: 61
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3ec569f8516b9160800000000000000
+      internalID: 7033322277838376510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_6
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 673
+        width: 32
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18810c3777aa420f0800000000000000
+      internalID: -1142600975425464191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_7
+      rect:
+        serializedVersion: 2
+        x: 1279
+        y: 578
+        width: 154
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cc2f24b2c8133af0800000000000000
+      internalID: -417963115889611584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_8
+      rect:
+        serializedVersion: 2
+        x: 1601
+        y: 618
+        width: 106
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab5c930cc7c393d0800000000000000
+      internalID: -3200995231082456158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_9
+      rect:
+        serializedVersion: 2
+        x: 1762
+        y: 622
+        width: 85
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18b4be43f5955cb60800000000000000
+      internalID: 7765711397914889089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_10
+      rect:
+        serializedVersion: 2
+        x: 1876
+        y: 691
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dff4953aa8be51dc0800000000000000
+      internalID: -3668767340744847363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_11
+      rect:
+        serializedVersion: 2
+        x: 1892
+        y: 707
+        width: 24
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f5990ce9042fef80800000000000000
+      internalID: -8075195981818653191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_12
+      rect:
+        serializedVersion: 2
+        x: 1919
+        y: 674
+        width: 75
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce4be5b3f0ebe40d0800000000000000
+      internalID: -3436600493007260436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_13
+      rect:
+        serializedVersion: 2
+        x: 1997
+        y: 669
+        width: 108
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b88aa77d35daf5a0800000000000000
+      internalID: -6486637853296392007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_14
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 626
+        width: 94
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3218f3abd0ecd7f60800000000000000
+      internalID: 8033803868653453603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_15
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 687
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2684b71794b2f6e50800000000000000
+      internalID: 6804705156416620642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_16
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 685
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a18a8cf3c037c9850800000000000000
+      internalID: 6385104868151437338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_17
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 673
+        width: 55
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 427e36bd662ef01c0800000000000000
+      internalID: -4535157368343501020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_18
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 689
+        width: 27
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd3cfa6a8b5cbe3e0800000000000000
+      internalID: -2023306210711714849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_19
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 634
+        width: 31
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b09a14f056e4ac00800000000000000
+      internalID: 911106260002836661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_20
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 618
+        width: 90
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c7bd561e7ba6f9f0800000000000000
+      internalID: -434971755965204543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_21
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 562
+        width: 121
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdf6fc4c76cab4e20800000000000000
+      internalID: 3335949510681522143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_22
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 663
+        width: 36
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1454f775b7e5eb320800000000000000
+      internalID: 2575599920744449345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_23
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 671
+        width: 36
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86ae160b535c8f060800000000000000
+      internalID: 6987551656248470120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_24
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 566
+        width: 80
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7139fe07931cbc60800000000000000
+      internalID: 7835158991230022013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_25
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 657
+        width: 51
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22b4e38e53760e890800000000000000
+      internalID: -7430825903933994206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_26
+      rect:
+        serializedVersion: 2
+        x: 1005
+        y: 683
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93e9f61e6837cab50800000000000000
+      internalID: 6605781776590675513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_27
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 644
+        width: 35
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e73c14cb06c636b0800000000000000
+      internalID: -5316844556227168284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_28
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 692
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75db747805935cf30800000000000000
+      internalID: 4595142012831251799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_29
+      rect:
+        serializedVersion: 2
+        x: 1172
+        y: 637
+        width: 62
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ef12ced5604b9a00800000000000000
+      internalID: 764275368042569705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_30
+      rect:
+        serializedVersion: 2
+        x: 1253
+        y: 632
+        width: 53
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4d81c3fe3160a2f0800000000000000
+      internalID: -963663397251871410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_31
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 691
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e131918c3f4bb490800000000000000
+      internalID: -7729497214160915997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_32
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 658
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0992394bee3a68100800000000000000
+      internalID: 109955486544243088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_33
+      rect:
+        serializedVersion: 2
+        x: 1494
+        y: 683
+        width: 38
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78088f7324316edc0800000000000000
+      internalID: -3610176876163071865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_34
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 683
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 716b8cbdbfea0eb60800000000000000
+      internalID: 7773405353588864535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_35
+      rect:
+        serializedVersion: 2
+        x: 1543
+        y: 689
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5994355e833660b0800000000000000
+      internalID: -5735840389001864868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_36
+      rect:
+        serializedVersion: 2
+        x: 1549
+        y: 677
+        width: 45
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13aaff2409beedad0800000000000000
+      internalID: -2675442123779626447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_37
+      rect:
+        serializedVersion: 2
+        x: 1669
+        y: 675
+        width: 23
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dbef006f83a792c0800000000000000
+      internalID: -4424888272680916009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_38
+      rect:
+        serializedVersion: 2
+        x: 1689
+        y: 673
+        width: 46
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 583c1c58d8ea6c5a0800000000000000
+      internalID: -6501317089205042299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_39
+      rect:
+        serializedVersion: 2
+        x: 1844
+        y: 570
+        width: 90
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89de3ce1d84b8f350800000000000000
+      internalID: 6050784617571806616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_40
+      rect:
+        serializedVersion: 2
+        x: 2093
+        y: 598
+        width: 79
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54ef429e0f0a4fa80800000000000000
+      internalID: -8433939245593985467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_41
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 665
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44434f6817a9cf8c0800000000000000
+      internalID: -3964123759606746044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_42
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 669
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d84ea6c8d7f132a0800000000000000
+      internalID: -6759349055288096560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_43
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 676
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 893a33d4a9f31abf0800000000000000
+      internalID: -314900566986480744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_44
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 651
+        width: 19
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: badcd4a3d493f3120800000000000000
+      internalID: 2395696530637835691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_45
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 674
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0b4b57e8b55a6600800000000000000
+      internalID: 462276164402760463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_46
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 673
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e641b08a97f965d0800000000000000
+      internalID: -3068649428120156446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_47
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 570
+        width: 73
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f7b07778eb868a60800000000000000
+      internalID: 7675976445452138486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_48
+      rect:
+        serializedVersion: 2
+        x: 1148
+        y: 673
+        width: 26
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17280f04a7b1aa3f0800000000000000
+      internalID: -888867764562787727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_49
+      rect:
+        serializedVersion: 2
+        x: 1532
+        y: 675
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 388f0a7518951a730800000000000000
+      internalID: 4008583555392272515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_50
+      rect:
+        serializedVersion: 2
+        x: 1541
+        y: 667
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6fb336736b5f7110800000000000000
+      internalID: 1260826903430020971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_51
+      rect:
+        serializedVersion: 2
+        x: 1559
+        y: 659
+        width: 27
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fce3dd28304c6bb20800000000000000
+      internalID: 3149920508751724239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_52
+      rect:
+        serializedVersion: 2
+        x: 1610
+        y: 665
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0455f1d2f42c22cc0800000000000000
+      internalID: -3737211095448857280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_53
+      rect:
+        serializedVersion: 2
+        x: 1623
+        y: 676
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1202448252998520800000000000000
+      internalID: 2704853934316585498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_54
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 671
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2f7e3f7318b19430800000000000000
+      internalID: 3788011155473989422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_55
+      rect:
+        serializedVersion: 2
+        x: 1943
+        y: 600
+        width: 79
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 330e83d9445bf9290800000000000000
+      internalID: -7881381516574924749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_56
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 662
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9dcae706ca66b480800000000000000
+      internalID: -8883795816172827233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_57
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 675
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7473934a1ff9b3b0800000000000000
+      internalID: -5496081381961010053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_58
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 602
+        width: 29
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5312a522e03b90490800000000000000
+      internalID: -7779490008018575051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_59
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 659
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3a6498af80669370800000000000000
+      internalID: 8328950730993199679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_60
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 646
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ee0be455b73a79d0800000000000000
+      internalID: -2775844968367190302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_61
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 659
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8eef6389948a69490800000000000000
+      internalID: -7739813875549798680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_62
+      rect:
+        serializedVersion: 2
+        x: 1102
+        y: 661
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bec43e2c8588e0e00800000000000000
+      internalID: 1012896881013116139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_63
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 657
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a3e27b38a9dd6530800000000000000
+      internalID: 3849972573046760359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_64
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 638
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8917ca6f51110460800000000000000
+      internalID: 7206059980280502666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_65
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 616
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 885ac8726d6249ab0800000000000000
+      internalID: -5002330584873392760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_66
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 626
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b77a348e0591b7f0800000000000000
+      internalID: -598533385883060304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_67
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 622
+        width: 44
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34717419554c22c00800000000000000
+      internalID: 874477149451917123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_68
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 644
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ac2a8c2fdca92000800000000000000
+      internalID: 11730548570074273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_69
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 634
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05d2b8a444a541fe0800000000000000
+      internalID: -1219250349755650736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_70
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 602
+        width: 27
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb94b6ef5eee10fb0800000000000000
+      internalID: -4683199465905239618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_71
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 594
+        width: 56
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bb3b3264b886e6d0800000000000000
+      internalID: -2961529396625982539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_72
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 626
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c92136ee2173bbc0800000000000000
+      internalID: -3768544016934557245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_73
+      rect:
+        serializedVersion: 2
+        x: 1496
+        y: 600
+        width: 82
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9628fed287c7124a0800000000000000
+      internalID: -6619873121649327511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_74
+      rect:
+        serializedVersion: 2
+        x: 1583
+        y: 570
+        width: 59
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8ed3d5c22594a3c0800000000000000
+      internalID: -4349187363552633206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_75
+      rect:
+        serializedVersion: 2
+        x: 2083
+        y: 642
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 063383e40536ac670800000000000000
+      internalID: 8559763238331888480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_76
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 582
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7a693757e031a860800000000000000
+      internalID: 7539361021353880190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_77
+      rect:
+        serializedVersion: 2
+        x: 1599
+        y: 596
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbe3143f65cea77e0800000000000000
+      internalID: -1766840045597016389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_78
+      rect:
+        serializedVersion: 2
+        x: 1639
+        y: 586
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98b892ef1939ad1b0800000000000000
+      internalID: -5631026128829707383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_79
+      rect:
+        serializedVersion: 2
+        x: 1655
+        y: 597
+        width: 21
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d85391165735e9bd0800000000000000
+      internalID: -2621566169477728883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_80
+      rect:
+        serializedVersion: 2
+        x: 1880
+        y: 600
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bf32878e21deb640800000000000000
+      internalID: 5097741826002141110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_81
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 577
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07b9f76380e7b9ee0800000000000000
+      internalID: -1253269497553380496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_82
+      rect:
+        serializedVersion: 2
+        x: 1617
+        y: 0
+        width: 309
+        height: 577
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c28937e76c08fe60800000000000000
+      internalID: 7996154778796786373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_83
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 91
+        width: 268
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b7c859467aaf6b00800000000000000
+      internalID: 824064681845508024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_84
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 0
+        width: 284
+        height: 567
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0150a0336667b7f00800000000000000
+      internalID: 1115615514019366160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_85
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 564
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7ca70049367ba720800000000000000
+      internalID: 2858508376756169852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_86
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 0
+        width: 269
+        height: 567
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82aeec30c8bee4500800000000000000
+      internalID: 382502004964911656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_87
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 0
+        width: 323
+        height: 569
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d22fd0f76b5afbd0800000000000000
+      internalID: -2595661733244755243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_88
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 562
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69e576d2bc576e020800000000000000
+      internalID: 2370711769357704854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_89
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 0
+        width: 313
+        height: 573
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cc431f59db072270800000000000000
+      internalID: 8225556272646409408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_90
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 561
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec7f5ef4c23355870800000000000000
+      internalID: 8670892922983806926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_91
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 0
+        width: 269
+        height: 566
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46c04203b4110cde0800000000000000
+      internalID: -1315032076564296604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_92
+      rect:
+        serializedVersion: 2
+        x: 1921
+        y: 0
+        width: 242
+        height: 566
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adf83476e120ab6d0800000000000000
+      internalID: -2974062274320035878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_93
+      rect:
+        serializedVersion: 2
+        x: 1351
+        y: 548
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c08433c376e90c6e0800000000000000
+      internalID: -1819280083228866548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_94
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 546
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6142afb1f9b1f590800000000000000
+      internalID: -7642122644717682322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_95
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 553
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9254c0bad4c00dcd0800000000000000
+      internalID: -2535513062487866071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_96
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 511
+        width: 23
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b7a548ed675fa490800000000000000
+      internalID: -7732865905611921481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_97
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 445
+        width: 58
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6af6718b268c5a4f0800000000000000
+      internalID: -818027430976983130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_98
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 481
+        width: 27
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb27e541c680e9be0800000000000000
+      internalID: -1468727168184978753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_99
+      rect:
+        serializedVersion: 2
+        x: 1341
+        y: 433
+        width: 42
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd5cef70f35027730800000000000000
+      internalID: 3995261587706267099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_100
+      rect:
+        serializedVersion: 2
+        x: 1592
+        y: 486
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af230ea8acd2f95d0800000000000000
+      internalID: -3053671674397314310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_101
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 468
+        width: 33
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80c7141153ab355d0800000000000000
+      internalID: -3074909383478379512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_102
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 482
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 965aa824c0049a2d0800000000000000
+      internalID: -3267009633280416407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_103
+      rect:
+        serializedVersion: 2
+        x: 1609
+        y: 482
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17421e96207c4fea0800000000000000
+      internalID: -5839824003612466063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_104
+      rect:
+        serializedVersion: 2
+        x: 1073
+        y: 415
+        width: 24
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93587332ce5257280800000000000000
+      internalID: -9046282580370422471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_105
+      rect:
+        serializedVersion: 2
+        x: 1623
+        y: 448
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f018be205c2d625b0800000000000000
+      internalID: -5393391760130211569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_106
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 421
+        width: 14
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2f6d4de327e2d050800000000000000
+      internalID: 5823971409634619181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_107
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 415
+        width: 17
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d8c8d209e3845450800000000000000
+      internalID: 6076626834028021974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_108
+      rect:
+        serializedVersion: 2
+        x: 1625
+        y: 433
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82b21caf20e573a50800000000000000
+      internalID: 6500767954022509352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_109
+      rect:
+        serializedVersion: 2
+        x: 778
+        y: 390
+        width: 44
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70d23e2312ad57a60800000000000000
+      internalID: 7671277376418032903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_110
+      rect:
+        serializedVersion: 2
+        x: 1337
+        y: 403
+        width: 26
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16148eaeca170de10800000000000000
+      internalID: 2220399603783057761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_111
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 409
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f3ba19b2b4d97930800000000000000
+      internalID: 4141575196418683888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_112
+      rect:
+        serializedVersion: 2
+        x: 788
+        y: 347
+        width: 24
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 595c2912c60e0af30800000000000000
+      internalID: 4584911175687521685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_113
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 367
+        width: 24
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e7af23da19b023e0800000000000000
+      internalID: -2080459502981765144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_114
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 325
+        width: 34
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aa985be5c2986b30800000000000000
+      internalID: 4280832824570321574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_115
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 353
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f87a2498421fd2290800000000000000
+      internalID: -7913403830996129905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_116
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 321
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c7f064fb11a72bf0800000000000000
+      internalID: -349133304661739575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_117
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 337
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa3f55c16d041be00800000000000000
+      internalID: 1058698675751351210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_118
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 293
+        width: 39
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd5d3cfed00238910800000000000000
+      internalID: 1838348317126546909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_119
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 323
+        width: 24
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cf07b04243f50c10800000000000000
+      internalID: 2019287473824665539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_120
+      rect:
+        serializedVersion: 2
+        x: 1631
+        y: 319
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0862e1c4e5c2af4b0800000000000000
+      internalID: -5405959619189266816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_121
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 305
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 926107d2cdbb05fa0800000000000000
+      internalID: -5813940564605790679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_122
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 304
+        width: 18
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af01105b1686c9810800000000000000
+      internalID: 1773407122134995194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_123
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 180
+        width: 90
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04bdafb07e6100490800000000000000
+      internalID: -7782194974501971136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_124
+      rect:
+        serializedVersion: 2
+        x: 1351
+        y: 306
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23ac94eaa05f2bb80800000000000000
+      internalID: -8380366530360522190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_125
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 303
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 178365e403252b0c0800000000000000
+      internalID: -4561493105146709903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_126
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 268
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33cdaa7130340e3d0800000000000000
+      internalID: -3179467656362533837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_127
+      rect:
+        serializedVersion: 2
+        x: 1351
+        y: 289
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2274067706b2b5e0800000000000000
+      internalID: -1895252350008528337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_128
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 256
+        width: 52
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60e94eca99eca9be0800000000000000
+      internalID: -1469635168957063674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_129
+      rect:
+        serializedVersion: 2
+        x: 1363
+        y: 280
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ad09c9ce5572b770800000000000000
+      internalID: 8625085286340693415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_130
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 260
+        width: 41
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7af30aab62ff1aff0800000000000000
+      internalID: -26459580982607961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_131
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 264
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 674ac6c250db2ac60800000000000000
+      internalID: 7828026932241146998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_132
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 248
+        width: 31
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cb190ae40795dbb0800000000000000
+      internalID: -4911853771215529017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_133
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 257
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c601c764465583300800000000000000
+      internalID: 232029269977206892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_134
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 252
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d4e02438acfa31b0800000000000000
+      internalID: -5675946580987812652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_135
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 256
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a2e0726318a77d80800000000000000
+      internalID: -8252942990923734360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_136
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 228
+        width: 13
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c2d01482dbc6b4c0800000000000000
+      internalID: -4272003091495071032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_137
+      rect:
+        serializedVersion: 2
+        x: 1623
+        y: 224
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12770b3020cc2d220800000000000000
+      internalID: 2509292251422684961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_138
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 200
+        width: 7
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6753eb086565548b0800000000000000
+      internalID: -5168630067810650762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_139
+      rect:
+        serializedVersion: 2
+        x: 1601
+        y: 191
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 428a8777f76c00ac0800000000000000
+      internalID: -3890891827280566236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_140
+      rect:
+        serializedVersion: 2
+        x: 1633
+        y: 190
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa4544b722249c580800000000000000
+      internalID: -8806434880481897297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_141
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 174
+        width: 14
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2d605b7cf2d433c0800000000000000
+      internalID: -4380644555682190034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_142
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 145
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec431e27a0c6ad580800000000000000
+      internalID: -8801603729609378610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_143
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 49
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 024166327b405c0d0800000000000000
+      internalID: -3403308758789123040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_144
+      rect:
+        serializedVersion: 2
+        x: 1575
+        y: 37
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5bcf147347386ee0800000000000000
+      internalID: -1267702532254217379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_145
+      rect:
+        serializedVersion: 2
+        x: 1902
+        y: 51
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 978b6c8d3ea900700800000000000000
+      internalID: 504573461650651257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_146
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 80
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd10e0bee026ccac0800000000000000
+      internalID: -3833581366586506785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_147
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 16
+        width: 25
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98c6e305c78965570800000000000000
+      internalID: 8455113010124319881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_148
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 28
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84f88c38e08756cd0800000000000000
+      internalID: -2565512408981795000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_149
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 17
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1e80ef2b9226980800000000000000
+      internalID: -8547223294052867649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_150
+      rect:
+        serializedVersion: 2
+        x: 1154
+        y: 33
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e9a3f815db9cd220800000000000000
+      internalID: 2512054031714855394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_151
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 22
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 920a3f5cb98185640800000000000000
+      internalID: 5068828437925568553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_152
+      rect:
+        serializedVersion: 2
+        x: 1301
+        y: 33
+        width: 33
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aa092a1f5ac1a340800000000000000
+      internalID: 4873398781601188515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_153
+      rect:
+        serializedVersion: 2
+        x: 1309
+        y: 32
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bb01f519cd64a1f0800000000000000
+      internalID: -1034581303964398669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_154
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 13
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2aa30caffbcdf510800000000000000
+      internalID: 1584646942867302958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_155
+      rect:
+        serializedVersion: 2
+        x: 1671
+        y: 31
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81c5dc039609d5b10800000000000000
+      internalID: 1971890993322875928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_156
+      rect:
+        serializedVersion: 2
+        x: 1834
+        y: 31
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35bcd1a99eb6539b0800000000000000
+      internalID: -5101052351870022829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_157
+      rect:
+        serializedVersion: 2
+        x: 1840
+        y: 29
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da9f664a0cace2cf0800000000000000
+      internalID: -275059598482277971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_158
+      rect:
+        serializedVersion: 2
+        x: 1886
+        y: 29
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d76f64ae7b2668f0800000000000000
+      internalID: -547702481754298412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_159
+      rect:
+        serializedVersion: 2
+        x: 1927
+        y: 31
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c26a8c10cd05a8040800000000000000
+      internalID: 4650618471066412588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_160
+      rect:
+        serializedVersion: 2
+        x: 1937
+        y: 31
+        width: 43
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b230bb59cf0ca8e0800000000000000
+      internalID: -1680951203414920519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_161
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 0
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cdb1f644423da580800000000000000
+      internalID: -8814333626864779835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_162
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 17
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49349a0e1e04e7340800000000000000
+      internalID: 4863395986487722900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_163
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 15
+        width: 24
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48854205b6d0f96b0800000000000000
+      internalID: -5287492682952451964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_164
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 15
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e7ba3b9faaeafd00800000000000000
+      internalID: 1007375506615220198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_165
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 15
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f85d1b8f856158db0800000000000000
+      internalID: -4790398057253317233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_166
+      rect:
+        serializedVersion: 2
+        x: 1561
+        y: 13
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01018e7727b095330800000000000000
+      internalID: 3700001155127447568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_167
+      rect:
+        serializedVersion: 2
+        x: 1808
+        y: 0
+        width: 57
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce4a909e3135041e0800000000000000
+      internalID: -2215679671687076628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: waterstream_168
+      rect:
+        serializedVersion: 2
+        x: 1906
+        y: 15
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9d6674d4cfafdf30800000000000000
+      internalID: 4602590604108918174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      waterstream_0: -4655977673074917394
+      waterstream_1: 4561821917354620829
+      waterstream_10: -3668767340744847363
+      waterstream_100: -3053671674397314310
+      waterstream_101: -3074909383478379512
+      waterstream_102: -3267009633280416407
+      waterstream_103: -5839824003612466063
+      waterstream_104: -9046282580370422471
+      waterstream_105: -5393391760130211569
+      waterstream_106: 5823971409634619181
+      waterstream_107: 6076626834028021974
+      waterstream_108: 6500767954022509352
+      waterstream_109: 7671277376418032903
+      waterstream_11: -8075195981818653191
+      waterstream_110: 2220399603783057761
+      waterstream_111: 4141575196418683888
+      waterstream_112: 4584911175687521685
+      waterstream_113: -2080459502981765144
+      waterstream_114: 4280832824570321574
+      waterstream_115: -7913403830996129905
+      waterstream_116: -349133304661739575
+      waterstream_117: 1058698675751351210
+      waterstream_118: 1838348317126546909
+      waterstream_119: 2019287473824665539
+      waterstream_12: -3436600493007260436
+      waterstream_120: -5405959619189266816
+      waterstream_121: -5813940564605790679
+      waterstream_122: 1773407122134995194
+      waterstream_123: -7782194974501971136
+      waterstream_124: -8380366530360522190
+      waterstream_125: -4561493105146709903
+      waterstream_126: -3179467656362533837
+      waterstream_127: -1895252350008528337
+      waterstream_128: -1469635168957063674
+      waterstream_129: 8625085286340693415
+      waterstream_13: -6486637853296392007
+      waterstream_130: -26459580982607961
+      waterstream_131: 7828026932241146998
+      waterstream_132: -4911853771215529017
+      waterstream_133: 232029269977206892
+      waterstream_134: -5675946580987812652
+      waterstream_135: -8252942990923734360
+      waterstream_136: -4272003091495071032
+      waterstream_137: 2509292251422684961
+      waterstream_138: -5168630067810650762
+      waterstream_139: -3890891827280566236
+      waterstream_14: 8033803868653453603
+      waterstream_140: -8806434880481897297
+      waterstream_141: -4380644555682190034
+      waterstream_142: -8801603729609378610
+      waterstream_143: -3403308758789123040
+      waterstream_144: -1267702532254217379
+      waterstream_145: 504573461650651257
+      waterstream_146: -3833581366586506785
+      waterstream_147: 8455113010124319881
+      waterstream_148: -2565512408981795000
+      waterstream_149: -8547223294052867649
+      waterstream_15: 6804705156416620642
+      waterstream_150: 2512054031714855394
+      waterstream_151: 5068828437925568553
+      waterstream_152: 4873398781601188515
+      waterstream_153: -1034581303964398669
+      waterstream_154: 1584646942867302958
+      waterstream_155: 1971890993322875928
+      waterstream_156: -5101052351870022829
+      waterstream_157: -275059598482277971
+      waterstream_158: -547702481754298412
+      waterstream_159: 4650618471066412588
+      waterstream_16: 6385104868151437338
+      waterstream_160: -1680951203414920519
+      waterstream_161: -8814333626864779835
+      waterstream_162: 4863395986487722900
+      waterstream_163: -5287492682952451964
+      waterstream_164: 1007375506615220198
+      waterstream_165: -4790398057253317233
+      waterstream_166: 3700001155127447568
+      waterstream_167: -2215679671687076628
+      waterstream_168: 4602590604108918174
+      waterstream_17: -4535157368343501020
+      waterstream_18: -2023306210711714849
+      waterstream_19: 911106260002836661
+      waterstream_2: 5145542634093921325
+      waterstream_20: -434971755965204543
+      waterstream_21: 3335949510681522143
+      waterstream_22: 2575599920744449345
+      waterstream_23: 6987551656248470120
+      waterstream_24: 7835158991230022013
+      waterstream_25: -7430825903933994206
+      waterstream_26: 6605781776590675513
+      waterstream_27: -5316844556227168284
+      waterstream_28: 4595142012831251799
+      waterstream_29: 764275368042569705
+      waterstream_3: -6350259528504139262
+      waterstream_30: -963663397251871410
+      waterstream_31: -7729497214160915997
+      waterstream_32: 109955486544243088
+      waterstream_33: -3610176876163071865
+      waterstream_34: 7773405353588864535
+      waterstream_35: -5735840389001864868
+      waterstream_36: -2675442123779626447
+      waterstream_37: -4424888272680916009
+      waterstream_38: -6501317089205042299
+      waterstream_39: 6050784617571806616
+      waterstream_4: -7286517475375592482
+      waterstream_40: -8433939245593985467
+      waterstream_41: -3964123759606746044
+      waterstream_42: -6759349055288096560
+      waterstream_43: -314900566986480744
+      waterstream_44: 2395696530637835691
+      waterstream_45: 462276164402760463
+      waterstream_46: -3068649428120156446
+      waterstream_47: 7675976445452138486
+      waterstream_48: -888867764562787727
+      waterstream_49: 4008583555392272515
+      waterstream_5: 7033322277838376510
+      waterstream_50: 1260826903430020971
+      waterstream_51: 3149920508751724239
+      waterstream_52: -3737211095448857280
+      waterstream_53: 2704853934316585498
+      waterstream_54: 3788011155473989422
+      waterstream_55: -7881381516574924749
+      waterstream_56: -8883795816172827233
+      waterstream_57: -5496081381961010053
+      waterstream_58: -7779490008018575051
+      waterstream_59: 8328950730993199679
+      waterstream_6: -1142600975425464191
+      waterstream_60: -2775844968367190302
+      waterstream_61: -7739813875549798680
+      waterstream_62: 1012896881013116139
+      waterstream_63: 3849972573046760359
+      waterstream_64: 7206059980280502666
+      waterstream_65: -5002330584873392760
+      waterstream_66: -598533385883060304
+      waterstream_67: 874477149451917123
+      waterstream_68: 11730548570074273
+      waterstream_69: -1219250349755650736
+      waterstream_7: -417963115889611584
+      waterstream_70: -4683199465905239618
+      waterstream_71: -2961529396625982539
+      waterstream_72: -3768544016934557245
+      waterstream_73: -6619873121649327511
+      waterstream_74: -4349187363552633206
+      waterstream_75: 8559763238331888480
+      waterstream_76: 7539361021353880190
+      waterstream_77: -1766840045597016389
+      waterstream_78: -5631026128829707383
+      waterstream_79: -2621566169477728883
+      waterstream_8: -3200995231082456158
+      waterstream_80: 5097741826002141110
+      waterstream_81: -1253269497553380496
+      waterstream_82: 7996154778796786373
+      waterstream_83: 824064681845508024
+      waterstream_84: 1115615514019366160
+      waterstream_85: 2858508376756169852
+      waterstream_86: 382502004964911656
+      waterstream_87: -2595661733244755243
+      waterstream_88: 2370711769357704854
+      waterstream_89: 8225556272646409408
+      waterstream_9: 7765711397914889089
+      waterstream_90: 8670892922983806926
+      waterstream_91: -1315032076564296604
+      waterstream_92: -2974062274320035878
+      waterstream_93: -1819280083228866548
+      waterstream_94: -7642122644717682322
+      waterstream_95: -2535513062487866071
+      waterstream_96: -7732865905611921481
+      waterstream_97: -818027430976983130
+      waterstream_98: -1468727168184978753
+      waterstream_99: 3995261587706267099
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

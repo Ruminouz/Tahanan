@@ -709,6 +709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BroomChore
   broomVisual: {fileID: 3488913438429020314}
+  vacuumSprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   tutorial: {fileID: 0}
 --- !u!1 &3947354410482850232
 GameObject:

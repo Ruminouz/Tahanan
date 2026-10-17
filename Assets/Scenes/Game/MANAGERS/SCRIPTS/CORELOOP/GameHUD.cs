@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class GameHUD : MonoBehaviour
 {
+    private static Sprite minimizeButtonSprite;
+
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text choreListText;
@@ -17,7 +19,26 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private TMP_Text coinsText;
     [SerializeField] private TMP_Text successRateText;
     [SerializeField] private Sprite coinSprite;
+    [SerializeField] private GameObject dailyQuestPanel;
+    [SerializeField] private TMP_Text dailyQuestText;
+    [SerializeField, Min(0f)] private float nearDeadlineWarningSeconds = 30f;
+    [SerializeField] private Color nearDeadlineColor = new Color(1f, 0.35f, 0.2f, 1f);
 
+    private Button choreListMinimizeButton;
+    private Button choreListRestoreButton;
+    private Button dailyQuestMinimizeButton;
+    private Button dailyQuestRestoreButton;
+    private bool isChoreListMinimized;
+    private bool isDailyQuestMinimized;
+    private RectTransform choreListPanelRect;
+    private GameObject choreListCollapsedPanel;
+    private GameObject dailyQuestCollapsedPanel;
+    private Image choreListPanelBackground;
+    private GameObject chorePanelDayLabel;
+    private GameObject chorePanelTimeLabel;
+    private bool choreListBackgroundWasEnabled;
+    private bool chorePanelDayTextWasActive;
+    private bool chorePanelTimeTextWasActive;
     private TimeManager timeManager;
     private DayManager dayManager;
     private SweepingManager sweepingManager;
@@ -33,6 +54,10 @@ public class GameHUD : MonoBehaviour
     private RectTransform hoverTooltipRect;
     private TMP_Text hoverTooltipText;
     private GameObject hoverTooltipPanel;
+    private readonly List<int> helperIndicatorCharacterIndices = new();
+    private readonly List<Image> helperIndicatorImages = new();
+    private Sprite helperSprite;
+    private bool dailyQuestPanelLookupAttempted;
 
     private sealed class CoinPopup
     {
@@ -67,9 +92,12 @@ public class GameHUD : MonoBehaviour
             ? coinsText.GetComponentInParent<Canvas>()
             : FindFirstObjectByType<Canvas>();
 
+        ResolveChoreListText();
+        ResolveDailyQuestPanel();
         if (clockFaceSprite != null)
             CreateClockDisplay();
 
+        SetupChoreListMinimizeButton();
         CreateCoinCounter();
         SetupHoverTooltips();
         ResolveEconomyManager();
@@ -83,6 +111,9 @@ public class GameHUD : MonoBehaviour
         ResolveEconomyManager();
         UpdateCoinCounter();
         UpdateCoinPopups();
+        if (dailyQuestPanel == null || dailyQuestText == null)
+            ResolveDailyQuestPanel();
+        UpdateDailyQuestPanel();
 
         if (timeManager == null || dayManager == null)
             return;
@@ -222,7 +253,16 @@ public class GameHUD : MonoBehaviour
         if (choreListText == null)
             return;
 
+        if (isChoreListMinimized)
+        {
+            choreListText.text = "DAILY CHORES";
+            helperIndicatorCharacterIndices.Clear();
+            UpdateHelperIndicators();
+            return;
+        }
+
         choreListText.text = "CHORES\n";
+        helperIndicatorCharacterIndices.Clear();
         Chore[] chores = dayManager.GetActiveChores();
         bool sweepListed = false;
         HashSet<Chore> seenChores = new HashSet<Chore>();
@@ -240,46 +280,608 @@ public class GameHUD : MonoBehaviour
                 if (chore == dayManager.SweepDustChore)
                     sweepListed = true;
 
+                if (dayManager.IsDailyAdditionalQuestFor(chore))
+                    continue;
+
                 AddChoreToGroup(chore, choreGroups, orderedGroups);
             }
         }
 
         if (!sweepListed && dayManager.SweepDustChore != null &&
+            !dayManager.IsDailyAdditionalQuestFor(dayManager.SweepDustChore) &&
             seenChores.Add(dayManager.SweepDustChore))
             AddChoreToGroup(dayManager.SweepDustChore, choreGroups, orderedGroups);
 
         foreach (ChoreGroup choreGroup in orderedGroups)
             AppendChoreGroup(choreGroup);
 
-        if (!sweepListed && dayManager.SweepDustChore == null && sweepingManager != null)
+        bool sweepIsDailyChallenge = string.Equals(
+            dayManager.DailyAdditionalQuestName,
+            "Sweep Dust",
+            System.StringComparison.OrdinalIgnoreCase);
+        if (!sweepListed && !sweepIsDailyChallenge &&
+            dayManager.SweepDustChore == null && sweepingManager != null)
         {
             string marker = sweepingManager.IsSweepingCompleted ? "✓ " : "○ ";
             string status = sweepingManager.IsSweepingCompleted
                 ? string.Empty
-                : " (" + sweepingManager.RemainingDust + " dust remaining, "
-                    + timeManager.FormatClockTime(timeManager.DayLength) + ")";
+                : " · " + sweepingManager.RemainingDust + " left";
             choreListText.text += marker + "Sweep Dust" + status + "\n";
         }
 
-        if (waterSpawner == null || !waterSpawner.MopTaskStarted)
-            return;
-
-        if (waterSpawner.IsMoppingCompleted)
+        bool mopIsDailyChallenge = string.Equals(
+            dayManager.DailyAdditionalQuestName,
+            "Mop Floor",
+            System.StringComparison.OrdinalIgnoreCase);
+        if (!mopIsDailyChallenge && waterSpawner != null &&
+            waterSpawner.MopTaskStarted && waterSpawner.IsMoppingCompleted)
         {
             choreListText.text += "✓ Mop Floor\n";
         }
-        else if (waterSpawner.IsMoppingMissed)
+        else if (!mopIsDailyChallenge && waterSpawner != null &&
+            waterSpawner.MopTaskStarted && waterSpawner.IsMoppingMissed)
         {
-            choreListText.text += "- Mop Floor (MISSED)\n";
+            choreListText.text += "! Mop Floor\n";
         }
-        else
+        else if (!mopIsDailyChallenge && waterSpawner != null &&
+            waterSpawner.MopTaskStarted)
         {
-            choreListText.text += "○ Mop Floor ("
+            choreListText.text += "○ Mop Floor · "
                 + waterSpawner.RemainingWetAreas
-                + " remaining, "
-                + timeManager.FormatClockTime(timeManager.DayLength)
-                + ")\n";
+                + " left\n";
         }
+
+        UpdateHelperIndicators();
+    }
+
+    private void UpdateDailyQuestPanel()
+    {
+        if (dailyQuestPanel == null || dailyQuestText == null)
+            ResolveDailyQuestPanel();
+
+        if (dailyQuestPanel == null || dailyQuestText == null || dayManager == null)
+            return;
+
+        string questName = dayManager.DailyAdditionalQuestName;
+        bool hasQuest = !string.IsNullOrEmpty(questName);
+        UpdateDailyQuestPanelVisibility(hasQuest);
+
+        if (!hasQuest)
+            return;
+
+        string status = dayManager.IsDailyAdditionalQuestCompleted
+            ? "COMPLETED!"
+            : dayManager.IsDailyAdditionalQuestMissed
+                ? "MISSED"
+                : dayManager.IsDailyAdditionalQuestFailed
+                    ? "CHALLENGE FAILED"
+                    : "IN PROGRESS";
+
+        dailyQuestText.text = "DAILY BONUS QUEST: " + questName.ToUpperInvariant() +
+            "\n" + dayManager.DailyAdditionalQuestGoal +
+            "\nReward: +" + dayManager.DailyAdditionalQuestRewardCoins + " coins" +
+            "\n" + status;
+    }
+
+    private void ResolveDailyQuestPanel()
+    {
+        if (dailyQuestPanel == null)
+        {
+            Canvas choreCanvas = choreListText != null
+                ? choreListText.GetComponentInParent<Canvas>()
+                : null;
+            if (choreCanvas != null)
+                FindDailyChallengeCard(choreCanvas.transform);
+
+            Canvas[] canvases = FindObjectsByType<Canvas>(
+                FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
+            if (dailyQuestPanel == null)
+            {
+                foreach (Canvas canvas in canvases)
+                {
+                    FindDailyChallengeCard(canvas.transform);
+                    if (dailyQuestPanel != null)
+                        break;
+                }
+            }
+        }
+
+        if (dailyQuestPanel != null)
+        {
+            Canvas hudCanvas = null;
+            Transform ancestor = dailyQuestPanel.transform;
+            while (ancestor != null)
+            {
+                Canvas ancestorCanvas = ancestor.GetComponent<Canvas>();
+                if (ancestorCanvas != null)
+                    hudCanvas = ancestorCanvas;
+                ancestor = ancestor.parent;
+            }
+
+            if (hudCanvas != null && dailyQuestPanel.transform.parent != hudCanvas.transform)
+                dailyQuestPanel.transform.SetParent(hudCanvas.transform, true);
+        }
+
+        if (dailyQuestPanel != null && dailyQuestText == null)
+        {
+            Transform challengeText = dailyQuestPanel.transform.Find("ChallengeText");
+            dailyQuestText = challengeText != null
+                ? challengeText.GetComponent<TMP_Text>()
+                : dailyQuestPanel.GetComponentInChildren<TMP_Text>(true);
+        }
+
+        if (dailyQuestPanel != null)
+        {
+            SetupDailyQuestMinimizeButton();
+        }
+
+        if (dailyQuestPanel == null && !dailyQuestPanelLookupAttempted)
+        {
+            Debug.LogWarning(
+                "Daily challenge card has not been found yet; the HUD will keep looking.",
+                this);
+            dailyQuestPanelLookupAttempted = true;
+        }
+    }
+
+    private void FindDailyChallengeCard(Transform searchRoot)
+    {
+        if (searchRoot == null || dailyQuestPanel != null)
+            return;
+
+        Transform[] descendants = searchRoot.GetComponentsInChildren<Transform>(true);
+        Transform fallbackCard = null;
+        foreach (Transform child in descendants)
+        {
+            if (child.name == "OptionalDailyChallengeCard")
+            {
+                dailyQuestPanel = child.gameObject;
+                return;
+            }
+
+            if (fallbackCard == null && child.name == "DailyChallengeCard")
+                fallbackCard = child;
+        }
+
+        if (fallbackCard != null)
+            dailyQuestPanel = fallbackCard.gameObject;
+    }
+
+    private void ResolveChoreListText()
+    {
+        if (choreListText != null)
+            return;
+
+        Canvas[] canvases = FindObjectsByType<Canvas>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (Canvas canvas in canvases)
+        {
+            Transform[] canvasChildren = canvas.GetComponentsInChildren<Transform>(true);
+            foreach (Transform child in canvasChildren)
+            {
+                if (child.name != "ChoreListText")
+                    continue;
+
+                choreListText = child.GetComponent<TMP_Text>();
+                if (choreListText != null)
+                    return;
+            }
+        }
+    }
+
+    private void SetupChoreListMinimizeButton()
+    {
+        if (choreListText == null || choreListMinimizeButton != null)
+            return;
+
+        Transform parent = choreListText.transform.parent;
+        choreListPanelRect = parent as RectTransform;
+        if (choreListPanelRect == null || choreListPanelRect.parent == null)
+            return;
+
+        choreListPanelBackground = choreListPanelRect.GetComponent<Image>();
+        if (choreListPanelBackground == null)
+            return;
+
+        if (chorePanelDayLabel == null)
+            chorePanelDayLabel = FindPanelObject(parent, "DayText");
+        if (chorePanelTimeLabel == null)
+            chorePanelTimeLabel = FindPanelObject(parent, "TimeText");
+
+        RectTransform textRect = choreListText.rectTransform;
+        Vector3[] panelCorners = new Vector3[4];
+        choreListPanelRect.GetWorldCorners(panelCorners);
+        RectTransform collapsedParent = choreListPanelRect.parent as RectTransform;
+        Vector3 lowerLeft = collapsedParent.InverseTransformPoint(panelCorners[0]);
+        Vector3 upperRight = collapsedParent.InverseTransformPoint(panelCorners[2]);
+        Vector2 collapsedSize = new Vector2(
+            upperRight.x - lowerLeft.x,
+            44f);
+        Vector2 collapsedPosition = new Vector2(
+            (lowerLeft.x + upperRight.x) * 0.5f,
+            upperRight.y - collapsedSize.y * 0.5f);
+
+        choreListCollapsedPanel = new GameObject(
+            "DailyChoreListCollapsedPanel",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        choreListCollapsedPanel.layer = choreListText.gameObject.layer;
+        choreListCollapsedPanel.transform.SetParent(collapsedParent, false);
+        RectTransform collapsedRect = choreListCollapsedPanel.GetComponent<RectTransform>();
+        collapsedRect.anchorMin = new Vector2(0.5f, 0.5f);
+        collapsedRect.anchorMax = new Vector2(0.5f, 0.5f);
+        collapsedRect.pivot = new Vector2(0.5f, 0.5f);
+        collapsedRect.anchoredPosition = collapsedPosition;
+        collapsedRect.sizeDelta = collapsedSize;
+        collapsedRect.SetAsLastSibling();
+
+        Image collapsedBackground = choreListCollapsedPanel.GetComponent<Image>();
+        collapsedBackground.sprite = choreListPanelBackground.sprite;
+        collapsedBackground.type = choreListPanelBackground.type;
+        collapsedBackground.color = choreListPanelBackground.color;
+        collapsedBackground.raycastTarget = false;
+
+        GameObject collapsedTitleObject = new GameObject(
+            "Title",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(TextMeshProUGUI));
+        collapsedTitleObject.layer = choreListText.gameObject.layer;
+        collapsedTitleObject.transform.SetParent(choreListCollapsedPanel.transform, false);
+        RectTransform titleRect = collapsedTitleObject.GetComponent<RectTransform>();
+        titleRect.anchorMin = Vector2.zero;
+        titleRect.anchorMax = Vector2.one;
+        titleRect.offsetMin = new Vector2(12f, 0f);
+        titleRect.offsetMax = new Vector2(-48f, 0f);
+        TMP_Text collapsedTitle = collapsedTitleObject.GetComponent<TMP_Text>();
+        collapsedTitle.font = choreListText.font;
+        collapsedTitle.fontSize = choreListText.fontSize;
+        collapsedTitle.color = choreListText.color;
+        collapsedTitle.alignment = TextAlignmentOptions.MidlineLeft;
+        collapsedTitle.text = "DAILY CHORES";
+        collapsedTitle.raycastTarget = false;
+
+        Button minimizeButton = CreateMinimizeButton(
+            "ChoreListMinimizeButton",
+            choreListPanelRect,
+            choreListText,
+            new Vector2(-8f, -8f));
+        RectTransform minimizeButtonRect = minimizeButton.GetComponent<RectTransform>();
+        minimizeButtonRect.anchorMin = new Vector2(1f, 1f);
+        minimizeButtonRect.anchorMax = new Vector2(1f, 1f);
+        minimizeButtonRect.pivot = new Vector2(1f, 1f);
+        minimizeButton.onClick.AddListener(ToggleChoreListMinimized);
+        choreListMinimizeButton = minimizeButton;
+
+        Button restoreButton = CreateMinimizeButton(
+            "ChoreListRestoreButton",
+            choreListCollapsedPanel.transform,
+            choreListText,
+            new Vector2(-8f, -8f));
+        RectTransform restoreButtonRect = restoreButton.GetComponent<RectTransform>();
+        restoreButtonRect.anchorMin = new Vector2(1f, 1f);
+        restoreButtonRect.anchorMax = new Vector2(1f, 1f);
+        restoreButtonRect.pivot = new Vector2(1f, 1f);
+        restoreButton.onClick.AddListener(ToggleChoreListMinimized);
+        choreListRestoreButton = restoreButton;
+
+        choreListBackgroundWasEnabled = choreListPanelBackground.enabled;
+        chorePanelDayTextWasActive = chorePanelDayLabel != null &&
+            chorePanelDayLabel.activeSelf;
+        chorePanelTimeTextWasActive = chorePanelTimeLabel != null &&
+            chorePanelTimeLabel.activeSelf;
+        choreListCollapsedPanel.SetActive(false);
+        UpdateMinimizeButtonLabel(choreListMinimizeButton, isChoreListMinimized);
+        UpdateMinimizeButtonLabel(choreListRestoreButton, isChoreListMinimized);
+    }
+
+    private static GameObject FindPanelObject(Transform panel, string objectName)
+    {
+        Transform textTransform = panel.Find(objectName);
+        return textTransform != null ? textTransform.gameObject : null;
+    }
+
+    private void SetupDailyQuestMinimizeButton()
+    {
+        if (dailyQuestMinimizeButton != null)
+            return;
+
+        RectTransform panelRect = dailyQuestPanel.GetComponent<RectTransform>();
+        if (panelRect == null)
+            return;
+
+        Transform collapsedParent = dailyQuestPanel.transform.parent;
+        RectTransform collapsedParentRect = collapsedParent as RectTransform;
+        if (collapsedParentRect == null)
+            return;
+
+        Vector3[] panelCorners = new Vector3[4];
+        panelRect.GetWorldCorners(panelCorners);
+        Vector3 lowerLeft = collapsedParentRect.InverseTransformPoint(panelCorners[0]);
+        Vector3 upperRight = collapsedParentRect.InverseTransformPoint(panelCorners[2]);
+        Vector2 collapsedSize = new Vector2(
+            upperRight.x - lowerLeft.x,
+            44f);
+        Vector2 collapsedPosition = new Vector2(
+            (lowerLeft.x + upperRight.x) * 0.5f,
+            upperRight.y - collapsedSize.y * 0.5f);
+
+        dailyQuestCollapsedPanel = new GameObject(
+            "DailyChallengeCollapsedPanel",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        dailyQuestCollapsedPanel.layer = dailyQuestPanel.layer;
+        dailyQuestCollapsedPanel.transform.SetParent(collapsedParent, false);
+        RectTransform collapsedRect = dailyQuestCollapsedPanel.GetComponent<RectTransform>();
+        collapsedRect.anchorMin = new Vector2(0.5f, 0.5f);
+        collapsedRect.anchorMax = new Vector2(0.5f, 0.5f);
+        collapsedRect.pivot = new Vector2(0.5f, 0.5f);
+        collapsedRect.anchoredPosition = collapsedPosition;
+        collapsedRect.sizeDelta = collapsedSize;
+        collapsedRect.SetAsLastSibling();
+
+        Image collapsedBackground = dailyQuestCollapsedPanel.GetComponent<Image>();
+        Image panelBackground = dailyQuestPanel.GetComponent<Image>();
+        if (panelBackground != null)
+        {
+            collapsedBackground.sprite = panelBackground.sprite;
+            collapsedBackground.type = panelBackground.type;
+            collapsedBackground.color = panelBackground.color;
+        }
+        collapsedBackground.raycastTarget = false;
+
+        GameObject collapsedTitleObject = new GameObject(
+            "Title",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(TextMeshProUGUI));
+        collapsedTitleObject.layer = dailyQuestPanel.layer;
+        collapsedTitleObject.transform.SetParent(dailyQuestCollapsedPanel.transform, false);
+        RectTransform titleRect = collapsedTitleObject.GetComponent<RectTransform>();
+        titleRect.anchorMin = Vector2.zero;
+        titleRect.anchorMax = Vector2.one;
+        titleRect.offsetMin = new Vector2(12f, 0f);
+        titleRect.offsetMax = new Vector2(-48f, 0f);
+        TMP_Text collapsedTitle = collapsedTitleObject.GetComponent<TMP_Text>();
+        collapsedTitle.font = dailyQuestText.font;
+        collapsedTitle.fontSize = dailyQuestText.fontSize;
+        collapsedTitle.color = dailyQuestText.color;
+        collapsedTitle.alignment = TextAlignmentOptions.MidlineLeft;
+        collapsedTitle.text = "DAILY CHALLENGE";
+        collapsedTitle.raycastTarget = false;
+
+        Transform existingButton = dailyQuestPanel.transform.Find(
+            "DailyChallengeMinimizeButton");
+        Button button = existingButton != null
+            ? existingButton.GetComponent<Button>()
+            : null;
+        if (button == null)
+        {
+            button = CreateMinimizeButton(
+                "DailyChallengeMinimizeButton",
+                dailyQuestPanel.transform,
+                dailyQuestText,
+                new Vector2(-22f, -20f));
+        }
+
+        RectTransform buttonRect = button.GetComponent<RectTransform>();
+        buttonRect.anchorMin = new Vector2(1f, 1f);
+        buttonRect.anchorMax = new Vector2(1f, 1f);
+        buttonRect.pivot = new Vector2(1f, 1f);
+        buttonRect.anchoredPosition = new Vector2(-8f, -8f);
+        buttonRect.sizeDelta = new Vector2(36f, 32f);
+        button.transform.SetAsLastSibling();
+
+        Image buttonBackground = button.GetComponent<Image>();
+        if (buttonBackground != null)
+        {
+            buttonBackground.sprite = GetMinimizeButtonSprite();
+            buttonBackground.type = Image.Type.Simple;
+            buttonBackground.color = new Color(0.07f, 0.12f, 0.14f, 0.96f);
+            buttonBackground.raycastTarget = true;
+            button.targetGraphic = buttonBackground;
+        }
+
+        EnsureMinimizeButtonLabel(button, dailyQuestText);
+
+        RectTransform textRect = dailyQuestText.rectTransform;
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = new Vector2(12f, 10f);
+        textRect.offsetMax = new Vector2(-52f, -10f);
+        dailyQuestText.enableAutoSizing = true;
+        dailyQuestText.fontSizeMin = 12f;
+        dailyQuestText.fontSizeMax = 18f;
+        dailyQuestText.fontSize = 18f;
+
+        button.onClick.AddListener(ToggleDailyQuestMinimized);
+        dailyQuestMinimizeButton = button;
+
+        Button restoreButton = CreateMinimizeButton(
+            "DailyChallengeRestoreButton",
+            dailyQuestCollapsedPanel.transform,
+            dailyQuestText,
+            new Vector2(-8f, -8f));
+        RectTransform restoreButtonRect = restoreButton.GetComponent<RectTransform>();
+        restoreButtonRect.anchorMin = new Vector2(1f, 1f);
+        restoreButtonRect.anchorMax = new Vector2(1f, 1f);
+        restoreButtonRect.pivot = new Vector2(1f, 1f);
+        restoreButton.onClick.AddListener(ToggleDailyQuestMinimized);
+        dailyQuestRestoreButton = restoreButton;
+        dailyQuestCollapsedPanel.SetActive(false);
+        UpdateMinimizeButtonLabel(dailyQuestMinimizeButton, isDailyQuestMinimized);
+        UpdateMinimizeButtonLabel(dailyQuestRestoreButton, isDailyQuestMinimized);
+    }
+
+    private void EnsureMinimizeButtonLabel(Button button, TMP_Text sourceText)
+    {
+        TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+        if (label == null)
+        {
+            GameObject labelObject = new GameObject(
+                "Label",
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(TextMeshProUGUI));
+            labelObject.layer = button.gameObject.layer;
+            labelObject.transform.SetParent(button.transform, false);
+
+            RectTransform labelRect = labelObject.GetComponent<RectTransform>();
+            labelRect.anchorMin = Vector2.zero;
+            labelRect.anchorMax = Vector2.one;
+            labelRect.offsetMin = Vector2.zero;
+            labelRect.offsetMax = Vector2.zero;
+            label = labelObject.GetComponent<TMP_Text>();
+        }
+
+        label.font = sourceText != null && sourceText.font != null
+            ? sourceText.font
+            : TMP_Settings.defaultFontAsset;
+        label.fontSize = 20f;
+        label.color = Color.white;
+        label.alignment = TextAlignmentOptions.Center;
+        label.raycastTarget = false;
+    }
+
+    private Button CreateMinimizeButton(
+        string objectName,
+        Transform parent,
+        TMP_Text sourceText,
+        Vector2 anchoredPosition)
+    {
+        GameObject buttonObject = new GameObject(
+            objectName,
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image),
+            typeof(Button));
+        buttonObject.layer = parent.gameObject.layer;
+        buttonObject.transform.SetParent(parent, false);
+
+        RectTransform buttonRect = buttonObject.GetComponent<RectTransform>();
+        buttonRect.anchorMin = new Vector2(0.5f, 0.5f);
+        buttonRect.anchorMax = new Vector2(0.5f, 0.5f);
+        buttonRect.pivot = new Vector2(0.5f, 0.5f);
+        buttonRect.anchoredPosition = anchoredPosition;
+        buttonRect.sizeDelta = new Vector2(36f, 32f);
+
+        Image background = buttonObject.GetComponent<Image>();
+        background.sprite = GetMinimizeButtonSprite();
+        background.type = Image.Type.Simple;
+        background.color = new Color(0.07f, 0.12f, 0.14f, 0.96f);
+        background.raycastTarget = true;
+
+        Button button = buttonObject.GetComponent<Button>();
+        button.targetGraphic = background;
+        button.transition = Selectable.Transition.ColorTint;
+        button.colors = new ColorBlock
+        {
+            normalColor = new Color(0.07f, 0.12f, 0.14f, 0.96f),
+            highlightedColor = new Color(0.13f, 0.22f, 0.25f, 1f),
+            pressedColor = new Color(0.2f, 0.3f, 0.32f, 1f),
+            selectedColor = new Color(0.07f, 0.12f, 0.14f, 0.96f),
+            disabledColor = new Color(0.07f, 0.12f, 0.14f, 0.5f),
+            colorMultiplier = 1f,
+            fadeDuration = 0.1f
+        };
+
+        GameObject labelObject = new GameObject(
+            "Label",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(TextMeshProUGUI));
+        labelObject.layer = parent.gameObject.layer;
+        labelObject.transform.SetParent(buttonObject.transform, false);
+
+        RectTransform labelRect = labelObject.GetComponent<RectTransform>();
+        labelRect.anchorMin = Vector2.zero;
+        labelRect.anchorMax = Vector2.one;
+        labelRect.offsetMin = Vector2.zero;
+        labelRect.offsetMax = Vector2.zero;
+
+        TMP_Text label = labelObject.GetComponent<TMP_Text>();
+        label.font = sourceText != null && sourceText.font != null
+            ? sourceText.font
+            : TMP_Settings.defaultFontAsset;
+        label.fontSize = 20f;
+        label.color = Color.white;
+        label.alignment = TextAlignmentOptions.Center;
+        label.raycastTarget = false;
+
+        return button;
+    }
+
+    private static Sprite GetMinimizeButtonSprite()
+    {
+        if (minimizeButtonSprite == null)
+            minimizeButtonSprite = Sprite.Create(
+                Texture2D.whiteTexture,
+                new Rect(0f, 0f, 1f, 1f),
+                new Vector2(0.5f, 0.5f));
+
+        return minimizeButtonSprite;
+    }
+
+    private void ToggleChoreListMinimized()
+    {
+        isChoreListMinimized = !isChoreListMinimized;
+        if (choreListPanelBackground != null)
+            choreListPanelBackground.enabled = isChoreListMinimized
+                ? false
+                : choreListBackgroundWasEnabled;
+        if (chorePanelDayLabel != null)
+            chorePanelDayLabel.SetActive(isChoreListMinimized
+                ? false
+                : chorePanelDayTextWasActive);
+        if (chorePanelTimeLabel != null)
+            chorePanelTimeLabel.SetActive(isChoreListMinimized
+                ? false
+                : chorePanelTimeTextWasActive);
+        if (choreListText != null)
+            choreListText.gameObject.SetActive(!isChoreListMinimized);
+        if (choreListCollapsedPanel != null)
+            choreListCollapsedPanel.SetActive(isChoreListMinimized);
+        if (choreListMinimizeButton != null)
+            choreListMinimizeButton.gameObject.SetActive(!isChoreListMinimized);
+        if (choreListRestoreButton != null)
+            choreListRestoreButton.gameObject.SetActive(isChoreListMinimized);
+    }
+
+    private void ToggleDailyQuestMinimized()
+    {
+        isDailyQuestMinimized = !isDailyQuestMinimized;
+        UpdateDailyQuestMinimizedState();
+    }
+
+    private void UpdateDailyQuestMinimizedState()
+    {
+        bool hasQuest = dayManager != null &&
+            !string.IsNullOrEmpty(dayManager.DailyAdditionalQuestName);
+        UpdateDailyQuestPanelVisibility(hasQuest);
+        UpdateMinimizeButtonLabel(dailyQuestMinimizeButton, isDailyQuestMinimized);
+        UpdateMinimizeButtonLabel(dailyQuestRestoreButton, isDailyQuestMinimized);
+    }
+
+    private void UpdateDailyQuestPanelVisibility(bool hasQuest)
+    {
+        if (dailyQuestPanel != null)
+            dailyQuestPanel.SetActive(hasQuest && !isDailyQuestMinimized);
+        if (dailyQuestCollapsedPanel != null)
+            dailyQuestCollapsedPanel.SetActive(hasQuest && isDailyQuestMinimized);
+    }
+
+    private static void UpdateMinimizeButtonLabel(Button button, bool isMinimized)
+    {
+        if (button == null)
+            return;
+
+        TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+        if (label != null)
+            label.text = isMinimized ? "+" : "-";
     }
 
     private void AddChoreToGroup(
@@ -330,25 +932,134 @@ public class GameHUD : MonoBehaviour
 
         if (remainingCount > 0)
         {
-            choreListText.text += "○ " + choreGroup.name + " ("
-                + remainingCount + " remaining, "
-                + timeManager.FormatClockTime(nextDeadline) + ")\n";
+            string pendingLine = "○ " + choreGroup.name
+                + (remainingCount > 1 ? " (" + remainingCount + ")" : string.Empty)
+                + " · " + timeManager.FormatClockTime(nextDeadline);
+            if (nextDeadline - timeManager.GetTime() <= nearDeadlineWarningSeconds)
+                pendingLine = "<color=#" + ColorUtility.ToHtmlStringRGBA(nearDeadlineColor)
+                    + ">" + pendingLine + "</color>";
+
+            choreListText.text += pendingLine + "\n";
         }
         else if (completedCount == choreGroup.chores.Count)
         {
-            string helperStatus = allCompletedByHelper ? " (HELPER)" : string.Empty;
-            choreListText.text += "✓ " + choreGroup.name + helperStatus + "\n";
-        }
-        else if (missedCount == choreGroup.chores.Count)
-        {
-            choreListText.text += "- " + choreGroup.name + " (MISSED)\n";
+            string completedLine = "✓ " + choreGroup.name;
+            int helperCharacterIndex = GetVisibleCharacterCount(choreListText.text)
+                + completedLine.Length - 1;
+            choreListText.text += completedLine + "\n";
+            if (allCompletedByHelper)
+                helperIndicatorCharacterIndices.Add(helperCharacterIndex);
         }
         else
         {
-            choreListText.text += "- " + choreGroup.name + " ("
-                + completedCount + " completed, "
-                + missedCount + " missed)\n";
+            string missedLine = "! " + choreGroup.name;
+            choreListText.text += "<color=#"
+                + ColorUtility.ToHtmlStringRGBA(nearDeadlineColor)
+                + ">" + missedLine + "</color>\n";
         }
+    }
+
+    private int GetVisibleCharacterCount(string text)
+    {
+        int visibleCharacterCount = 0;
+        bool insideRichTextTag = false;
+
+        foreach (char character in text)
+        {
+            if (character == '<')
+                insideRichTextTag = true;
+            else if (character == '>')
+                insideRichTextTag = false;
+            else if (!insideRichTextTag)
+                visibleCharacterCount++;
+        }
+
+        return visibleCharacterCount;
+    }
+
+    private void UpdateHelperIndicators()
+    {
+        if (helperIndicatorCharacterIndices.Count == 0)
+        {
+            foreach (Image indicator in helperIndicatorImages)
+                indicator.gameObject.SetActive(false);
+            return;
+        }
+
+        if (helperSprite == null)
+        {
+            HelperNPC helper = FindFirstObjectByType<HelperNPC>(FindObjectsInactive.Include);
+            SpriteRenderer helperRenderer = helper != null
+                ? helper.GetComponentInChildren<SpriteRenderer>(true)
+                : null;
+            helperSprite = helperRenderer != null ? helperRenderer.sprite : null;
+        }
+
+        choreListText.ForceMeshUpdate();
+        TMP_TextInfo textInfo = choreListText.textInfo;
+
+        for (int i = 0; i < helperIndicatorCharacterIndices.Count; i++)
+        {
+            if (i >= helperIndicatorImages.Count)
+                helperIndicatorImages.Add(CreateHelperIndicator());
+
+            Image indicator = helperIndicatorImages[i];
+            if (helperSprite == null)
+            {
+                indicator.gameObject.SetActive(false);
+                continue;
+            }
+
+            int characterInfoIndex = -1;
+            for (int j = 0; j < textInfo.characterCount; j++)
+            {
+                if (textInfo.characterInfo[j].index == helperIndicatorCharacterIndices[i])
+                {
+                    characterInfoIndex = j;
+                    break;
+                }
+            }
+
+            if (characterInfoIndex < 0)
+            {
+                indicator.gameObject.SetActive(false);
+                continue;
+            }
+
+            TMP_CharacterInfo character = textInfo.characterInfo[characterInfoIndex];
+            float iconSize = Mathf.Max(1f, choreListText.fontSize * 1.5f);
+            RectTransform indicatorRect = indicator.rectTransform;
+            indicatorRect.sizeDelta = new Vector2(iconSize, iconSize);
+            indicatorRect.anchoredPosition = new Vector2(
+                character.topRight.x + iconSize * 0.6f,
+                (character.topRight.y + character.bottomRight.y) * 0.5f);
+            indicator.sprite = helperSprite;
+            indicator.gameObject.SetActive(true);
+        }
+
+        for (int i = helperIndicatorCharacterIndices.Count; i < helperIndicatorImages.Count; i++)
+            helperIndicatorImages[i].gameObject.SetActive(false);
+    }
+
+    private Image CreateHelperIndicator()
+    {
+        GameObject indicatorObject = new GameObject(
+            "Helper Chore Sprite",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        indicatorObject.layer = choreListText.gameObject.layer;
+        indicatorObject.transform.SetParent(choreListText.transform, false);
+
+        RectTransform indicatorRect = indicatorObject.GetComponent<RectTransform>();
+        indicatorRect.anchorMin = new Vector2(0.5f, 0.5f);
+        indicatorRect.anchorMax = new Vector2(0.5f, 0.5f);
+        indicatorRect.pivot = new Vector2(0.5f, 0.5f);
+
+        Image indicator = indicatorObject.GetComponent<Image>();
+        indicator.preserveAspect = true;
+        indicator.raycastTarget = false;
+        return indicator;
     }
 
     private void UpdateDailyStats()

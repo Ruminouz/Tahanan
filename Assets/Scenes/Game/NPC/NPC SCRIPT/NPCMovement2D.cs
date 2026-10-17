@@ -30,7 +30,7 @@ public static class NPCMovement2D
         float minimumDistance = personalSpace;
         foreach (WaypointMover other in Movers)
         {
-            if (other == null || other == mover || !other.MovementEnabled)
+            if (other == null || other == mover)
                 continue;
 
             Vector2 offset = position - (Vector2)other.transform.position;

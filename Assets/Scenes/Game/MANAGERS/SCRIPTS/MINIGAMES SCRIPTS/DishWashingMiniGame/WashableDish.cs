@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
-public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHandler, IPointerExitHandler
+public class WashableDish : MonoBehaviour
 {
     [Header("Dish Visual")]
     [SerializeField] private Image dishImage;
@@ -20,6 +18,18 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
     [Header("Scrub Feedback")]
     [SerializeField] private GameObject scrubFoam;
     [SerializeField] private ParticleSystem scrubParticles;
+    [SerializeField] private Sprite scrubBubbleSprite;
+    [SerializeField, Min(0.05f)] private float scrubBubbleInterval = 0.16f;
+    [SerializeField, Min(0.1f)] private float scrubBubbleLifetime = 0.65f;
+    [SerializeField, Min(0f)] private float scrubBubbleRiseDistance = 42f;
+    [SerializeField, Min(1f)] private float scrubBubbleSize = 14f;
+
+    [Header("Rinse Feedback")]
+    [SerializeField] private Sprite rinseSparkleSprite;
+    [SerializeField, Min(1)] private int rinseSparkleCount = 6;
+    [SerializeField, Min(0.1f)] private float rinseSparkleLifetime = 0.85f;
+    [SerializeField, Min(1f)] private float rinseSparkleSize = 24f;
+    [SerializeField] private Color rinseSparkleColor = new Color(1f, 0.94f, 0.64f, 1f);
 
 
     [Header("Audio")]
@@ -34,7 +44,6 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
     private bool canScrub;
     private bool canRinse;
-    private Vector2 lastPointerPosition;
     private Color baseDirtyColor;
     private float scrubDifficultyMultiplier = 1f;
 
@@ -47,10 +56,18 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
     private const float ScrubSfxCooldown = 0.12f;
 
     private AudioSource audioSource;
+    private const int MaxActiveScrubBubbles = 10;
+    private float nextScrubBubbleTime;
+    private readonly System.Collections.Generic.List<GameObject> activeScrubBubbles =
+        new System.Collections.Generic.List<GameObject>();
+    private readonly System.Collections.Generic.List<GameObject> activeRinseSparkles =
+        new System.Collections.Generic.List<GameObject>();
+    private static Sprite generatedRinseSparkleSprite;
 
     private void Awake()
     {
         baseDirtyColor = dirtyColor;
+        ResolveScrubFoam();
     }
 
     public bool IsClean => isClean;
@@ -138,83 +155,12 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
 
 
-    // =========================================
-    // POINTER SCRUB
-    // =========================================
-
-
-    public void OnPointerEnter(
-        PointerEventData eventData)
-    {
-        ProcessScrubInput(eventData);
-    }
-
-    public void OnPointerMove(
-        PointerEventData eventData)
-    {
-        ProcessScrubInput(eventData);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        lastPointerPosition = Vector2.zero;
-    }
-
-    private void ProcessScrubInput(PointerEventData eventData)
-    {
-        if(!canScrub)
-            return;
-
-
-        if(isClean)
-            return;
-
-
-        if(Mouse.current == null)
-            return;
-
-
-        if(!Mouse.current.leftButton.isPressed)
-        {
-            lastPointerPosition = Vector2.zero;
-            return;
-        }
-
-
-        if(miniGame != null)
-        {
-            if(!miniGame.CanScrubThisPlate(this))
-                return;
-        }
-
-
-        float scrubBoost = 1f;
-
-        if(lastPointerPosition != Vector2.zero)
-        {
-            float pointerTravel =
-                Vector2.Distance(
-                    eventData.position,
-                    lastPointerPosition
-                );
-
-            scrubBoost = Mathf.Clamp01(pointerTravel / 18f) * 0.6f + 1f;
-        }
-
-        lastPointerPosition = eventData.position;
-        Scrub(scrubBoost);
-    }
-
-
-
-
-
-    public void SpongeScrub()
+    public void SpongeScrub(float bonusMultiplier = 1f)
     {
         if (!canScrub || isClean)
             return;
 
-        Scrub(1.4f);
+        Scrub(1.4f * Mathf.Max(1f, bonusMultiplier));
     }
 
     private void Scrub(float bonusMultiplier = 1f)
@@ -223,6 +169,7 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
         progress =
             Mathf.Clamp01(progress);
+        SpawnScrubBubble();
 
 
         if(progressBar != null)
@@ -305,6 +252,7 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
         canScrub = false;
         canRinse = true;
+        StopScrubBubbleAnimation();
 
 
         progress = 1f;
@@ -327,7 +275,9 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
 
         if(scrubFoam != null)
         {
-            scrubFoam.SetActive(false);
+            scrubFoam.SetActive(true);
+            if (dishImage != null && scrubFoam.transform.parent == dishImage.transform.parent)
+                scrubFoam.transform.SetSiblingIndex(dishImage.transform.GetSiblingIndex() + 1);
         }
 
 
@@ -371,7 +321,6 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
     public void ResetDish()
     {
         progress = 0f;
-        lastPointerPosition = Vector2.zero;
 
 
         isClean = false;
@@ -379,6 +328,8 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
         canScrub = false;
         canRinse = false;
         transform.localScale = Vector3.one;
+        StopScrubBubbleAnimation();
+        StopRinseSparkleAnimation();
 
 
 
@@ -422,5 +373,244 @@ public class WashableDish : MonoBehaviour, IPointerEnterHandler, IPointerMoveHan
     public bool CanRinse()
     {
         return canRinse;
+    }
+
+    public void RemoveScrubFoamAfterRinsing()
+    {
+        if (scrubFoam != null)
+            scrubFoam.SetActive(false);
+    }
+
+    public void PlayRinseSparkle()
+    {
+        RectTransform sparkleParent = transform as RectTransform;
+        if (sparkleParent == null)
+            return;
+
+        Sprite sparkleSprite = rinseSparkleSprite != null
+            ? rinseSparkleSprite
+            : GetGeneratedRinseSparkleSprite();
+
+        for (int i = 0; i < rinseSparkleCount; i++)
+        {
+            GameObject sparkleObject = new GameObject(
+                "RinseSparkle",
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(Image),
+                typeof(CanvasGroup));
+            RectTransform sparkleRect = sparkleObject.GetComponent<RectTransform>();
+            sparkleRect.SetParent(sparkleParent, false);
+            sparkleRect.anchorMin = sparkleRect.anchorMax = new Vector2(0.5f, 0.5f);
+            sparkleRect.pivot = new Vector2(0.5f, 0.5f);
+
+            float size = rinseSparkleSize * Random.Range(0.75f, 1.25f);
+            sparkleRect.sizeDelta = new Vector2(size, size);
+            sparkleRect.anchoredPosition = new Vector2(
+                Random.Range(-sparkleParent.rect.width * 0.34f, sparkleParent.rect.width * 0.34f),
+                Random.Range(-sparkleParent.rect.height * 0.3f, sparkleParent.rect.height * 0.3f));
+            sparkleRect.localRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 90f));
+
+            Image sparkleImage = sparkleObject.GetComponent<Image>();
+            sparkleImage.sprite = sparkleSprite;
+            sparkleImage.color = rinseSparkleColor;
+            sparkleImage.raycastTarget = false;
+            sparkleImage.preserveAspect = true;
+            sparkleRect.SetAsLastSibling();
+
+            activeRinseSparkles.Add(sparkleObject);
+            StartCoroutine(AnimateRinseSparkle(
+                sparkleObject,
+                sparkleRect,
+                i * 0.06f,
+                Random.Range(-35f, 35f)));
+        }
+    }
+
+    private static Sprite GetGeneratedRinseSparkleSprite()
+    {
+        if (generatedRinseSparkleSprite != null)
+            return generatedRinseSparkleSprite;
+
+        const int textureSize = 32;
+        Texture2D texture = new Texture2D(textureSize, textureSize, TextureFormat.RGBA32, false)
+        {
+            name = "Generated Rinse Sparkle",
+            filterMode = FilterMode.Bilinear,
+            wrapMode = TextureWrapMode.Clamp,
+            hideFlags = HideFlags.HideAndDontSave
+        };
+        Color32[] pixels = new Color32[textureSize * textureSize];
+
+        for (int y = 0; y < textureSize; y++)
+        {
+            for (int x = 0; x < textureSize; x++)
+            {
+                float nx = Mathf.Abs((x + 0.5f) / textureSize * 2f - 1f);
+                float ny = Mathf.Abs((y + 0.5f) / textureSize * 2f - 1f);
+                float verticalWidth = Mathf.Lerp(0.28f, 0.045f, ny);
+                float horizontalWidth = Mathf.Lerp(0.28f, 0.045f, nx);
+                float vertical = ny < 1f ? 1f - Mathf.SmoothStep(verticalWidth * 0.65f, verticalWidth, nx) : 0f;
+                float horizontal = nx < 1f ? 1f - Mathf.SmoothStep(horizontalWidth * 0.65f, horizontalWidth, ny) : 0f;
+                float glow = Mathf.Clamp01((1f - Mathf.Sqrt(nx * nx + ny * ny)) * 0.22f);
+                byte alpha = (byte)(Mathf.Clamp01(Mathf.Max(Mathf.Max(vertical, horizontal), glow)) * 255f);
+                pixels[y * textureSize + x] = new Color32(255, 255, 255, alpha);
+            }
+        }
+
+        texture.SetPixels32(pixels);
+        texture.Apply(false, true);
+        generatedRinseSparkleSprite = Sprite.Create(
+            texture,
+            new Rect(0f, 0f, textureSize, textureSize),
+            new Vector2(0.5f, 0.5f),
+            textureSize);
+        generatedRinseSparkleSprite.name = "Generated Rinse Sparkle";
+        generatedRinseSparkleSprite.hideFlags = HideFlags.HideAndDontSave;
+        return generatedRinseSparkleSprite;
+    }
+
+    private System.Collections.IEnumerator AnimateRinseSparkle(
+        GameObject sparkleObject,
+        RectTransform sparkleRect,
+        float delay,
+        float rotationAmount)
+    {
+        while (delay > 0f && sparkleObject != null)
+        {
+            delay -= Time.deltaTime;
+            yield return null;
+        }
+
+        if (sparkleObject == null)
+            yield break;
+
+        CanvasGroup canvasGroup = sparkleObject.GetComponent<CanvasGroup>();
+        float duration = Mathf.Max(0.1f, rinseSparkleLifetime);
+        float elapsed = 0f;
+        Vector2 startPosition = sparkleRect.anchoredPosition;
+
+        while (elapsed < duration && sparkleObject != null)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float pulse = Mathf.Sin(t * Mathf.PI);
+            sparkleRect.anchoredPosition = startPosition + Vector2.up * (8f * t);
+            sparkleRect.localScale = Vector3.one * Mathf.Lerp(0.35f, 1.1f, pulse);
+            sparkleRect.Rotate(0f, 0f, rotationAmount * Time.deltaTime);
+            canvasGroup.alpha = pulse;
+            yield return null;
+        }
+
+        if (sparkleObject != null)
+        {
+            activeRinseSparkles.Remove(sparkleObject);
+            Destroy(sparkleObject);
+        }
+    }
+
+    private void StopRinseSparkleAnimation()
+    {
+        foreach (GameObject sparkle in activeRinseSparkles)
+        {
+            if (sparkle != null)
+                Destroy(sparkle);
+        }
+
+        activeRinseSparkles.Clear();
+    }
+
+    private void ResolveScrubFoam()
+    {
+        if (scrubFoam != null)
+            return;
+
+        Transform foamTransform = transform.Find("Foam");
+        if (foamTransform != null)
+            scrubFoam = foamTransform.gameObject;
+    }
+
+    private void SpawnScrubBubble()
+    {
+        if (scrubBubbleSprite == null)
+            return;
+
+        if (Time.time < nextScrubBubbleTime)
+            return;
+
+        activeScrubBubbles.RemoveAll(bubble => bubble == null);
+        if (activeScrubBubbles.Count >= MaxActiveScrubBubbles)
+            return;
+
+        RectTransform bubbleParent = transform as RectTransform;
+        if (bubbleParent == null)
+            return;
+
+        GameObject bubbleObject = new GameObject(
+            "ScrubBubble",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image),
+            typeof(CanvasGroup));
+        RectTransform bubbleRect = bubbleObject.GetComponent<RectTransform>();
+        bubbleRect.SetParent(bubbleParent, false);
+        bubbleRect.anchorMin = bubbleRect.anchorMax = new Vector2(0.5f, 0.5f);
+        bubbleRect.pivot = new Vector2(0.5f, 0.5f);
+
+        float size = scrubBubbleSize * Random.Range(0.7f, 1.25f);
+        bubbleRect.sizeDelta = new Vector2(size, size);
+        bubbleRect.anchoredPosition = new Vector2(
+            Random.Range(-bubbleParent.rect.width * 0.28f, bubbleParent.rect.width * 0.28f),
+            Random.Range(-bubbleParent.rect.height * 0.12f, bubbleParent.rect.height * 0.12f));
+
+        Image bubbleImage = bubbleObject.GetComponent<Image>();
+        bubbleImage.sprite = scrubBubbleSprite;
+        bubbleImage.color = new Color(0.45f, 0.9f, 1f, 1f);
+        bubbleImage.raycastTarget = false;
+        bubbleImage.preserveAspect = true;
+        bubbleObject.GetComponent<CanvasGroup>().alpha = 0.9f;
+        bubbleRect.SetAsLastSibling();
+        activeScrubBubbles.Add(bubbleObject);
+        nextScrubBubbleTime = Time.time + scrubBubbleInterval;
+        StartCoroutine(AnimateScrubBubble(bubbleObject, bubbleRect));
+    }
+
+    private System.Collections.IEnumerator AnimateScrubBubble(
+        GameObject bubbleObject,
+        RectTransform bubbleRect)
+    {
+        float duration = Mathf.Max(0.1f, scrubBubbleLifetime);
+        float elapsed = 0f;
+        Vector2 startPosition = bubbleRect.anchoredPosition;
+        float riseDistance = scrubBubbleRiseDistance * Random.Range(0.75f, 1.25f);
+        CanvasGroup canvasGroup = bubbleObject.GetComponent<CanvasGroup>();
+
+        while (elapsed < duration && bubbleObject != null)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            bubbleRect.anchoredPosition = startPosition + Vector2.up * (riseDistance * t);
+            bubbleRect.localScale = Vector3.one * Mathf.Lerp(0.6f, 1.15f, t);
+            canvasGroup.alpha = (1f - t) * 0.9f;
+            yield return null;
+        }
+
+        if (bubbleObject != null)
+        {
+            activeScrubBubbles.Remove(bubbleObject);
+            Destroy(bubbleObject);
+        }
+    }
+
+    private void StopScrubBubbleAnimation()
+    {
+        nextScrubBubbleTime = 0f;
+        foreach (GameObject bubble in activeScrubBubbles)
+        {
+            if (bubble != null)
+                Destroy(bubble);
+        }
+
+        activeScrubBubbles.Clear();
     }
 }

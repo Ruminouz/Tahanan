@@ -360,6 +360,7 @@ MonoBehaviour:
   catSpawnPoint: {fileID: 1298402942}
   mopUpgradeIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
   catIcon: {fileID: -7232521027535748977, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
+  dishwashingLiquidIcon: {fileID: 4398864269921876113, guid: 562166918a4224a40afc89f9f5583164, type: 3}
 --- !u!114 &68763431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,7 +416,7 @@ MonoBehaviour:
   statusText: {fileID: 1637620284}
   buyButton: {fileID: 1785283028}
   closeButton: {fileID: 1405085285}
-  broomUpgradeIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  vacuumUpgradeIcon: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
 --- !u!4 &79365035 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8935189840966961768, guid: a0a862bb4275c374fa8fe9c69ed69283, type: 3}
@@ -2239,7 +2240,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2259,7 +2260,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 558999701}
   m_FillRect: {fileID: 1158667129}
   m_HandleRect: {fileID: 558999699}
@@ -2919,6 +2920,7 @@ MonoBehaviour:
   chocolateSprite: {fileID: 8386067457128398079, guid: aab55cf87ab958d46981b995b26257f7, type: 3}
   extraTimeSprite: {fileID: -7754988575891523622, guid: 8d782902958a6354797c1a649a2949a0, type: 3}
   broomSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  vacuumSprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   mopSprite: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
   garbageBagSprite: {fileID: -1984049885866873280, guid: 84f25f985d9b459489ba4ce0a630f699, type: 3}
 --- !u!114 &614554698
@@ -4460,7 +4462,7 @@ GameObject:
   - component: {fileID: 863713374}
   - component: {fileID: 863713373}
   m_Layer: 5
-  m_Name: UpgradedBroomUI
+  m_Name: UpgradedVacuumUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4498,16 +4500,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.049153328, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  m_Sprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -4661,7 +4663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &983941647
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6663,10 +6665,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8f82537d90f5647937e0dad26f813e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WasteSpawner
-  leafPrefab: {fileID: 3657187560689947137, guid: d5260a27d07caef43b6149fb2e52bf4e, type: 3}
-  bottlePrefab: {fileID: 1783231392314788191, guid: da81aab4ca987a74688e6f1e142de6bb, type: 3}
-  wrapperPrefab: {fileID: 2423061027922943701, guid: f4da892c31edd864c828fa47d7b1642b, type: 3}
-  wormPrefab: {fileID: 6014796658178622443, guid: c9e0b93d2c094e643b6ccf52d04b727b, type: 3}
+  toySprites:
+  - {fileID: -8648943487719732145, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 3622615083720987861, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -2992271137422973184, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -3910683414637180764, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -41988433006847486, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -6191173665105976869, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -8440507175559472757, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 6584128545534808457, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
 --- !u!114 &1372377670 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 281675359315078018, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}
@@ -8121,7 +8128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1621687503
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8819,11 +8826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteMiniGame
   panel: {fileID: 1734432310}
   spawnArea: {fileID: 965355502}
-  dropZones:
-  - {fileID: 983941651}
-  - {fileID: 2053265304}
-  - {fileID: 1621687507}
-  - {fileID: 1993732131}
+  boxDropZone: {fileID: 1993732131}
   mistakesText: {fileID: 1957132253}
   progressText: {fileID: 757806946}
   spawner: {fileID: 1371290760}
@@ -9112,11 +9115,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoodManager
   moodSlider: {fileID: 490425223}
-  startingMood: 60
+  startingMood: 30
   concernedThreshold: 65
   angryThreshold: 13.5
   moodLossPerMissedChore: 20
+  dailyMoodLoss: 20
   moodRecoveryPerCompletedChore: 5
+  moodGainSprite: {fileID: 5951587013162271021, guid: 4ab192c131e22bd40bd4dab15b920f7d, type: 3}
+  moodLossSprite: {fileID: -3151740070689166471, guid: 08c6851420614cd4d83e1ec64aa46e38, type: 3}
 --- !u!4 &1839325606
 Transform:
   m_ObjectHideFlags: 0
@@ -10740,7 +10746,7 @@ GameObject:
   - component: {fileID: 1993732129}
   - component: {fileID: 1993732131}
   m_Layer: 5
-  m_Name: LeavesDrop
+  m_Name: ToyBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10762,7 +10768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -575, y: -393}
+  m_AnchoredPosition: {x: 0, y: -393}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1993732129
@@ -11095,7 +11101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2053265300
 RectTransform:
   m_ObjectHideFlags: 0

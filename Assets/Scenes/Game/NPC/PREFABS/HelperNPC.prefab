@@ -279,6 +279,19 @@ MonoBehaviour:
   choreStuckTimeout: 0.5
   choreSpeedMultiplier: 2
   playerChoreDistance: 2
+  defaultChoreDuration: 15
+  dishwashingDuration: 20
+  garbageSortingDuration: 20
+  cleanLeavesDuration: 18
+  feedDogDuration: 15
+  dishwashingIcon: {fileID: -4795573259988461060, guid: 8c8468b038deff4459ee9ae5f7e1bc8a, type: 3}
+  garbageSortingIcon: {fileID: -1984049885866873280, guid: 84f25f985d9b459489ba4ce0a630f699, type: 3}
+  cleanLeavesIcon: {fileID: 8377670743103895261, guid: d2d2a114033763b458cb6b3b8599518c, type: 3}
+  feedDogIcon: {fileID: 8547402250504553676, guid: ac7777586342a114cafe57a15162339a, type: 3}
+  sweepingIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  moppingIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
+  choreIconSize: 0.45
+  choreIconOffset: 0.55
   bubbleAnchor: {fileID: 1042943640945524530}
   moodBubblePrefab: {fileID: 0}
   badMoodBubbleInterval: 8

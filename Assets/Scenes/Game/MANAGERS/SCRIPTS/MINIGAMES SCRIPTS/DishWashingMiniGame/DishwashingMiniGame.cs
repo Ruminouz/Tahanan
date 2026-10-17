@@ -3,15 +3,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-public class DishwashingMiniGame : MonoBehaviour
+using UnityEngine.EventSystems;
+public class DishwashingMiniGame : MonoBehaviour, IPointerClickHandler
 {
-    private enum DailyChallenge
-    {
-        RushFinish,
-        ComboStreak,
-        LeftoverDash
-    }
-
     public enum WashStage
     {
         RemoveLeftovers,
@@ -61,7 +55,6 @@ public class DishwashingMiniGame : MonoBehaviour
 
 [Header("Day Scaling")]
 
-[SerializeField, Min(0)] private int dailyChallengeRewardCoins = 5;
 [SerializeField, Min(2)] private int fryingPanStartDay = 2;
 [SerializeField, Min(0f)] private float fryingPanChancePerDay = 0.12f;
 [SerializeField, Range(0f, 1f)] private float maximumFryingPanChance = 0.4f;
@@ -73,18 +66,18 @@ public class DishwashingMiniGame : MonoBehaviour
 private int currentPlateAmount;
 private int currentLeftoverAmount;
 private int currentDay = 1;
-private DailyChallenge dailyChallenge;
-private string dailyChallengeLabel;
-private string dailyChallengeResult;
-private float elapsedRunTime;
-private bool dailyChallengeResolved;
-private GameObject dailyChallengeCard;
-private TMP_Text dailyChallengeText;
 private Coroutine resultCoroutine;
 private const float ResultDisplayDuration = 1.5f;
 
     [Header("Rinsing")]
     [SerializeField] private Transform rinsingArea;
+    [SerializeField, Min(0.1f)] private float waterFillDuration = 3f;
+    [SerializeField] private Texture2D waterStreamSpriteSheet;
+    [SerializeField] private Transform waterStreamSpawnPoint;
+    [SerializeField, Min(1)] private int waterStreamFrameCount = 8;
+    [SerializeField, Min(1f)] private float waterStreamFramesPerSecond = 12f;
+    [SerializeField, Min(0.01f)] private float waterStreamWidth = 112.6723f;
+    [SerializeField, Min(0.01f)] private float waterStreamHeight = 50.24773f;
 
     [Header("Drying Rack")]
     [SerializeField] private Transform dryingRack;
@@ -105,17 +98,108 @@ private int platesRinsed;
 
 private int platesToRinse;
 private int platesToDry;
+private Transform faucet;
+private Image faucetImage;
+private Outline faucetOutline;
+private Color faucetOriginalColor;
+private Vector3 faucetOriginalScale;
+private Image waterFillImage;
+private Sprite waterOverlaySprite;
+private Image waterStreamImage;
+private RectTransform waterStreamRect;
+private Image waterSurfaceImage;
+private Sprite[] waterStreamFrames;
+private Coroutine waterFillCoroutine;
+private bool waterFilled;
+private EconomyManager economyManager;
+
+private void OnEnable()
+{
+    SubscribeToEconomy();
+    RefreshDishwashingLiquidVisual();
+}
 
 private void Start()
 {
+    SubscribeToEconomy();
+    RefreshDishwashingLiquidVisual();
+
     tutorialManager = FindFirstObjectByType<TutorialManager>();
     dayManager = DayManager.Instance != null
         ? DayManager.Instance
         : FindFirstObjectByType<DayManager>();
 
     ApplyDayDifficulty();
-    EnsureDailyChallengeCard();
-    UpdateDailyChallengeCard();
+    ResolveRinseVisuals();
+}
+
+private void OnDisable()
+{
+    if (economyManager != null)
+        economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
+}
+
+private void SubscribeToEconomy()
+{
+    EconomyManager currentEconomyManager = EconomyManager.Instance;
+    if (currentEconomyManager == null)
+        return;
+
+    if (economyManager != null && economyManager != currentEconomyManager)
+        economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
+
+    economyManager = currentEconomyManager;
+    economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
+    economyManager.DishwashingLiquidPurchaseChanged += OnDishwashingLiquidPurchaseChanged;
+}
+
+private void OnDishwashingLiquidPurchaseChanged(bool purchased)
+{
+    RefreshDishwashingLiquidVisual();
+}
+
+private void RefreshDishwashingLiquidVisual()
+{
+    if (economyManager == null || !economyManager.HasPurchasedDishwashingLiquid)
+        return;
+
+    if (soap == null)
+    {
+        Debug.LogWarning("Dishwashing liquid was purchased, but the soap visual is not assigned.", this);
+        return;
+    }
+
+    Sprite liquidSprite = economyManager.DishwashingLiquidSprite;
+    if (liquidSprite == null)
+    {
+        Debug.LogWarning("Dishwashing liquid was purchased, but its sprite is not available.", this);
+        return;
+    }
+
+    Image soapImage = soap.GetComponentInChildren<Image>(true);
+    if (soapImage == null)
+    {
+        Debug.LogWarning("Dishwashing liquid visual has no UI Image to update.", soap);
+        return;
+    }
+
+    soapImage.sprite = liquidSprite;
+    soapImage.preserveAspect = true;
+}
+
+private void OnDestroy()
+{
+    if (waterStreamFrames != null)
+    {
+        foreach (Sprite frame in waterStreamFrames)
+        {
+            if (frame != null)
+                Destroy(frame);
+        }
+    }
+
+    if (waterOverlaySprite != null)
+        Destroy(waterOverlaySprite);
 }
 
 public void StartGame(Chore chore)
@@ -131,6 +215,7 @@ public void StartGame(Chore chore)
 
     currentChore = chore;
 
+    ResolveRinseVisuals();
 
     // RESET EVERYTHING FIRST
     ResetMiniGameState();
@@ -142,10 +227,6 @@ public void StartGame(Chore chore)
     {
         panel.SetActive(true);
     }
-
-    EnsureDailyChallengeCard();
-
-
 
     // ENABLE SPONGE AGAIN
     if(sponge != null)
@@ -272,17 +353,37 @@ public void StartGame(Chore chore)
             "1. Remove all leftovers and put them in the trash.\n" +
             "2. Add dishwashing liquid to the sponge.\n" +
             "3. Scrub each plate until clean.\n" +
-            "4. Rinse each plate under the faucet.\n" +
-            "5. Put the clean plates on the drying rack.",
+            "4. Put all clean plates in the rinsing area.\n" +
+            "5. Click the faucet and wait 3 seconds for the area to fill with water.\n" +
+            "6. Put the rinsed plates on the drying rack.",
             FinishTutorial
         );
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        GameObject pressedObject = eventData.pointerPressRaycast.gameObject;
+        if (faucet == null || pressedObject == null)
+            return;
+
+        Transform clickedTransform = pressedObject.transform;
+        if (clickedTransform != faucet && !clickedTransform.IsChildOf(faucet))
+            return;
+
+        if (currentStage != WashStage.Rinse ||
+            waterFilled ||
+            waterFillCoroutine != null ||
+            platesToRinse < currentPlateAmount)
+            return;
+
+        waterFillCoroutine = StartCoroutine(FillRinsingArea());
+    }
     private void Update()
 {
+    UpdateFaucetCue();
+
     if(!timerRunning)
         return;
-
-        elapsedRunTime += Time.deltaTime;
 
         currentTimer -= Time.deltaTime;
 
@@ -313,7 +414,6 @@ public void StartGame(Chore chore)
 private void FailDishwashing()
 {
     timerRunning = false;
-    ResolveDailyChallenge(false);
 
 
     Debug.Log(
@@ -362,7 +462,6 @@ if(manager != null)
 
     private void StartDishwashing()
     {
-        elapsedRunTime = 0f;
         currentStage = WashStage.RemoveLeftovers;
 
         Debug.Log("Dishwashing started!");
@@ -390,11 +489,6 @@ if(manager != null)
 
         if (leftoversRemaining <= 0)
         {
-            if (dailyChallenge == DailyChallenge.LeftoverDash)
-            {
-                ResolveDailyChallenge(elapsedRunTime <= 12f);
-            }
-
             StartAddSoap();
         }
     }
@@ -417,7 +511,7 @@ if(manager != null)
         Debug.Log("SoapAdded() received.");
         Debug.Log("Current stage: " + currentStage);
 
-        if (currentStage != WashStage.AddSoap)
+        if (!CanAddSoap())
         {
             Debug.LogWarning(
                 "Cannot add soap. Current stage is: " +
@@ -434,6 +528,13 @@ if(manager != null)
 
         EnablePlateScrubbing();
     }
+
+    public bool CanAddSoap()
+    {
+        return currentStage == WashStage.AddSoap &&
+            leftoversRemaining == 0;
+    }
+
     public bool CanScrubThisPlate(WashableDish dish)
 {
     return dish == currentScrubbingPlate;
@@ -541,7 +642,9 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
         currentStage != WashStage.Rinse)
         return;
 
-    // Count this plate as part of the rinse queue.
+    if (platesToRinse >= currentPlateAmount)
+        return;
+
     platesToRinse++;
 
     Debug.Log(
@@ -550,11 +653,11 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
         platesToRinse
     );
 
-    // Once the first scrubbed plate enters the rinse area,
-    // the player can start rinsing immediately.
     currentStage = WashStage.Rinse;
-
     Debug.Log("RINSE STAGE ACTIVE.");
+
+    // Allow the next plate to be scrubbed while this one waits in the rinse area.
+    EnableNextPlate();
 }
 
 
@@ -572,6 +675,9 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
 
  public void PlateRinsed(DishRinsePlate plate)
 {
+    if (currentStage != WashStage.Rinse || platesRinsed >= currentPlateAmount)
+        return;
+
     platesRinsed++;
     AwardComboScore(35, "Rinse bonus!");
 
@@ -585,7 +691,6 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
 
     if(platesRinsed < currentPlateAmount)
     {
-        EnableNextPlate();
         return;
     }
 
@@ -596,6 +701,390 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
 
 
     StartDrying();
+}
+
+private IEnumerator FillRinsingArea()
+{
+    waterFilled = false;
+    float fillDuration = Mathf.Max(0.1f, waterFillDuration);
+    RectTransform rinseRect = rinsingArea as RectTransform;
+    RectTransform parentRect = rinsingArea != null
+        ? rinsingArea.parent as RectTransform
+        : null;
+    bool streamPositionValid = waterStreamRect != null &&
+        rinseRect != null &&
+        parentRect != null &&
+        UpdateWaterStreamPosition(parentRect, rinseRect);
+
+    if (waterFillImage != null)
+    {
+        waterFillImage.fillAmount = 0f;
+        waterFillImage.gameObject.SetActive(true);
+    }
+
+    if (waterStreamImage != null)
+        waterStreamImage.gameObject.SetActive(streamPositionValid);
+
+    float elapsed = 0f;
+    int lastFrame = -1;
+    while (elapsed < fillDuration)
+    {
+        elapsed += Time.deltaTime;
+        float fillAmount = Mathf.Clamp01(elapsed / fillDuration);
+        if (waterFillImage != null)
+            waterFillImage.fillAmount = fillAmount;
+
+        UpdateWaterSurface(fillAmount);
+
+        if (waterStreamFrames != null && waterStreamFrames.Length > 0 &&
+            waterStreamImage != null)
+        {
+            int frame = (int)(elapsed * waterStreamFramesPerSecond) % waterStreamFrames.Length;
+            if (frame != lastFrame)
+            {
+                waterStreamImage.sprite = waterStreamFrames[frame];
+                lastFrame = frame;
+            }
+        }
+
+        yield return null;
+    }
+
+    if (waterFillImage != null)
+        waterFillImage.fillAmount = 1f;
+
+    UpdateWaterSurface(1f);
+
+    if (waterStreamImage != null)
+        waterStreamImage.gameObject.SetActive(false);
+
+    if (waterFillImage != null)
+        waterFillImage.gameObject.SetActive(false);
+
+    waterFilled = true;
+    waterFillCoroutine = null;
+
+    DishRinseArea area = rinsingArea != null
+        ? rinsingArea.GetComponent<DishRinseArea>()
+        : null;
+    if (area == null)
+    {
+        Debug.LogWarning("Dishwashing rinse could not finish because the rinsing area has no DishRinseArea component.");
+        yield break;
+    }
+
+    area.CompleteRinsing();
+}
+
+private void UpdateWaterSurface(float fillAmount)
+{
+    if (waterSurfaceImage == null || waterFillImage == null)
+        return;
+
+    RectTransform fillRect = waterFillImage.rectTransform;
+    RectTransform surfaceRect = waterSurfaceImage.rectTransform;
+    surfaceRect.anchoredPosition = new Vector2(
+        Mathf.Sin(Time.time * 5f) * 3f,
+        fillRect.rect.height * fillAmount);
+    waterSurfaceImage.gameObject.SetActive(fillAmount > 0.02f);
+
+    Color surfaceColor = waterSurfaceImage.color;
+    surfaceColor.a = 0.65f + (Mathf.Sin(Time.time * 7f) + 1f) * 0.12f;
+    waterSurfaceImage.color = surfaceColor;
+}
+
+private void ResolveRinseVisuals()
+{
+    Transform faucetParent = panel != null ? panel.transform : transform;
+    if (faucet == null)
+        faucet = FindDescendant(faucetParent, "Faucet");
+
+    if (waterStreamSpawnPoint == null && faucet != null)
+    {
+        waterStreamSpawnPoint = FindDescendant(faucet, "Water Stream Spawn Point");
+        if (waterStreamSpawnPoint == null)
+            waterStreamSpawnPoint = FindDescendant(faucet, "WaterStreamSpawnPoint");
+    }
+
+    if (faucet != null && faucetImage == null)
+    {
+        faucetImage = faucet.GetComponent<Image>();
+        if (faucetImage != null)
+        {
+            faucetOriginalColor = faucetImage.color;
+            faucetOriginalScale = faucet.localScale;
+            faucetOutline = faucetImage.GetComponent<Outline>();
+            if (faucetOutline == null)
+                faucetOutline = faucetImage.gameObject.AddComponent<Outline>();
+
+            faucetOutline.effectColor = new Color(0.3f, 0.9f, 1f, 0.95f);
+            faucetOutline.effectDistance = new Vector2(4f, 4f);
+            faucetOutline.enabled = false;
+        }
+    }
+
+    if (waterStreamFrames == null || waterStreamFrames.Length == 0)
+        CreateWaterStreamFrames();
+
+    if (rinsingArea == null)
+        return;
+
+    RectTransform rinseRect = rinsingArea as RectTransform;
+    RectTransform parentRect = rinsingArea.parent as RectTransform;
+    if (rinseRect == null || parentRect == null)
+        return;
+
+    if (waterFillImage == null)
+    {
+        if (waterOverlaySprite == null)
+        {
+            waterOverlaySprite = Sprite.Create(
+                Texture2D.whiteTexture,
+                new Rect(0f, 0f, 1f, 1f),
+                new Vector2(0.5f, 0.5f));
+        }
+
+        var waterObject = new GameObject(
+            "RinseWaterFill",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        RectTransform waterRect = waterObject.GetComponent<RectTransform>();
+        waterRect.SetParent(parentRect, false);
+        waterRect.anchorMin = rinseRect.anchorMin;
+        waterRect.anchorMax = rinseRect.anchorMax;
+        waterRect.anchoredPosition = rinseRect.anchoredPosition;
+        waterRect.sizeDelta = rinseRect.sizeDelta;
+        waterRect.pivot = rinseRect.pivot;
+        waterRect.localRotation = rinseRect.localRotation;
+        waterRect.localScale = rinseRect.localScale;
+        waterRect.SetSiblingIndex(rinseRect.GetSiblingIndex() + 1);
+
+        waterFillImage = waterObject.GetComponent<Image>();
+        waterFillImage.sprite = waterOverlaySprite;
+        waterFillImage.color = new Color(0.2f, 0.65f, 0.95f, 0.45f);
+        waterFillImage.type = Image.Type.Filled;
+        waterFillImage.fillMethod = Image.FillMethod.Vertical;
+        waterFillImage.fillOrigin = (int)Image.OriginVertical.Bottom;
+        waterFillImage.fillAmount = 0f;
+        waterFillImage.raycastTarget = false;
+        waterObject.SetActive(false);
+
+        var surfaceObject = new GameObject(
+            "RinseWaterSurface",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        RectTransform surfaceRect = surfaceObject.GetComponent<RectTransform>();
+        surfaceRect.SetParent(waterRect, false);
+        surfaceRect.anchorMin = new Vector2(0f, 0f);
+        surfaceRect.anchorMax = new Vector2(1f, 0f);
+        surfaceRect.pivot = new Vector2(0.5f, 0.5f);
+        surfaceRect.sizeDelta = new Vector2(-12f, 5f);
+        surfaceRect.anchoredPosition = Vector2.zero;
+
+        waterSurfaceImage = surfaceObject.GetComponent<Image>();
+        waterSurfaceImage.sprite = waterOverlaySprite;
+        waterSurfaceImage.color = new Color(0.72f, 0.96f, 1f, 0.8f);
+        waterSurfaceImage.raycastTarget = false;
+        surfaceObject.SetActive(false);
+    }
+
+    CreateWaterStream(parentRect, rinseRect);
+}
+
+private void CreateWaterStreamFrames()
+{
+    if (waterStreamSpriteSheet == null)
+    {
+        Debug.LogWarning("Dishwashing water stream sprite sheet is not assigned.");
+        return;
+    }
+
+    int frameCount = Mathf.Max(1, waterStreamFrameCount);
+    Rect sheetRect = new Rect(0f, 0f, waterStreamSpriteSheet.width, waterStreamSpriteSheet.height);
+    float frameWidth = sheetRect.width / frameCount;
+    waterStreamFrames = new Sprite[frameCount];
+
+    for (int i = 0; i < frameCount; i++)
+    {
+        Rect frameRect = new Rect(
+            sheetRect.x + i * frameWidth,
+            sheetRect.y,
+            frameWidth,
+            sheetRect.height);
+        waterStreamFrames[i] = Sprite.Create(
+            waterStreamSpriteSheet,
+            frameRect,
+            new Vector2(0.5f, 0.5f),
+            100f,
+            0,
+            SpriteMeshType.FullRect);
+        waterStreamFrames[i].name = "FaucetWaterStream_" + i;
+    }
+}
+
+private void CreateWaterStream(RectTransform parentRect, RectTransform rinseRect)
+{
+    if (waterStreamImage != null)
+        return;
+
+    if (faucet == null)
+    {
+        Debug.LogWarning("Dishwashing water stream could not spawn because the faucet was not found.");
+        return;
+    }
+
+    if (waterStreamFrames == null || waterStreamFrames.Length == 0)
+    {
+        Debug.LogWarning("Dishwashing water stream could not spawn because its sprite frames are unavailable.");
+        return;
+    }
+
+    if (waterFillImage == null)
+    {
+        Debug.LogWarning("Dishwashing water stream could not spawn because the rinse water UI was not created.");
+        return;
+    }
+
+    GameObject streamObject = new GameObject(
+        "FaucetWaterStream",
+        typeof(RectTransform),
+        typeof(CanvasRenderer),
+        typeof(Image));
+    waterStreamRect = streamObject.GetComponent<RectTransform>();
+    waterStreamRect.SetParent(parentRect, false);
+    waterStreamRect.anchorMin = waterStreamRect.anchorMax = parentRect.pivot;
+    waterStreamRect.pivot = new Vector2(0.5f, 1f);
+    waterStreamRect.localScale = new Vector3(1f, 3.395195f, 1f);
+
+    Sprite firstFrame = waterStreamFrames[0];
+    waterStreamImage = streamObject.GetComponent<Image>();
+    waterStreamImage.sprite = firstFrame;
+    waterStreamImage.color = Color.white;
+    waterStreamImage.preserveAspect = false;
+    waterStreamImage.raycastTarget = false;
+    streamObject.SetActive(false);
+
+    UpdateWaterStreamPosition(parentRect, rinseRect);
+}
+
+private bool UpdateWaterStreamPosition(RectTransform parentRect, RectTransform rinseRect)
+{
+    if (waterStreamRect == null || faucet == null || parentRect == null || rinseRect == null)
+        return false;
+
+    Vector3 streamStart;
+    if (waterStreamSpawnPoint != null)
+    {
+        streamStart = waterStreamSpawnPoint.position;
+    }
+    else if (faucet is RectTransform faucetRect)
+    {
+        streamStart = faucetRect.position -
+            faucetRect.up * (faucetRect.rect.height * faucetRect.lossyScale.y * 0.3f);
+    }
+    else
+    {
+        Debug.LogWarning("Dishwashing water stream has no valid faucet spawn point.");
+        return false;
+    }
+
+    Vector2 streamStartInParent = parentRect.InverseTransformPoint(streamStart);
+
+    Rect parentBounds = parentRect.rect;
+    if (Mathf.Approximately(parentBounds.width, 0f) ||
+        Mathf.Approximately(parentBounds.height, 0f))
+    {
+        Debug.LogWarning("Dishwashing water stream could not align because its UI parent has no size.");
+        return false;
+    }
+
+    Vector2 spawnAnchor = new Vector2(
+        (streamStartInParent.x - parentBounds.xMin) / parentBounds.width,
+        (streamStartInParent.y - parentBounds.yMin) / parentBounds.height);
+    waterStreamRect.anchorMin = spawnAnchor;
+    waterStreamRect.anchorMax = spawnAnchor;
+    waterStreamRect.anchoredPosition = new Vector2(0f, 42.9f);
+    waterStreamRect.sizeDelta = new Vector2(
+        waterStreamWidth,
+        waterStreamHeight);
+    waterStreamRect.localRotation = Quaternion.Euler(0f, 0f, -2.456f);
+    waterStreamRect.SetAsLastSibling();
+    return true;
+}
+
+private static Transform FindDescendant(Transform root, string targetName)
+{
+    if (root == null)
+        return null;
+
+    Transform[] descendants = root.GetComponentsInChildren<Transform>(true);
+    foreach (Transform descendant in descendants)
+    {
+        if (string.Equals(
+                descendant.name,
+                targetName,
+                System.StringComparison.OrdinalIgnoreCase))
+            return descendant;
+    }
+
+    return null;
+}
+
+private void UpdateFaucetCue()
+{
+    bool shouldHighlight = faucetOutline != null &&
+        currentStage == WashStage.Rinse &&
+        platesToRinse >= currentPlateAmount &&
+        !waterFilled &&
+        waterFillCoroutine == null;
+
+    if (faucetOutline != null)
+        faucetOutline.enabled = shouldHighlight;
+
+    if (faucetImage == null)
+        return;
+
+    if (shouldHighlight)
+    {
+        float pulse = (Mathf.Sin(Time.unscaledTime * 5f) + 1f) * 0.5f;
+        faucetImage.color = Color.Lerp(faucetOriginalColor, Color.white, pulse * 0.35f);
+        faucet.localScale = faucetOriginalScale * (1f + pulse * 0.08f);
+    }
+    else
+    {
+        faucetImage.color = faucetOriginalColor;
+        faucet.localScale = faucetOriginalScale;
+    }
+}
+
+private void ResetRinseState()
+{
+    if (waterFillCoroutine != null)
+    {
+        StopCoroutine(waterFillCoroutine);
+        waterFillCoroutine = null;
+    }
+
+    if (waterFillImage != null)
+    {
+        waterFillImage.fillAmount = 0f;
+        waterFillImage.gameObject.SetActive(false);
+    }
+
+    if (waterSurfaceImage != null)
+        waterSurfaceImage.gameObject.SetActive(false);
+
+    if (waterStreamImage != null)
+        waterStreamImage.gameObject.SetActive(false);
+
+    waterFilled = false;
+    DishRinseArea area = rinsingArea != null
+        ? rinsingArea.GetComponent<DishRinseArea>()
+        : null;
+    if (area != null)
+        area.ResetArea();
 }
     private void StartDrying()
 {
@@ -823,14 +1312,6 @@ private void ResetSponge()
  public void CompleteGame()
 {
     SoundEffectManager.Play("ChoreFinished");
-    if (dailyChallenge == DailyChallenge.RushFinish)
-    {
-        ResolveDailyChallenge(currentTimer >= 30f);
-    }
-    else if (!dailyChallengeResolved)
-    {
-        ResolveDailyChallenge(false);
-    }
 
     timerRunning = false;
 
@@ -862,6 +1343,18 @@ private void ResetSponge()
     // COMPLETE CHORE
     if(currentChore != null)
     {
+        DayManager resolvedDayManager = dayManager != null
+            ? dayManager
+            : (DayManager.Instance != null
+                ? DayManager.Instance
+                : FindFirstObjectByType<DayManager>());
+        if (resolvedDayManager != null)
+        {
+            resolvedDayManager.ResolveDailyAdditionalQuest(
+                currentChore,
+                currentTimer >= resolvedDayManager.DailyQuestDishwashingTimeRemaining);
+        }
+
         currentChore.Complete();
     }
 
@@ -897,7 +1390,6 @@ private void UpdateTimerUI()
     int minutes = Mathf.FloorToInt(currentTimer / 60);
     int seconds = Mathf.FloorToInt(currentTimer % 60);
     SetTimerText(string.Format("{0:00}:{1:00}", minutes, seconds));
-    UpdateDailyChallengeCard();
 
     UpdateScoreUI();
 }
@@ -911,145 +1403,6 @@ private void SetTimerText(string value)
     else if (timerText is TMP_Text tmpText)
     {
         tmpText.text = value;
-    }
-}
-
-private void EnsureDailyChallengeCard()
-{
-    if (dailyChallengeCard != null)
-        return;
-
-    Canvas canvas = panel != null ? panel.GetComponentInParent<Canvas>() : null;
-    if (canvas == null)
-    {
-        Debug.LogError(
-            "DishwashingMiniGame cannot display the optional challenge because it is not under a Canvas.",
-            this
-        );
-        return;
-    }
-
-    Transform existingCard = canvas.transform.Find("OptionalDailyChallengeCard");
-    if (existingCard != null)
-    {
-        dailyChallengeCard = existingCard.gameObject;
-        dailyChallengeText = existingCard.Find("ChallengeText")
-            ?.GetComponent<TMP_Text>();
-        return;
-    }
-
-    dailyChallengeCard = new GameObject(
-        "OptionalDailyChallengeCard",
-        typeof(RectTransform),
-        typeof(CanvasRenderer),
-        typeof(Image)
-    );
-    dailyChallengeCard.transform.SetParent(canvas.transform, false);
-    dailyChallengeCard.transform.SetAsLastSibling();
-
-    RectTransform cardRect = dailyChallengeCard.GetComponent<RectTransform>();
-    cardRect.anchorMin = new Vector2(0f, 1f);
-    cardRect.anchorMax = new Vector2(0f, 1f);
-    cardRect.pivot = new Vector2(0f, 1f);
-    cardRect.anchoredPosition = new Vector2(24f, -24f);
-    cardRect.sizeDelta = new Vector2(350f, 112f);
-
-    Image background = dailyChallengeCard.GetComponent<Image>();
-    background.color = new Color(0.07f, 0.12f, 0.14f, 0.96f);
-    background.raycastTarget = false;
-
-    dailyChallengeText = CreateChallengeText(
-        "ChallengeText",
-        dailyChallengeCard.transform,
-        16f,
-        FontStyles.Normal,
-        new Vector2(14f, -12f),
-        new Vector2(322f, 88f)
-    );
-}
-
-private static TMP_Text CreateChallengeText(
-    string objectName,
-    Transform parent,
-    float fontSize,
-    FontStyles fontStyle,
-    Vector2 anchoredPosition,
-    Vector2 size
-)
-{
-    GameObject textObject = new GameObject(
-        objectName,
-        typeof(RectTransform),
-        typeof(CanvasRenderer),
-        typeof(TextMeshProUGUI)
-    );
-    textObject.transform.SetParent(parent, false);
-
-    RectTransform rect = textObject.GetComponent<RectTransform>();
-    rect.anchorMin = new Vector2(0f, 1f);
-    rect.anchorMax = new Vector2(0f, 1f);
-    rect.pivot = new Vector2(0f, 1f);
-    rect.anchoredPosition = anchoredPosition;
-    rect.sizeDelta = size;
-
-    TextMeshProUGUI text = textObject.GetComponent<TextMeshProUGUI>();
-    if (TMP_Settings.defaultFontAsset != null)
-        text.font = TMP_Settings.defaultFontAsset;
-    text.fontSize = fontSize;
-    text.fontStyle = fontStyle;
-    text.color = Color.white;
-    text.alignment = TextAlignmentOptions.TopLeft;
-    text.enableWordWrapping = true;
-    text.raycastTarget = false;
-    return text;
-}
-
-private void UpdateDailyChallengeCard()
-{
-    if (dailyChallengeText == null)
-        return;
-
-    if (!string.IsNullOrEmpty(dailyChallengeResult))
-    {
-        dailyChallengeText.text = "DAILY CHALLENGE: " +
-            dailyChallengeLabel.ToUpperInvariant() + "\n" +
-            dailyChallengeResult;
-        return;
-    }
-
-    if (!timerRunning)
-    {
-        dailyChallengeText.text = "DAILY CHALLENGE: " +
-            dailyChallengeLabel.ToUpperInvariant() +
-            "\nOptional dishwashing bonus\nReward: +" +
-            dailyChallengeRewardCoins + " coins";
-        return;
-    }
-
-    switch (dailyChallenge)
-    {
-        case DailyChallenge.RushFinish:
-            dailyChallengeText.text =
-                "DAILY CHALLENGE: " + dailyChallengeLabel.ToUpperInvariant() +
-                "\nFinish with 30+ seconds left\nTime remaining: " +
-                Mathf.CeilToInt(currentTimer) + "s | Reward: +" +
-                dailyChallengeRewardCoins + " coins";
-            break;
-        case DailyChallenge.ComboStreak:
-            dailyChallengeText.text =
-                "DAILY CHALLENGE: " + dailyChallengeLabel.ToUpperInvariant() +
-                "\nBuild a combo of 3\nCurrent streak: " +
-                Mathf.Min(currentCombo, 3) + "/3 | Reward: +" +
-                dailyChallengeRewardCoins + " coins";
-            break;
-        case DailyChallenge.LeftoverDash:
-            dailyChallengeText.text =
-                "DAILY CHALLENGE: " + dailyChallengeLabel.ToUpperInvariant() +
-                "\nClear leftovers in 12 seconds\nLeft: " +
-                leftoversRemaining + " | Time: " +
-                Mathf.FloorToInt(elapsedRunTime) + "s | Reward: +" +
-                dailyChallengeRewardCoins + " coins";
-            break;
     }
 }
 
@@ -1087,12 +1440,6 @@ private void AwardComboScore(int baseScore, string message)
         currentCombo++;
     }
 
-    if (dailyChallenge == DailyChallenge.ComboStreak &&
-        currentCombo >= 3)
-    {
-        ResolveDailyChallenge(true);
-    }
-
     comboTimer = comboWindow;
 
     float multiplier = 1f + (currentCombo - 1) * 0.35f;
@@ -1100,7 +1447,6 @@ private void AwardComboScore(int baseScore, string message)
 
     currentScore += awardedScore;
     currentTimer = Mathf.Min(dishwashingTime, currentTimer + 0.2f + currentCombo * 0.12f);
-    UpdateDailyChallengeCard();
 
     if(!string.IsNullOrEmpty(message))
     {
@@ -1112,6 +1458,8 @@ private void AwardComboScore(int baseScore, string message)
 
 private void ResetMiniGameState()
 {
+    ResetRinseState();
+
     leftoversRemaining = 0;
 
     platesRemaining = 0;
@@ -1123,11 +1471,6 @@ private void ResetMiniGameState()
     currentScore = 0;
     currentCombo = 0;
     comboTimer = 0f;
-    elapsedRunTime = 0f;
-    dailyChallengeLabel = "";
-    dailyChallengeResult = "";
-    dailyChallengeResolved = false;
-    dailyChallenge = DailyChallenge.RushFinish;
 
 
     currentScrubbingPlate = null;
@@ -1227,22 +1570,6 @@ private void ApplyDayDifficulty()
             break;
     }
 
-    switch ((day - 1) % 3)
-    {
-        case 0:
-            dailyChallenge = DailyChallenge.RushFinish;
-            dailyChallengeLabel = "Rush Finish";
-            break;
-        case 1:
-            dailyChallenge = DailyChallenge.ComboStreak;
-            dailyChallengeLabel = "Combo Streak";
-            break;
-        default:
-            dailyChallenge = DailyChallenge.LeftoverDash;
-            dailyChallengeLabel = "Leftover Dash";
-            break;
-    }
-
     UpdateTimerUI();
 
     Debug.Log(
@@ -1251,38 +1578,6 @@ private void ApplyDayDifficulty()
         " Plates: " +
         currentPlateAmount
     );
-}
-
-private void ResolveDailyChallenge(bool completed)
-{
-    if (dailyChallengeResolved)
-        return;
-
-    dailyChallengeResolved = true;
-    if (completed)
-    {
-        EconomyManager economyManager = EconomyManager.Instance;
-        if (economyManager != null)
-        {
-            economyManager.AddCoins(dailyChallengeRewardCoins);
-            dailyChallengeResult = "COMPLETED! +" +
-                dailyChallengeRewardCoins + " coins";
-        }
-        else
-        {
-            dailyChallengeResult = "COMPLETED! Reward unavailable";
-            Debug.LogError(
-                "Daily dishwashing challenge completed, but EconomyManager is unavailable.",
-                this
-            );
-        }
-    }
-    else
-    {
-        dailyChallengeResult = "Not completed - no penalty";
-    }
-
-    UpdateDailyChallengeCard();
 }
 
 }

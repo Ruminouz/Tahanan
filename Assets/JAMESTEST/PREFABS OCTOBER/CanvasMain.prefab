@@ -1409,6 +1409,10 @@ MonoBehaviour:
   fryingPanScrubRateMultiplier: 0.72
   maximumDishScatter: 18
   rinsingArea: {fileID: 3698712194285369426}
+  waterFillDuration: 3
+  waterStreamSpriteSheet: {fileID: 2800000, guid: 14cec9d13fdf7a140b195bd8e65a9b05, type: 3}
+  waterStreamFrameCount: 8
+  waterStreamFramesPerSecond: 12
   dryingRack: {fileID: 5684249230112412076}
   tutorial: {fileID: 0}
 --- !u!1 &884546171142799374
@@ -1597,10 +1601,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WasteSpawner
   minimumDistanceBetweenToys: 200
-  leafPrefab: {fileID: 3657187560689947137, guid: d5260a27d07caef43b6149fb2e52bf4e, type: 3}
-  bottlePrefab: {fileID: 1783231392314788191, guid: da81aab4ca987a74688e6f1e142de6bb, type: 3}
-  wrapperPrefab: {fileID: 2423061027922943701, guid: f4da892c31edd864c828fa47d7b1642b, type: 3}
-  wormPrefab: {fileID: 6014796658178622443, guid: c9e0b93d2c094e643b6ccf52d04b727b, type: 3}
+  toySprites:
+  - {fileID: -8648943487719732145, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 3622615083720987861, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -2992271137422973184, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -3910683414637180764, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -41988433006847486, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -6191173665105976869, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -8440507175559472757, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 6584128545534808457, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
 --- !u!1 &967828457056135710
 GameObject:
   m_ObjectHideFlags: 0
@@ -4789,7 +4798,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4809,7 +4818,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 4360139126578713888}
   m_FillRect: {fileID: 7188922363055269874}
   m_HandleRect: {fileID: 7202189525334044130}
@@ -6020,7 +6029,7 @@ GameObject:
   - component: {fileID: 2099293251172065034}
   - component: {fileID: 4603567515844757553}
   m_Layer: 5
-  m_Name: UpgradedBroomUI
+  m_Name: UpgradedVacuumUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6073,9 +6082,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8028649828709036675, guid: 0e4da8b7abc7af74c970ea2a6bc4191c, type: 3}
+  m_Sprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -6132,10 +6141,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WasteSpawner
   minimumDistanceBetweenToys: 80
-  leafPrefab: {fileID: 3657187560689947137, guid: d5260a27d07caef43b6149fb2e52bf4e, type: 3}
-  bottlePrefab: {fileID: 1783231392314788191, guid: da81aab4ca987a74688e6f1e142de6bb, type: 3}
-  wrapperPrefab: {fileID: 2423061027922943701, guid: f4da892c31edd864c828fa47d7b1642b, type: 3}
-  wormPrefab: {fileID: 6014796658178622443, guid: c9e0b93d2c094e643b6ccf52d04b727b, type: 3}
+  toySprites:
+  - {fileID: -8648943487719732145, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 3622615083720987861, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -2992271137422973184, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -3910683414637180764, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -41988433006847486, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -6191173665105976869, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -8440507175559472757, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 6584128545534808457, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
 --- !u!1 &3151737694270477943
 GameObject:
   m_ObjectHideFlags: 0
@@ -6627,7 +6641,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -6647,7 +6661,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 3253007440489645735}
   m_FillRect: {fileID: 2673946361387977105}
   m_HandleRect: {fileID: 4324988250501774009}
@@ -8147,7 +8161,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -8167,7 +8181,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 5379798723866725127}
   m_FillRect: {fileID: 798983408300160264}
   m_HandleRect: {fileID: 5861484543213890585}
@@ -9605,6 +9619,7 @@ MonoBehaviour:
   catSpawnPoint: {fileID: 0}
   mopUpgradeIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
   catIcon: {fileID: -7232521027535748977, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
+  dishwashingLiquidIcon: {fileID: 4398864269921876113, guid: 562166918a4224a40afc89f9f5583164, type: 3}
 --- !u!114 &1385771555240014274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9622,7 +9637,7 @@ MonoBehaviour:
   statusText: {fileID: 5450267266512389902}
   buyButton: {fileID: 141125348969062732}
   closeButton: {fileID: 7693507794133672397}
-  broomUpgradeIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  vacuumUpgradeIcon: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
 --- !u!1 &4796930568089554187
 GameObject:
   m_ObjectHideFlags: 0
@@ -10142,6 +10157,16 @@ MonoBehaviour:
   broomDownSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   broomLeftSprite: {fileID: -1291012852715099164, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   broomRightSprite: {fileID: 663463509561187115, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  vacuumAnimationFrames:
+  - {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -1541953373, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -662251031, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -276013549, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -6011010548061803210, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -693667511, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: 256182693, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -5921757237261147061, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  vacuumAnimationFramesPerSecond: 8
   brushColliderOffset: {x: 0, y: -28}
   brushColliderRadius: 100
   minimumStrokeDistance: 35
@@ -10411,6 +10436,7 @@ MonoBehaviour:
   chocolateSprite: {fileID: 8386067457128398079, guid: aab55cf87ab958d46981b995b26257f7, type: 3}
   extraTimeSprite: {fileID: -7754988575891523622, guid: 8d782902958a6354797c1a649a2949a0, type: 3}
   broomSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  vacuumSprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   mopSprite: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
   garbageBagSprite: {fileID: -1984049885866873280, guid: 84f25f985d9b459489ba4ce0a630f699, type: 3}
 --- !u!1 &5079518721244795791
@@ -10920,7 +10946,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -10940,7 +10966,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2885293801793336759}
   m_FillRect: {fileID: 7718785155565963365}
   m_HandleRect: {fileID: 6328633652262699729}
@@ -13575,7 +13601,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -13595,7 +13621,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 3800354348350725197}
   m_FillRect: {fileID: 4395331002057296586}
   m_HandleRect: {fileID: 7941066898288973242}
@@ -13786,7 +13812,7 @@ GameObject:
   - component: {fileID: 526490041085850081}
   - component: {fileID: 2091053044977655623}
   m_Layer: 5
-  m_Name: UpgradedBroomUI
+  m_Name: UpgradedVacuumUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13839,9 +13865,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8028649828709036675, guid: 0e4da8b7abc7af74c970ea2a6bc4191c, type: 3}
+  m_Sprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -13907,7 +13933,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -13927,7 +13953,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 4613586391145947201}
   m_FillRect: {fileID: 8854983983712492908}
   m_HandleRect: {fileID: 4110498173104171738}
@@ -15677,7 +15703,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -15697,7 +15723,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 7566409413034408614}
   m_FillRect: {fileID: 5748439007898759598}
   m_HandleRect: {fileID: 3958647490906806602}
@@ -18629,8 +18655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteMiniGame
   panel: {fileID: 8874486314664870627}
   spawnArea: {fileID: 4887193901625285417}
-  dropZones:
-  - {fileID: 8990120046960734458}
+  boxDropZone: {fileID: 8990120046960734458}
   toysRemainingText: {fileID: 313159560638854592}
   progressText: {fileID: 4051141455096319098}
   spawner: {fileID: 3386473586571317956}

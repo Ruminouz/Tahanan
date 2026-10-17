@@ -8,6 +8,7 @@ public class WaypointMover : MonoBehaviour
 
     public float waitTime = 2f;
     public bool loopWaypoints = true;
+    [SerializeField] private int[] waypointOrderOverride;
 
     [Header("Collision Avoidance")]
     [SerializeField] private LayerMask obstacleLayers = ~0;
@@ -92,15 +93,28 @@ public class WaypointMover : MonoBehaviour
 
         if (waypoints == null || waypoints.Length == 0)
         {
-            return stayOnWaypointsWhenRouteUnavailable
-                ? Vector2.zero
-                : GetMovementTowards(target, speed);
+            return GetMovementTowards(target, speed);
         }
 
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
         LayerMask routeObstacleLayers = stayOnWaypointsWhenRouteUnavailable
             ? GetChoreObstacleLayers(taggedPlayerObstacle)
             : obstacleLayers;
+        if (stayOnWaypointsWhenRouteUnavailable &&
+            HasClearChorePath(currentPosition, target, routeObstacleLayers, taggedPlayerObstacle))
+        {
+            waypointRoute = null;
+            waypointRouteIndex = 0;
+            waypointRouteTarget = target;
+            currentPath = null;
+            currentPathIndex = 0;
+            return GetMovementAlongChoreSegment(
+                target,
+                speed,
+                routeObstacleLayers,
+                taggedPlayerObstacle);
+        }
+
         if (waypointRoute == null ||
             (!stayOnWaypointsWhenRouteUnavailable &&
              waypointRoute.Count > 0 &&
@@ -131,7 +145,7 @@ public class WaypointMover : MonoBehaviour
 
             if (waypointRoute.Count == 0 ||
                 !HasClearChorePath(currentPosition, target, routeObstacleLayers, taggedPlayerObstacle))
-                return Vector2.zero;
+                return GetMovementTowards(target, speed);
 
             return GetMovementAlongChoreSegment(
                 target,
@@ -144,7 +158,7 @@ public class WaypointMover : MonoBehaviour
         {
             Vector2 nextWaypoint = waypoints[waypointRoute[waypointRouteIndex]].position;
             if (!HasClearChorePath(currentPosition, nextWaypoint, routeObstacleLayers, taggedPlayerObstacle))
-                return Vector2.zero;
+                return GetMovementTowards(nextWaypoint, speed);
 
             return GetMovementAlongChoreSegment(
                 nextWaypoint,
@@ -217,13 +231,50 @@ public class WaypointMover : MonoBehaviour
 
     private void CacheWaypoints()
     {
-        waypoints = new Transform[waypointParent.childCount];
-
+        var uniqueWaypoints = new List<Transform>(waypointParent.childCount);
         for (int i = 0; i < waypointParent.childCount; i++)
         {
-            waypoints[i] = waypointParent.GetChild(i);
+            Transform waypoint = waypointParent.GetChild(i);
+            bool duplicatesExistingPoint = false;
+            foreach (Transform existingWaypoint in uniqueWaypoints)
+            {
+                if (((Vector2)waypoint.position - (Vector2)existingWaypoint.position).sqrMagnitude <= 0.0001f)
+                {
+                    duplicatesExistingPoint = true;
+                    break;
+                }
+            }
+
+            if (!duplicatesExistingPoint)
+                uniqueWaypoints.Add(waypoint);
         }
 
+        if (waypointOrderOverride != null && waypointOrderOverride.Length > 0)
+        {
+            var orderedWaypoints = new List<Transform>(uniqueWaypoints.Count);
+            var addedIndices = new bool[uniqueWaypoints.Count];
+            foreach (int waypointIndex in waypointOrderOverride)
+            {
+                if (waypointIndex < 0 ||
+                    waypointIndex >= uniqueWaypoints.Count ||
+                    addedIndices[waypointIndex])
+                    continue;
+
+                orderedWaypoints.Add(uniqueWaypoints[waypointIndex]);
+                addedIndices[waypointIndex] = true;
+            }
+
+            for (int waypointIndex = 0; waypointIndex < uniqueWaypoints.Count; waypointIndex++)
+            {
+                if (!addedIndices[waypointIndex])
+                    orderedWaypoints.Add(uniqueWaypoints[waypointIndex]);
+            }
+
+            if (orderedWaypoints.Count > 0)
+                uniqueWaypoints = orderedWaypoints;
+        }
+
+        waypoints = uniqueWaypoints.ToArray();
         activeWaypoints = waypoints;
     }
 
@@ -273,7 +324,6 @@ public class WaypointMover : MonoBehaviour
 
         Transform target = activeWaypoints[currentWaypointIndex];
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
-        Vector2 toTarget = (Vector2)target.position - currentPosition;
         Vector2 navigationTarget = GetPathTarget(currentPosition, target.position);
         float step = moveSpeed * Time.deltaTime;
         Vector2 movement = Vector2.ClampMagnitude(navigationTarget - currentPosition, step);
@@ -285,8 +335,8 @@ public class WaypointMover : MonoBehaviour
             obstacleLayers,
             collisionPadding);
 
-        float previousDistance = toTarget.magnitude;
-        float nextDistance = Vector2.Distance(currentPosition + safeMovement, target.position);
+        float previousDistance = Vector2.Distance(currentPosition, navigationTarget);
+        float nextDistance = Vector2.Distance(currentPosition + safeMovement, navigationTarget);
         bool madeProgress = safeMovement.magnitude > minimumProgress && nextDistance < previousDistance;
         stuckTimer = madeProgress ? 0f : stuckTimer + Time.deltaTime;
 
@@ -313,10 +363,17 @@ public class WaypointMover : MonoBehaviour
 
     public Vector2 GetMovementTowards(Vector2 target, float speed)
     {
+        return GetMovementTowards(target, speed, true);
+    }
+
+    public Vector2 GetMovementTowards(Vector2 target, float speed, bool useNpcSeparation)
+    {
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
         Vector2 navigationTarget = GetPathTarget(currentPosition, target);
         Vector2 movement = Vector2.ClampMagnitude(navigationTarget - currentPosition, speed * Time.deltaTime);
-        movement = NPCMovement2D.GetSeparationMovement(this, currentPosition, movement, personalSpace);
+        if (useNpcSeparation)
+            movement = NPCMovement2D.GetSeparationMovement(this, currentPosition, movement, personalSpace);
+
         return NPCMovement2D.GetCollisionSafeMovement(
             bodyCollider,
             movement,
@@ -340,6 +397,14 @@ public class WaypointMover : MonoBehaviour
 
     private Vector2 GetPathTarget(Vector2 currentPosition, Vector2 target)
     {
+        if (HasClearPathBetween(currentPosition, target))
+        {
+            currentPath = null;
+            currentPathIndex = 0;
+            pathTarget = target;
+            return target;
+        }
+
         if (currentPath == null ||
             currentPathIndex >= currentPath.Count ||
             (target - pathTarget).sqrMagnitude > navigationCellSize * navigationCellSize)
@@ -609,9 +674,6 @@ public class WaypointMover : MonoBehaviour
         if (distance <= 0.0001f)
             return true;
 
-        float radius = bodyCollider != null
-            ? Mathf.Max(bodyCollider.bounds.extents.x, bodyCollider.bounds.extents.y)
-            : 0f;
         ContactFilter2D filter = new ContactFilter2D
         {
             useLayerMask = true,
@@ -619,13 +681,37 @@ public class WaypointMover : MonoBehaviour
         };
         filter.SetLayerMask(layers);
 
-        int hitCount = Physics2D.CircleCast(
-            start,
-            radius + collisionPadding,
-            direction / distance,
-            filter,
-            PathCastResults,
-            distance);
+        int hitCount;
+        if (bodyCollider is BoxCollider2D boxCollider)
+        {
+            Vector3 scale = boxCollider.transform.lossyScale;
+            Vector2 size = Vector2.Scale(
+                boxCollider.size,
+                new Vector2(Mathf.Abs(scale.x), Mathf.Abs(scale.y)));
+            Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
+            Vector2 colliderOffset = (Vector2)bodyCollider.bounds.center - currentPosition;
+            hitCount = Physics2D.BoxCast(
+                start + colliderOffset,
+                size,
+                boxCollider.transform.eulerAngles.z,
+                direction / distance,
+                filter,
+                PathCastResults,
+                distance + collisionPadding);
+        }
+        else
+        {
+            float radius = bodyCollider != null
+                ? Mathf.Max(bodyCollider.bounds.extents.x, bodyCollider.bounds.extents.y)
+                : 0f;
+            hitCount = Physics2D.CircleCast(
+                start,
+                radius + collisionPadding,
+                direction / distance,
+                filter,
+                PathCastResults,
+                distance);
+        }
 
         for (int i = 0; i < hitCount; i++)
         {

@@ -259,6 +259,7 @@ private void CompleteGame()
     if(currentChore == null)
         return;
 
+    ResolveDailyQuest(mistakes == 0);
 
     Debug.Log(
         "Garbage Sorting Complete!"
@@ -299,6 +300,8 @@ private void CompleteGame()
 
     if (currentChore != null)
     {
+        ResolveDailyQuest(false);
+
         if (currentChore is GarbageChore garbageChore)
         {
             garbageChore.ConsumeCarriedBag();
@@ -318,6 +321,13 @@ private void CompleteGame()
 
     currentChore = null;
 
+}
+
+private void ResolveDailyQuest(bool metChallenge)
+{
+    DayManager resolvedDayManager = ResolveDayManager();
+    if (resolvedDayManager != null)
+        resolvedDayManager.ResolveDailyAdditionalQuest(currentChore, metChallenge);
 }
 
 

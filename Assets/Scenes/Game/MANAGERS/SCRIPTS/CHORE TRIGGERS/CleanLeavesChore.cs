@@ -1,18 +1,22 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CleanLeavesChore : Chore
 {
-    [SerializeField] private CleanLeavesMiniGame miniGame;
-    [SerializeField] private SegregateWasteMiniGame segregationMiniGame;
+    [FormerlySerializedAs("segregationMiniGame")]
+    [SerializeField] private SegregateWasteMiniGame toyPickupMiniGame;
 
     private DayManager dayManager;
 
     private void Awake()
     {
-        SetChoreName("Segregate Waste");
+        SetChoreName("Clean Leaves");
 
-        if (segregationMiniGame == null)
-            segregationMiniGame = FindFirstObjectByType<SegregateWasteMiniGame>();
+        if (toyPickupMiniGame == null)
+        {
+            toyPickupMiniGame = FindFirstObjectByType<SegregateWasteMiniGame>(
+                FindObjectsInactive.Include);
+        }
     }
 
     private bool IsAvailableToday()
@@ -25,7 +29,7 @@ public class CleanLeavesChore : Chore
         }
 
         int day = dayManager != null ? dayManager.CurrentDay : 1;
-        return day >= 2 && day <= 7;
+        return day >= 2;
     }
 
     public override bool CanInteract()
@@ -37,18 +41,18 @@ public class CleanLeavesChore : Chore
     {
         if (!IsAvailableToday())
         {
-            Debug.Log("Segregate Waste is available from Day 2 to Day 7 only.");
+            Debug.Log("Clean Leaves is available from Day 2 onward.");
             return;
         }
 
-        if (segregationMiniGame != null)
+        if (toyPickupMiniGame != null)
         {
-            Debug.Log("Starting Segregate Waste Mini-Game!");
-            segregationMiniGame.StartGame(this);
+            Debug.Log("Starting Clean Leaves toy-pickup mini-game!");
+            toyPickupMiniGame.StartGame(this);
         }
         else
         {
-            Debug.LogWarning("Segregate Waste Mini-Game is not assigned!");
+            Debug.LogWarning("Toy-pickup mini-game is not assigned!");
         }
     }
 }

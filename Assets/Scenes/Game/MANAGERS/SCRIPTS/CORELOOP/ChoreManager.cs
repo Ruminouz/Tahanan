@@ -43,6 +43,11 @@ public class ChoreManager : MonoBehaviour
 
     public void CompleteChore(int points)
     {
+        CompleteChore(points, false);
+    }
+
+    private void CompleteChore(int points, bool completedByHelper)
+    {
         completedChores++;
 
         totalPoints += points;
@@ -53,7 +58,12 @@ public class ChoreManager : MonoBehaviour
 
         MoodManager moodManager = FindFirstObjectByType<MoodManager>();
         if (moodManager != null)
-            moodManager.HandleCompletedChore();
+        {
+            if (completedByHelper)
+                moodManager.AddMood(-10f);
+            else
+                moodManager.HandleCompletedChore();
+        }
 
 
         Debug.Log("Chore Completed!");
@@ -75,7 +85,14 @@ public class ChoreManager : MonoBehaviour
         if (chore != null && chore.RemainingDeadline > 0f)
             earnedPoints += earlyBonusPoints;
 
-        CompleteChore(earnedPoints);
+        CompleteChore(earnedPoints, chore != null && WasCompletedByHelper(chore));
+    }
+
+    public void ApplyHelperMoodCost()
+    {
+        MoodManager moodManager = FindFirstObjectByType<MoodManager>();
+        if (moodManager != null)
+            moodManager.AddMood(-10f);
     }
 
 
@@ -105,20 +122,22 @@ public class ChoreManager : MonoBehaviour
     // NEW VERSION
     public void MissChore(Chore chore)
     {
-        missedChores++;
-        ChoreMissed?.Invoke(chore);
+        if (chore != null && (chore.IsCompleted || chore.IsMissed))
+            return;
 
+        missedChores++;
 
         if (chore != null)
         {
+            chore.MarkAsMissed();
+
             Debug.Log(
                 chore.ChoreName +
                 " Marked as Missed!"
             );
-
-            chore.MarkAsMissed();
         }
 
+        ChoreMissed?.Invoke(chore);
 
         Debug.Log(
             "Missed Chores: " +

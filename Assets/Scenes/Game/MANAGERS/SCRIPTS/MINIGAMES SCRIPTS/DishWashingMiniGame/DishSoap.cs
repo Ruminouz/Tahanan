@@ -10,6 +10,9 @@ public class DishSoap : MonoBehaviour
         if (sponge == null)
             return;
 
+        if (!sponge.AddSoap())
+            return;
+
         float timeSinceLastSoapSfx = Time.time - lastSoapSfxTime;
         if (timeSinceLastSoapSfx >= SoapSfxCooldown)
         {
@@ -18,7 +21,5 @@ public class DishSoap : MonoBehaviour
         }
 
         Debug.Log("Sponge touched dishwashing liquid.");
-
-        sponge.AddSoap();
     }
 }

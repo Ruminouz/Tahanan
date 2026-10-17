@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.27503014, b: 1, a: 1}
@@ -2704,7 +2704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6934655283525245778
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2948,7 +2948,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2968,7 +2968,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 6961356692320953990}
   m_FillRect: {fileID: 5714906733548009493}
   m_HandleRect: {fileID: 8401560253351559170}
@@ -4353,8 +4353,22 @@ MonoBehaviour:
   broomDownSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   broomLeftSprite: {fileID: -1291012852715099164, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   broomRightSprite: {fileID: 663463509561187115, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  vacuumAnimationFrames:
+  - {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -1541953373, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -662251031, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -276013549, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -6011010548061803210, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -693667511, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: 256182693, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  - {fileID: -5921757237261147061, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  vacuumAnimationFramesPerSecond: 8
   brushColliderOffset: {x: 0, y: -28}
   brushColliderRadius: 100
+  vacuumNozzleOffset: {x: 0, y: 35}
+  vacuumSuctionRadius: 180
+  vacuumSuctionSpeed: 650
+  vacuumSuctionFadeSpeed: 2.5
   minimumStrokeDistance: 35
   minimumSweepSpeed: 80
   sweepBonusMultiplier: 1.75
@@ -4560,7 +4574,7 @@ GameObject:
   - component: {fileID: 564933842767487267}
   - component: {fileID: 4638962502956127529}
   m_Layer: 5
-  m_Name: UpgradedBroomUI
+  m_Name: UpgradedVacuumUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4613,9 +4627,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8028649828709036675, guid: 0e4da8b7abc7af74c970ea2a6bc4191c, type: 3}
+  m_Sprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -4641,7 +4655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7995284324756379075
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5421,7 +5435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7148853429727321486
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6363,7 +6377,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -6383,7 +6397,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 9005527653008895860}
   m_FillRect: {fileID: 1761256321450212711}
   m_HandleRect: {fileID: 8417548664145031252}
@@ -8020,6 +8034,7 @@ MonoBehaviour:
   catSpawnPoint: {fileID: 0}
   mopUpgradeIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
   catIcon: {fileID: -7232521027535748977, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
+  dishwashingLiquidIcon: {fileID: 4398864269921876113, guid: 562166918a4224a40afc89f9f5583164, type: 3}
 --- !u!114 &3846898025652169751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8037,7 +8052,7 @@ MonoBehaviour:
   statusText: {fileID: 142165914111417204}
   buyButton: {fileID: 1532249510517768138}
   closeButton: {fileID: 8456375768233427567}
-  broomUpgradeIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  vacuumUpgradeIcon: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
 --- !u!1 &4510546254457828161
 GameObject:
   m_ObjectHideFlags: 0
@@ -8553,7 +8568,7 @@ GameObject:
   - component: {fileID: 7089202919878018263}
   - component: {fileID: 8059035433659556150}
   m_Layer: 5
-  m_Name: UpgradedBroomUI
+  m_Name: UpgradedVacuumUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8606,9 +8621,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8028649828709036675, guid: 0e4da8b7abc7af74c970ea2a6bc4191c, type: 3}
+  m_Sprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -9109,11 +9124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteMiniGame
   panel: {fileID: 5075664828936657136}
   spawnArea: {fileID: 7630854914864411946}
-  dropZones:
-  - {fileID: 2103829933588919562}
-  - {fileID: 6171876389134960119}
-  - {fileID: 916608756704502880}
-  - {fileID: 430091738577364782}
+  boxDropZone: {fileID: 430091738577364782}
   toysRemainingText: {fileID: 8427550492095708600}
   progressText: {fileID: 3275122856824347903}
   spawner: {fileID: 6671465501330811638}
@@ -12078,7 +12089,7 @@ GameObject:
   - component: {fileID: 2903136422884080986}
   - component: {fileID: 430091738577364782}
   m_Layer: 5
-  m_Name: LeavesDrop
+  m_Name: ToyBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12100,7 +12111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -575, y: -393}
+  m_AnchoredPosition: {x: 0, y: -393}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1953809593067819706
@@ -12493,10 +12504,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WasteSpawner
   minimumDistanceBetweenToys: 80
-  leafPrefab: {fileID: 3657187560689947137, guid: d5260a27d07caef43b6149fb2e52bf4e, type: 3}
-  bottlePrefab: {fileID: 1783231392314788191, guid: da81aab4ca987a74688e6f1e142de6bb, type: 3}
-  wrapperPrefab: {fileID: 2423061027922943701, guid: f4da892c31edd864c828fa47d7b1642b, type: 3}
-  wormPrefab: {fileID: 6014796658178622443, guid: c9e0b93d2c094e643b6ccf52d04b727b, type: 3}
+  toySprites:
+  - {fileID: -8648943487719732145, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 3622615083720987861, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -2992271137422973184, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -3910683414637180764, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -41988433006847486, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -6191173665105976869, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -8440507175559472757, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 6584128545534808457, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
 --- !u!1 &6962865434189271376
 GameObject:
   m_ObjectHideFlags: 0
@@ -13301,10 +13317,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WasteSpawner
   minimumDistanceBetweenToys: 80
-  leafPrefab: {fileID: 3657187560689947137, guid: d5260a27d07caef43b6149fb2e52bf4e, type: 3}
-  bottlePrefab: {fileID: 1783231392314788191, guid: da81aab4ca987a74688e6f1e142de6bb, type: 3}
-  wrapperPrefab: {fileID: 2423061027922943701, guid: f4da892c31edd864c828fa47d7b1642b, type: 3}
-  wormPrefab: {fileID: 6014796658178622443, guid: c9e0b93d2c094e643b6ccf52d04b727b, type: 3}
+  toySprites:
+  - {fileID: -8648943487719732145, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 3622615083720987861, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -2992271137422973184, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -3910683414637180764, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -41988433006847486, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -6191173665105976869, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: -8440507175559472757, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
+  - {fileID: 6584128545534808457, guid: 75489d24eb2cdaa46b15ce9394bca19a, type: 3}
 --- !u!1 &7200629080852764417
 GameObject:
   m_ObjectHideFlags: 0
@@ -14234,6 +14255,7 @@ MonoBehaviour:
   chocolateSprite: {fileID: 8386067457128398079, guid: aab55cf87ab958d46981b995b26257f7, type: 3}
   extraTimeSprite: {fileID: -7754988575891523622, guid: 8d782902958a6354797c1a649a2949a0, type: 3}
   broomSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  vacuumSprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   mopSprite: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
   garbageBagSprite: {fileID: -1984049885866873280, guid: 84f25f985d9b459489ba4ce0a630f699, type: 3}
 --- !u!1 &7790154647851300767
@@ -14845,6 +14867,10 @@ MonoBehaviour:
   fryingPanScrubRateMultiplier: 0.72
   maximumDishScatter: 18
   rinsingArea: {fileID: 9162444331776049948}
+  waterFillDuration: 3
+  waterStreamSpriteSheet: {fileID: 2800000, guid: 14cec9d13fdf7a140b195bd8e65a9b05, type: 3}
+  waterStreamFrameCount: 8
+  waterStreamFramesPerSecond: 12
   dryingRack: {fileID: 3815363860785365162}
   tutorial: {fileID: 0}
 --- !u!1 &7948697018002906710
@@ -15918,7 +15944,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -15938,7 +15964,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2335338234585437486}
   m_FillRect: {fileID: 5446003593534442967}
   m_HandleRect: {fileID: 6598730772331195447}
@@ -16220,7 +16246,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -16240,7 +16266,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 6400933136930484048}
   m_FillRect: {fileID: 6142660465315882377}
   m_HandleRect: {fileID: 9158899604485401375}
@@ -16311,7 +16337,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -16331,7 +16357,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 8332704669654888555}
   m_FillRect: {fileID: 861078355945738213}
   m_HandleRect: {fileID: 135629904053422561}
@@ -16634,6 +16660,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8800100000000000006}
+  - {fileID: 880010000000001001}
   m_Father: {fileID: 5224332993996402475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -16659,7 +16686,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.07, g: 0.12, b: 0.14, a: 0.96}
@@ -16821,6 +16848,126 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &880010000000001000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 880010000000001001}
+  - component: {fileID: 880010000000001002}
+  - component: {fileID: 880010000000001003}
+  - component: {fileID: 880010000000001004}
+  m_Layer: 5
+  m_Name: DailyChallengeMinimizeButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &880010000000001001
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880010000000001000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8800100000000000002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -8, y: -8}
+  m_SizeDelta: {x: 36, y: 32}
+  m_Pivot: {x: 1, y: 1}
+--- !u!222 &880010000000001002
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880010000000001000}
+  m_CullTransparentMesh: 1
+--- !u!114 &880010000000001003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880010000000001000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.07, g: 0.12, b: 0.14, a: 0.96}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &880010000000001004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880010000000001000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 880010000000001003}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8836842485929699015
 GameObject:
   m_ObjectHideFlags: 0
@@ -16960,7 +17107,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -16980,7 +17127,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 7863217787162436428}
   m_FillRect: {fileID: 4548132563645066867}
   m_HandleRect: {fileID: 8735973700682796097}

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BroomShopUI : MonoBehaviour
@@ -11,10 +12,11 @@ public class BroomShopUI : MonoBehaviour
     [SerializeField] private Button closeButton;
 
     [Header("Shop Icon")]
-    [SerializeField] private Sprite broomUpgradeIcon;
+    [FormerlySerializedAs("broomUpgradeIcon")]
+    [SerializeField] private Sprite vacuumUpgradeIcon;
 
     private EconomyManager economyManager;
-    private ShopItemCardUI broomCard;
+    private ShopItemCardUI vacuumCard;
 
     private void OnEnable()
     {
@@ -27,13 +29,13 @@ public class BroomShopUI : MonoBehaviour
             closeButton.onClick.AddListener(CloseShop);
 
         ShopItemCardUI.PrepareShopPanel(transform, closeButton);
-        broomCard = ShopItemCardUI.GetOrCreate(
+        vacuumCard = ShopItemCardUI.GetOrCreate(
             transform,
             "BroomUpgrade",
             1,
-            broomUpgradeIcon,
-            "Broom Upgrade",
-            "Sweep dust faster with an upgraded broom.",
+            vacuumUpgradeIcon,
+            "Vacuum Upgrade",
+            "Suck up dust faster with an upgraded vacuum.",
             BuyBroomUpgrade);
 
         Refresh();
@@ -111,8 +113,8 @@ public class BroomShopUI : MonoBehaviour
             if (buyButton != null)
                 buyButton.interactable = false;
 
-            if (broomCard != null)
-                broomCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+            if (vacuumCard != null)
+                vacuumCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
 
             return;
         }
@@ -121,7 +123,7 @@ public class BroomShopUI : MonoBehaviour
         int cost = economyManager.GetBroomUpgradeCost();
 
         if (levelText != null)
-            levelText.text = "Broom Level: " + economyManager.BroomUpgradeLevel;
+            levelText.text = "Vacuum Level: " + economyManager.BroomUpgradeLevel;
 
         if (costText != null)
             costText.text = canUpgrade ? "Cost: " + cost + " coins" : "MAX LEVEL";
@@ -129,18 +131,18 @@ public class BroomShopUI : MonoBehaviour
         if (statusText != null)
         {
             statusText.text = !canUpgrade
-                ? "Broom fully upgraded"
+                ? "Vacuum fully upgraded"
                 : economyManager.Coins >= cost
-                    ? "Upgrade sweeping speed"
+                    ? "Upgrade vacuum speed"
                     : "Not enough coins";
         }
 
         if (buyButton != null)
             buyButton.interactable = canUpgrade && economyManager.Coins >= cost;
 
-        if (broomCard != null)
+        if (vacuumCard != null)
         {
-            broomCard.SetPurchaseState(
+            vacuumCard.SetPurchaseState(
                 canUpgrade ? cost + " COINS" : "MAX LEVEL",
                 !canUpgrade ? "MAXED" : economyManager.Coins >= cost ? "UPGRADE" : "NEED COINS",
                 canUpgrade && economyManager.Coins >= cost);

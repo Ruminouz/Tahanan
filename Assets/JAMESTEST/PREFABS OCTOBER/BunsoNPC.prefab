@@ -544,6 +544,7 @@ MonoBehaviour:
   possibleBoosts: 0000000001000000
   chocolatePrefab: {fileID: 2093951337509963342, guid: 86d7c508fe0eba54eb85686efa87b206, type: 3}
   timeFreezerPrefab: {fileID: 6014960946341728753, guid: c313d8be4311359489f1b34ed95ac3a8, type: 3}
+  rewardDropGap: 0.15
   segregateWastePrefab: {fileID: 0}
   dustSpotPrefab: {fileID: 6552050211545809342, guid: 10c7e0e6b72a2f24aab7c74fa974ab65, type: 3}
   wetAreaPrefab: {fileID: 6995687946688838214, guid: 22f1d286bcd5f4c4c80aedbe6bb2e753, type: 3}

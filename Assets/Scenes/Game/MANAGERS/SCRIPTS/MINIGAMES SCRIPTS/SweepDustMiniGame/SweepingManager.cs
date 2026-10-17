@@ -38,12 +38,25 @@ public class SweepingManager : MonoBehaviour
     private Chore sweepDustChore;
     private int totalDustSpawned;
     private int cleanedDustCount;
+    private float dailyQuestAttemptStartedAt = -1f;
 
     public int TotalDustSpawned => totalDustSpawned;
     public int CleanedDustCount => cleanedDustCount;
     public void SetSweepDustChore(Chore chore)
     {
         sweepDustChore = chore;
+    }
+
+    public void RegisterExternalDust(DustSpot dustSpot, SweepingMinigame minigame)
+    {
+        if (dustSpot == null || activeDust.Contains(dustSpot))
+            return;
+
+        dustSpot.SetSweepingMinigame(minigame);
+        dustSpot.SetSweepingManager(this);
+        activeDust.Add(dustSpot);
+        totalDustSpawned++;
+        sweepingCompleted = false;
     }
 
 
@@ -55,7 +68,58 @@ public class SweepingManager : MonoBehaviour
         }
     }
 
+    public bool TryGetNearestDustSpotPosition(Vector2 fromPosition, out Vector2 position)
+    {
+        DustSpot nearestDust = null;
+        float nearestDistance = float.PositiveInfinity;
 
+        foreach (DustSpot dust in activeDust)
+        {
+            if (dust == null || !dust.gameObject.activeInHierarchy)
+                continue;
+
+            float distance = ((Vector2)dust.transform.position - fromPosition).sqrMagnitude;
+            if (distance < nearestDistance)
+            {
+                nearestDust = dust;
+                nearestDistance = distance;
+            }
+        }
+
+        position = nearestDust != null ? nearestDust.transform.position : Vector2.zero;
+        return nearestDust != null;
+    }
+
+    public bool TryGetRandomDustSpot(out DustSpot dustSpot)
+    {
+        List<DustSpot> availableDust = activeDust.FindAll(
+            dust => dust != null && dust.gameObject.activeInHierarchy);
+        if (availableDust.Count == 0)
+        {
+            dustSpot = null;
+            return false;
+        }
+
+        dustSpot = availableDust[Random.Range(0, availableDust.Count)];
+        return true;
+    }
+
+    public bool HelpCleanAllDust()
+    {
+        DustSpot[] dustToClean = activeDust.ToArray();
+        bool cleanedAny = false;
+
+        foreach (DustSpot dust in dustToClean)
+        {
+            if (dust == null || !dust.gameObject.activeInHierarchy)
+                continue;
+
+            dust.Clean();
+            cleanedAny = true;
+        }
+
+        return cleanedAny;
+    }
 
     public bool IsSweepingCompleted
     {
@@ -96,6 +160,7 @@ public class SweepingManager : MonoBehaviour
         sweepingCompleted = false;
         totalDustSpawned = 0;
         cleanedDustCount = 0;
+        dailyQuestAttemptStartedAt = -1f;
 
         SpawnDust();
 
@@ -284,8 +349,16 @@ public class SweepingManager : MonoBehaviour
         }
     }
 
-
-
+    public void BeginDailyQuestAttempt()
+    {
+        DayManager resolvedDayManager = ResolveDayManager();
+        if (dailyQuestAttemptStartedAt < 0f &&
+            resolvedDayManager != null &&
+            resolvedDayManager.IsDailyAdditionalQuestFor(sweepDustChore))
+        {
+            dailyQuestAttemptStartedAt = Time.time;
+        }
+    }
 
 
     private void CompleteSweepingTask()
@@ -307,6 +380,17 @@ public class SweepingManager : MonoBehaviour
 
         if (sweepDustChore != null)
         {
+            DayManager resolvedDayManager = ResolveDayManager();
+            if (resolvedDayManager != null)
+            {
+                float elapsedSeconds = dailyQuestAttemptStartedAt >= 0f
+                    ? Time.time - dailyQuestAttemptStartedAt
+                    : float.PositiveInfinity;
+                resolvedDayManager.ResolveDailyAdditionalQuest(
+                    sweepDustChore,
+                    elapsedSeconds <= resolvedDayManager.DailyQuestSweepTimeLimit);
+            }
+
             sweepDustChore.Complete();
 
             Debug.Log(

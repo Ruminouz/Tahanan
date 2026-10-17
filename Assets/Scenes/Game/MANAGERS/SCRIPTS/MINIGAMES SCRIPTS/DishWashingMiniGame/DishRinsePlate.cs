@@ -11,6 +11,7 @@ public class DishRinsePlate : MonoBehaviour,
 
     private Transform originalParent;
     private Vector2 originalPosition;
+    private bool isDragging;
 
 
     private bool canRinse = false;
@@ -25,6 +26,7 @@ public class DishRinsePlate : MonoBehaviour,
     private const float RackSfxCooldown = 0.12f;
 
     private DishwashingMiniGame miniGame;
+    private WashableDish washableDish;
 
 
 
@@ -38,6 +40,8 @@ public class DishRinsePlate : MonoBehaviour,
 
         miniGame =
             FindFirstObjectByType<DishwashingMiniGame>();
+
+        washableDish = GetComponent<WashableDish>();
     }
 
 
@@ -105,7 +109,7 @@ public class DishRinsePlate : MonoBehaviour,
         if(!canRinse && !canDry)
             return;
 
-
+        isDragging = true;
 
         originalParent =
             transform.parent;
@@ -141,7 +145,7 @@ public class DishRinsePlate : MonoBehaviour,
     public void OnDrag(
         PointerEventData eventData)
     {
-        if(!canRinse && !canDry)
+        if(!isDragging)
             return;
 
 
@@ -155,10 +159,10 @@ public class DishRinsePlate : MonoBehaviour,
     public void OnEndDrag(
         PointerEventData eventData)
     {
-        if(!canRinse && !canDry)
+        if(!isDragging)
             return;
 
-
+        isDragging = false;
 
         CanvasGroup group =
             GetComponent<CanvasGroup>();
@@ -194,7 +198,7 @@ public class DishRinsePlate : MonoBehaviour,
                 RectTransformUtility
                 .RectangleContainsScreenPoint(
                     rinseRect,
-                    rectTransform.position,
+                    eventData.position,
                     eventData.pressEventCamera))
                 {
 
@@ -277,7 +281,7 @@ public class DishRinsePlate : MonoBehaviour,
                 RectTransformUtility
                 .RectangleContainsScreenPoint(
                     rackRect,
-                    rectTransform.position,
+                    eventData.position,
                     eventData.pressEventCamera))
                 {
                     PutOnDryingRack(rack);
@@ -293,15 +297,17 @@ public class DishRinsePlate : MonoBehaviour,
 
         // RETURN
 
-        transform.SetParent(
-            originalParent
-        );
-
-
-        rectTransform.anchoredPosition =
-            originalPosition;
+        ReturnToOriginalPosition();
     }
 
+    private void ReturnToOriginalPosition()
+    {
+        if (originalParent == null)
+            return;
+
+        transform.SetParent(originalParent);
+        rectTransform.anchoredPosition = originalPosition;
+    }
 
 
 
@@ -378,6 +384,11 @@ public class DishRinsePlate : MonoBehaviour,
 
         canRinse = false;
 
+        if (washableDish != null)
+        {
+            washableDish.RemoveScrubFoamAfterRinsing();
+            washableDish.PlayRinseSparkle();
+        }
 
 
         Debug.Log(

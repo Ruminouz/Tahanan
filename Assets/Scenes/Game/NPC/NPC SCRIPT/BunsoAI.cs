@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,6 +19,9 @@ public class BunsoAI : MonoBehaviour
     [SerializeField] private string waterBadMoodLine = "paki mop to kuya! bwhaahah!";
     [SerializeField] private string segregateBadMoodLine = "pakiligpit to kuya! bwahahah!";
     [SerializeField] private string garbageBagBadMoodLine = "pakitapon to sa basura kuya! bwaahha!";
+    [SerializeField] private string chocolateRewardLine = "May chocolate ako para sa'yo!";
+    [SerializeField] private string chocolateConsumedLine = "Mama! kinain ni kuya chocolate ko!";
+    [SerializeField] private string timeFreezerRewardLine = "Eto, pampahinto ng oras!";
 
     [Header("Good Mood Rewards")]
     [SerializeField] private BunsoBoostType[] possibleBoosts =
@@ -27,6 +29,7 @@ public class BunsoAI : MonoBehaviour
     [SerializeField] private GameObject chocolatePrefab;
     [FormerlySerializedAs("extraTimePrefab")]
     [SerializeField] private GameObject timeFreezerPrefab;
+    [SerializeField, Min(0f)] private float rewardDropGap = 0.15f;
 
     [Header("Bad Mood Chore")]
     [SerializeField] private SegregateWasteChore segregateWastePrefab;
@@ -41,8 +44,11 @@ public class BunsoAI : MonoBehaviour
     [SerializeField, Min(0.1f)] private float followStopDistance = 2.25f;
     [SerializeField, Min(0.1f)] private float wanderRadius = 1.75f;
     [SerializeField, Min(0.05f)] private float arriveDistance = 0.2f;
+    [SerializeField, Min(0.1f)] private float dialogueApproachDistance = 1.2f;
+    [SerializeField, Min(0.1f)] private float dialogueApproachTimeout = 30f;
     [SerializeField, Min(0f)] private float minimumWanderWait = 1f;
     [SerializeField, Min(0f)] private float maximumWanderWait = 3f;
+    [SerializeField, Min(0f)] private float dialogueDisplayDuration = 2f;
 
     [Header("Mood Bubble")]
     [SerializeField] private Transform topAnchor;
@@ -53,12 +59,15 @@ public class BunsoAI : MonoBehaviour
     private DayManager dayManager;
     private WaypointMover waypointMover;
     private Rigidbody2D body;
+    private Collider2D bodyCollider;
+    private SpriteRenderer spriteRenderer;
     private Transform player;
     private Vector2 homePosition;
     private Vector2 movementTarget;
     private bool hasMovementTarget;
     private float nextWanderTime;
     private float nextActionTime;
+    private bool actionInProgress;
     private readonly List<SegregateWasteChore> spawnedChores = new();
     private readonly List<GameObject> spawnedBadMoodObjects = new();
 
@@ -66,6 +75,8 @@ public class BunsoAI : MonoBehaviour
     {
         waypointMover = GetComponent<WaypointMover>();
         body = GetComponent<Rigidbody2D>();
+        bodyCollider = GetComponent<Collider2D>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         homePosition = transform.position;
 
@@ -85,7 +96,10 @@ public class BunsoAI : MonoBehaviour
     {
         UpdateMovement();
 
-        if (moodManager == null || dayManager == null || Time.time < nextActionTime)
+        if (actionInProgress ||
+            moodManager == null ||
+            dayManager == null ||
+            Time.time < nextActionTime)
             return;
 
         nextActionTime = Time.time + actionInterval;
@@ -95,18 +109,19 @@ public class BunsoAI : MonoBehaviour
         switch (moodManager.CurrentMood)
         {
             case HouseholdMood.Calm:
-                DropReward();
+                BeginRewardDrop();
                 break;
             case HouseholdMood.Angry:
             case HouseholdMood.Concerned:
-                SpawnBadMoodChore();
+                BeginBadMoodChore();
                 break;
         }
     }
 
     private void UpdateMovement()
     {
-        if (PauseController.IsGamePaused ||
+        if (actionInProgress ||
+            PauseController.IsGamePaused ||
             (waypointMover != null && waypointMover.waypointParent != null))
             return;
 
@@ -169,7 +184,7 @@ public class BunsoAI : MonoBehaviour
         }
     }
 
-    private void DropReward()
+    private void BeginRewardDrop()
     {
         if (possibleBoosts == null || possibleBoosts.Length == 0)
             return;
@@ -184,16 +199,66 @@ public class BunsoAI : MonoBehaviour
             return;
         }
 
+        string dialogue = boost == BunsoBoostType.Chocolate
+            ? chocolateRewardLine
+            : timeFreezerRewardLine;
+        StartCoroutine(ApproachAndAct(dialogue, () => DropReward(boost)));
+    }
+
+    public void ReactToChocolateConsumed()
+    {
+        Transform anchor = topAnchor != null ? topAnchor : transform;
+        SpeechBubbleCanvas.Show(anchor, chocolateConsumedLine, bubbleDuration);
+    }
+
+    private void DropReward(BunsoBoostType boost)
+    {
+        GameObject prefab = boost == BunsoBoostType.Chocolate
+            ? chocolatePrefab
+            : timeFreezerPrefab;
         GameObject droppedReward = Instantiate(prefab, transform.position, Quaternion.identity);
         BunsoBoostPickup pickup = droppedReward.GetComponent<BunsoBoostPickup>();
         if (pickup == null)
             pickup = droppedReward.AddComponent<BunsoBoostPickup>();
         if (droppedReward.GetComponent<Collider2D>() == null)
             droppedReward.AddComponent<BoxCollider2D>();
+        PlaceRewardBesideBunso(droppedReward);
         pickup.Configure(boost);
     }
 
-    private void SpawnBadMoodChore()
+    private void PlaceRewardBesideBunso(GameObject reward)
+    {
+        Collider2D rewardCollider = reward.GetComponent<Collider2D>();
+        SpriteRenderer rewardRenderer = reward.GetComponentInChildren<SpriteRenderer>();
+
+        float bunsoHalfWidth = bodyCollider != null && bodyCollider.enabled
+            ? bodyCollider.bounds.extents.x
+            : 0f;
+        if (spriteRenderer != null && spriteRenderer.enabled)
+            bunsoHalfWidth = Mathf.Max(bunsoHalfWidth, spriteRenderer.bounds.extents.x);
+
+        float rewardHalfWidth = rewardCollider != null && rewardCollider.enabled
+            ? rewardCollider.bounds.extents.x
+            : 0f;
+        if (rewardRenderer != null && rewardRenderer.enabled)
+            rewardHalfWidth = Mathf.Max(rewardHalfWidth, rewardRenderer.bounds.extents.x);
+
+        float side = player != null && player.position.x > transform.position.x ? -1f : 1f;
+        float bunsoCenterX = bodyCollider != null && bodyCollider.enabled
+            ? bodyCollider.bounds.center.x
+            : transform.position.x;
+        float rewardCenterX = rewardCollider != null && rewardCollider.enabled
+            ? rewardCollider.bounds.center.x
+            : reward.transform.position.x;
+        float targetCenterX = bunsoCenterX +
+            side * (bunsoHalfWidth + rewardHalfWidth + rewardDropGap);
+
+        Vector3 rewardPosition = reward.transform.position;
+        rewardPosition.x += targetCenterX - rewardCenterX;
+        reward.transform.position = rewardPosition;
+    }
+
+    private void BeginBadMoodChore()
     {
         if (dayManager.CurrentDay < 2)
             return;
@@ -204,35 +269,149 @@ public class BunsoAI : MonoBehaviour
 
         BadMoodChoreType choreType = (BadMoodChoreType)Random.Range(0, 4);
         string dialogue;
-        bool spawned;
+        System.Func<bool> spawnChore;
 
         switch (choreType)
         {
             case BadMoodChoreType.Dust:
                 dialogue = dustBadMoodLine;
-                spawned = SpawnDustSpot();
+                spawnChore = SpawnDustSpot;
                 break;
             case BadMoodChoreType.WaterArea:
                 dialogue = waterBadMoodLine;
-                spawned = SpawnWetArea();
+                spawnChore = SpawnWetArea;
                 break;
             case BadMoodChoreType.Segregate:
                 dialogue = segregateBadMoodLine;
-                spawned = SpawnSegregateChore();
+                spawnChore = SpawnSegregateChore;
                 break;
             default:
                 dialogue = garbageBagBadMoodLine;
-                spawned = SpawnGarbageBag();
+                spawnChore = SpawnGarbageBag;
                 break;
         }
 
-        if (spawned)
-            ShowBadMoodBubble(dialogue);
+        StartCoroutine(ApproachAndAct(dialogue, () =>
+        {
+            if (!spawnChore())
+                Debug.LogWarning("Bunso's selected bad-mood chore could not be spawned.", this);
+        }));
+    }
+
+    private System.Collections.IEnumerator ApproachAndAct(
+        string dialogueLine,
+        System.Action performAction)
+    {
+        actionInProgress = true;
+        hasMovementTarget = false;
+
+        try
+        {
+            if (player == null)
+                player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+            if (player == null)
+            {
+                Debug.LogWarning("Bunso cannot approach because the Player object was not found.", this);
+                yield break;
+            }
+
+            float elapsed = 0f;
+            while (Vector2.Distance(transform.position, player.position) > dialogueApproachDistance &&
+                   elapsed < dialogueApproachTimeout)
+            {
+                if (PauseController.IsGamePaused)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
+                Vector2 movement = waypointMover != null
+                    ? waypointMover.GetMovementTowards(player.position, moveSpeed, false)
+                    : Vector2.ClampMagnitude(
+                        (Vector2)player.position - currentPosition,
+                        moveSpeed * Time.deltaTime);
+
+                if (movement.sqrMagnitude <= 0.000001f)
+                {
+                    Vector2 toPlayer = (Vector2)player.position - currentPosition;
+                    movement = NPCMovement2D.GetCollisionSafeMovement(
+                        bodyCollider,
+                        Vector2.ClampMagnitude(toPlayer, moveSpeed * Time.deltaTime),
+                        toPlayer,
+                        Physics2D.AllLayers,
+                        0.02f);
+                }
+
+                Vector2 nextPosition = currentPosition + movement;
+                if (body != null)
+                    body.MovePosition(nextPosition);
+                else
+                    transform.position = new Vector3(nextPosition.x, nextPosition.y, transform.position.z);
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            if (Vector2.Distance(transform.position, player.position) > dialogueApproachDistance)
+                Debug.LogWarning(name + " could not reach the player before the dialogue approach timed out.", this);
+
+            NPC dialogueHost = null;
+            bool dialogueClosed = false;
+            while (!dialogueClosed)
+            {
+                if (dialogueHost == null || !dialogueHost.CanStartAutomaticDialogue)
+                {
+                    if (PauseController.IsGamePaused)
+                    {
+                        yield return null;
+                        continue;
+                    }
+
+                    dialogueHost = NPC.FindDialogueHost(GetComponent<NPC>());
+                    if (dialogueHost == null)
+                    {
+                        Debug.LogWarning("Bunso could not find an NPC dialogue panel; using a speech bubble instead.", this);
+                        Transform anchor = topAnchor != null ? topAnchor : transform;
+                        SpeechBubbleCanvas.Show(anchor, dialogueLine, bubbleDuration);
+                        yield return new WaitForSecondsRealtime(bubbleDuration);
+                        break;
+                    }
+                }
+
+                bool started = dialogueHost.StartAutomaticDialogue(
+                    "Bunso",
+                    dialogueLine,
+                    spriteRenderer != null ? spriteRenderer.sprite : null,
+                    dialogueDisplayDuration,
+                    () => dialogueClosed = true);
+                if (!started)
+                {
+                    dialogueHost = null;
+                    yield return null;
+                    continue;
+                }
+
+                while (!dialogueClosed)
+                    yield return null;
+            }
+
+            performAction?.Invoke();
+        }
+        finally
+        {
+            actionInProgress = false;
+            hasMovementTarget = false;
+        }
     }
 
     private bool SpawnDustSpot()
     {
-        SweepingMinigame minigame = FindFirstObjectByType<SweepingMinigame>();
+        SweepingMinigame minigame = FindFirstObjectByType<SweepingMinigame>(
+            FindObjectsInactive.Include);
+        SweepingManager manager = FindFirstObjectByType<SweepingManager>(
+            FindObjectsInactive.Include);
         if (dustSpotPrefab == null || minigame == null)
         {
             Debug.LogWarning("Bunso cannot spawn a dust spot because its prefab or sweeping minigame is missing.", this);
@@ -240,14 +419,20 @@ public class BunsoAI : MonoBehaviour
         }
 
         DustSpot dustSpot = Instantiate(dustSpotPrefab, transform.position, Quaternion.identity);
-        dustSpot.SetSweepingMinigame(minigame);
+        if (manager != null)
+            manager.RegisterExternalDust(dustSpot, minigame);
+        else
+            dustSpot.SetSweepingMinigame(minigame);
         TrackSpawnedObject(dustSpot.gameObject);
         return true;
     }
 
     private bool SpawnWetArea()
     {
-        MoppingMinigame minigame = FindFirstObjectByType<MoppingMinigame>();
+        MoppingMinigame minigame = FindFirstObjectByType<MoppingMinigame>(
+            FindObjectsInactive.Include);
+        WaterSpawner spawner = FindFirstObjectByType<WaterSpawner>(
+            FindObjectsInactive.Include);
         if (wetAreaPrefab == null || minigame == null)
         {
             Debug.LogWarning("Bunso cannot spawn a wet area because its prefab or mopping minigame is missing.", this);
@@ -255,7 +440,10 @@ public class BunsoAI : MonoBehaviour
         }
 
         WetArea wetArea = Instantiate(wetAreaPrefab, transform.position, Quaternion.identity);
-        wetArea.SetMoppingMinigame(minigame);
+        if (spawner != null)
+            spawner.RegisterExternalWetArea(wetArea, minigame);
+        else
+            wetArea.SetMoppingMinigame(minigame);
         TrackSpawnedObject(wetArea.gameObject);
         return true;
     }
@@ -306,12 +494,6 @@ public class BunsoAI : MonoBehaviour
         spawnedBadMoodObjects.Add(spawnedObject);
         if (choreLifetime > 0f)
             Destroy(spawnedObject, choreLifetime);
-    }
-
-    private void ShowBadMoodBubble(string dialogue)
-    {
-        Transform anchor = topAnchor != null ? topAnchor : transform;
-        SpeechBubbleCanvas.Show(anchor, dialogue, bubbleDuration);
     }
 
     private void OnDestroy()

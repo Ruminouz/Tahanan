@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Serialization;
@@ -6,6 +7,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private Transform spawnArea;
+    [SerializeField] private DropZone boxDropZone;
     [SerializeField] private DropZone[] dropZones;
     [FormerlySerializedAs("mistakesText")]
     [SerializeField] private TextMeshProUGUI toysRemainingText;
@@ -15,28 +17,30 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
     private Chore currentChore;
     private TutorialManager tutorialManager;
-    private DayManager dayManager;
 
     private WasteObject[] spawnedWaste;
-    private int correctlySegregatedCount = 0;
-    private int totalItemsNeeded = 0;
-    private bool gameStarted = false;
+    private readonly HashSet<WasteObject> collectedToys = new HashSet<WasteObject>();
+    private int correctlySegregatedCount;
+    private int totalItemsNeeded;
+    private float elapsedTime;
+    private bool gameStarted;
 
     private void Start()
     {
         tutorialManager = FindFirstObjectByType<TutorialManager>();
-        dayManager = FindFirstObjectByType<DayManager>();
     }
 
     public void StartGame(Chore chore)
     {
         currentChore = chore;
+        CleanupWaste();
+        collectedToys.Clear();
         correctlySegregatedCount = 0;
+        elapsedTime = 0f;
         gameStarted = false;
 
         panel.SetActive(true);
-
-        int currentDay = dayManager != null ? dayManager.CurrentDay : 1;
+        int currentDay = FindFirstObjectByType<DayManager>()?.CurrentDifficulty ?? 1;
         ConfigureDifficulty(currentDay);
 
         bool alreadyLearned = false;
@@ -58,9 +62,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
     private void ConfigureDifficulty(int day)
     {
-        day = Mathf.Clamp(day, 1, 7);
-
-        switch (day)
+        switch (Mathf.Clamp(day, 1, 7))
         {
             case 1:
                 totalItemsNeeded = 3;
@@ -84,11 +86,9 @@ public class SegregateWasteMiniGame : MonoBehaviour
                 totalItemsNeeded = 14;
                 break;
             default:
-                totalItemsNeeded = 5;
+                totalItemsNeeded = 3;
                 break;
         }
-
-        Debug.Log($"Day {day} - Total Toys: {totalItemsNeeded}");
     }
 
     private void ShowTutorial()
@@ -100,9 +100,9 @@ public class SegregateWasteMiniGame : MonoBehaviour
         }
 
         tutorial.ShowTutorial(
-            "TOY COLLECTION",
-            "1. Pick up each toy and drag it into the box.\n" +
-            "2. Move quickly to collect all the toys.",
+            "PICK UP TOYS",
+            "Drag each toy into the box.\n" +
+            $"Collect all {totalItemsNeeded} toys as quickly as you can!",
             FinishTutorial
         );
     }
@@ -119,46 +119,133 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
     private void StartSegregation()
     {
+        if (!SpawnWaste())
+        {
+            panel.SetActive(false);
+            currentChore = null;
+            return;
+        }
+
         gameStarted = true;
-        SpawnWaste();
+        elapsedTime = 0f;
         UpdateUI();
 
         Debug.Log("Toy collection game started!");
     }
 
-    private void SpawnWaste()
+    private bool SpawnWaste()
     {
         if (spawner == null)
         {
             Debug.LogError("WasteSpawner not assigned!");
-            return;
+            return false;
         }
 
-        int currentDay = dayManager != null ? dayManager.CurrentDay : 1;
-        spawnedWaste = spawner.SpawnWaste(totalItemsNeeded, spawnArea, currentDay);
+        if (spawnArea == null)
+        {
+            Debug.LogError("Toy spawn area not assigned!");
+            return false;
+        }
 
+        DropZone boxDropZone = GetBoxDropZone();
+        if (boxDropZone == null)
+        {
+            Debug.LogError("Toy box drop zone not assigned!");
+            return false;
+        }
+
+        spawnedWaste = spawner.SpawnWaste(totalItemsNeeded, spawnArea, boxDropZone.transform);
+
+        int spawnedCount = 0;
         foreach (WasteObject waste in spawnedWaste)
         {
             if (waste != null)
             {
                 waste.SetMiniGame(this);
+                spawnedCount++;
             }
         }
+
+        if (spawnedCount != totalItemsNeeded)
+        {
+            Debug.LogError($"Expected {totalItemsNeeded} toys, but only spawned {spawnedCount}.");
+            CleanupWaste();
+            return false;
+        }
+
+        return true;
     }
 
-    public void OnWasteSegregated(WasteObject waste, DropZone dropZone)
+    private void Update()
     {
         if (!gameStarted)
             return;
 
-        SoundEffectManager.Play("Toys");
-        dropZone.StackToy(waste, correctlySegregatedCount);
-        correctlySegregatedCount++;
+        elapsedTime += Time.deltaTime;
+        ReconcileCollectedToys();
+        UpdateUI();
+        CheckCompletion();
+    }
 
+    public bool TryCollectToy(WasteObject waste, DropZone dropZone)
+    {
+        if (!gameStarted ||
+            waste == null ||
+            waste.IsCollected ||
+            collectedToys.Contains(waste) ||
+            dropZone != GetBoxDropZone())
+        {
+            return false;
+        }
+
+        dropZone.StackToy(waste, correctlySegregatedCount);
+        collectedToys.Add(waste);
+        correctlySegregatedCount = collectedToys.Count;
+
+        SoundEffectManager.Play("Toys");
         Debug.Log($"Toy collected! Progress: {correctlySegregatedCount}/{totalItemsNeeded}");
 
         UpdateUI();
         CheckCompletion();
+        return true;
+    }
+
+    public bool TryCollectToyAtScreenPosition(
+        WasteObject waste,
+        Vector2 screenPosition,
+        Camera eventCamera)
+    {
+        DropZone box = GetBoxDropZone();
+        RectTransform boxRect = box != null ? box.transform as RectTransform : null;
+
+        if (boxRect == null ||
+            !RectTransformUtility.RectangleContainsScreenPoint(boxRect, screenPosition, eventCamera))
+        {
+            return false;
+        }
+
+        return TryCollectToy(waste, box);
+    }
+
+    private DropZone GetBoxDropZone()
+    {
+        if (boxDropZone != null &&
+            boxDropZone.isActiveAndEnabled &&
+            boxDropZone.gameObject.activeInHierarchy)
+        {
+            return boxDropZone;
+        }
+
+        if (dropZones != null)
+        {
+            foreach (DropZone zone in dropZones)
+            {
+                if (zone != null && zone.isActiveAndEnabled && zone.gameObject.activeInHierarchy)
+                    return zone;
+            }
+        }
+
+        return null;
     }
 
     private void UpdateUI()
@@ -167,31 +254,76 @@ public class SegregateWasteMiniGame : MonoBehaviour
             toysRemainingText.text = $"Toys left: {totalItemsNeeded - correctlySegregatedCount}";
 
         if (progressText != null)
-            progressText.text = $"Progress: {correctlySegregatedCount}/{totalItemsNeeded}";
+        {
+            int minutes = Mathf.FloorToInt(elapsedTime / 60f);
+            float seconds = elapsedTime - minutes * 60f;
+            progressText.text =
+                $"Progress: {correctlySegregatedCount}/{totalItemsNeeded}  |  Time: {minutes:00}:{seconds:00.0}";
+        }
     }
 
     private void CheckCompletion()
     {
-        if (correctlySegregatedCount >= totalItemsNeeded)
+        ReconcileCollectedToys();
+
+        if (gameStarted &&
+            spawnedWaste != null &&
+            collectedToys.Count >= spawnedWaste.Length)
         {
             CompleteGame();
         }
     }
 
+    private void ReconcileCollectedToys()
+    {
+        if (spawnedWaste == null)
+            return;
+
+        DropZone box = GetBoxDropZone();
+        if (box == null)
+            return;
+
+        foreach (WasteObject toy in spawnedWaste)
+        {
+            if (toy != null &&
+                toy.IsCollected &&
+                toy.transform.IsChildOf(box.transform))
+            {
+                collectedToys.Add(toy);
+            }
+        }
+
+        correctlySegregatedCount = collectedToys.Count;
+    }
+
     private void CompleteGame()
     {
+        if (!gameStarted)
+            return;
+
         gameStarted = false;
 
-        Debug.Log("Toy collection complete!");
-
-        if (currentChore != null)
-        {
-            currentChore.Complete();
-            SoundEffectManager.Play("ChoreFinished");
-        }
+        Debug.Log($"Toy collection complete in {elapsedTime:0.0} seconds!");
 
         panel.SetActive(false);
         CleanupWaste();
+
+        if (currentChore != null)
+        {
+            DayManager dayManager = DayManager.Instance != null
+                ? DayManager.Instance
+                : FindFirstObjectByType<DayManager>();
+            if (dayManager != null)
+            {
+                dayManager.ResolveDailyAdditionalQuest(
+                    currentChore,
+                    elapsedTime <= dayManager.DailyQuestToyPickupTimeLimit);
+            }
+
+            Debug.Log($"Completing chore: {currentChore.ChoreName}");
+            currentChore.Complete();
+            SoundEffectManager.Play("ChoreFinished");
+        }
 
         currentChore = null;
     }

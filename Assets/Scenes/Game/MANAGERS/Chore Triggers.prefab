@@ -195,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FeedDogChore
   choreName: FeedDog
   points: 1
-  deadlineSeconds: 250
+  deadlineSeconds: 90
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
 --- !u!1 &1081123552167931290
@@ -896,6 +896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BroomChore
   broomVisual: {fileID: 5360686316870333254}
+  vacuumSprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   tutorial: {fileID: 0}
 --- !u!1 &5659519998778115523
 GameObject:
@@ -1081,7 +1082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingChore
   choreName: Dishes
   points: 1
-  deadlineSeconds: 250
+  deadlineSeconds: 135
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
 --- !u!1 &7430527013064816712
@@ -1531,7 +1532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteChore
   choreName: PickUp
   points: 1
-  deadlineSeconds: 250
+  deadlineSeconds: 180
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
 --- !u!114 &687503562833805824
@@ -1548,7 +1549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteChore
   choreName: PickUp
   points: 1
-  deadlineSeconds: 250
+  deadlineSeconds: 180
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
 --- !u!114 &5839721144584643437
@@ -1565,7 +1566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteChore
   choreName: PickUp
   points: 1
-  deadlineSeconds: 250
+  deadlineSeconds: 180
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
 --- !u!1 &8896623799091094127
@@ -1721,7 +1722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ThrowTrashChore
   choreName: Garbage
   points: 1
-  deadlineSeconds: 250
+  deadlineSeconds: 220
   earlyBonusPoints: 1
   miniGame: {fileID: 0}
   garbageBag: {fileID: 0}

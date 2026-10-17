@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -17,6 +18,8 @@ public class WasteObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private SegregateWasteMiniGame miniGame;
     private Vector3 originalPosition;
     private bool isCollected;
+
+    public bool IsCollected => isCollected;
 
     private void Awake()
     {
@@ -79,28 +82,53 @@ public class WasteObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             return;
 
         if (canvasGroup != null)
-        {
             canvasGroup.alpha = 1f;
-            canvasGroup.blocksRaycasts = true;
-        }
 
-        DropZone dropZone = null;
-
-        if (eventData.pointerEnter != null)
+        if (miniGame != null &&
+            miniGame.TryCollectToyAtScreenPosition(this, eventData.position, eventData.pressEventCamera))
         {
-            dropZone = eventData.pointerEnter.GetComponentInParent<DropZone>();
-        }
-
-        if (dropZone != null && dropZone.CanAccept(wasteType))
-        {
-            if (miniGame != null)
-            {
-                miniGame.OnWasteSegregated(this, dropZone);
-            }
-
             return;
         }
 
+        if (TryCollectFromDropPosition(eventData))
+        {
+            return;
+        }
+
+        if (canvasGroup != null)
+            canvasGroup.blocksRaycasts = true;
+
         transform.position = originalPosition;
+    }
+
+    private bool TryCollectFromDropPosition(PointerEventData eventData)
+    {
+        EventSystem eventSystem = EventSystem.current;
+        if (eventSystem != null)
+        {
+            List<RaycastResult> raycastResults = new List<RaycastResult>();
+            eventSystem.RaycastAll(eventData, raycastResults);
+
+            foreach (RaycastResult result in raycastResults)
+            {
+                DropZone zone = result.gameObject.GetComponentInParent<DropZone>();
+                if (TryCollectInto(zone))
+                    return true;
+            }
+        }
+
+        DropZone pointerEnterZone = eventData.pointerEnter != null
+            ? eventData.pointerEnter.GetComponentInParent<DropZone>()
+            : null;
+        return TryCollectInto(pointerEnterZone);
+    }
+
+    public bool TryCollectInto(DropZone dropZone)
+    {
+        return !isCollected &&
+            dropZone != null &&
+            dropZone.CanAccept(wasteType) &&
+            miniGame != null &&
+            miniGame.TryCollectToy(this, dropZone);
     }
 }

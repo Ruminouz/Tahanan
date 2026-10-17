@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Animator animator;
+    private Vector3 dailySpawnPosition;
+    private Quaternion dailySpawnRotation;
+    private bool hasDailySpawnPoint;
+    private bool movementInputEnabled = true;
     private float speedMultiplier = 1f;
     private float temporarySpeedMultiplier = 1f;
 
@@ -22,6 +26,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        if (dailySpawnPoint != null)
+        {
+            dailySpawnPosition = dailySpawnPoint.position;
+            dailySpawnRotation = dailySpawnPoint.rotation;
+            hasDailySpawnPoint = true;
+        }
     }
 
     private void Start()
@@ -34,12 +45,8 @@ public class PlayerMovement : MonoBehaviour
         moveInput = Vector2.zero;
         temporarySpeedMultiplier = 1f;
 
-        if (dailySpawnPoint != null)
-        {
-            transform.SetPositionAndRotation(
-                dailySpawnPoint.position,
-                dailySpawnPoint.rotation);
-        }
+        if (hasDailySpawnPoint)
+            transform.SetPositionAndRotation(dailySpawnPosition, dailySpawnRotation);
 
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
@@ -79,6 +86,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
+        if (!movementInputEnabled)
+            return;
+
         // Read raw input
         Vector2 input = context.ReadValue<Vector2>();
 
@@ -110,6 +120,20 @@ public class PlayerMovement : MonoBehaviour
     public void SetSpeedMultiplier(float multiplier)
     {
         speedMultiplier = Mathf.Max(0.1f, multiplier);
+    }
+
+    public void SetMovementInputEnabled(bool enabled)
+    {
+        movementInputEnabled = enabled;
+        if (enabled)
+            return;
+
+        moveInput = Vector2.zero;
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+        if (animator != null)
+            animator.SetBool("isWalking", false);
+        StopFootsteps();
     }
 
     public void ApplyTemporarySpeedBoost(float multiplier, float duration)

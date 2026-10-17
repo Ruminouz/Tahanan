@@ -3,14 +3,73 @@ using UnityEngine;
 public class BroomChore : Interactable
 {
     [SerializeField] private GameObject broomVisual;
+    [SerializeField] private Sprite vacuumSprite;
     [SerializeField] private ChoreTutorial tutorial;
 
     private bool hasBeenPickedUp = false;
     private TutorialManager tutorialManager;
+    private SpriteRenderer broomSpriteRenderer;
+    private Sprite originalBroomSprite;
 
     private void Start()
     {
         tutorialManager = FindFirstObjectByType<TutorialManager>();
+        CacheBroomSprite();
+        SubscribeToBroomUpgrade();
+        UpdateBroomVisual();
+    }
+
+    private void OnEnable()
+    {
+        SubscribeToBroomUpgrade();
+    }
+
+    private void OnDisable()
+    {
+        if (EconomyManager.Instance != null)
+            EconomyManager.Instance.BroomUpgradeChanged -= OnBroomUpgradeChanged;
+    }
+
+    private void CacheBroomSprite()
+    {
+        if (broomVisual == null)
+            return;
+
+        broomSpriteRenderer = broomVisual.GetComponent<SpriteRenderer>();
+        if (broomSpriteRenderer == null)
+            broomSpriteRenderer = broomVisual.GetComponentInChildren<SpriteRenderer>(true);
+
+        if (broomSpriteRenderer != null)
+            originalBroomSprite = broomSpriteRenderer.sprite;
+    }
+
+    private void SubscribeToBroomUpgrade()
+    {
+        if (EconomyManager.Instance == null)
+            return;
+
+        EconomyManager.Instance.BroomUpgradeChanged -= OnBroomUpgradeChanged;
+        EconomyManager.Instance.BroomUpgradeChanged += OnBroomUpgradeChanged;
+    }
+
+    private void OnBroomUpgradeChanged(int level)
+    {
+        UpdateBroomVisual();
+    }
+
+    private void UpdateBroomVisual()
+    {
+        if (broomSpriteRenderer == null)
+            CacheBroomSprite();
+
+        if (broomSpriteRenderer == null || originalBroomSprite == null)
+            return;
+
+        bool hasVacuumUpgrade = EconomyManager.Instance != null
+            && EconomyManager.Instance.HasUpgradedBroom;
+        broomSpriteRenderer.sprite = hasVacuumUpgrade && vacuumSprite != null
+            ? vacuumSprite
+            : originalBroomSprite;
     }
 
     public void ResetForDay()
@@ -19,6 +78,8 @@ public class BroomChore : Interactable
 
         if (broomVisual != null)
             broomVisual.SetActive(true);
+
+        UpdateBroomVisual();
     }
 
     public override void Interact()

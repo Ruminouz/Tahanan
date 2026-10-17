@@ -52,6 +52,8 @@ public class WaterSpawner : MonoBehaviour
     private bool mopCompleted = false;
     private bool mopMissed = false;
     private bool mopCounted = false;
+    private float mopQuestStartedAt;
+    private bool hasMopQuestStartedAt;
 
 
 
@@ -114,6 +116,83 @@ public class WaterSpawner : MonoBehaviour
         {
             return activeWetAreas.Count > 0;
         }
+    }
+
+    public void RegisterExternalWetArea(WetArea wetArea, MoppingMinigame minigame)
+    {
+        if (wetArea == null || activeWetAreas.Contains(wetArea))
+            return;
+
+        if (moppingMinigame == null)
+            moppingMinigame = minigame;
+
+        wetArea.SetSpawner(this, null);
+        wetArea.SetMoppingMinigame(minigame != null ? minigame : moppingMinigame);
+        activeWetAreas.Add(wetArea);
+        StartMopQuestTimer();
+        mopTaskStarted = true;
+        mopCompleted = false;
+        mopMissed = false;
+
+        if (suddenTaskManager == null)
+            suddenTaskManager = FindFirstObjectByType<SuddenTaskManager>(
+                FindObjectsInactive.Include);
+
+        if (suddenTaskManager != null)
+            suddenTaskManager.ShowMopTask();
+    }
+
+    public bool TryGetNearestWetAreaPosition(Vector2 fromPosition, out Vector2 position)
+    {
+        WetArea nearestArea = null;
+        float nearestDistance = float.PositiveInfinity;
+
+        foreach (WetArea area in activeWetAreas)
+        {
+            if (area == null || !area.gameObject.activeInHierarchy)
+                continue;
+
+            float distance = ((Vector2)area.transform.position - fromPosition).sqrMagnitude;
+            if (distance < nearestDistance)
+            {
+                nearestArea = area;
+                nearestDistance = distance;
+            }
+        }
+
+        position = nearestArea != null ? nearestArea.transform.position : Vector2.zero;
+        return nearestArea != null;
+    }
+
+    public bool TryGetRandomWetArea(out WetArea wetArea)
+    {
+        List<WetArea> availableAreas = activeWetAreas.FindAll(
+            area => area != null && area.gameObject.activeInHierarchy);
+        if (availableAreas.Count == 0)
+        {
+            wetArea = null;
+            return false;
+        }
+
+        wetArea = availableAreas[Random.Range(0, availableAreas.Count)];
+        return true;
+    }
+
+    public bool HelpCleanAllWetAreas()
+    {
+        WetArea[] areasToClean = activeWetAreas.ToArray();
+        bool cleanedAny = false;
+
+        foreach (WetArea area in areasToClean)
+        {
+            if (area == null || !area.gameObject.activeInHierarchy)
+                continue;
+
+            area.Clean();
+            cleanedAny = true;
+        }
+
+        return cleanedAny;
     }
 
     public bool IsSpawning => spawning;
@@ -210,6 +289,8 @@ private void Update()
     mopCompleted = false;
     mopMissed = false;
     mopCounted = false;
+    mopQuestStartedAt = 0f;
+    hasMopQuestStartedAt = false;
     waterSpawnCount = 0;
     cleanedWaterCount = 0;
 
@@ -403,6 +484,7 @@ private void Update()
 
 
 
+        StartMopQuestTimer();
         mopTaskStarted = true;
 
         mopCompleted = false;
@@ -450,6 +532,15 @@ private void Update()
         {
             mopCompleted = true;
 
+            DayManager resolvedDayManager = ResolveDayManager();
+            if (resolvedDayManager != null)
+            {
+                float elapsedSeconds = hasMopQuestStartedAt
+                    ? Time.time - mopQuestStartedAt
+                    : float.PositiveInfinity;
+                resolvedDayManager.ResolveDailyMopAdditionalQuest(elapsedSeconds);
+            }
+
             if (!mopCounted && choreManager != null)
             {
                 choreManager.CompleteDynamicChore(1);
@@ -461,6 +552,15 @@ private void Update()
                 "ALL WATER CLEANED"
             );
         }
+    }
+
+    private void StartMopQuestTimer()
+    {
+        if (mopTaskStarted && !mopCompleted)
+            return;
+
+        mopQuestStartedAt = Time.time;
+        hasMopQuestStartedAt = true;
     }
 
     public void MarkMoppingMissed()
@@ -530,6 +630,8 @@ public void StartSpawning()
 
     mopCompleted = false;
     mopMissed = false;
+    mopQuestStartedAt = 0f;
+    hasMopQuestStartedAt = false;
     waterSpawnCount = 0;
 
     if (MaxWaterSpawnsToday <= 0)

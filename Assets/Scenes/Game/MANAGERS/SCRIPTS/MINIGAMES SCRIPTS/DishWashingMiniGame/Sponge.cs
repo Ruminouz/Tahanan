@@ -164,7 +164,11 @@ public class DishSponge : MonoBehaviour,
             if (miniGame != null && !miniGame.CanScrubThisPlate(dish))
                 continue;
 
-            dish.SpongeScrub();
+            EconomyManager economyManager = EconomyManager.Instance;
+            float scrubSpeedMultiplier = economyManager != null
+                ? economyManager.DishwashingScrubSpeedMultiplier
+                : 1f;
+            dish.SpongeScrub(scrubSpeedMultiplier);
             return;
         }
     }
@@ -287,31 +291,32 @@ public class DishSponge : MonoBehaviour,
 
 
 
-    public void AddSoap()
+    public bool AddSoap()
     {
-
-        if(hasSoap)
-            return;
-
-
-        hasSoap = true;
-
-
-        UpdateSprite();
-
-
-
         miniGame =
         FindFirstObjectByType<DishwashingMiniGame>();
 
-
-        if(miniGame != null)
+        if (miniGame == null)
         {
-            miniGame.SoapAdded();
+            Debug.LogWarning("Cannot add soap because the dishwashing minigame was not found.");
+            return false;
         }
 
+        if (!miniGame.CanAddSoap())
+        {
+            Debug.Log("Finish throwing away all leftovers before adding soap.");
+            return false;
+        }
+
+        if (hasSoap)
+            return true;
+
+        hasSoap = true;
+        UpdateSprite();
+        miniGame.SoapAdded();
 
         Debug.Log("Soap Added");
+        return true;
 
     }
 

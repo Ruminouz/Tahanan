@@ -1,46 +1,37 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class DishRinseArea : MonoBehaviour
 {
-    [SerializeField] private float rinseTime = 1.5f;
-
-    private DishRinsePlate currentPlate;
-    private float rinseProgress = 0f;
-
-    private void Update()
-    {
-        if (currentPlate == null)
-            return;
-
-        rinseProgress += Time.deltaTime;
-
-        if (rinseProgress >= rinseTime)
-        {
-            FinishRinsing();
-        }
-    }
+    private readonly List<DishRinsePlate> platesWaitingForRinse =
+        new List<DishRinsePlate>();
 
     public void ReceivePlate(DishRinsePlate plate)
     {
-        if (currentPlate != null)
+        if (plate == null || platesWaitingForRinse.Contains(plate))
             return;
 
-        currentPlate = plate;
-        rinseProgress = 0f;
+        platesWaitingForRinse.Add(plate);
 
-        Debug.Log("Rinsing plate...");
+        Debug.Log("Plate waiting for the faucet.");
     }
 
-    private void FinishRinsing()
+    public void CompleteRinsing()
     {
-        if (currentPlate == null)
+        if (platesWaitingForRinse.Count == 0)
             return;
 
-        Debug.Log("Rinse complete!");
+        DishRinsePlate[] plates = platesWaitingForRinse.ToArray();
+        platesWaitingForRinse.Clear();
+        foreach (DishRinsePlate plate in plates)
+        {
+            if (plate != null)
+                plate.FinishRinsing();
+        }
+    }
 
-        currentPlate.FinishRinsing();
-
-        currentPlate = null;
-        rinseProgress = 0f;
+    public void ResetArea()
+    {
+        platesWaitingForRinse.Clear();
     }
 }
