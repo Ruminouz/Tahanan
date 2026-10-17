@@ -6,25 +6,27 @@ using UnityEngine.InputSystem;
 
 public class SweepingMinigame : MonoBehaviour
 {
-    [Header("UI")]
+    [Header("Mga Elemento ng UI")]
     [SerializeField] private GameObject minigamePanel;
     [SerializeField] private Slider progressBar;
-    [Tooltip("Optional text that displays the current sweeping speed grade.")]
+    [Tooltip("Opsyonal: dito makikita kung gaano kabilis ka magwalis.")]
     [SerializeField] private TMP_Text speedGradeText;
     [SerializeField] private Image sweepingAreaImage;
     [SerializeField] private int dustParticleCount = 18;
     [SerializeField, Min(0)] private int additionalDustPerDay = 3;
     [SerializeField] private Sprite dustSprite;
+    [Tooltip("Dito lilitaw ang mga tipak ng alikabok.")]
+    [SerializeField] private RectTransform dustSpawnArea;
 
-    [Header("Dust")]
-    [Tooltip("Optional sprites ordered from full dust to fully swept. Assign all seven frames here.")]
+    [Header("Alikabok")]
+    [Tooltip("Opsyonal na mga larawan mula makapal na alikabok hanggang malinis na. Ilagay dito ang pitong frame.")]
     [SerializeField] private Sprite[] dustFadeSprites = new Sprite[7];
     [SerializeField] private Vector2 dustParticleSizeMin = new Vector2(100f, 100f);
     [SerializeField] private Vector2 dustParticleSizeMax = new Vector2(150f, 150f);
 
-    [Header("Cleaning Tool")]
+    [Header("Panglinis")]
     [SerializeField] private RectTransform broom;
-    [Tooltip("Vacuum visual used after the broom upgrade is purchased.")]
+    [Tooltip("Itsura ng vacuum kapag nabili na ang upgrade ng walis.")]
     [SerializeField] private RectTransform upgradedBroomVisual;
     [SerializeField] private RectTransform sweepingArea;
     [SerializeField] private float broomDisplayScale = 1f;
@@ -36,7 +38,7 @@ public class SweepingMinigame : MonoBehaviour
     [SerializeField] private Sprite broomDownSprite;
     [SerializeField] private Sprite broomLeftSprite;
     [SerializeField] private Sprite broomRightSprite;
-    [Tooltip("Eight animation frames for the upgraded vacuum, in playback order.")]
+    [Tooltip("Walong sunod-sunod na frame ng animation para sa upgraded na vacuum.")]
     [SerializeField] private Sprite[] vacuumAnimationFrames = new Sprite[8];
     [SerializeField, Min(0.1f)] private float vacuumAnimationFramesPerSecond = 8f;
     [SerializeField] private Vector2 brushColliderOffset = new Vector2(0f, -28f);
@@ -48,13 +50,13 @@ public class SweepingMinigame : MonoBehaviour
     [SerializeField] private float minimumStrokeDistance = 35f;
     [SerializeField] private float minimumSweepSpeed = 80f;
 
-    [Header("Cleaning")]
+    [Header("Pagwawalis")]
     [SerializeField] private float sweepBonusMultiplier = 1.75f;
     [SerializeField] private float dragMomentumThreshold = 400f;
     [SerializeField] private float sweepAreaDrift = 40f;
     [SerializeField] private float sweepAreaDriftSpeed = 1.5f;
     [SerializeField] private Vector2 dustSpread = new Vector2(140f, 100f);
-    [Header("Speed Reward")]
+    [Header("Dagdag-Gantimpala sa Bilis")]
     [SerializeField, Min(0)] private int baseSpeedRewardCoins = 2;
     [SerializeField, Min(0)] private int maximumSpeedBonusCoins = 8;
     [SerializeField, Min(0.1f)] private float targetSweepDuration = 12f;
@@ -83,6 +85,7 @@ public class SweepingMinigame : MonoBehaviour
     private int expectedStrokeDirection;
     private float lastSweepSfxTime;
     private const float SweepSfxCooldown = .8f;
+    private const float DustCompletionAlphaThreshold = 0.1f;
     private bool isVacuumUpgrade;
     private SweepingManager sweepingManager;
 
@@ -140,8 +143,14 @@ public class SweepingMinigame : MonoBehaviour
 
     public void StartSweeping(DustSpot dustSpot)
     {
-        if (dustSpot == null)
+        if (dustSpot == null || isSweeping)
             return;
+
+        if (dustSpawnArea == null)
+        {
+            Debug.LogError("Hindi naka-assign kung saan lilitaw ang alikabok.", this);
+            return;
+        }
 
         if (sweepingManager == null)
             sweepingManager = FindFirstObjectByType<SweepingManager>();
@@ -173,14 +182,17 @@ public class SweepingMinigame : MonoBehaviour
             baseSweepingAreaPosition = sweepingArea.anchoredPosition;
 
         if (minigamePanel != null)
+        {
+            MiniGameInteractionBlocker.RegisterPanel(minigamePanel);
             minigamePanel.SetActive(true);
+        }
 
         if (progressBar != null)
             progressBar.value = 0f;
         if (speedGradeText != null)
-            speedGradeText.text = "Ready!";
+            speedGradeText.text = "Game na!";
 
-        Debug.Log("SWEEPING STARTED");
+        Debug.Log("NAGSIMULA NA ANG PAGWAWALIS");
     }
 
     private void ApplyDifficulty()
@@ -192,7 +204,7 @@ public class SweepingMinigame : MonoBehaviour
         if (economyManager != null)
             difficultyScale *= economyManager.BroomCleaningSpeedMultiplier;
 
-        Debug.Log("Sweeping difficulty: " + difficulty + " | Sweep scale: " + difficultyScale);
+        Debug.Log("Hirap ng pagwawalis: " + difficulty + " | Bilis ng walis: " + difficultyScale);
     }
 
     private bool HasVacuumUpgrade()
@@ -238,7 +250,7 @@ public class SweepingMinigame : MonoBehaviour
     {
         ClearDustVisuals();
 
-        if (minigamePanel == null || sweepingArea == null)
+        if (dustSpawnArea == null)
             return;
 
         int day = DayManager.Instance != null
@@ -252,12 +264,12 @@ public class SweepingMinigame : MonoBehaviour
             RectTransform dustRect = dustObject.GetComponent<RectTransform>();
             Image dustImage = dustObject.GetComponent<Image>();
 
-            dustRect.SetParent(sweepingArea, false);
+            dustRect.SetParent(dustSpawnArea, false);
 
             dustRect.sizeDelta = GetDustParticleSize();
             float randomRotation = Random.Range(0f, 360f);
             dustRect.localRotation = Quaternion.Euler(0f, 0f, randomRotation);
-            dustRect.anchoredPosition = GetDustPositionInsideArea(dustRect.sizeDelta, randomRotation);
+            dustRect.anchoredPosition = GetDustPositionInsideSpawnArea(dustRect.sizeDelta, randomRotation);
 
             dustImage.sprite = GetDustFadeSprite(1f);
             dustImage.color = new Color(0.74f, 0.56f, 0.2f, 1f);
@@ -282,9 +294,9 @@ public class SweepingMinigame : MonoBehaviour
             Random.Range(minSize.y, maxSize.y));
     }
 
-    private Vector2 GetDustPositionInsideArea(Vector2 dustSize, float rotationDegrees)
+    private Vector2 GetDustPositionInsideSpawnArea(Vector2 dustSize, float rotationDegrees)
     {
-        Rect areaRect = sweepingArea.rect;
+        Rect areaRect = dustSpawnArea.rect;
         float radians = rotationDegrees * Mathf.Deg2Rad;
         float halfWidth = (Mathf.Abs(Mathf.Cos(radians)) * dustSize.x
             + Mathf.Abs(Mathf.Sin(radians)) * dustSize.y) * 0.5f;
@@ -432,7 +444,7 @@ public class SweepingMinigame : MonoBehaviour
             {
                 float fade = Mathf.Max(0f, 1f - (distance / brushColliderRadius));
                 float cleanAmount = (Time.deltaTime * (0.85f + rewardMultiplier * 0.55f)) * Mathf.Clamp01(fade + 0.5f);
-                color.a = Mathf.Max(0f, color.a - cleanAmount);
+                color.a = SnapDustAlphaToCompletion(color.a - cleanAmount);
                 dustImage.color = color;
                 dustImage.sprite = GetDustFadeSprite(color.a);
                 dustImage.transform.localScale = Vector3.one * Mathf.Lerp(1f, 0.25f, 1f - color.a);
@@ -470,10 +482,16 @@ public class SweepingMinigame : MonoBehaviour
                 Mathf.Max(0.1f, vacuumSuctionFadeSpeed)
                 * (0.5f + suctionStrength)
                 * Time.deltaTime);
+            color.a = SnapDustAlphaToCompletion(color.a);
             dustImage.color = color;
             dustImage.sprite = GetDustFadeSprite(color.a);
             dustRect.localScale = Vector3.one * Mathf.Lerp(0.15f, 1f, color.a);
         }
+    }
+
+    private float SnapDustAlphaToCompletion(float alpha)
+    {
+        return alpha <= DustCompletionAlphaThreshold ? 0f : alpha;
     }
 
     private bool UpdateProgressFromDust()
@@ -489,7 +507,15 @@ public class SweepingMinigame : MonoBehaviour
                 continue;
 
             activeDustCount++;
-            float alpha = Mathf.Clamp01(dustImage.color.a);
+            Color color = dustImage.color;
+            color.a = SnapDustAlphaToCompletion(Mathf.Clamp01(color.a));
+            if (color.a != dustImage.color.a)
+            {
+                dustImage.color = color;
+                dustImage.sprite = GetDustFadeSprite(color.a);
+            }
+
+            float alpha = color.a;
             remainingDust += alpha;
             if (alpha > 0f)
                 allDustFaded = false;
@@ -657,25 +683,25 @@ public class SweepingMinigame : MonoBehaviour
 
         if (isVacuumUpgrade && insideArea && currentMomentum >= minimumSweepSpeed)
         {
-            speedGradeText.text = "Sipping dust...";
+            speedGradeText.text = "Higop, alikabok!";
             return;
         }
 
         if (currentMomentum < minimumSweepSpeed)
         {
-            speedGradeText.text = "Too slow";
+            speedGradeText.text = "Ang bagal naman!";
             return;
         }
 
         float speedRatio = currentMomentum / Mathf.Max(1f, dragMomentumThreshold);
         if (speedRatio < 0.5f)
-            speedGradeText.text = "Getting faster";
+            speedGradeText.text = "Bilis-bilisan pa!";
         else if (speedRatio < 0.8f)
-            speedGradeText.text = "Fast";
+            speedGradeText.text = "Ayan, bumibilis!";
         else if (speedRatio < 1.15f)
-            speedGradeText.text = "Very fast";
+            speedGradeText.text = "Ang bilis na!";
         else
-            speedGradeText.text = "Super fast!";
+            speedGradeText.text = "Walang alikabok ang makakatakas!";
     }
 
     private bool IsInsideArea()
@@ -717,7 +743,7 @@ public class SweepingMinigame : MonoBehaviour
         activeBroom = null;
         activeBroomImage = null;
 
-        Debug.Log("SWEEPING COMPLETE! +" + rewardCoins + " speed reward coins");
+        Debug.Log("TAPOS NA MAGWALIS! +" + rewardCoins + " barya bilang dagdag-gantimpala sa bilis");
     }
 
     private int CalculateSpeedRewardCoins(float elapsedSeconds, float targetSeconds)

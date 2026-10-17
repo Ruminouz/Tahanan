@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class GameHUD : MonoBehaviour
 {
     private static Sprite minimizeButtonSprite;
+    private const string CompletedChoreColor = "#4CAF50";
+    private const string MissedChoreColor = "#F44336";
 
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text timeText;
@@ -43,6 +45,7 @@ public class GameHUD : MonoBehaviour
     private DayManager dayManager;
     private SweepingManager sweepingManager;
     private WaterSpawner waterSpawner;
+    private SegregateWasteMiniGame toyPickupMiniGame;
     private ChoreManager choreManager;
     private EconomyManager economyManager;
     private RectTransform clockHand;
@@ -87,6 +90,8 @@ public class GameHUD : MonoBehaviour
             : FindFirstObjectByType<DayManager>();
         sweepingManager = FindFirstObjectByType<SweepingManager>();
         waterSpawner = FindFirstObjectByType<WaterSpawner>();
+        toyPickupMiniGame = FindFirstObjectByType<SegregateWasteMiniGame>(
+            FindObjectsInactive.Include);
         choreManager = FindFirstObjectByType<ChoreManager>();
         currencyCanvas = coinsText != null
             ? coinsText.GetComponentInParent<Canvas>()
@@ -280,55 +285,48 @@ public class GameHUD : MonoBehaviour
                 if (chore == dayManager.SweepDustChore)
                     sweepListed = true;
 
-                if (dayManager.IsDailyAdditionalQuestFor(chore))
-                    continue;
-
                 AddChoreToGroup(chore, choreGroups, orderedGroups);
             }
         }
 
         if (!sweepListed && dayManager.SweepDustChore != null &&
-            !dayManager.IsDailyAdditionalQuestFor(dayManager.SweepDustChore) &&
             seenChores.Add(dayManager.SweepDustChore))
             AddChoreToGroup(dayManager.SweepDustChore, choreGroups, orderedGroups);
 
         foreach (ChoreGroup choreGroup in orderedGroups)
             AppendChoreGroup(choreGroup);
 
-        bool sweepIsDailyChallenge = string.Equals(
-            dayManager.DailyAdditionalQuestName,
-            "Sweep Dust",
-            System.StringComparison.OrdinalIgnoreCase);
-        if (!sweepListed && !sweepIsDailyChallenge &&
-            dayManager.SweepDustChore == null && sweepingManager != null)
+        if (!sweepListed && dayManager.SweepDustChore == null && sweepingManager != null)
         {
             string marker = sweepingManager.IsSweepingCompleted ? "✓ " : "○ ";
             string status = sweepingManager.IsSweepingCompleted
                 ? string.Empty
-                : " · " + sweepingManager.RemainingDust + " left";
-            choreListText.text += marker + "Sweep Dust" + status + "\n";
+                : " · " + Mathf.Max(0, sweepingManager.RemainingDust) + " remaining";
+            choreListText.text += sweepingManager.IsSweepingCompleted
+                ? "<color=" + CompletedChoreColor + ">✓ <s>Sweep Dust</s></color>\n"
+                : marker + "Sweep Dust" + status + "\n";
         }
 
-        bool mopIsDailyChallenge = string.Equals(
-            dayManager.DailyAdditionalQuestName,
-            "Mop Floor",
-            System.StringComparison.OrdinalIgnoreCase);
-        if (!mopIsDailyChallenge && waterSpawner != null &&
-            waterSpawner.MopTaskStarted && waterSpawner.IsMoppingCompleted)
+        if (waterSpawner != null && waterSpawner.MopTaskStarted &&
+            waterSpawner.IsMoppingMissed)
         {
-            choreListText.text += "✓ Mop Floor\n";
+            choreListText.text += "<color=" + MissedChoreColor + ">X Mop Floor</color>\n";
         }
-        else if (!mopIsDailyChallenge && waterSpawner != null &&
-            waterSpawner.MopTaskStarted && waterSpawner.IsMoppingMissed)
+        else if (waterSpawner != null && waterSpawner.MopTaskStarted &&
+            waterSpawner.IsMoppingCompleted && !waterSpawner.IsSpawning)
         {
-            choreListText.text += "! Mop Floor\n";
+            choreListText.text += "<color=" + CompletedChoreColor
+                + ">✓ <s>Mop Floor</s></color>\n";
         }
-        else if (!mopIsDailyChallenge && waterSpawner != null &&
-            waterSpawner.MopTaskStarted)
+        else if (waterSpawner != null &&
+            (waterSpawner.MopTaskStarted || waterSpawner.IsSpawning))
         {
-            choreListText.text += "○ Mop Floor · "
-                + waterSpawner.RemainingWetAreas
-                + " left\n";
+            string mopStatus = waterSpawner.RemainingWetAreas > 0
+                ? " · " + waterSpawner.RemainingWetAreas + " "
+                    + (waterSpawner.RemainingWetAreas == 1 ? "wet area" : "wet areas")
+                    + " remaining"
+                : " · waiting for water";
+            choreListText.text += "○ Mop Floor" + mopStatus + "\n";
         }
 
         UpdateHelperIndicators();
@@ -884,18 +882,47 @@ public class GameHUD : MonoBehaviour
             label.text = isMinimized ? "+" : "-";
     }
 
+    private static string GetDisplayChoreName(string choreName)
+    {
+        if (string.IsNullOrWhiteSpace(choreName))
+            return choreName;
+
+        string trimmedName = choreName.Trim();
+        if (trimmedName.IndexOf("pick up", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            trimmedName.IndexOf("toy", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            string.Equals(trimmedName, "PickUp", System.StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(trimmedName, "Clean Leaves", System.StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(
+                trimmedName,
+                CleanLeavesChore.ToyPickupChoreName,
+                System.StringComparison.OrdinalIgnoreCase))
+        {
+            return CleanLeavesChore.ToyPickupChoreName;
+        }
+
+        if (trimmedName.IndexOf("sweep", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            trimmedName.IndexOf("dust", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            string.Equals(trimmedName, "SweepDust", System.StringComparison.OrdinalIgnoreCase))
+        {
+            return "Sweep Dust";
+        }
+
+        return trimmedName;
+    }
+
     private void AddChoreToGroup(
         Chore chore,
         Dictionary<string, ChoreGroup> choreGroups,
         List<ChoreGroup> orderedGroups)
     {
-        string key = string.IsNullOrWhiteSpace(chore.ChoreName)
+        string normalizedName = GetDisplayChoreName(chore.ChoreName);
+        string key = string.IsNullOrWhiteSpace(normalizedName)
             ? "#" + chore.GetInstanceID()
-            : chore.ChoreName;
+            : normalizedName;
 
         if (!choreGroups.TryGetValue(key, out ChoreGroup choreGroup))
         {
-            choreGroup = new ChoreGroup(chore.ChoreName);
+            choreGroup = new ChoreGroup(normalizedName);
             choreGroups.Add(key, choreGroup);
             orderedGroups.Add(choreGroup);
         }
@@ -910,9 +937,20 @@ public class GameHUD : MonoBehaviour
         int missedCount = 0;
         float nextDeadline = float.MaxValue;
         bool allCompletedByHelper = true;
+        int remainingGarbageBags = 0;
+        bool hasGarbageChore = false;
+        bool hasSpawnedGarbageBag = false;
+        string displayName = GetDisplayChoreName(choreGroup.name);
 
         foreach (Chore chore in choreGroup.chores)
         {
+            if (chore is GarbageChore garbageChore)
+            {
+                hasGarbageChore = true;
+                hasSpawnedGarbageBag |= garbageChore.HasSpawnedBagToday;
+                remainingGarbageBags += garbageChore.RemainingBagCount;
+            }
+
             if (chore.IsCompleted)
             {
                 completedCount++;
@@ -932,10 +970,52 @@ public class GameHUD : MonoBehaviour
 
         if (remainingCount > 0)
         {
-            string pendingLine = "○ " + choreGroup.name
-                + (remainingCount > 1 ? " (" + remainingCount + ")" : string.Empty)
-                + " · " + timeManager.FormatClockTime(nextDeadline);
-            if (nextDeadline - timeManager.GetTime() <= nearDeadlineWarningSeconds)
+            string remainingSuffix = string.Empty;
+            bool showDeadline = true;
+            if (hasGarbageChore)
+            {
+                remainingSuffix = hasSpawnedGarbageBag
+                    ? " · " + remainingGarbageBags + " "
+                        + (remainingGarbageBags == 1 ? "trash bag" : "trash bags")
+                        + " remaining"
+                    : " · waiting for trash bags";
+                showDeadline = false;
+            }
+            else if (string.Equals(
+                displayName,
+                "Sweep Dust",
+                System.StringComparison.OrdinalIgnoreCase) && sweepingManager != null)
+            {
+                int remainingDust = sweepingManager.RemainingDust;
+                remainingSuffix = " · " + remainingDust + " "
+                    + (remainingDust == 1 ? "dust spot" : "dust spots")
+                    + " remaining";
+                showDeadline = false;
+            }
+            else if (string.Equals(
+                displayName,
+                CleanLeavesChore.ToyPickupChoreName,
+                System.StringComparison.OrdinalIgnoreCase) &&
+                toyPickupMiniGame != null &&
+                toyPickupMiniGame.IsGameStarted)
+            {
+                int remainingToys = toyPickupMiniGame.RemainingToyCount;
+                remainingSuffix = " · " + remainingToys + " "
+                    + (remainingToys == 1 ? "toy" : "toys")
+                    + " remaining";
+                showDeadline = false;
+            }
+            else if (remainingCount > 1)
+            {
+                remainingSuffix = " (" + remainingCount + ")";
+            }
+
+            string pendingLine = "○ " + displayName + remainingSuffix;
+
+            if (showDeadline)
+                pendingLine += " · " + timeManager.FormatClockTime(nextDeadline);
+
+            if (showDeadline && nextDeadline - timeManager.GetTime() <= nearDeadlineWarningSeconds)
                 pendingLine = "<color=#" + ColorUtility.ToHtmlStringRGBA(nearDeadlineColor)
                     + ">" + pendingLine + "</color>";
 
@@ -943,19 +1023,18 @@ public class GameHUD : MonoBehaviour
         }
         else if (completedCount == choreGroup.chores.Count)
         {
-            string completedLine = "✓ " + choreGroup.name;
+            string completedLine = "✓ " + displayName;
             int helperCharacterIndex = GetVisibleCharacterCount(choreListText.text)
                 + completedLine.Length - 1;
-            choreListText.text += completedLine + "\n";
+            choreListText.text += "<color=" + CompletedChoreColor + ">✓ <s>"
+                + displayName + "</s></color>\n";
             if (allCompletedByHelper)
                 helperIndicatorCharacterIndices.Add(helperCharacterIndex);
         }
         else
         {
-            string missedLine = "! " + choreGroup.name;
-            choreListText.text += "<color=#"
-                + ColorUtility.ToHtmlStringRGBA(nearDeadlineColor)
-                + ">" + missedLine + "</color>\n";
+            choreListText.text += "<color=" + MissedChoreColor + ">X "
+                + displayName + "</color>\n";
         }
     }
 

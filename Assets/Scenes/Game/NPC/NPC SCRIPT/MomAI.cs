@@ -104,6 +104,9 @@ public class MomAI : MonoBehaviour
 
     private void Update()
     {
+        if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
+            return;
+
         if (choreManager == null)
             SubscribeToChoreManager();
 
@@ -178,6 +181,9 @@ public class MomAI : MonoBehaviour
     {
         reprimanding = true;
 
+        while (MiniGameInteractionBlocker.IsAnyMiniGameActive)
+            yield return null;
+
         while (pendingMissedChores.Count > 0)
         {
             Chore missedChore = pendingMissedChores.Dequeue();
@@ -223,6 +229,12 @@ public class MomAI : MonoBehaviour
             Vector2 previousPosition = body != null ? body.position : (Vector2)transform.position;
             while (player != null && !IsPlayerWithinSpankRange() && elapsed < maxApproachTime)
             {
+                if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
+                {
+                    yield return null;
+                    continue;
+                }
+
                 Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
                 Vector2 movement = waypointMover != null
                     ? waypointMover.GetMovementTowards(player.position, spankApproachSpeed, false)

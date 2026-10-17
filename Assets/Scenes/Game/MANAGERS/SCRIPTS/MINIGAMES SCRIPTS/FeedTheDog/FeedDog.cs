@@ -56,6 +56,7 @@ public class FeedDogMiniGame : MonoBehaviour
         combo = 0;
         score = 0;
 
+        MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
 
         bool alreadyLearned = false;

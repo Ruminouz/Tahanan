@@ -227,6 +227,7 @@ public void StartGame(Chore chore)
     // OPEN PANEL
     if(panel != null)
     {
+        MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
     }
 

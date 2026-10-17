@@ -261,9 +261,9 @@ MonoBehaviour:
   displayName: Bunso
   speechAnchor: {fileID: 612108440320188999}
   waypointMover: {fileID: 191313501327832035}
-  calmLine: It feels peaceful today.
-  concernedLine: We should take care of the house.
-  angryLine: Something needs to change.
+  calmLine: Ang payapa naman ng araw ngayon.
+  concernedLine: Asikasuhin na natin ang bahay.
+  angryLine: Kailangan na nating kumilos.
 --- !u!1 &5990642220842103243
 GameObject:
   m_ObjectHideFlags: 0

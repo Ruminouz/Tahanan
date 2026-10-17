@@ -84,7 +84,7 @@ public class Chore : Interactable
     // RESET NEW DAY
     // =========================
 
-  public void ResetChore()
+  public virtual void ResetChore()
 {
     isCompleted = false;
     isMissed = false;
@@ -178,6 +178,11 @@ public class Chore : Interactable
     // =========================
 
     public void MarkAsMissed()
+    {
+        MarkAsMissed(true);
+    }
+
+    public virtual void MarkAsMissed(bool disableGameObject)
 {
     if(isCompleted)
         return;
@@ -186,7 +191,8 @@ public class Chore : Interactable
     isMissed = true;
 
 
-    gameObject.SetActive(false);
+    if (disableGameObject)
+        gameObject.SetActive(false);
 
 
     Debug.Log(

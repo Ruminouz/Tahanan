@@ -494,8 +494,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
-  m_fontSizeBase: 8
+  m_fontSize: 6
+  m_fontSizeBase: 6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -565,6 +565,41 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -2.091, y: -5.369}
   m_SizeDelta: {x: 295.792, y: 167.262}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &540179807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540179808}
+  m_Layer: 5
+  m_Name: DustSpawnArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &540179808
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540179807}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2647625089460692255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -6.077, y: -8.0704}
+  m_SizeDelta: {x: 1520.921, y: 719.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &586526450 stripped
 MonoBehaviour:
@@ -820,6 +855,10 @@ PrefabInstance:
       propertyPath: sweepingMinigame
       value: 
       objectReference: {fileID: 2647625089460692254}
+    - target: {fileID: 29368461892534080, guid: 80e1e70b96e3ff643ac9f6b2b0965b22, type: 3}
+      propertyPath: 'dustPerDay.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1673599203510057855, guid: 80e1e70b96e3ff643ac9f6b2b0965b22, type: 3}
       propertyPath: m_LocalPosition.x
       value: 328.99942
@@ -1010,6 +1049,10 @@ PrefabInstance:
       propertyPath: tutorial
       value: 
       objectReference: {fileID: 7948106418534549318}
+    - target: {fileID: 486123816547885098, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
+      propertyPath: m_Name
+      value: PickUpToy
+      objectReference: {fileID: 0}
     - target: {fileID: 1494111540938651430, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: m_Name
       value: Chore Triggers
@@ -1074,13 +1117,17 @@ PrefabInstance:
       propertyPath: garbageBag
       value: 
       objectReference: {fileID: 1536422020718883322}
+    - target: {fileID: 6008167292394149642, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.86
+      objectReference: {fileID: 0}
     - target: {fileID: 6653447056419113867, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: miniGame
       value: 
       objectReference: {fileID: 5292845960082814051}
     - target: {fileID: 6653447056419113867, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: choreName
-      value: Pulutin ang mga laruan.
+      value: Iligpit ang mga laruan
       objectReference: {fileID: 0}
     - target: {fileID: 6916284537871387907, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: miniGame
@@ -1363,6 +1410,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 792b19e82e94bc141b02ce4433f5c4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SweepingMinigame
+--- !u!224 &2647625089460692255 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 430628092331334789, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
+  m_PrefabInstance: {fileID: 5457503535679431044}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2840334385593938865 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4720009657503594330, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
@@ -1502,6 +1554,10 @@ PrefabInstance:
     - target: {fileID: 8936545590720147186, guid: 1f4775a5ecfa56340963fa0b9a63d2d9, type: 3}
       propertyPath: m_Name
       value: BunsoNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 9135919930907748146, guid: 1f4775a5ecfa56340963fa0b9a63d2d9, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 640
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2025,9 +2081,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4932076745717060921, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
+      propertyPath: dustSpawnArea
+      value: 
+      objectReference: {fileID: 540179808}
+    - target: {fileID: 4932076745717060921, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
       propertyPath: broomDisplayScale
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4932076745717060921, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
+      propertyPath: 'dustFadeSprites.Array.data[6]'
+      value: 
+      objectReference: {fileID: -8463600169594432917, guid: 5bcbaa55e08a34341ab8aa7fbff8cc15, type: 3}
     - target: {fileID: 5353288730674052946, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
       propertyPath: tutorial
       value: 
@@ -2221,6 +2285,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3227366201068776337, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 428549438}
+    - targetCorrespondingSourceObject: {fileID: 430628092331334789, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 540179808}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf8c5728fa244394e8a27678d1d578e2, type: 3}
 --- !u!114 &5462901036617693270 stripped
@@ -2456,6 +2523,10 @@ PrefabInstance:
       propertyPath: dialoguePanelBackgroundSprite
       value: 
       objectReference: {fileID: 852052284539156526, guid: 7858bc7a3fa14984e90a3fbd3088c53f, type: 3}
+    - target: {fileID: 2859369600443598645, guid: 025c18fedd446f24e990c73a154587be, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 640
+      objectReference: {fileID: 0}
     - target: {fileID: 3724498181002373473, guid: 025c18fedd446f24e990c73a154587be, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.66
@@ -2716,6 +2787,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 34348846748205987, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145606768447960466, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3624545672882892414, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6267695058444739381, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.80448
@@ -2755,6 +2838,22 @@ PrefabInstance:
     - target: {fileID: 6267695058444739381, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272484882314997222, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377675914111931770, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036405361215425148, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7409962647154261929, guid: cd77a413ba102a447b1eb8e3c47f53ae, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2829,7 +2928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6364266456788755897, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: startingCoins
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6364266456788755897, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: mopUpgradeBaseCost
@@ -2882,7 +2981,7 @@ PrefabInstance:
     - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: cleanLeaves
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5839721144344248062}
     - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: garbageChore
       value: 

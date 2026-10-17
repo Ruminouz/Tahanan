@@ -195,7 +195,7 @@ public class WaterSpawner : MonoBehaviour
         return cleanedAny;
     }
 
-    public bool IsSpawning => spawning;
+    public bool IsSpawning => spawning && waterSpawnCount < MaxWaterSpawnsToday;
 
     public int WaterSpawnCount => waterSpawnCount;
     public int TotalWaterSpawned => waterSpawnCount;
@@ -248,6 +248,7 @@ private void Update()
     if (waterSpawnCount >= MaxWaterSpawnsToday)
     {
         spawning = false;
+        CompleteMoppingTaskIfReady();
         return;
     }
 
@@ -528,30 +529,35 @@ private void Update()
 
 
 
-        if(activeWetAreas.Count == 0)
+        CompleteMoppingTaskIfReady();
+    }
+
+    private void CompleteMoppingTaskIfReady()
+    {
+        if (!mopTaskStarted || mopCompleted || mopMissed ||
+            activeWetAreas.Count > 0 ||
+            waterSpawnCount < MaxWaterSpawnsToday)
+            return;
+
+        spawning = false;
+        mopCompleted = true;
+
+        DayManager resolvedDayManager = ResolveDayManager();
+        if (resolvedDayManager != null)
         {
-            mopCompleted = true;
-
-            DayManager resolvedDayManager = ResolveDayManager();
-            if (resolvedDayManager != null)
-            {
-                float elapsedSeconds = hasMopQuestStartedAt
-                    ? Time.time - mopQuestStartedAt
-                    : float.PositiveInfinity;
-                resolvedDayManager.ResolveDailyMopAdditionalQuest(elapsedSeconds);
-            }
-
-            if (!mopCounted && choreManager != null)
-            {
-                choreManager.CompleteDynamicChore(1);
-                mopCounted = true;
-            }
-
-
-            Debug.Log(
-                "ALL WATER CLEANED"
-            );
+            float elapsedSeconds = hasMopQuestStartedAt
+                ? Time.time - mopQuestStartedAt
+                : float.PositiveInfinity;
+            resolvedDayManager.ResolveDailyMopAdditionalQuest(elapsedSeconds);
         }
+
+        if (!mopCounted && choreManager != null)
+        {
+            choreManager.CompleteDynamicChore(1);
+            mopCounted = true;
+        }
+
+        Debug.Log("ALL WATER CLEANED");
     }
 
     private void StartMopQuestTimer()
@@ -565,7 +571,7 @@ private void Update()
 
     public void MarkMoppingMissed()
     {
-        if (!mopTaskStarted || mopCompleted)
+        if (!mopTaskStarted || mopCompleted || mopMissed)
             return;
 
         mopMissed = true;

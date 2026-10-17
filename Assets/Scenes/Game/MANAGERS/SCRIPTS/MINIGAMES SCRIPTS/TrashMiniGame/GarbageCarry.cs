@@ -69,6 +69,11 @@ public class GarbageCarry : MonoBehaviour
             return;
 
         PlayerEquipmentInventory inventory = GetComponent<PlayerEquipmentInventory>();
+        GarbageBag garbageBag = currentBag != null
+            ? currentBag.GetComponent<GarbageBag>()
+            : null;
+        garbageBag?.NotifyConsumed();
+
         if (inventory != null)
             inventory.Remove(EquipmentType.GarbageBag, true);
         else

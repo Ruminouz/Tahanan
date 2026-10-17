@@ -59,7 +59,8 @@ public class NPCInteractionManager : MonoBehaviour
 
     private void Update()
     {
-        if (interactionActive || moodManager == null ||
+        if (MiniGameInteractionBlocker.IsAnyMiniGameActive ||
+            interactionActive || moodManager == null ||
             PauseController.IsGamePaused || Time.time < nextCheckTime ||
             Time.time < nextInteractionTime)
             return;
@@ -118,6 +119,12 @@ public class NPCInteractionManager : MonoBehaviour
                first != null && second != null &&
                !PauseController.IsGamePaused)
         {
+            if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
+            {
+                yield return null;
+                continue;
+            }
+
             first.WaypointMover.MoveTowards(firstTarget, approachSpeed, arriveDistance);
             second.WaypointMover.MoveTowards(secondTarget, approachSpeed, arriveDistance);
 

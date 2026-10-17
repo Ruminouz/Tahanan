@@ -22,6 +22,7 @@ public class CleanLeavesMiniGame : MonoBehaviour
         currentChore = chore;
         cleaningStarted = false;
 
+        MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
 
         ResetLeaves();
@@ -52,7 +53,7 @@ public class CleanLeavesMiniGame : MonoBehaviour
         }
 
         tutorial.ShowTutorial(
-            "CLEAN LEAVES",
+            CleanLeavesChore.ToyPickupChoreName.ToUpperInvariant(),
             "1. Hold Left Mouse Button.\n" +
             "2. Move your mouse over the leaves.\n" +
             "3. Clear all the leaves.",
@@ -111,7 +112,7 @@ public class CleanLeavesMiniGame : MonoBehaviour
 
     private void CompleteGame()
     {
-        Debug.Log("Clean Leaves complete!");
+        Debug.Log(CleanLeavesChore.ToyPickupChoreName + " complete!");
 
         if (currentChore != null)
         {

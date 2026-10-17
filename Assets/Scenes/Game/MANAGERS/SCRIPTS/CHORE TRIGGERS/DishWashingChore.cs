@@ -25,6 +25,20 @@ public class DishwashingChore : Chore
 
         base.Complete();
 
+        SpawnGarbageBagForDishwashing();
+    }
+
+    public override void MarkAsMissed(bool disableGameObject)
+    {
+        if (IsCompleted || IsMissed)
+            return;
+
+        base.MarkAsMissed(disableGameObject);
+        SpawnGarbageBagForDishwashing();
+    }
+
+    private void SpawnGarbageBagForDishwashing()
+    {
         DayManager resolvedDayManager = DayManager.Instance != null
             ? DayManager.Instance
             : FindFirstObjectByType<DayManager>();
@@ -38,7 +52,7 @@ public class DishwashingChore : Chore
 
         if (garbageChore == null)
         {
-            Debug.LogWarning("Dishwashing completed, but no GarbageChore is available to spawn the bag.", this);
+            Debug.LogWarning("Dishwashing ended, but no GarbageChore is available to spawn the bag.", this);
             return;
         }
 

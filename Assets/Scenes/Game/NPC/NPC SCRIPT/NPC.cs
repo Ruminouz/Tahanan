@@ -30,11 +30,13 @@ public class NPC : MonoBehaviour, IInteractable
     public bool CanInteract()
     {
         return (dialogueData != null || GetComponent<HouseholdHelperAI>() != null) &&
+            !MiniGameInteractionBlocker.IsAnyMiniGameActive &&
             (!PauseController.IsGamePaused || isDialogueActive);
     }
 
     public bool CanStartAutomaticDialogue =>
         !isDialogueActive &&
+        !MiniGameInteractionBlocker.IsAnyMiniGameActive &&
         dialoguePanel != null &&
         dialogueText != null &&
         nameText != null;
@@ -116,7 +118,7 @@ public class NPC : MonoBehaviour, IInteractable
         IReadOnlyList<string> choices,
         Action<int> onChoice)
     {
-        if (isDialogueActive)
+        if (isDialogueActive || MiniGameInteractionBlocker.IsAnyMiniGameActive)
             return false;
 
         if (!HasDialogueReferences())
@@ -149,7 +151,7 @@ public class NPC : MonoBehaviour, IInteractable
         float displayDuration,
         Action onClosed)
     {
-        if (isDialogueActive)
+        if (isDialogueActive || MiniGameInteractionBlocker.IsAnyMiniGameActive)
             return false;
 
         if (!HasDialogueReferences())
@@ -279,7 +281,7 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void ShowChoices()
     {
-        StringBuilder choicesText = new StringBuilder("Pumili ng chore (pindutin ang numero):\n");
+        StringBuilder choicesText = new StringBuilder("Pumili ng gawain (pindutin ang numero):\n");
         for (int index = 0; index < activeChoices.Length; index++)
         {
             choicesText.Append(index + 1)

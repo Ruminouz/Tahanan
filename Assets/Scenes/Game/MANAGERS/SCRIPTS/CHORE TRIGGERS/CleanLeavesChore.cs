@@ -3,6 +3,8 @@ using UnityEngine.Serialization;
 
 public class CleanLeavesChore : Chore
 {
+    public const string ToyPickupChoreName = "Iligpit ang mga laruan";
+
     [FormerlySerializedAs("segregationMiniGame")]
     [SerializeField] private SegregateWasteMiniGame toyPickupMiniGame;
 
@@ -10,7 +12,7 @@ public class CleanLeavesChore : Chore
 
     private void Awake()
     {
-        SetChoreName("Clean Leaves");
+        SetChoreName(ToyPickupChoreName);
 
         if (toyPickupMiniGame == null)
         {
@@ -41,13 +43,13 @@ public class CleanLeavesChore : Chore
     {
         if (!IsAvailableToday())
         {
-            Debug.Log("Clean Leaves is available from Day 2 onward.");
+            Debug.Log(ToyPickupChoreName + " is available from Day 2 onward.");
             return;
         }
 
         if (toyPickupMiniGame != null)
         {
-            Debug.Log("Starting Clean Leaves toy-pickup mini-game!");
+            Debug.Log("Starting " + ToyPickupChoreName + " mini-game!");
             toyPickupMiniGame.StartGame(this);
         }
         else

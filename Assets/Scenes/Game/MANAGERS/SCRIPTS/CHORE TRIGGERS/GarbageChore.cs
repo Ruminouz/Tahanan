@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -17,7 +18,28 @@ public class GarbageChore : Chore
 
 
     private bool hasGarbageBag = false;
+    private bool hasSpawnedBagToday;
+    private bool hasStartedBagDeadlineToday;
+    private bool hasMissedBag;
     private DayManager dayManager;
+    private readonly HashSet<GarbageBag> spawnedBags = new HashSet<GarbageBag>();
+
+    public bool HasSpawnedBagToday => hasSpawnedBagToday || RemainingBagCount > 0;
+
+    public int RemainingBagCount
+    {
+        get
+        {
+            int count = 0;
+            foreach (GarbageBag bag in spawnedBags)
+            {
+                if (bag != null)
+                    count++;
+            }
+
+            return count;
+        }
+    }
 
 
 
@@ -37,6 +59,15 @@ public class GarbageChore : Chore
         if (Instance == this)
             Instance = null;
     }
+
+    public override void ResetChore()
+    {
+        base.ResetChore();
+        hasSpawnedBagToday = false;
+        hasStartedBagDeadlineToday = false;
+        hasMissedBag = false;
+    }
+
     private void Start()
 {
     gameObject.SetActive(true);
@@ -87,15 +118,17 @@ public class GarbageChore : Chore
 
 
 
-        hasGarbageBag = false;
-
         if (garbageBag == null)
             garbageBag = FindFirstObjectByType<GarbageBag>(FindObjectsInactive.Include);
 
         if (garbageBag != null)
         {
-            garbageBag.ConfigureSpawnedBag(this);
-            garbageBag.gameObject.SetActive(true);
+            GarbageBag spawnedBag = Instantiate(
+                garbageBag,
+                garbageBag.transform.position,
+                garbageBag.transform.rotation);
+            spawnedBag.ConfigureSpawnedBag(this);
+            spawnedBag.gameObject.SetActive(true);
 
             Debug.Log(
                 "Garbage Bag Spawned Day "
@@ -113,6 +146,31 @@ public class GarbageChore : Chore
 
         }
 
+    }
+
+    public void RegisterSpawnedBag(GarbageBag bag)
+    {
+        if (bag != null)
+        {
+            if (IsCompleted || IsMissed)
+                ResetChore();
+
+            spawnedBags.Add(bag);
+            if (!hasStartedBagDeadlineToday)
+            {
+                DayManager resolvedDayManager = ResolveDayManager();
+                hasStartedBagDeadlineToday = resolvedDayManager != null &&
+                    resolvedDayManager.StartGarbageBagDeadline(this);
+            }
+
+            hasSpawnedBagToday = true;
+        }
+    }
+
+    public void UnregisterSpawnedBag(GarbageBag bag)
+    {
+        if (bag != null)
+            spawnedBags.Remove(bag);
     }
 
 
@@ -137,7 +195,13 @@ public class GarbageChore : Chore
             return;
 
         ConsumeCarriedBag();
-        base.Complete();
+        if (RemainingBagCount > 0)
+            return;
+
+        if (hasMissedBag)
+            MarkAsMissed(false);
+        else
+            base.Complete();
     }
 
     public void ConsumeCarriedBag()
@@ -146,6 +210,21 @@ public class GarbageChore : Chore
             GarbageCarry.Instance.ConsumeBag();
 
         hasGarbageBag = false;
+    }
+
+    public void MissCarriedBag()
+    {
+        ConsumeCarriedBag();
+        hasMissedBag = true;
+
+        ChoreManager choreManager = FindFirstObjectByType<ChoreManager>();
+        if (choreManager != null)
+            choreManager.MissChore();
+        else
+            Debug.LogWarning("Cannot record the missed garbage bag because ChoreManager is missing.", this);
+
+        if (RemainingBagCount == 0)
+            MarkAsMissed(false);
     }
 
 

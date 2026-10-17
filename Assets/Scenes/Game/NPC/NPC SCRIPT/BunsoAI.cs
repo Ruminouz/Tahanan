@@ -68,7 +68,7 @@ public class BunsoAI : MonoBehaviour
     private float nextWanderTime;
     private float nextActionTime;
     private bool actionInProgress;
-    private readonly List<SegregateWasteChore> spawnedChores = new();
+    private readonly List<Chore> spawnedChores = new();
     private readonly List<GameObject> spawnedBadMoodObjects = new();
 
     private void Start()
@@ -94,6 +94,9 @@ public class BunsoAI : MonoBehaviour
 
     private void Update()
     {
+        if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
+            return;
+
         UpdateMovement();
 
         if (actionInProgress ||
@@ -121,6 +124,7 @@ public class BunsoAI : MonoBehaviour
     private void UpdateMovement()
     {
         if (actionInProgress ||
+            MiniGameInteractionBlocker.IsAnyMiniGameActive ||
             PauseController.IsGamePaused ||
             (waypointMover != null && waypointMover.waypointParent != null))
             return;
@@ -320,7 +324,8 @@ public class BunsoAI : MonoBehaviour
             while (Vector2.Distance(transform.position, player.position) > dialogueApproachDistance &&
                    elapsed < dialogueApproachTimeout)
             {
-                if (PauseController.IsGamePaused)
+                if (PauseController.IsGamePaused ||
+                    MiniGameInteractionBlocker.IsAnyMiniGameActive)
                 {
                     yield return null;
                     continue;
@@ -355,12 +360,21 @@ public class BunsoAI : MonoBehaviour
             }
 
             if (Vector2.Distance(transform.position, player.position) > dialogueApproachDistance)
+            {
                 Debug.LogWarning(name + " could not reach the player before the dialogue approach timed out.", this);
+                yield break;
+            }
 
             NPC dialogueHost = null;
             bool dialogueClosed = false;
             while (!dialogueClosed)
             {
+                if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
+                {
+                    yield return null;
+                    continue;
+                }
+
                 if (dialogueHost == null || !dialogueHost.CanStartAutomaticDialogue)
                 {
                     if (PauseController.IsGamePaused)
@@ -444,27 +458,41 @@ public class BunsoAI : MonoBehaviour
             spawner.RegisterExternalWetArea(wetArea, minigame);
         else
             wetArea.SetMoppingMinigame(minigame);
-        TrackSpawnedObject(wetArea.gameObject);
         return true;
     }
 
     private bool SpawnSegregateChore()
     {
-        if (segregateWastePrefab == null)
+        Chore choreTemplate = segregateWastePrefab;
+        if (choreTemplate == null)
+        {
+            choreTemplate = FindFirstObjectByType<SegregateWasteChore>(
+                FindObjectsInactive.Include);
+        }
+
+        if (choreTemplate == null)
+        {
+            choreTemplate = FindFirstObjectByType<CleanLeavesChore>(
+                FindObjectsInactive.Include);
+        }
+
+        if (choreTemplate == null)
         {
             Debug.LogWarning("Bunso cannot spawn a segregation chore because its prefab or scene chore is missing.", this);
             return false;
         }
 
-        SegregateWasteChore chore = Instantiate(
-            segregateWastePrefab,
+        Chore chore = Instantiate(
+            choreTemplate,
             transform.position,
             Quaternion.identity);
-        chore.ConfigureSpawnedChore("PickUp");
+        chore.ResetChore();
+        chore.SetRuntimeChoreName(CleanLeavesChore.ToyPickupChoreName);
         dayManager.RegisterDynamicChore(chore);
         spawnedChores.Add(chore);
         TrackSpawnedObject(chore.gameObject);
 
+        SpawnGarbageBag();
         return true;
     }
 
@@ -500,7 +528,7 @@ public class BunsoAI : MonoBehaviour
     {
         if (dayManager != null)
         {
-            foreach (SegregateWasteChore chore in spawnedChores)
+            foreach (Chore chore in spawnedChores)
             {
                 if (chore != null)
                     dayManager.UnregisterDynamicChore(chore);

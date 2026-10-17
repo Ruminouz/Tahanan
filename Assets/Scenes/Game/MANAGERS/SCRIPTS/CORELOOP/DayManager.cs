@@ -202,6 +202,12 @@ public class DayManager : MonoBehaviour
 
         ExpireChoresAtDeadline();
 
+        if (HasReachedMissedChoreGameOverThreshold)
+        {
+            TriggerGameOver();
+            return;
+        }
+
         if (timeManager != null && timeManager.GetRemainingTime() <= 0f)
         {
             FinishDay();
@@ -421,7 +427,7 @@ public class DayManager : MonoBehaviour
         EnableChore(washDishes);
         EnableChore(sweepDust);
         EnableChore(feedDog);
-        DisableChore(cleanLeaves);
+        EnableChore(cleanLeaves);
 
         DisableChore(mopFloor);
         DisableChore(throwTrash);
@@ -430,6 +436,7 @@ public class DayManager : MonoBehaviour
         AddActiveChore(chores, washDishes);
         AddActiveChore(chores, sweepDust);
         AddActiveChore(chores, feedDog);
+        AddActiveChore(chores, cleanLeaves);
 
         if (garbageChore != null && currentDay >= 2)
         {
@@ -464,7 +471,7 @@ public class DayManager : MonoBehaviour
         List<Chore> chores = new List<Chore>();
         foreach (Chore chore in activeChores)
         {
-            if (chore != null)
+            if (chore != null && !(chore is GarbageChore))
                 chores.Add(chore);
         }
 
@@ -670,6 +677,17 @@ public class DayManager : MonoBehaviour
             Mathf.Max(earliestAvailableDeadline, latestDeadline)));
     }
 
+    public bool StartGarbageBagDeadline(GarbageChore chore)
+    {
+        if (chore == null ||
+            !TryGetDailyDeadlineBounds(out float earliestDeadline, out float latestDeadline))
+            return false;
+
+        float deadlineDuration = Random.Range(earliestDeadline, latestDeadline);
+        chore.SetDailyDeadline(timeManager.GetTime() + deadlineDuration);
+        return true;
+    }
+
     private bool TryGetDailyDeadlineBounds(out float earliestDeadline, out float latestDeadline)
     {
         earliestDeadline = 0f;
@@ -809,7 +827,12 @@ public class DayManager : MonoBehaviour
         Debug.Log("DAY " + currentDay + " COMPLETE!");
         MarkUnfinishedChoresAsMissed();
         if (waterSpawner != null)
+        {
+            if (waterSpawner.MopTaskStarted && !waterSpawner.IsMoppingCompleted)
+                waterSpawner.MarkMoppingMissed();
+
             waterSpawner.StopSpawning();
+        }
 
         gameOver |= HasReachedMissedChoreGameOverThreshold;
         ShowDaySummary();
@@ -817,6 +840,19 @@ public class DayManager : MonoBehaviour
 
     private bool HasPendingHudChores()
     {
+        if (sweepDust != null &&
+            sweepingManager != null &&
+            sweepingManager.RemainingDust > 0)
+            return true;
+
+        if (garbageChore != null &&
+            garbageChore.RemainingBagCount > 0)
+            return true;
+
+        if (waterSpawner != null &&
+            (waterSpawner.IsSpawning || waterSpawner.RemainingWetAreas > 0))
+            return true;
+
         if (!AllActiveChoresResolved())
             return true;
 
@@ -842,6 +878,16 @@ public class DayManager : MonoBehaviour
                 if (chore == null || chore.IsCompleted || chore.IsMissed)
                     continue;
 
+                if (chore is GarbageChore garbageChore &&
+                    (!garbageChore.HasSpawnedBagToday ||
+                     garbageChore.RemainingBagCount > 0))
+                    continue;
+
+                if (chore == sweepDust &&
+                    sweepingManager != null &&
+                    sweepingManager.RemainingDust > 0)
+                    continue;
+
                 if (chore.RemainingDeadline <= 0f)
                 {
                     if (choreManager != null)
@@ -854,6 +900,11 @@ public class DayManager : MonoBehaviour
 
         if (timeManager != null && timeManager.GetRemainingTime() <= 0f)
         {
+            if (waterSpawner != null && waterSpawner.IsSpawning)
+            {
+                waterSpawner.StopSpawning();
+            }
+
             if (waterSpawner != null && waterSpawner.MopTaskStarted &&
                 !waterSpawner.IsMoppingCompleted)
             {
@@ -861,9 +912,6 @@ public class DayManager : MonoBehaviour
                 if (suddenTaskManager != null)
                     suddenTaskManager.ResetMopTask();
             }
-
-            if (waterSpawner != null)
-                waterSpawner.StopSpawning();
         }
     }
 
@@ -924,9 +972,17 @@ public class DayManager : MonoBehaviour
                     if (chore == null)
                         continue;
 
-                    summary.AppendLine((chore.IsCompleted ? "✓ " : "- ")
-                        + chore.ChoreName
-                        + (chore.IsCompleted ? " - COMPLETED" : " - MISSED"));
+                    bool garbageWasNotSpawned = chore is GarbageChore garbageChore &&
+                        !garbageChore.HasSpawnedBagToday;
+                    string choreStatus = chore.IsCompleted
+                        ? "COMPLETED"
+                        : garbageWasNotSpawned
+                            ? "NOT SPAWNED"
+                            : chore.IsMissed
+                                ? "MISSED"
+                                : "INCOMPLETE";
+                    string choreMarker = chore.IsCompleted ? "✓ " : "- ";
+                    summary.AppendLine(choreMarker + chore.ChoreName + " - " + choreStatus);
                     summaryChoresText.text = summary.ToString();
                     yield return new WaitForSecondsRealtime(summaryLineDelay);
                 }
@@ -1231,6 +1287,10 @@ public class DayManager : MonoBehaviour
         foreach (Chore chore in activeChores)
         {
             if (chore == null || chore.IsCompleted || chore.IsMissed)
+                continue;
+
+            if (chore is GarbageChore garbageChore &&
+                !garbageChore.HasSpawnedBagToday)
                 continue;
 
             if (choreManager != null)

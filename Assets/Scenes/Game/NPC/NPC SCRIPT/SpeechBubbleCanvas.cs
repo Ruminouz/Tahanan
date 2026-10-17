@@ -4,6 +4,7 @@ using TMPro;
 
 public static class SpeechBubbleCanvas
 {
+    private const string BubbleContainerName = "Speech Bubble Container";
     private const float HorizontalPadding = 28f;
     private const float VerticalPadding = 16f;
     private const float MinimumBubbleWidth = 120f;
@@ -48,9 +49,10 @@ public static class SpeechBubbleCanvas
         if (canvasRect == null)
             return null;
 
+        RectTransform bubbleContainer = GetBubbleContainer(canvasRect);
         GameObject bubble = new GameObject("NPC Speech Bubble");
         RectTransform bubbleRect = bubble.AddComponent<RectTransform>();
-        bubbleRect.SetParent(canvasRect, false);
+        bubbleRect.SetParent(bubbleContainer, false);
         bubbleRect.localScale = Vector3.one;
         bubbleRect.SetAsLastSibling();
 
@@ -89,6 +91,32 @@ public static class SpeechBubbleCanvas
         ScreenSpaceBubbleFollower follower = bubble.AddComponent<ScreenSpaceBubbleFollower>();
         follower.Initialize(anchor, canvas, worldCamera, duration);
         return bubble;
+    }
+
+    private static RectTransform GetBubbleContainer(RectTransform canvasRect)
+    {
+        Transform existingContainer = canvasRect.Find(BubbleContainerName);
+        RectTransform containerRect;
+        if (existingContainer != null)
+        {
+            containerRect = existingContainer as RectTransform;
+        }
+        else
+        {
+            GameObject container = new GameObject(
+                BubbleContainerName,
+                typeof(RectTransform));
+            containerRect = container.GetComponent<RectTransform>();
+            containerRect.SetParent(canvasRect, false);
+            containerRect.anchorMin = Vector2.zero;
+            containerRect.anchorMax = Vector2.one;
+            containerRect.offsetMin = Vector2.zero;
+            containerRect.offsetMax = Vector2.zero;
+            containerRect.pivot = new Vector2(0.5f, 0.5f);
+        }
+
+        containerRect.SetAsFirstSibling();
+        return containerRect;
     }
 
     private static Vector2 CalculateBubbleSize(

@@ -25,6 +25,11 @@ public class SegregateWasteMiniGame : MonoBehaviour
     private float elapsedTime;
     private bool gameStarted;
 
+    public bool IsGameStarted => gameStarted;
+    public int RemainingToyCount => gameStarted && spawnedWaste != null
+        ? Mathf.Max(0, spawnedWaste.Length - collectedToys.Count)
+        : 0;
+
     private void Start()
     {
         tutorialManager = FindFirstObjectByType<TutorialManager>();
@@ -39,6 +44,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
         elapsedTime = 0f;
         gameStarted = false;
 
+        MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
         int currentDay = FindFirstObjectByType<DayManager>()?.CurrentDifficulty ?? 1;
         ConfigureDifficulty(currentDay);
@@ -100,7 +106,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
         }
 
         tutorial.ShowTutorial(
-            "PICK UP TOYS",
+            CleanLeavesChore.ToyPickupChoreName.ToUpperInvariant(),
             "Drag each toy into the box.\n" +
             $"Collect all {totalItemsNeeded} toys as quickly as you can!",
             FinishTutorial

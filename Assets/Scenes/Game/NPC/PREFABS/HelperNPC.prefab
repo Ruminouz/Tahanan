@@ -253,9 +253,9 @@ MonoBehaviour:
   displayName: Kuya
   speechAnchor: {fileID: 1042943640945524530}
   waypointMover: {fileID: 8564069997886501912}
-  calmLine: Ako najan mamaya
-  concernedLine: We should take care of the house.
-  angryLine: katamad ah
+  calmLine: Ako na diyan mamaya.
+  concernedLine: Asikasuhin na natin ang bahay.
+  angryLine: Nakakatamad naman, ah.
 --- !u!114 &8049838704480278140
 MonoBehaviour:
   m_ObjectHideFlags: 0

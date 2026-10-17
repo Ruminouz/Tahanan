@@ -5011,9 +5011,9 @@ MonoBehaviour:
   displayName: Tatay
   speechAnchor: {fileID: 129610332}
   waypointMover: {fileID: 1493128261299710533}
-  calmLine: It feels peaceful today.
-  concernedLine: We should take care of the house.
-  angryLine: Something needs to change.
+  calmLine: Ang payapa naman ng araw ngayon.
+  concernedLine: Asikasuhin na natin ang bahay.
+  angryLine: Kailangan na nating kumilos.
 --- !u!1 &1594257851
 GameObject:
   m_ObjectHideFlags: 0
@@ -5105,9 +5105,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   collisionPadding: 0.02
-  calmLine: Good job helping around the house!
-  concernedLine: Please try to finish your chores.
-  angryLine: You missed another chore! Get moving!
+  calmLine: Ayos, ang sipag mong tumulong sa bahay!
+  concernedLine: Tapusin mo na sana ang mga gawain mo.
+  angryLine: May na-miss ka na namang gawain! Galaw-galaw na!
   angrySpriteColor: {r: 1, g: 0.45, b: 0.45, a: 1}
 --- !u!50 &1609937395
 Rigidbody2D:
@@ -6800,9 +6800,9 @@ MonoBehaviour:
   displayName: Tatay
   speechAnchor: {fileID: 8157910243762772216}
   waypointMover: {fileID: 1493128261299710533}
-  calmLine: It feels peaceful today.
-  concernedLine: We should take care of the house.
-  angryLine: Something needs to change.
+  calmLine: Ang payapa naman ng araw ngayon.
+  concernedLine: Asikasuhin na natin ang bahay.
+  angryLine: Kailangan na nating kumilos.
 --- !u!4 &437580079482569656
 Transform:
   m_ObjectHideFlags: 0
@@ -7838,8 +7838,8 @@ MonoBehaviour:
   speechAnchor: {fileID: 1895825523723791353}
   waypointMover: {fileID: 7129097854483259603}
   calmLine: Ako najan mamaya
-  concernedLine: We should take care of the house.
-  angryLine: katamad ah
+  concernedLine: Asikasuhin na natin ang bahay.
+  angryLine: Nakakatamad naman, ah.
 --- !u!4 &5583211196672629926
 Transform:
   m_ObjectHideFlags: 0

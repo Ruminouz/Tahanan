@@ -186,7 +186,10 @@ public class MoppingMinigame : MonoBehaviour
         }
 
         if (minigamePanel != null)
+        {
+            MiniGameInteractionBlocker.RegisterPanel(minigamePanel);
             minigamePanel.SetActive(true);
+        }
         moppingArea.gameObject.SetActive(true);
         if (progressBar != null)
             progressBar.gameObject.SetActive(false);

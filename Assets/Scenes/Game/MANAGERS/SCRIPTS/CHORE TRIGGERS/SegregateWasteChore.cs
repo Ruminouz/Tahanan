@@ -8,7 +8,7 @@ public class SegregateWasteChore : Chore
 
     private void Awake()
     {
-        SetChoreName("Clean Leaves");
+        SetChoreName(CleanLeavesChore.ToyPickupChoreName);
 
         if (miniGame == null)
         {
@@ -54,11 +54,11 @@ public class SegregateWasteChore : Chore
     {
         if (!IsAvailableToday())
         {
-            Debug.Log("Clean Leaves is available from Day 2 onward.");
+            Debug.Log(CleanLeavesChore.ToyPickupChoreName + " is available from Day 2 onward.");
             return;
         }
 
-        Debug.Log("Starting Clean Leaves toy-pickup mini-game!");
+        Debug.Log("Starting " + CleanLeavesChore.ToyPickupChoreName + " mini-game!");
 
         if (miniGame != null)
         {

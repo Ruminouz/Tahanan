@@ -40,7 +40,7 @@ public class GarbageSortingMiniGame : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        Instance = this;
         Instance = this;
     }
 
@@ -93,9 +93,7 @@ public class GarbageSortingMiniGame : MonoBehaviour
     currentDay = Mathf.Clamp(currentDay, 1, 7);
 
     totalTrash = GetTrashAmount();
-
-
-
+    MiniGameInteractionBlocker.RegisterPanel(panel);
     panel.SetActive(true);
 
 
@@ -304,7 +302,7 @@ private void CompleteGame()
 
         if (currentChore is GarbageChore garbageChore)
         {
-            garbageChore.ConsumeCarriedBag();
+            garbageChore.MissCarriedBag();
         }
         else
         {

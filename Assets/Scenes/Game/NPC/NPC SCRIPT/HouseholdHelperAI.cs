@@ -111,6 +111,9 @@ public class HouseholdHelperAI : MonoBehaviour
 
     private void Update()
     {
+        if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
+            return;
+
         if (moodManager == null)
             moodManager = MoodManager.Instance != null
                 ? MoodManager.Instance
@@ -180,7 +183,8 @@ public class HouseholdHelperAI : MonoBehaviour
 
     public void Interact()
     {
-        if (helping || PauseController.IsGamePaused)
+        if (helping || PauseController.IsGamePaused ||
+            MiniGameInteractionBlocker.IsAnyMiniGameActive)
             return;
 
         if (moodManager == null)
@@ -354,7 +358,8 @@ public class HouseholdHelperAI : MonoBehaviour
 
         try
         {
-            while (PauseController.IsGamePaused)
+            while (PauseController.IsGamePaused ||
+                   MiniGameInteractionBlocker.IsAnyMiniGameActive)
                 yield return null;
 
             if (player != null)
@@ -363,7 +368,8 @@ public class HouseholdHelperAI : MonoBehaviour
                 while (player != null &&
                        Vector2.Distance(transform.position, player.position) > playerApproachDistance)
                 {
-                    if (PauseController.IsGamePaused)
+                    if (PauseController.IsGamePaused ||
+                        MiniGameInteractionBlocker.IsAnyMiniGameActive)
                     {
                         yield return null;
                         continue;
@@ -501,8 +507,9 @@ public class HouseholdHelperAI : MonoBehaviour
             : 0f;
         float workElapsed = 0f;
 
+        SetChoreProgress(workDuration > 0f ? 0f : 1f);
         DisableBodyColliderForTravel();
-        while (IsTaskStillAvailable(task))
+        while (task.AreasCleanedByHelper == 0 && IsTaskStillAvailable(task))
         {
             WetArea wetArea = null;
             DustSpot dustSpot = null;
@@ -554,8 +561,6 @@ public class HouseholdHelperAI : MonoBehaviour
 
             task.AreasCleanedByHelper++;
         }
-
-        SetChoreProgress(1f);
     }
 
     private bool IsAreaActive(HelperTask task, WetArea wetArea, DustSpot dustSpot)
@@ -679,8 +684,12 @@ public class HouseholdHelperAI : MonoBehaviour
         if (chore is CleanLeavesChore ||
             chore is SegregateWasteChore ||
             choreName.IndexOf("toy", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
-            choreName.IndexOf("pickup", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Pick Up Toys";
+            choreName.IndexOf("pickup", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            string.Equals(
+                choreName,
+                CleanLeavesChore.ToyPickupChoreName,
+                System.StringComparison.OrdinalIgnoreCase))
+            return CleanLeavesChore.ToyPickupChoreName;
 
         return string.IsNullOrWhiteSpace(choreName) ? "Chore" : choreName;
     }
@@ -888,7 +897,7 @@ public class HouseholdHelperAI : MonoBehaviour
             message = "Ako na ang magmo-mop!";
         else if (task.SweepDust)
             message = "Ako na ang magwawalis!";
-        else if (task.DisplayName == "Pick Up Toys")
+        else if (task.DisplayName == CleanLeavesChore.ToyPickupChoreName)
             message = "Ako na ang magliligpit ng mga laruan!";
         else if (task.Chore is DishwashingChore)
             message = "Ako na mag huhugas";
