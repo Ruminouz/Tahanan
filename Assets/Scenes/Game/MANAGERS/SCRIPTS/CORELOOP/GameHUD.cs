@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -61,6 +62,9 @@ public class GameHUD : MonoBehaviour
     private readonly List<Image> helperIndicatorImages = new();
     private Sprite helperSprite;
     private bool dailyQuestPanelLookupAttempted;
+    private Coroutine tutorialPulseCoroutine;
+    private Transform tutorialPulseTarget;
+    private Vector3 tutorialPulseOriginalScale;
 
     private sealed class CoinPopup
     {
@@ -574,6 +578,66 @@ public class GameHUD : MonoBehaviour
         choreListCollapsedPanel.SetActive(false);
         UpdateMinimizeButtonLabel(choreListMinimizeButton, isChoreListMinimized);
         UpdateMinimizeButtonLabel(choreListRestoreButton, isChoreListMinimized);
+    }
+
+    public void PulseChoreListForTutorial()
+    {
+        if (choreListPanelRect == null)
+        {
+            Debug.LogWarning("Cannot highlight the chore list because its panel is unavailable.", this);
+            return;
+        }
+
+        StartTutorialPulse(choreListPanelRect);
+    }
+
+    public void PulseMoodSliderForTutorial()
+    {
+        MoodManager resolvedMoodManager = MoodManager.Instance != null
+            ? MoodManager.Instance
+            : FindFirstObjectByType<MoodManager>();
+        if (resolvedMoodManager == null || resolvedMoodManager.MoodSlider == null)
+        {
+            Debug.LogWarning("Cannot highlight the mood slider because it is unavailable.", this);
+            return;
+        }
+
+        StartTutorialPulse(resolvedMoodManager.MoodSlider.transform);
+    }
+
+    private void StartTutorialPulse(Transform target)
+    {
+        if (tutorialPulseCoroutine != null)
+        {
+            StopCoroutine(tutorialPulseCoroutine);
+            if (tutorialPulseTarget != null)
+                tutorialPulseTarget.localScale = tutorialPulseOriginalScale;
+        }
+
+        tutorialPulseTarget = target;
+        tutorialPulseOriginalScale = target.localScale;
+        tutorialPulseCoroutine = StartCoroutine(PulseTutorialTarget(target));
+    }
+
+    private IEnumerator PulseTutorialTarget(Transform target)
+    {
+        const float pulseDuration = 1.5f;
+        const float pulseCount = 3f;
+        float elapsed = 0f;
+        while (elapsed < pulseDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float pulse = 0.5f - 0.5f * Mathf.Cos(
+                elapsed / pulseDuration * pulseCount * Mathf.PI * 2f);
+            target.localScale = tutorialPulseOriginalScale * (1f + pulse * 0.12f);
+            yield return null;
+        }
+
+        if (target != null)
+            target.localScale = tutorialPulseOriginalScale;
+
+        tutorialPulseTarget = null;
+        tutorialPulseCoroutine = null;
     }
 
     private static GameObject FindPanelObject(Transform panel, string objectName)

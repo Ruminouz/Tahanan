@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class WetArea : Interactable
 {
-    private MoppingMinigame moppingMinigame;
+    private const string MoppingTutorialKey = "Mop";
 
+    private MoppingMinigame moppingMinigame;
     private WaterSpawner waterSpawner;
+    private TutorialManager tutorialManager;
     private Transform spawnPoint;
 
     private bool isCleaned = false;
@@ -102,7 +104,15 @@ public class WetArea : Interactable
 
 
 
-        moppingMinigame.StartMopping(this);
+        if (tutorialManager == null)
+            tutorialManager = FindFirstObjectByType<TutorialManager>();
+
+        bool showTutorial = tutorialManager == null
+            || !tutorialManager.HasLearned(MoppingTutorialKey);
+        moppingMinigame.StartMopping(
+            this,
+            showTutorial,
+            () => tutorialManager?.MarkAsLearned(MoppingTutorialKey));
     }
 
 

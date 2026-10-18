@@ -262,7 +262,7 @@ public class NPC : MonoBehaviour, IInteractable
         float typingSpeed = dialogueData != null
             ? Mathf.Max(0f, dialogueData.typingSpeed)
             : 0.03f;
-        yield return new WaitForSeconds(typingSpeed);
+        yield return new WaitForSecondsRealtime(typingSpeed);
     }
 
     isTyping = false;
@@ -274,7 +274,7 @@ public class NPC : MonoBehaviour, IInteractable
         dialogueData.autoProgressLines.Length > dialogueIndex &&
         dialogueData.autoProgressLines[dialogueIndex])
     {
-        yield return new WaitForSeconds(dialogueData.autoProgressDelay);
+        yield return new WaitForSecondsRealtime(dialogueData.autoProgressDelay);
         NextLine();
     }
 }

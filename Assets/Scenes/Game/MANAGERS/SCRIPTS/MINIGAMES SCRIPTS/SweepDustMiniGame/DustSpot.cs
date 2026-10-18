@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class DustSpot : Interactable
 {
+    private const string SweepingTutorialKey = "Broom";
+
     private SweepingMinigame sweepingMinigame;
     private SweepingManager sweepingManager;
+    private TutorialManager tutorialManager;
 
     private bool isCleaned = false;
 
@@ -65,11 +68,17 @@ public class DustSpot : Interactable
             return;
         }
 
-
         Debug.Log("Opening Sweeping Minigame");
 
+        if (tutorialManager == null)
+            tutorialManager = FindFirstObjectByType<TutorialManager>();
 
-        sweepingMinigame.StartSweeping(this);
+        bool showTutorial = tutorialManager == null
+            || !tutorialManager.HasLearned(SweepingTutorialKey);
+        sweepingMinigame.StartSweeping(
+            this,
+            showTutorial,
+            () => tutorialManager?.MarkAsLearned(SweepingTutorialKey));
     }
 
 

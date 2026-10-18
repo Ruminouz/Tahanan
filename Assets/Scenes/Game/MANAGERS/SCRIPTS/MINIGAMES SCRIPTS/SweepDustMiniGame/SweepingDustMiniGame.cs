@@ -38,6 +38,8 @@ public class SweepingMinigame : MonoBehaviour
     [SerializeField] private Sprite broomDownSprite;
     [SerializeField] private Sprite broomLeftSprite;
     [SerializeField] private Sprite broomRightSprite;
+    [SerializeField, Min(1f)] private float tutorialPulseScale = 1.15f;
+    [SerializeField, Min(0.1f)] private float tutorialPulseSpeed = 3f;
     [Tooltip("Walong sunod-sunod na frame ng animation para sa upgraded na vacuum.")]
     [SerializeField] private Sprite[] vacuumAnimationFrames = new Sprite[8];
     [SerializeField, Min(0.1f)] private float vacuumAnimationFramesPerSecond = 8f;
@@ -84,6 +86,10 @@ public class SweepingMinigame : MonoBehaviour
     private int currentStrokeDirection;
     private int expectedStrokeDirection;
     private float lastSweepSfxTime;
+    private float defaultSpeedGradeFontSize;
+    private bool firstTimeTutorialActive;
+    private bool waitingForTutorialHold;
+    private System.Action onTutorialCompleted;
     private const float SweepSfxCooldown = .8f;
     private const float DustCompletionAlphaThreshold = 0.1f;
     private bool isVacuumUpgrade;
@@ -91,6 +97,9 @@ public class SweepingMinigame : MonoBehaviour
 
     private void Start()
     {
+        if (speedGradeText != null)
+            defaultSpeedGradeFontSize = speedGradeText.fontSize;
+
         ResetSweeping();
     }
 
@@ -112,6 +121,9 @@ public class SweepingMinigame : MonoBehaviour
         expectedStrokeDirection = 0;
         lastSweepSfxTime = -999f;
         isVacuumUpgrade = false;
+        firstTimeTutorialActive = false;
+        waitingForTutorialHold = false;
+        onTutorialCompleted = null;
 
         ClearDustVisuals();
 
@@ -121,7 +133,10 @@ public class SweepingMinigame : MonoBehaviour
         if (progressBar != null)
             progressBar.value = 0f;
         if (speedGradeText != null)
+        {
             speedGradeText.text = string.Empty;
+            speedGradeText.fontSize = defaultSpeedGradeFontSize;
+        }
 
         if (broom != null)
             broom.gameObject.SetActive(false);
@@ -138,10 +153,26 @@ public class SweepingMinigame : MonoBehaviour
         if (!isSweeping)
             return;
 
+        if (waitingForTutorialHold)
+            PulseBroomForTutorial();
+
         HandleMouseInput();
     }
 
-    public void StartSweeping(DustSpot dustSpot)
+    private void PulseBroomForTutorial()
+    {
+        if (activeBroom == null)
+            return;
+
+        float pulse = 1f + (Mathf.Sin(Time.unscaledTime * tutorialPulseSpeed) + 1f)
+            * 0.5f * (tutorialPulseScale - 1f);
+        activeBroom.localScale = activeBroomBaseScale * broomDisplayScale * pulse;
+    }
+
+    public void StartSweeping(
+        DustSpot dustSpot,
+        bool showFirstTimeTutorial = false,
+        System.Action tutorialCompleted = null)
     {
         if (dustSpot == null || isSweeping)
             return;
@@ -170,6 +201,9 @@ public class SweepingMinigame : MonoBehaviour
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
         lastSweepSfxTime = -999f;
+        firstTimeTutorialActive = showFirstTimeTutorial;
+        waitingForTutorialHold = showFirstTimeTutorial;
+        onTutorialCompleted = showFirstTimeTutorial ? tutorialCompleted : null;
 
         isVacuumUpgrade = HasVacuumUpgrade();
         ApplyCleaningToolVisual(isVacuumUpgrade);
@@ -190,7 +224,12 @@ public class SweepingMinigame : MonoBehaviour
         if (progressBar != null)
             progressBar.value = 0f;
         if (speedGradeText != null)
-            speedGradeText.text = "Game na!";
+        {
+            speedGradeText.fontSize = waitingForTutorialHold ? 20f : defaultSpeedGradeFontSize;
+            speedGradeText.text = waitingForTutorialHold
+                ? "Hawakan ang kaliwang pindutan ng mouse\npara humawak sa walis tambo."
+                : "Magsimula na!";
+        }
 
         Debug.Log("NAGSIMULA NA ANG PAGWAWALIS");
     }
@@ -359,6 +398,18 @@ public class SweepingMinigame : MonoBehaviour
         {
             mouseIsDown = true;
             lastMousePosition = Mouse.current.position.ReadValue();
+
+            if (waitingForTutorialHold)
+            {
+                waitingForTutorialHold = false;
+                if (activeBroom != null)
+                    activeBroom.localScale = activeBroomBaseScale * broomDisplayScale;
+                if (speedGradeText != null)
+                {
+                    speedGradeText.text =
+                        "Mahusay! Walisin ang dumi!\nIkilos ang mouse pabalik-balik.";
+                }
+            }
         }
 
         if (releaseThisFrame)
@@ -678,7 +729,7 @@ public class SweepingMinigame : MonoBehaviour
 
     private void UpdateSpeedGrade(bool insideArea)
     {
-        if (speedGradeText == null)
+        if (speedGradeText == null || firstTimeTutorialActive)
             return;
 
         if (isVacuumUpgrade && insideArea && currentMomentum >= minimumSweepSpeed)
@@ -727,6 +778,13 @@ public class SweepingMinigame : MonoBehaviour
 
         if (currentDustSpot != null)
             currentDustSpot.Clean();
+
+        System.Action tutorialCompleted = onTutorialCompleted;
+        onTutorialCompleted = null;
+        firstTimeTutorialActive = false;
+        if (speedGradeText != null)
+            speedGradeText.fontSize = defaultSpeedGradeFontSize;
+        tutorialCompleted?.Invoke();
 
         int rewardCoins = CalculateSpeedRewardCoins(Time.time - sweepStartTime, targetSweepDuration);
         if (EconomyManager.Instance != null)

@@ -1179,7 +1179,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MopChore
   mopVisual: {fileID: 7430527013064816712}
   upgradedMopVisual: {fileID: 2504166085544953492}
-  tutorial: {fileID: 0}
 --- !u!212 &6428745839643866374
 SpriteRenderer:
   serializedVersion: 2

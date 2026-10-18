@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 
 public class DayManager : MonoBehaviour
@@ -59,6 +60,12 @@ public class DayManager : MonoBehaviour
     [SerializeField, Min(0f)] private float catCameraHoldDuration = 1.5f;
     [SerializeField, Min(0.1f)] private float catCameraOrthographicSize = 2f;
 
+    [Header("Day 1 Introduction")]
+    [SerializeField, Min(0.01f)] private float dayOneCameraMoveDuration = 1f;
+    [SerializeField, Min(0.1f)] private float dayOneCameraOrthographicSize = 2.5f;
+    [SerializeField, Min(0.1f)] private float dayOneKitchenCameraOrthographicSize = 4.25f;
+    [SerializeField] private TMP_FontAsset dayOneIntroFont;
+
     [Header("Game Over")]
     [Tooltip("Maximum chores that may be missed before game over. Element 0 is Day 1 and element 6 is Day 7.")]
     [Min(0)]
@@ -74,6 +81,8 @@ public class DayManager : MonoBehaviour
 
     private Chore[] activeChores;
     private readonly List<Chore> dynamicChores = new List<Chore>();
+    private readonly Dictionary<GameObject, bool> npcActiveStates =
+        new Dictionary<GameObject, bool>();
     private bool dayFinished;
     private bool gameOver;
     private bool weekComplete;
@@ -87,6 +96,15 @@ public class DayManager : MonoBehaviour
     private bool summaryRevealComplete;
     private bool transitionInProgress;
     private bool dayStartIntroInProgress;
+    private bool dayOneFollowupIntroStarted;
+    private bool dayOneWaterTutorialComplete;
+    private bool dayOneKitchenIntroStarted;
+    private GameObject dayOneIntroOverlay;
+    private CinemachineCamera[] dayOneIntroCameras;
+    private CinemachineBrain[] dayOneIntroBrains;
+    private bool[] dayOneIntroBrainPreviousIgnoreTimeScale;
+    private bool dayOneIntroPausedTime;
+    private float dayOneIntroPreviousTimeScale = 1f;
     private float normalTimeScale = 1f;
     private bool doubleGameSpeedApplied;
 
@@ -163,9 +181,66 @@ public class DayManager : MonoBehaviour
         }
     }
 
+    private void HideSceneNpcs()
+    {
+        HashSet<GameObject> sceneNpcs = new HashSet<GameObject>(
+            GameObject.FindGameObjectsWithTag("NPCS"));
+        AddNpcComponents<NPC>(sceneNpcs);
+        AddNpcComponents<NPCSocialParticipant>(sceneNpcs);
+        AddNpcComponents<MomAI>(sceneNpcs);
+        AddNpcComponents<BunsoAI>(sceneNpcs);
+        AddNpcComponents<HouseholdHelperAI>(sceneNpcs);
+        AddNpcComponents<CatInteraction>(sceneNpcs);
+
+        foreach (GameObject npc in sceneNpcs)
+        {
+            if (npc == null || npcActiveStates.ContainsKey(npc))
+                continue;
+
+            npcActiveStates.Add(npc, npc.activeSelf);
+            npc.SetActive(false);
+        }
+    }
+
+    private static void AddNpcComponents<T>(HashSet<GameObject> sceneNpcs)
+        where T : Component
+    {
+        T[] components = FindObjectsByType<T>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (T component in components)
+        {
+            if (component == null)
+                continue;
+
+            Transform current = component.transform;
+            while (current != null && !current.CompareTag("NPCS"))
+                current = current.parent;
+
+            sceneNpcs.Add(current != null ? current.gameObject : component.gameObject);
+        }
+    }
+
+    private void RestoreSceneNpcs()
+    {
+        foreach (KeyValuePair<GameObject, bool> npcState in npcActiveStates)
+        {
+            if (npcState.Key != null)
+                npcState.Key.SetActive(npcState.Value);
+        }
+
+        npcActiveStates.Clear();
+    }
+
     private void Start()
     {
-        if (currentDay == 2)
+        if (currentDay == 1)
+        {
+            HideSceneNpcs();
+            dayStartIntroInProgress = true;
+            StartCoroutine(StartDayOneWithIntroduction());
+        }
+        else if (currentDay == 2)
         {
             dayStartIntroInProgress = true;
             StartCoroutine(StartDayTwoWithIntroduction());
@@ -186,6 +261,11 @@ public class DayManager : MonoBehaviour
         if (mainMenuButton != null)
             mainMenuButton.onClick.RemoveListener(ReturnToMainMenu);
 
+        ResumeDayOneIntro();
+
+        if (dayOneIntroOverlay != null)
+            Destroy(dayOneIntroOverlay);
+
         if (economyManager != null)
             economyManager.CoinsEarned -= HandleCoinsEarned;
 
@@ -199,6 +279,18 @@ public class DayManager : MonoBehaviour
 
         if (dayFinished || transitionInProgress || dayStartIntroInProgress)
             return;
+
+        if (currentDay == 1 &&
+            dayOneWaterTutorialComplete &&
+            !dayOneKitchenIntroStarted &&
+            waterSpawner != null &&
+            waterSpawner.IsMoppingCompleted)
+        {
+            dayOneKitchenIntroStarted = true;
+            dayStartIntroInProgress = true;
+            StartCoroutine(StartDayOneKitchenIntroduction());
+            return;
+        }
 
         ExpireChoresAtDeadline();
 
@@ -220,8 +312,24 @@ public class DayManager : MonoBehaviour
         FinishDay();
     }
 
+    public void NotifyDayOneSweepingCompleted()
+    {
+        if (currentDay != 1 ||
+            dayFinished ||
+            dayStartIntroInProgress ||
+            dayOneFollowupIntroStarted)
+            return;
+
+        dayOneFollowupIntroStarted = true;
+        dayStartIntroInProgress = true;
+        StartCoroutine(StartDayOneFollowupIntroduction());
+    }
+
     private void UpdateGameSpeed()
     {
+        if (dayOneIntroPausedTime)
+            return;
+
         if (doubleGameSpeed == doubleGameSpeedApplied)
             return;
 
@@ -1094,9 +1202,551 @@ public class DayManager : MonoBehaviour
             daySummaryPanel.SetActive(false);
         yield return Fade(0f);
         if (currentDay == 2)
+        {
+            RestoreSceneNpcs();
             yield return PlayDayTwoIntroduction();
+        }
         StartDay();
         transitionInProgress = false;
+    }
+
+    private IEnumerator StartDayOneWithIntroduction()
+    {
+        yield return null;
+
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        Camera mainCamera = Camera.main;
+        if (player == null || mainCamera == null)
+        {
+            Debug.LogWarning(
+                "The Day 1 introduction was skipped because the player or MainCamera is missing.",
+                this);
+            StartDay();
+            dayStartIntroInProgress = false;
+            yield break;
+        }
+
+        player.ResetToDailySpawn();
+        player.SetMovementInputEnabled(false);
+
+        dayOneIntroCameras = FindObjectsByType<CinemachineCamera>(
+            FindObjectsSortMode.None);
+        float originalOrthographicSize = dayOneIntroCameras.Length > 0
+            ? dayOneIntroCameras[0].Lens.OrthographicSize
+            : mainCamera.orthographicSize;
+
+        SetDayOneCameraFollowTarget(null);
+
+        SetupDay1();
+        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
+        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
+        PauseDayOneIntro();
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "WELCOME SA TAHANAN!",
+            "Welcome sa Tahanan game! Sa game na ito matututunan mo ang mga pangkaraniwang araw-araw na buhay sa loob ng bahay :D");
+        GameHUD hud = FindFirstObjectByType<GameHUD>();
+        if (hud != null)
+            hud.PulseChoreListForTutorial();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "CHORE LIST",
+            "Sa papel na ito nakasulat ang mga task na dapat mong gawin daily. Huwag mong kalimutang gawin kahit isa, magagalit si Nanay!");
+        if (hud != null)
+            hud.PulseMoodSliderForTutorial();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "MOOD",
+            "Ito naman ang mood ng mga magiging kasama mo sa bahay. Huwag mong hayaang bumaba ito, baka mahirapan ka.");
+
+        DustSpot dustSpot = FindFirstObjectByType<DustSpot>();
+        if (dustSpot != null)
+        {
+            yield return MoveDayOneCameraTo(
+                mainCamera,
+                dustSpot.transform.position,
+                dayOneCameraOrthographicSize,
+                dayOneCameraMoveDuration);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "The Day 1 introduction could not focus on a dust spot because none is available.",
+                this);
+        }
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "DUST SPOTS",
+            "Nako, may mga dumi! Mag-umpisa na tayo maglinis.");
+
+        Component broom = FindFirstObjectByType<BroomChore>();
+        if (broom == null)
+            broom = FindFirstObjectByType<BroomPickup>();
+
+        if (broom != null)
+        {
+            yield return MoveDayOneCameraTo(
+                mainCamera,
+                broom.transform.position,
+                dayOneCameraOrthographicSize,
+                dayOneCameraMoveDuration);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "The Day 1 introduction could not focus on the broom because no broom pickup is available.",
+                this);
+        }
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "WALIS TAMBO",
+            "Kunin mo muna ito at i-equip para ma-walisan mo ang dumi.");
+
+        Destroy(dayOneIntroOverlay);
+        dayOneIntroOverlay = null;
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            player.transform.position,
+            originalOrthographicSize,
+            dayOneCameraMoveDuration);
+
+        SetDayOneCameraFollowTarget(player.transform);
+
+        StartDay();
+        player.SetMovementInputEnabled(true);
+        ResumeDayOneIntro();
+        dayStartIntroInProgress = false;
+    }
+
+    private IEnumerator StartDayOneFollowupIntroduction()
+    {
+        ResolveWaterSpawner();
+        if (dayFinished)
+        {
+            dayStartIntroInProgress = false;
+            yield break;
+        }
+
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        Camera mainCamera = Camera.main;
+        if (player == null || mainCamera == null)
+        {
+            Debug.LogWarning(
+                "The Day 1 follow-up introduction was skipped because the player or MainCamera is missing.",
+                this);
+            dayStartIntroInProgress = false;
+            yield break;
+        }
+
+        if (waterSpawner == null || !waterSpawner.SpawnWaterForTutorial())
+        {
+            Debug.LogWarning(
+                "The Day 1 follow-up introduction was skipped because no tutorial water spot could be spawned.",
+                this);
+            dayOneWaterTutorialComplete = true;
+            dayStartIntroInProgress = false;
+            yield break;
+        }
+
+        dayOneIntroCameras = FindObjectsByType<CinemachineCamera>(
+            FindObjectsSortMode.None);
+        float originalOrthographicSize = dayOneIntroCameras.Length > 0
+            ? dayOneIntroCameras[0].Lens.OrthographicSize
+            : mainCamera.orthographicSize;
+
+        player.SetMovementInputEnabled(false);
+        SetDayOneCameraFollowTarget(null);
+
+        PauseDayOneIntro();
+        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
+        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
+
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            waterSpawner.LastWaterSpawnPosition,
+            dayOneCameraOrthographicSize,
+            dayOneCameraMoveDuration);
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "WATER SPOT",
+            "Nako, may natapon na tubig! Puntahan natin at linisin bago may madulas.");
+
+        MopChore mopEquipment = FindFirstObjectByType<MopChore>(
+            FindObjectsInactive.Include);
+        if (mopEquipment != null)
+        {
+            yield return MoveDayOneCameraTo(
+                mainCamera,
+                mopEquipment.transform.position,
+                dayOneCameraOrthographicSize,
+                dayOneCameraMoveDuration);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "The Day 1 follow-up introduction could not find the mop equipment.",
+                this);
+        }
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "MOP",
+            "Kunin mo ang mop at i-equip ito para malinis ang natapong tubig.");
+
+        Destroy(dayOneIntroOverlay);
+        dayOneIntroOverlay = null;
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            player.transform.position,
+            originalOrthographicSize,
+            dayOneCameraMoveDuration);
+        SetDayOneCameraFollowTarget(player.transform);
+
+        player.SetMovementInputEnabled(true);
+        ResumeDayOneIntro();
+        dayOneWaterTutorialComplete = true;
+        dayStartIntroInProgress = false;
+    }
+
+    private IEnumerator StartDayOneKitchenIntroduction()
+    {
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        Camera mainCamera = Camera.main;
+        Chore dishes = washDishes != null
+            ? washDishes
+            : FindFirstObjectByType<DishwashingChore>(FindObjectsInactive.Include);
+        if (player == null || mainCamera == null || dishes == null)
+        {
+            Debug.LogWarning(
+                "The Day 1 kitchen introduction was skipped because the player, MainCamera, or dishwashing chore is missing.",
+                this);
+            dayStartIntroInProgress = false;
+            yield break;
+        }
+
+        dayOneIntroCameras = FindObjectsByType<CinemachineCamera>(
+            FindObjectsSortMode.None);
+        float originalOrthographicSize = dayOneIntroCameras.Length > 0
+            ? dayOneIntroCameras[0].Lens.OrthographicSize
+            : mainCamera.orthographicSize;
+
+        player.SetMovementInputEnabled(false);
+        SetDayOneCameraFollowTarget(null);
+        PauseDayOneIntro();
+        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
+        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
+        Collider2D kitchenTrigger = dishes.GetComponent<Collider2D>();
+        Vector3 kitchenFocusPosition = kitchenTrigger != null
+            ? kitchenTrigger.bounds.center
+            : dishes.transform.position;
+
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            kitchenFocusPosition,
+            dayOneKitchenCameraOrthographicSize,
+            dayOneCameraMoveDuration);
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "KUSINA",
+            "Pagkatapos mag-mop, dito sa kusina ka naman maghuhugas ng mga plato!");
+
+        Destroy(dayOneIntroOverlay);
+        dayOneIntroOverlay = null;
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            player.transform.position,
+            originalOrthographicSize,
+            dayOneCameraMoveDuration);
+        SetDayOneCameraFollowTarget(player.transform);
+
+        player.SetMovementInputEnabled(true);
+        ResumeDayOneIntro();
+        dayStartIntroInProgress = false;
+    }
+
+    private void PauseDayOneIntro()
+    {
+        dayOneIntroPreviousTimeScale = Time.timeScale;
+        dayOneIntroBrains = FindObjectsByType<CinemachineBrain>(
+            FindObjectsSortMode.None);
+        dayOneIntroBrainPreviousIgnoreTimeScale =
+            new bool[dayOneIntroBrains.Length];
+        for (int i = 0; i < dayOneIntroBrains.Length; i++)
+        {
+            dayOneIntroBrainPreviousIgnoreTimeScale[i] =
+                dayOneIntroBrains[i].IgnoreTimeScale;
+            dayOneIntroBrains[i].IgnoreTimeScale = true;
+        }
+
+        dayOneIntroPausedTime = true;
+        Time.timeScale = 0f;
+    }
+
+    private void ResumeDayOneIntro()
+    {
+        if (!dayOneIntroPausedTime)
+            return;
+
+        if (dayOneIntroBrains != null)
+        {
+            for (int i = 0; i < dayOneIntroBrains.Length; i++)
+            {
+                if (dayOneIntroBrains[i] != null)
+                    dayOneIntroBrains[i].IgnoreTimeScale =
+                        dayOneIntroBrainPreviousIgnoreTimeScale[i];
+            }
+        }
+
+        Time.timeScale = dayOneIntroPreviousTimeScale;
+        dayOneIntroPausedTime = false;
+        dayOneIntroBrains = null;
+        dayOneIntroBrainPreviousIgnoreTimeScale = null;
+        dayOneIntroCameras = null;
+    }
+
+    private void SetDayOneCameraFollowTarget(Transform target)
+    {
+        if (dayOneIntroCameras == null)
+            return;
+
+        foreach (CinemachineCamera cameraRig in dayOneIntroCameras)
+        {
+            if (cameraRig != null)
+                cameraRig.Follow = target;
+        }
+    }
+
+    private IEnumerator MoveDayOneCameraTo(
+        Camera mainCamera,
+        Vector3 focusPosition,
+        float targetOrthographicSize,
+        float duration)
+    {
+        if (dayOneIntroCameras == null || dayOneIntroCameras.Length == 0)
+        {
+            yield return MoveCameraTo(
+                mainCamera.transform,
+                null,
+                mainCamera,
+                focusPosition,
+                targetOrthographicSize,
+                duration);
+            yield break;
+        }
+
+        Vector3[] startPositions = new Vector3[dayOneIntroCameras.Length];
+        Vector3[] targetPositions = new Vector3[dayOneIntroCameras.Length];
+        float[] startSizes = new float[dayOneIntroCameras.Length];
+        for (int i = 0; i < dayOneIntroCameras.Length; i++)
+        {
+            CinemachineCamera cameraRig = dayOneIntroCameras[i];
+            startPositions[i] = cameraRig.transform.position;
+            targetPositions[i] = new Vector3(
+                focusPosition.x,
+                focusPosition.y,
+                startPositions[i].z);
+            startSizes[i] = cameraRig.Lens.OrthographicSize;
+        }
+
+        float elapsed = 0f;
+        duration = Mathf.Max(0.01f, duration);
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float progress = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / duration));
+            for (int i = 0; i < dayOneIntroCameras.Length; i++)
+            {
+                CinemachineCamera cameraRig = dayOneIntroCameras[i];
+                if (cameraRig == null)
+                    continue;
+
+                cameraRig.transform.position = Vector3.Lerp(
+                    startPositions[i],
+                    targetPositions[i],
+                    progress);
+                SetCameraOrthographicSize(
+                    cameraRig,
+                    mainCamera,
+                    Mathf.Lerp(startSizes[i], targetOrthographicSize, progress));
+            }
+
+            yield return null;
+        }
+
+        for (int i = 0; i < dayOneIntroCameras.Length; i++)
+        {
+            CinemachineCamera cameraRig = dayOneIntroCameras[i];
+            if (cameraRig == null)
+                continue;
+
+            cameraRig.transform.position = targetPositions[i];
+            SetCameraOrthographicSize(cameraRig, mainCamera, targetOrthographicSize);
+        }
+    }
+
+    private static GameObject CreateDayOneIntroOverlay(out TMP_Text continuePrompt)
+    {
+        GameObject canvasObject = new GameObject(
+            "Day 1 Introduction Overlay",
+            typeof(RectTransform),
+            typeof(Canvas),
+            typeof(CanvasScaler),
+            typeof(GraphicRaycaster));
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = 100;
+
+        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.matchWidthOrHeight = 0.5f;
+
+        GameObject panelObject = new GameObject(
+            "Introduction Message Background",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        RectTransform panelRect = panelObject.GetComponent<RectTransform>();
+        panelRect.SetParent(canvasObject.transform, false);
+        panelRect.anchorMin = new Vector2(0.5f, 0.5f);
+        panelRect.anchorMax = new Vector2(0.5f, 0.5f);
+        panelRect.pivot = new Vector2(0.5f, 0.5f);
+        panelRect.anchoredPosition = new Vector2(0f, 180f);
+        panelRect.sizeDelta = new Vector2(1200f, 440f);
+        Image panelImage = panelObject.GetComponent<Image>();
+        panelImage.color = new Color(0.04f, 0.04f, 0.04f, 0f);
+        panelImage.raycastTarget = false;
+
+        GameObject textObject = new GameObject(
+            "Introduction Message",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(TextMeshProUGUI));
+        RectTransform textRect = textObject.GetComponent<RectTransform>();
+        textRect.SetParent(panelRect, false);
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = new Vector2(48f, 100f);
+        textRect.offsetMax = new Vector2(-48f, -36f);
+
+        TextMeshProUGUI text = textObject.GetComponent<TextMeshProUGUI>();
+        text.font = TMP_Settings.defaultFontAsset;
+        text.fontSize = 40f;
+        text.enableAutoSizing = true;
+        text.fontSizeMin = 26f;
+        text.fontSizeMax = 40f;
+        text.color = Color.white;
+        text.alignment = TextAlignmentOptions.Center;
+        text.raycastTarget = false;
+
+        GameObject promptObject = new GameObject(
+            "Continue Prompt",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(TextMeshProUGUI));
+        RectTransform promptRect = promptObject.GetComponent<RectTransform>();
+        promptRect.SetParent(panelRect, false);
+        promptRect.anchorMin = new Vector2(0f, 0f);
+        promptRect.anchorMax = new Vector2(1f, 0f);
+        promptRect.pivot = new Vector2(0.5f, 0f);
+        promptRect.offsetMin = new Vector2(48f, 24f);
+        promptRect.offsetMax = new Vector2(-48f, 86f);
+
+        continuePrompt = promptObject.GetComponent<TextMeshProUGUI>();
+        continuePrompt.font = TMP_Settings.defaultFontAsset;
+        continuePrompt.fontSize = 26f;
+        continuePrompt.enableAutoSizing = true;
+        continuePrompt.fontSizeMin = 20f;
+        continuePrompt.fontSizeMax = 26f;
+        continuePrompt.color = Color.white;
+        continuePrompt.alignment = TextAlignmentOptions.Center;
+        continuePrompt.raycastTarget = false;
+
+        return canvasObject;
+    }
+
+    private IEnumerator ShowDayOneIntroText(
+        TMP_Text text,
+        TMP_Text continuePrompt,
+        string title,
+        string message)
+    {
+        text.font = dayOneIntroFont;
+        text.outlineWidth = 0.2f;
+        text.outlineColor = Color.black;
+        text.text = "<b>" + title + "</b>\n\n" + message;
+        text.ForceMeshUpdate();
+        text.maxVisibleCharacters = 0;
+
+        continuePrompt.font = dayOneIntroFont;
+        continuePrompt.outlineWidth = 0.2f;
+        continuePrompt.outlineColor = Color.black;
+        continuePrompt.text = "Press Space or Esc to continue";
+        Vector3 originalScale = continuePrompt.rectTransform.localScale;
+        float revealElapsed = 0f;
+        float pulseElapsed = 0f;
+        int wordIndex = 0;
+        bool skippedTyping = false;
+        const float wordRevealInterval = 0.16f;
+
+        while (wordIndex < text.textInfo.wordCount)
+        {
+            if (WasDayOneIntroContinuePressed())
+            {
+                text.maxVisibleCharacters = text.textInfo.characterCount;
+                skippedTyping = true;
+                break;
+            }
+
+            float deltaTime = Time.unscaledDeltaTime;
+            revealElapsed += deltaTime;
+            pulseElapsed += deltaTime;
+            if (revealElapsed >= wordRevealInterval)
+            {
+                revealElapsed -= wordRevealInterval;
+                text.maxVisibleCharacters =
+                    text.textInfo.wordInfo[wordIndex].lastCharacterIndex + 1;
+                wordIndex++;
+            }
+
+            float pulse = 0.5f + 0.5f * Mathf.Sin(pulseElapsed * Mathf.PI * 2f);
+            continuePrompt.rectTransform.localScale = originalScale * (1f + pulse * 0.12f);
+            yield return null;
+        }
+
+        text.maxVisibleCharacters = text.textInfo.characterCount;
+        if (skippedTyping)
+            yield return null;
+
+        while (!WasDayOneIntroContinuePressed())
+        {
+            pulseElapsed += Time.unscaledDeltaTime;
+            float pulse = 0.5f + 0.5f * Mathf.Sin(pulseElapsed * Mathf.PI * 2f);
+            continuePrompt.rectTransform.localScale = originalScale * (1f + pulse * 0.12f);
+            yield return null;
+        }
+
+        continuePrompt.rectTransform.localScale = originalScale;
+    }
+
+    private static bool WasDayOneIntroContinuePressed()
+    {
+        return (Keyboard.current != null &&
+                (Keyboard.current.spaceKey.wasPressedThisFrame ||
+                 Keyboard.current.escapeKey.wasPressedThisFrame));
     }
 
     private IEnumerator StartDayTwoWithIntroduction()

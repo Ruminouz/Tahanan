@@ -4,16 +4,13 @@ public class BroomChore : Interactable
 {
     [SerializeField] private GameObject broomVisual;
     [SerializeField] private Sprite vacuumSprite;
-    [SerializeField] private ChoreTutorial tutorial;
 
     private bool hasBeenPickedUp = false;
-    private TutorialManager tutorialManager;
     private SpriteRenderer broomSpriteRenderer;
     private Sprite originalBroomSprite;
 
     private void Start()
     {
-        tutorialManager = FindFirstObjectByType<TutorialManager>();
         CacheBroomSprite();
         SubscribeToBroomUpgrade();
         UpdateBroomVisual();
@@ -122,33 +119,6 @@ public class BroomChore : Interactable
 
         inventory.Add(EquipmentType.Broom, broomVisual != null ? broomVisual : gameObject);
 
-        ShowFirstPickupTutorial();
         Debug.Log("BROOM PICKED UP!");
-    }
-
-    private void ShowFirstPickupTutorial()
-    {
-        const string tutorialKey = "Broom";
-        if (tutorialManager == null)
-            tutorialManager = FindFirstObjectByType<TutorialManager>();
-
-        if (tutorialManager != null && tutorialManager.HasLearned(tutorialKey))
-            return;
-
-        if (tutorial == null)
-            tutorial = FindFirstObjectByType<ChoreTutorial>();
-
-        if (tutorial == null)
-        {
-            tutorialManager?.MarkAsLearned(tutorialKey);
-            return;
-        }
-
-        tutorial.ShowTutorial(
-            "SWEEPING",
-            "1. Equip the broom.\n" +
-            "2. Hold Left Mouse Button.\n" +
-            "3. Sweep quickly back and forth over the dust.",
-            () => tutorialManager?.MarkAsLearned(tutorialKey));
     }
 }

@@ -20,6 +20,8 @@ public class MoppingMinigame : MonoBehaviour
     [SerializeField] private RectTransform mop;
     [SerializeField] private RectTransform moppingArea;
     [SerializeField] private GameObject upgradedMopVisual;
+    [SerializeField, Min(1f)] private float tutorialPulseScale = 1.15f;
+    [SerializeField, Min(0.1f)] private float tutorialPulseSpeed = 3f;
     [Header("Mop Movement Sprites")]
     [Tooltip("Optional classic mop movement frames in playback order. Assign up to eight sprites.")]
     [SerializeField] private Sprite[] classicMopMovementSprites = new Sprite[8];
@@ -62,6 +64,10 @@ public class MoppingMinigame : MonoBehaviour
     private Quaternion mopBaseRotation;
     private Vector3 mopBaseScale = Vector3.one;
     private float lastMopSfxTime;
+    private bool firstTimeTutorialActive;
+    private bool waitingForTutorialHold;
+    private bool waitingForTutorialStroke;
+    private System.Action onTutorialCompleted;
     private const float MopSfxCooldown = 0.7f;
 
     private DayManager dayManager;
@@ -110,6 +116,10 @@ public class MoppingMinigame : MonoBehaviour
         mopAnimationTime = 0f;
         mopMovementAnimationTime = 0f;
         lastMopSfxTime = -999f;
+        firstTimeTutorialActive = false;
+        waitingForTutorialHold = false;
+        waitingForTutorialStroke = false;
+        onTutorialCompleted = null;
         activeMopImage = null;
         activeMopIdleSprite = null;
         activeMopMovementSprites = null;
@@ -147,10 +157,26 @@ public class MoppingMinigame : MonoBehaviour
             return;
         }
 
+        if (waitingForTutorialHold)
+            PulseMopForTutorial();
+
         HandleMouseInput();
     }
 
-    public void StartMopping(WetArea wetArea)
+    private void PulseMopForTutorial()
+    {
+        if (activeMop == null)
+            return;
+
+        float pulse = 1f + (Mathf.Sin(Time.unscaledTime * tutorialPulseSpeed) + 1f)
+            * 0.5f * (tutorialPulseScale - 1f);
+        activeMop.localScale = mopBaseScale * pulse;
+    }
+
+    public void StartMopping(
+        WetArea wetArea,
+        bool showFirstTimeTutorial = false,
+        System.Action tutorialCompleted = null)
     {
         if (wetArea == null || !wetArea.gameObject.activeInHierarchy)
         {
@@ -172,6 +198,10 @@ public class MoppingMinigame : MonoBehaviour
         mopAnimationTime = 0f;
         mopMovementAnimationTime = 0f;
         lastMopSfxTime = -999f;
+        firstTimeTutorialActive = showFirstTimeTutorial;
+        waitingForTutorialHold = showFirstTimeTutorial;
+        waitingForTutorialStroke = false;
+        onTutorialCompleted = showFirstTimeTutorial ? tutorialCompleted : null;
 
         ApplyMopVisual(GetCurrentMopLevel());
         ApplyDifficulty();
@@ -200,7 +230,9 @@ public class MoppingMinigame : MonoBehaviour
             UpdateWetAreaVisual();
         }
 
-        ShowFeedback("Scrub back and forth!");
+        ShowFeedback(waitingForTutorialHold
+            ? "Hawakan ang kaliwang pindutan ng mouse\npara humawak sa mop."
+            : "Ikiskis ang mop pabalik-balik sa basang sahig.");
         Debug.Log("MOPPING MINIGAME STARTED!");
     }
 
@@ -290,6 +322,15 @@ public class MoppingMinigame : MonoBehaviour
             mouseIsDown = true;
             lastMousePosition = Mouse.current.position.ReadValue();
             currentStrokeDistance = 0f;
+
+            if (waitingForTutorialHold)
+            {
+                waitingForTutorialHold = false;
+                waitingForTutorialStroke = true;
+                if (activeMop != null)
+                    activeMop.localScale = mopBaseScale;
+                ShowFeedback("Magaling! Ikiskis pabalik-balik\nsa basang bahagi.");
+            }
         }
 
         if (Mouse.current.leftButton.wasReleasedThisFrame)
@@ -312,6 +353,14 @@ public class MoppingMinigame : MonoBehaviour
 
         bool insideArea = IsMopOverlappingMoppingArea();
         bool validStroke = UpdateStroke(mouseDelta);
+        if (waitingForTutorialStroke && insideArea
+            && validStroke && currentMomentum >= minimumMopSpeed)
+        {
+            waitingForTutorialStroke = false;
+            firstTimeTutorialActive = false;
+            ShowFeedback("Tama! Ipagpatuloy hanggang\nmatuyo ang sahig.");
+        }
+
         if (insideArea && validStroke && currentMomentum >= minimumMopSpeed)
         {
             float timeSinceLastMopSfx = Time.time - lastMopSfxTime;
@@ -328,7 +377,10 @@ public class MoppingMinigame : MonoBehaviour
         else
         {
             progress = Mathf.Max(0f, progress - progressDecay * Time.deltaTime);
-            ShowFeedback(insideArea ? "Scrub faster!" : "Move onto the wet spot!");
+            if (!firstTimeTutorialActive || waitingForTutorialStroke)
+                ShowFeedback(insideArea
+                    ? "Mas mabilis na pagkiskis!"
+                    : "Ilipat ang mop sa basang bahagi!");
         }
 
         UpdateWetAreaVisual();
@@ -504,11 +556,16 @@ public class MoppingMinigame : MonoBehaviour
         mouseIsDown = false;
         progress = 1f;
         UpdateWetAreaVisual();
-        ShowFeedback("Spotless!");
+        ShowFeedback("Malinis na ang sahig!");
         SoundEffectManager.Play("ChoreFinished");
 
         if (currentWetArea != null)
             currentWetArea.Clean();
+
+        System.Action tutorialCompleted = onTutorialCompleted;
+        onTutorialCompleted = null;
+        firstTimeTutorialActive = false;
+        tutorialCompleted?.Invoke();
 
         float targetDuration = Mathf.Max(0.1f, mopDuration);
         float speedRatio = Mathf.Clamp01(

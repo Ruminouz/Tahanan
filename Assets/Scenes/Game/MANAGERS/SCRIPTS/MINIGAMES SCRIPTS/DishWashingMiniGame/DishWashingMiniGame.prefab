@@ -118,7 +118,6 @@ MonoBehaviour:
   maximumDishScatter: 18
   rinsingArea: {fileID: 5616591386841462619}
   dryingRack: {fileID: 8259160021338318133}
-  tutorial: {fileID: 0}
 --- !u!1 &2649356726586322570
 GameObject:
   m_ObjectHideFlags: 0

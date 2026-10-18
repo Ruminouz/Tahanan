@@ -200,6 +200,32 @@ public class WaterSpawner : MonoBehaviour
     public int WaterSpawnCount => waterSpawnCount;
     public int TotalWaterSpawned => waterSpawnCount;
     public int CleanedWaterCount => cleanedWaterCount;
+    public Vector3 LastWaterSpawnPosition { get; private set; }
+
+    public bool SpawnWaterForTutorial()
+    {
+        InitializeSpawner();
+
+        if (waterSpawnCount > 0)
+            return true;
+
+        if (waterSpawnCount >= MaxWaterSpawnsToday)
+            return false;
+
+        if (availableSpawnPoints.Count == 0)
+            ResetSpawnPoints();
+
+        if (waterPrefab == null || availableSpawnPoints.Count == 0)
+        {
+            Debug.LogWarning(
+                "Tutorial water could not spawn because its prefab or spawn points are unavailable.",
+                this);
+            return false;
+        }
+
+        SpawnWater();
+        return waterSpawnCount > 0;
+    }
 
     public int MaxWaterSpawnsToday
     {
@@ -294,6 +320,7 @@ private void Update()
     hasMopQuestStartedAt = false;
     waterSpawnCount = 0;
     cleanedWaterCount = 0;
+    LastWaterSpawnPosition = Vector3.zero;
 
 
     spawning = false;
@@ -428,7 +455,7 @@ private void Update()
         Transform point =
             availableSpawnPoints[index];
 
-
+        LastWaterSpawnPosition = point.position;
 
         GameObject water =
             Instantiate(

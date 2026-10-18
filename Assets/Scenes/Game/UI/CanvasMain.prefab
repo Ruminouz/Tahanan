@@ -14872,7 +14872,6 @@ MonoBehaviour:
   waterStreamFrameCount: 8
   waterStreamFramesPerSecond: 12
   dryingRack: {fileID: 3815363860785365162}
-  tutorial: {fileID: 0}
 --- !u!1 &7948697018002906710
 GameObject:
   m_ObjectHideFlags: 0

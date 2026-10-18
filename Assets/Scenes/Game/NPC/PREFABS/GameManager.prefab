@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
   currentDay: 1
+  dayOneIntroFont: {fileID: 11400000, guid: 1cb780c78e6b6174b82d2efea0702b23, type: 2}
   washDishes: {fileID: 0}
   mopFloor: {fileID: 0}
   sweepDust: {fileID: 0}
