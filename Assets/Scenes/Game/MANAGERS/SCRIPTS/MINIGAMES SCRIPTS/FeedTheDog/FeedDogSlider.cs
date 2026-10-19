@@ -16,6 +16,7 @@ public class FeedDogSlider : MonoBehaviour
 
     private float baseSpeed;
     private float baseSuccessRange;
+    private Vector3 targetZoneBaseScale;
 
 
     private bool movingRight = true;
@@ -30,6 +31,8 @@ public class FeedDogSlider : MonoBehaviour
     {
         baseSpeed = speed;
         baseSuccessRange = successRange;
+        if (targetZone != null)
+            targetZoneBaseScale = targetZone.localScale;
     }
 
     public void SetMiniGame(FeedDogMiniGame miniGame)
@@ -82,6 +85,13 @@ public class FeedDogSlider : MonoBehaviour
     public void StopSlider()
     {
         active = false;
+        SetTutorialPulse(1f);
+    }
+
+    public void SetTutorialPulse(float pulse)
+    {
+        if (targetZone != null)
+            targetZone.localScale = targetZoneBaseScale * pulse;
     }
 
     public void TryFeed()

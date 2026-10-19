@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 
 public class GarbageSortingMiniGame : MonoBehaviour
@@ -10,9 +11,15 @@ public class GarbageSortingMiniGame : MonoBehaviour
     [SerializeField] private GameObject panel;
 
     [SerializeField] private GarbageSpawner spawner;
+    [SerializeField] private TMP_Text tutorialText;
+    [SerializeField] private TMP_Text mistakesCounterText;
+    [SerializeField] private TMP_Text correctCounterText;
 
 
     private Chore currentChore;
+    private TutorialManager tutorialManager;
+    private bool firstTimeTutorialActive;
+    private bool tutorialTextWarningLogged;
 
 
     [Header("DAY SETTINGS")]
@@ -42,6 +49,12 @@ public class GarbageSortingMiniGame : MonoBehaviour
         }
         Instance = this;
         Instance = this;
+    }
+
+    private void Start()
+    {
+        tutorialManager = FindFirstObjectByType<TutorialManager>();
+        ResolveTutorialText();
     }
 
     private void OnDestroy()
@@ -75,13 +88,19 @@ public class GarbageSortingMiniGame : MonoBehaviour
     }
 
     currentChore = chore;
+    if (tutorialManager == null)
+        tutorialManager = FindFirstObjectByType<TutorialManager>();
+
+    ResolveTutorialText();
+    firstTimeTutorialActive = tutorialManager == null ||
+        !tutorialManager.HasLearned(chore.ChoreName);
+    SetTutorialText(string.Empty);
 
     spawner.StopSpawning();
 
 
     mistakes = 0;
     correct = 0;
-    
 
 
 
@@ -93,8 +112,11 @@ public class GarbageSortingMiniGame : MonoBehaviour
     currentDay = Mathf.Clamp(currentDay, 1, 7);
 
     totalTrash = GetTrashAmount();
+    UpdateCounterTexts();
     MiniGameInteractionBlocker.RegisterPanel(panel);
     panel.SetActive(true);
+    ShowTutorial(
+        "I-drag ang bawat nahuhulog na basura sa tamang lalagyan. Itugma ang uri sa label: Nabubulok, Di-nabubulok, o Recyclable. Bawat maling lagay o hindi nasagip na basura ay dagdag sa 5 pagkakamali; kapag umabot dito, matatalo ka.");
 
 
 
@@ -137,7 +159,7 @@ public class GarbageSortingMiniGame : MonoBehaviour
         }
         else
         {
-            WrongTrash();
+            WrongTrash(trash.trashType, bin.binType);
         }
 
     }
@@ -150,7 +172,10 @@ private void CorrectTrash(TrashItem trash)
 {
 
     correct++;
+    UpdateCounterTexts();
     SoundEffectManager.Play("ChoreFinished");
+    ShowTutorial(
+        $"Tama! {GetTrashTypeLabel(trash.trashType)} ay nasa tamang lalagyan. Naayos: {correct}/{totalTrash}  |  Pagkakamali: {mistakes}/{maxMistakes}");
 
     
 
@@ -176,11 +201,14 @@ private void CorrectTrash(TrashItem trash)
 
 
 
-    private void WrongTrash()
+    private void WrongTrash(TrashType itemType, TrashType binType)
     {
 
         mistakes++;
+        UpdateCounterTexts();
         SoundEffectManager.Play("Wrong");
+        ShowTutorial(
+            $"Hindi tugma: {GetTrashTypeLabel(itemType)} ay napunta sa {GetTrashTypeLabel(binType)}. Itugma ang basura sa parehong label. Pagkakamali: {mistakes}/{maxMistakes}");
 
 
         Debug.Log(
@@ -210,6 +238,9 @@ private void CorrectTrash(TrashItem trash)
     {
 
         mistakes++;
+        UpdateCounterTexts();
+        ShowTutorial(
+            $"May basurang nahulog. Bilisan ang pag-drag sa susunod na basura papunta sa tamang lalagyan. Pagkakamali: {mistakes}/{maxMistakes}");
 
 
         Debug.Log(
@@ -258,6 +289,8 @@ private void CompleteGame()
         return;
 
     ResolveDailyQuest(mistakes == 0);
+    if (firstTimeTutorialActive && tutorialManager != null)
+        tutorialManager.MarkAsLearned(currentChore.ChoreName);
 
     Debug.Log(
         "Garbage Sorting Complete!"
@@ -275,6 +308,8 @@ private void CompleteGame()
 
 
     panel.SetActive(false);
+    SetTutorialText(string.Empty);
+    firstTimeTutorialActive = false;
 
 
     currentChore = null;
@@ -315,10 +350,74 @@ private void CompleteGame()
 
 
     panel.SetActive(false);
+    SetTutorialText(string.Empty);
+    firstTimeTutorialActive = false;
 
 
     currentChore = null;
 
+}
+
+private void ResolveTutorialText()
+{
+    if (tutorialText != null || panel == null)
+        return;
+
+    foreach (TMP_Text text in panel.GetComponentsInChildren<TMP_Text>(true))
+    {
+        if (text.gameObject.name == "Tutorial Text")
+        {
+            tutorialText = text;
+            break;
+        }
+    }
+
+    if (tutorialText == null && !tutorialTextWarningLogged)
+    {
+        Debug.LogWarning("Assign the garbage sorting Tutorial Text TMP object in the Inspector.", this);
+        tutorialTextWarningLogged = true;
+    }
+}
+
+private void ShowTutorial(string message)
+{
+    if (!firstTimeTutorialActive || tutorialText == null)
+        return;
+
+    SetTutorialText(message);
+}
+
+private void SetTutorialText(string message)
+{
+    if (tutorialText == null)
+        return;
+
+    tutorialText.text = message;
+    tutorialText.gameObject.SetActive(!string.IsNullOrEmpty(message));
+}
+
+private void UpdateCounterTexts()
+{
+    if (mistakesCounterText != null)
+        mistakesCounterText.text = $"Mali : {mistakes}";
+
+    if (correctCounterText != null)
+        correctCounterText.text = $"Tama : {correct}";
+}
+
+private static string GetTrashTypeLabel(TrashType type)
+{
+    switch (type)
+    {
+        case TrashType.Nabubulok:
+            return "Nabubulok";
+        case TrashType.DiNabubulok:
+            return "Di-nabubulok";
+        case TrashType.Recyclable:
+            return "Recyclable";
+        default:
+            return type.ToString();
+    }
 }
 
 private void ResolveDailyQuest(bool metChallenge)

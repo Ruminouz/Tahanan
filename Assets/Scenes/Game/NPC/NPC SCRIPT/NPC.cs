@@ -27,6 +27,8 @@ public class NPC : MonoBehaviour, IInteractable
     private float dialogueTextFontSize;
     private float reprimandDialogueDuration;
 
+    public bool IsDialogueActive => isDialogueActive;
+
     public bool CanInteract()
     {
         return (dialogueData != null || GetComponent<HouseholdHelperAI>() != null) &&
@@ -58,21 +60,20 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (isDialogueActive)
+        {
+            NextLine();
+            return;
+        }
+
         if (!CanInteract())
             return;
 
-        if (!isDialogueActive)
-        {
-            HouseholdHelperAI helper = GetComponent<HouseholdHelperAI>();
-            if (helper != null)
-                helper.Interact();
-            else
-                StartDialogue();
-        }
+        HouseholdHelperAI helper = GetComponent<HouseholdHelperAI>();
+        if (helper != null)
+            helper.Interact();
         else
-        {
-            NextLine();
-        }
+            StartDialogue();
     }
 
     private void Update()

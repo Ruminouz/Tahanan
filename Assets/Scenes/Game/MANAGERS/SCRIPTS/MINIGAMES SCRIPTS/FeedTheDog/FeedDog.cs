@@ -13,17 +13,26 @@ public class FeedDogMiniGame : MonoBehaviour
     [SerializeField] private ChoreTutorial tutorial;
     [SerializeField] private FeedDogSlider slider;
     [SerializeField] private Component statusText;
+    [SerializeField] private TMP_Text tutorialText;
 
     private Chore currentChore;
     private TutorialManager tutorialManager;
     private DayManager dayManager;
     private bool feedingStarted = false;
+    private bool firstTimeTutorialActive;
+    private bool tutorialTextWarningLogged;
     private int attemptsMade;
     private int successfulBites;
     private int combo;
     private int score;
     private Coroutine resultCoroutine;
     private Vector3 resultTextBaseScale;
+    private Transform feedButton;
+    private TMP_Text feedButtonText;
+    private Vector3 feedButtonBaseScale;
+
+    private const float TutorialPulseSpeed = 5f;
+    private const float TutorialPulseScale = 1.15f;
 
     private void Start()
     {
@@ -31,6 +40,32 @@ public class FeedDogMiniGame : MonoBehaviour
         dayManager = DayManager.Instance != null
             ? DayManager.Instance
             : FindFirstObjectByType<DayManager>();
+        feedButton = FindDescendant(panel != null ? panel.transform : transform, "FeedButton");
+        if (feedButton != null)
+        {
+            feedButtonBaseScale = feedButton.localScale;
+            feedButtonText = feedButton.GetComponentInChildren<TMP_Text>(true);
+        }
+
+        ResolveTutorialText();
+    }
+
+    private void Update()
+    {
+        if (!firstTimeTutorialActive || !feedingStarted)
+        {
+            RestoreTutorialPulse();
+            return;
+        }
+
+        float pulse = 1f + (Mathf.Sin(Time.unscaledTime * TutorialPulseSpeed) + 1f)
+            * 0.5f * (TutorialPulseScale - 1f);
+
+        if (feedButton != null)
+            feedButton.localScale = feedButtonBaseScale * pulse;
+
+        if (slider != null)
+            slider.SetTutorialPulse(pulse);
     }
 
     public void StartGame(Chore chore)
@@ -51,6 +86,13 @@ public class FeedDogMiniGame : MonoBehaviour
 
         currentChore = chore;
         feedingStarted = false;
+        if (tutorialManager == null)
+            tutorialManager = FindFirstObjectByType<TutorialManager>();
+
+        firstTimeTutorialActive = tutorialManager != null &&
+            !tutorialManager.HasLearned(chore.ChoreName);
+        ResolveTutorialText();
+        SetTutorialText(string.Empty);
         attemptsMade = 0;
         successfulBites = 0;
         combo = 0;
@@ -58,45 +100,8 @@ public class FeedDogMiniGame : MonoBehaviour
 
         MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
-
-        bool alreadyLearned = false;
-        if(tutorialManager != null)
-        {
-            alreadyLearned = tutorialManager.HasLearned(chore.ChoreName);
-        }
-
-        if(alreadyLearned)
-        {
-            StartFeeding();
-        }
-        else
-        {
-            ShowTutorial();
-        }
-    }
-
-    private void ShowTutorial()
-    {
-        if (tutorial == null)
-        {
-            StartFeeding();
-            return;
-        }
-
-        tutorial.ShowTutorial(
-            "FEED THE DOG",
-            "Watch the slider and press SPACE or tap FEED when the food is in the bowl.\n" +
-            "Land at least 2 of 3 bites to finish the meal. Consecutive bites build your combo!",
-            FinishTutorial
-        );
-    }
-
-    private void FinishTutorial()
-    {
-        if(tutorialManager != null)
-        {
-            tutorialManager.MarkAsLearned(currentChore.ChoreName);
-        }
+        if (feedButtonText != null)
+            feedButtonText.text = "PAKAIN";
 
         StartFeeding();
     }
@@ -186,16 +191,22 @@ public class FeedDogMiniGame : MonoBehaviour
     private void UpdateStatusText(bool lastAttemptSucceeded = false)
     {
         string feedback = lastAttemptSucceeded
-            ? "Yum! Bite landed."
+            ? "Magaling! Tumama ang pagkain. Ihanda ang susunod na subok."
             : attemptsMade > 0
-                ? "Missed! Try the next toss."
-                : "Press SPACE or tap FEED!";
+                ? "Hindi tumama. Abangan ang mangkok at subukan ulit."
+                : "Pindutin ang SPACE o PAKAIN kapag tumapat ang pagkain sa mangkok.";
 
         SetStatusText(
-            $"BOWL [{(successfulBites > 0 ? "X" : " ")}][{(successfulBites > 1 ? "X" : " ")}] {successfulBites}/{BitesNeeded}\n" +
-            $"TOSS {attemptsMade}/{AttemptsPerMeal} | COMBO x{combo} | {score} pts\n" +
-            feedback
+            $"KAIN: {successfulBites}/{BitesNeeded}  |  PAGKAKATAON: {AttemptsPerMeal - attemptsMade}\n" +
+            $"SUBOK: {attemptsMade}/{AttemptsPerMeal}  |  SUNOD-SUNOD x{combo}  |  PUNTOS: {score}" +
+            (firstTimeTutorialActive ? string.Empty : $"\n{feedback}")
         );
+
+        SetTutorialText(!firstTimeTutorialActive
+            ? string.Empty
+            : attemptsMade == 0
+                ? $"Hintaying tumapat ang pagkain sa mangkok, saka pindutin ang SPACE o PAKAIN.\n{feedback}"
+                : feedback);
     }
 
     private void CompleteGame()
@@ -210,9 +221,14 @@ public class FeedDogMiniGame : MonoBehaviour
                 successfulBites == AttemptsPerMeal);
 
         SetStatusText(successfulBites == AttemptsPerMeal
-            ? $"PERFECT MEAL!\n3 bites | Score: {score}"
-            : $"HAPPY PUP!\nMeal complete | Score: {score}");
+            ? $"PERPEKTONG KAIN!\n3 subok ang tumama | Puntos: {score}"
+            : $"BUSOG NA ANG TUTA!\nTapos ang pagkain | Puntos: {score}");
 
+        if (firstTimeTutorialActive && tutorialManager != null && currentChore != null)
+            tutorialManager.MarkAsLearned(currentChore.ChoreName);
+
+        firstTimeTutorialActive = false;
+        SetTutorialText(string.Empty);
         if(currentChore != null)
         {
             currentChore.Complete();
@@ -238,10 +254,12 @@ public class FeedDogMiniGame : MonoBehaviour
         }
 
         SetStatusText(
-            $"PUP IS STILL HUNGRY!\nYou landed {successfulBites}/{BitesNeeded} bites.\n" +
-            "CHORE MISSED FOR TODAY."
+            $"GUTOM PA ANG TUTA!\n{successfulBites}/{BitesNeeded} pagkain ang tumama.\n" +
+            "Hindi natapos ang gawain ngayong araw."
         );
 
+        firstTimeTutorialActive = false;
+        SetTutorialText(string.Empty);
         Debug.Log("Feeding attempt failed. The chore has been marked as missed.", this);
         ShowResultThenClose();
     }
@@ -307,6 +325,9 @@ public class FeedDogMiniGame : MonoBehaviour
 
     private void ClosePanel()
     {
+        RestoreTutorialPulse();
+        SetTutorialText(string.Empty);
+
         if(slider != null)
         {
             slider.StopSlider();
@@ -319,5 +340,61 @@ public class FeedDogMiniGame : MonoBehaviour
 
         currentChore = null;
         feedingStarted = false;
+        firstTimeTutorialActive = false;
+    }
+
+    private void ResolveTutorialText()
+    {
+        if (tutorialText != null || panel == null)
+            return;
+
+        foreach (TMP_Text text in panel.GetComponentsInChildren<TMP_Text>(true))
+        {
+            if (text.gameObject.name == "Tutorial Text")
+            {
+                tutorialText = text;
+                return;
+            }
+        }
+    }
+
+    private void SetTutorialText(string message)
+    {
+        if (tutorialText == null)
+        {
+            if (firstTimeTutorialActive && !tutorialTextWarningLogged)
+            {
+                Debug.LogWarning("I-assign ang Tutorial Text ng dog minigame sa Inspector.", this);
+                tutorialTextWarningLogged = true;
+            }
+
+            return;
+        }
+
+        tutorialText.text = message;
+        tutorialText.gameObject.SetActive(!string.IsNullOrEmpty(message));
+    }
+
+    private Transform FindDescendant(Transform root, string targetName)
+    {
+        if (root == null)
+            return null;
+
+        foreach (Transform child in root.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.name == targetName)
+                return child;
+        }
+
+        return null;
+    }
+
+    private void RestoreTutorialPulse()
+    {
+        if (feedButton != null)
+            feedButton.localScale = feedButtonBaseScale;
+
+        if (slider != null)
+            slider.SetTutorialPulse(1f);
     }
 }

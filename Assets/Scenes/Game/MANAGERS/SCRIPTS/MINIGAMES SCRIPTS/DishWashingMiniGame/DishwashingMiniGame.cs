@@ -30,6 +30,8 @@ public class DishwashingMiniGame : MonoBehaviour, IPointerClickHandler
    private float comboTimer;
     [Header("Main Panel")]
     [SerializeField] private GameObject panel;
+    [SerializeField] private ChoreTutorial tutorial;
+    [SerializeField] private TMP_Text tutorialText;
     private DayManager dayManager;
 [SerializeField] private GameObject garbageBag;
 [SerializeField] private Transform garbageSpawnPoint;
@@ -68,6 +70,7 @@ private int currentLeftoverAmount;
 private int currentDay = 1;
 private Coroutine resultCoroutine;
 private const float ResultDisplayDuration = 1.5f;
+private const float TutorialPulseSpeed = 5f;
 
     [Header("Rinsing")]
     [SerializeField] private Transform rinsingArea;
@@ -288,16 +291,16 @@ public void StartGame(Chore chore)
 
     SpawnLeftovers();
 
-    if (tutorialManager == null)
+    bool hasLearnedBefore = tutorialManager != null && tutorialManager.HasLearned(chore.ChoreName);
+    firstTimeTutorialActive = tutorialText != null && !hasLearnedBefore;
+
+    if (tutorialText == null)
     {
-        Debug.LogWarning(
-            "Dishwashing tutorial cannot track first-time completion because TutorialManager is missing.",
-            this);
-        firstTimeTutorialActive = false;
+        Debug.LogWarning("Dishwashing tutorial is enabled but no Tutorial Text TMP object is assigned in the Inspector.", this);
     }
-    else
+    else if (tutorialManager == null)
     {
-        firstTimeTutorialActive = !tutorialManager.HasLearned(chore.ChoreName);
+        Debug.Log("TutorialManager missing; showing the first-time dishwashing tutorial anyway.");
     }
 
     StartDishwashing();
@@ -341,7 +344,9 @@ public void StartGame(Chore chore)
             platesToRinse < currentPlateAmount)
             return;
 
-        SetTutorialStep("Hintayin mapuno ang lababo bago banlawan ang mga pinggan.");
+        if (firstTimeTutorialActive)
+            SetTutorialStep("Maghintay ng ilang segundo para mapuno ang lababo bago ilagay ang mga pinggan sa ilalim ng tubig.");
+
         waterFillCoroutine = StartCoroutine(FillRinsingArea());
     }
     private void Update()
@@ -449,20 +454,20 @@ if(manager != null)
                     leftoverTargets.Add(trashBin.transform);
 
                 SetTutorialStep(
-                    "I-drag ang mga tira-tirang pagkain papunta sa basurahan.",
+                    "Unang hakbang: i-drag ang mga tira-tirang pagkain sa basurahan. Kapag naalis mo na ang lahat, saka magpatuloy sa susunod na hakbang.",
                     leftoverTargets.ToArray());
                 break;
 
             case WashStage.AddSoap:
                 SetTutorialStep(
-                    "I-drag ang espongha papunta sa sabon para lagyan ito ng panlinis.",
+                    "Pangalawang hakbang: i-drag ang espongha sa sabon para ma-sabon ang mga pinggan.",
                     GetTransform(sponge),
                     GetTransform(soap));
                 break;
 
             case WashStage.Scrub:
                 SetTutorialStep(
-                    "Kuskusin ang maruming pinggan gamit ang esponghang may sabon.",
+                    "Pangatlong hakbang: kuskusin ang maruming pinggan gamit ang espongha hanggang maging malinis ito.",
                     currentScrubbingPlate != null ? currentScrubbingPlate.transform : null,
                     GetTransform(sponge));
                 break;
@@ -471,26 +476,26 @@ if(manager != null)
                 if (platesToRinse >= currentPlateAmount)
                 {
                     SetTutorialStep(
-                        "Pindutin ang gripo at hintaying mapuno ang lababo.");
+                        "Pang-apat na hakbang: pindutin ang gripo at hintayin itong mapuno ang lababo bago ilagay ang mga pinggan.");
                 }
                 else if (currentScrubbingPlate != null)
                 {
                     SetTutorialStep(
-                        "Kuskusin ang natitirang maruruming pinggan.",
+                        "Kuskusin pa ang natitirang maruming pinggan bago ilagay ang mga malinis na pinggan sa lababo.",
                         currentScrubbingPlate.transform,
                         GetTransform(sponge));
                 }
                 else
                 {
                     SetTutorialStep(
-                        "I-drag ang mga malinis na pinggan papunta sa lababo.",
+                        "I-drag ang mga malinis na pinggan papunta sa lababo para banlawan.",
                         rinsingArea);
                 }
                 break;
 
             case WashStage.Dry:
                 SetTutorialStep(
-                    "I-drag ang mga nabanlawang pinggan papunta sa patungan para patuyuin.",
+                    "Panghuling hakbang: i-drag ang mga nabanlawang pinggan sa drying rack para patuyuin.",
                     dryingRack);
                 break;
         }
@@ -506,11 +511,14 @@ if(manager != null)
         if (!firstTimeTutorialActive)
             return;
 
+        tutorialPrompt = tutorialText;
         if (tutorialPrompt == null)
-            CreateTutorialPrompt();
+            return;
 
-        if (tutorialPrompt != null)
-            tutorialPrompt.text = message;
+        if (tutorialPrompt.gameObject != null)
+            tutorialPrompt.gameObject.SetActive(true);
+
+        tutorialPrompt.text = message;
 
         RestoreTutorialPulseTargets();
         if (targets == null)
@@ -526,56 +534,12 @@ if(manager != null)
         }
     }
 
-    private void CreateTutorialPrompt()
-    {
-        if (panel == null)
-        {
-            Debug.LogWarning("Dishwashing tutorial cannot display because its panel is missing.", this);
-            return;
-        }
-
-        TMP_Text template = comboText != null ? comboText : scoreText;
-        if (template == null)
-        {
-            foreach (TMP_Text text in panel.GetComponentsInChildren<TMP_Text>(true))
-            {
-                template = text;
-                break;
-            }
-        }
-
-        if (template == null)
-        {
-            Debug.LogWarning("Dishwashing tutorial cannot display because no TMP text is available.", this);
-            return;
-        }
-
-        tutorialPrompt = Instantiate(template, panel.transform);
-        tutorialPrompt.name = "DishwashingTutorialPrompt";
-        tutorialPrompt.raycastTarget = false;
-        tutorialPrompt.alignment = TextAlignmentOptions.Center;
-        tutorialPrompt.fontStyle = FontStyles.Bold;
-        tutorialPrompt.enableAutoSizing = true;
-        tutorialPrompt.fontSize = 36f;
-        tutorialPrompt.fontSizeMin = 22f;
-        tutorialPrompt.fontSizeMax = 36f;
-        tutorialPrompt.color = Color.white;
-
-        RectTransform promptRect = tutorialPrompt.rectTransform;
-        promptRect.anchorMin = new Vector2(0.5f, 1f);
-        promptRect.anchorMax = new Vector2(0.5f, 1f);
-        promptRect.pivot = new Vector2(0.5f, 1f);
-        promptRect.anchoredPosition = new Vector2(0f, -35f);
-        promptRect.sizeDelta = new Vector2(1100f, 130f);
-        promptRect.SetAsLastSibling();
-    }
-
     private void UpdateTutorialPulse()
     {
         if (!firstTimeTutorialActive)
             return;
 
-        float pulse = 1f + (Mathf.Sin(Time.unscaledTime * 5f) + 1f) * 0.075f;
+        float pulse = 1f + (Mathf.Sin(Time.unscaledTime * TutorialPulseSpeed) + 1f) * 0.075f;
         for (int i = tutorialPulseTargets.Count - 1; i >= 0; i--)
         {
             Transform target = tutorialPulseTargets[i];
@@ -605,11 +569,12 @@ if(manager != null)
     private void DestroyTutorialPrompt()
     {
         RestoreTutorialPulseTargets();
+        tutorialPrompt = tutorialText;
         if (tutorialPrompt == null)
             return;
 
-        Destroy(tutorialPrompt.gameObject);
-        tutorialPrompt = null;
+        tutorialPrompt.text = string.Empty;
+        tutorialPrompt.gameObject.SetActive(false);
     }
 
     // =========================================================
