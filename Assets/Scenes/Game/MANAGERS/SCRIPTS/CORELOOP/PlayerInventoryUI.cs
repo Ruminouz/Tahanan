@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +20,14 @@ public class PlayerInventoryUI : MonoBehaviour
     private EconomyManager economyManager;
     private GameObject playerObject;
     private readonly List<Image> itemIcons = new();
+    private readonly List<TMP_Text> itemQuantities = new();
 
     private struct DisplayItem
     {
         public bool isEquipment;
         public EquipmentType equipment;
-        public int boostIndex;
+        public BunsoBoostType boost;
+        public int quantity;
         public Sprite sprite;
     }
 
@@ -132,6 +135,29 @@ public class PlayerInventoryUI : MonoBehaviour
                 iconRect.offsetMin = Vector2.zero;
                 iconRect.offsetMax = Vector2.zero;
                 itemIcons.Add(icon);
+
+                GameObject quantityObject = new GameObject(
+                    "ItemQuantity",
+                    typeof(RectTransform),
+                    typeof(CanvasRenderer),
+                    typeof(TextMeshProUGUI));
+                quantityObject.transform.SetParent(slot.transform, false);
+                quantityObject.transform.SetAsLastSibling();
+                TMP_Text quantityText = quantityObject.GetComponent<TMP_Text>();
+                if (TMP_Settings.defaultFontAsset != null)
+                    quantityText.font = TMP_Settings.defaultFontAsset;
+                quantityText.fontSize = 16f;
+                quantityText.fontStyle = FontStyles.Bold;
+                quantityText.color = Color.white;
+                quantityText.outlineWidth = 0.2f;
+                quantityText.alignment = TextAlignmentOptions.BottomRight;
+                quantityText.raycastTarget = false;
+                RectTransform quantityRect = quantityText.rectTransform;
+                quantityRect.anchorMin = new Vector2(0.45f, 0f);
+                quantityRect.anchorMax = Vector2.one;
+                quantityRect.offsetMin = Vector2.zero;
+                quantityRect.offsetMax = new Vector2(-2f, 2f);
+                itemQuantities.Add(quantityText);
             }
 
             bool hasItem = index < displayItems.Count;
@@ -143,6 +169,9 @@ public class PlayerInventoryUI : MonoBehaviour
             itemIcons[index].color = hasItem
                 ? Color.white
                 : new Color(1f, 1f, 1f, 0f);
+            itemQuantities[index].text = hasItem && displayItems[index].quantity > 1
+                ? displayItems[index].quantity + "x"
+                : string.Empty;
 
             Button button = slot.GetComponent<Button>();
             if (button == null)
@@ -156,7 +185,7 @@ public class PlayerInventoryUI : MonoBehaviour
                 if (displayItem.isEquipment)
                     button.onClick.AddListener(() => equipmentInventory.Select(displayItem.equipment));
                 else
-                    button.onClick.AddListener(() => boostInventory.ConsumeAt(displayItem.boostIndex));
+                    button.onClick.AddListener(() => boostInventory.ConsumeOne(displayItem.boost));
             }
         }
     }
@@ -180,13 +209,14 @@ public class PlayerInventoryUI : MonoBehaviour
 
         if (boostInventory != null)
         {
-            for (int index = 0; index < boostInventory.Count; index++)
+            for (int index = 0; index < boostInventory.StackCount; index++)
             {
-                BunsoBoostType boost = boostInventory.GetItemAt(index);
+                BunsoBoostType boost = boostInventory.GetStackAt(index);
                 displayItems.Add(new DisplayItem
                 {
                     isEquipment = false,
-                    boostIndex = index,
+                    boost = boost,
+                    quantity = boostInventory.GetQuantity(boost),
                     sprite = GetSprite(boost)
                 });
             }

@@ -49,12 +49,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundEffectLibrary
   soundEffectGroups:
-  - name: 
+  - name: Footstep
+    audioClips:
+    - {fileID: 8300000, guid: b4e9b461b1a7f1342b9ecf0383d2a3d9, type: 3}
+  - name: DoorClose
+    audioClips:
+    - {fileID: 8300000, guid: 25730dc6c9fa46a4ea8dac3d3cdc66da, type: 3}
+  - name: DoorOpen
+    audioClips:
+    - {fileID: 8300000, guid: 252b578e153840847a3fffbe2be46f03, type: 3}
+  - name: Sweep
+    audioClips:
+    - {fileID: 8300000, guid: 2459d6337e132214fb423516f7e4c76f, type: 3}
+  - name: ChoreFinished
+    audioClips:
+    - {fileID: 8300000, guid: c94a3586690356b4e8c38055b66a5bde, type: 3}
+  - name: Mop
+    audioClips:
+    - {fileID: 8300000, guid: af0a08928954082499f139ed9f2fd912, type: 3}
+  - name: Soap
+    audioClips:
+    - {fileID: 8300000, guid: 60d4e4990752fd44597633ca63e2c94b, type: 3}
+  - name: Trash
+    audioClips:
+    - {fileID: 8300000, guid: ba19c83b0a10dea4eb57a3c37ee5196e, type: 3}
+  - name: Scrub
+    audioClips:
+    - {fileID: 8300000, guid: 2f34e37ad84309944b126a552dd2db1a, type: 3}
+  - name: Rack
+    audioClips:
+    - {fileID: 8300000, guid: b469244699f954e4b8a4eac5adaa2066, type: 3}
+  - name: HappyDog
+    audioClips:
+    - {fileID: 8300000, guid: 03991d925cd8c394d8c5a98ddba15578, type: 3}
+  - name: SadDog
+    audioClips:
+    - {fileID: 8300000, guid: 5d3fdfcf826b9c7409f498b23f9b6182, type: 3}
+  - name: Wrong
+    audioClips:
+    - {fileID: 8300000, guid: ab4742d53cc93ad4a8ad04285dae20f6, type: 3}
+  - name: Toys
+    audioClips:
+    - {fileID: 8300000, guid: 39183580b2d00c84eaa1908139d24d43, type: 3}
+  - name: Faucet
+    audioClips:
+    - {fileID: 8300000, guid: 3ab9f8868c163944fa5de947fae13b55, type: 3}
+  - name: Clean
+    audioClips:
+    - {fileID: 8300000, guid: 882f7d4a491735c40a421271992fc1d8, type: 3}
+  - name: Vacuum
+    audioClips:
+    - {fileID: 8300000, guid: dfb31c338ba69074191527a10848940d, type: 3}
+  - name: BunsoTawa
+    audioClips:
+    - {fileID: 8300000, guid: f7813df04ae6ec84c9a03ced9041f832, type: 3}
+  - name: BunsoLove
     audioClips: []
-  - name: 
+  - name: Ant
+    audioClips:
+    - {fileID: 8300000, guid: 66da62ce150f92b4da065002dc8cbff2, type: 3}
+  - name: NPC Help
     audioClips: []
-  - name: 
+  - name: Chocolate
     audioClips: []
+  - name: Frozen
+    audioClips: []
+  - name: Buy
+    audioClips:
+    - {fileID: 8300000, guid: 9137d3256ca769d499d36377bad2aef1, type: 3}
 --- !u!114 &3602414614963774326
 MonoBehaviour:
   m_ObjectHideFlags: 0

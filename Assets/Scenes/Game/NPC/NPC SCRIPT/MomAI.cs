@@ -17,7 +17,7 @@ public class MomAI : MonoBehaviour
 
     [Header("Reprimand")]
     [SerializeField, Min(0f)] private float slowMultiplier = 0.5f;
-    [SerializeField, Min(0f)] private float slowDuration = 3f;
+    [SerializeField, Min(0f)] private float slowDuration = 7f;
     [SerializeField, Min(0f)] private float reprimandCooldown = 2f;
     [SerializeField, Min(0f)] private float bubbleDuration = 3f;
     [SerializeField, Min(0f)] private float angryBubbleInterval = 8f;
@@ -301,6 +301,7 @@ public class MomAI : MonoBehaviour
                 ShowMoodDialogue();
             }
 
+            SoundEffectManager.Play("Tsinelas");
             if (animator != null && !string.IsNullOrEmpty(spankTrigger))
                 animator.SetTrigger(spankTrigger);
 
@@ -312,7 +313,7 @@ public class MomAI : MonoBehaviour
             }
 
             if (playerMovement != null)
-                StartCoroutine(SlowPlayer());
+                playerMovement.ApplyTemporarySlow(slowMultiplier, slowDuration);
 
             yield return new WaitForSeconds(0.75f);
         }
@@ -416,13 +417,6 @@ public class MomAI : MonoBehaviour
     {
         if (animator != null)
             animator.SetBool("isWalking", false);
-    }
-
-    private IEnumerator SlowPlayer()
-    {
-        playerMovement.SetSpeedMultiplier(slowMultiplier);
-        yield return new WaitForSeconds(slowDuration);
-        playerMovement.SetSpeedMultiplier(1f);
     }
 
     private void ShowMoodDialogue()

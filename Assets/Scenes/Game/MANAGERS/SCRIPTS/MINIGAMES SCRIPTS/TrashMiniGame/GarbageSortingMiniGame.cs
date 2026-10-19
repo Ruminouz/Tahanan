@@ -173,7 +173,7 @@ private void CorrectTrash(TrashItem trash)
 
     correct++;
     UpdateCounterTexts();
-    SoundEffectManager.Play("ChoreFinished");
+    SoundEffectManager.Play("Trash");
     ShowTutorial(
         $"Tama! {GetTrashTypeLabel(trash.trashType)} ay nasa tamang lalagyan. Naayos: {correct}/{totalTrash}  |  Pagkakamali: {mistakes}/{maxMistakes}");
 
@@ -239,6 +239,7 @@ private void CorrectTrash(TrashItem trash)
 
         mistakes++;
         UpdateCounterTexts();
+        SoundEffectManager.Play("Wrong");
         ShowTutorial(
             $"May basurang nahulog. Bilisan ang pag-drag sa susunod na basura papunta sa tamang lalagyan. Pagkakamali: {mistakes}/{maxMistakes}");
 

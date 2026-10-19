@@ -710,7 +710,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
         antHitCount++;
         antHitCooldown = AntHitCooldown;
-        SoundEffectManager.Play("Wrong");
+        SoundEffectManager.Play("Ant");
         UpdateUI();
         Debug.Log($"Ant collision! Hits: {antHitCount}/{MaximumAntHits}", this);
 

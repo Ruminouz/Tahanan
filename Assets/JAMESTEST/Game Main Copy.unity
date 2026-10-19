@@ -7303,6 +7303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 3.5
+  slowIconSprite: {fileID: 4505920951284908434, guid: d36a18584ce5c6a41acc6993f003ccdb, type: 3}
 --- !u!114 &7224421212362748716
 MonoBehaviour:
   m_ObjectHideFlags: 0

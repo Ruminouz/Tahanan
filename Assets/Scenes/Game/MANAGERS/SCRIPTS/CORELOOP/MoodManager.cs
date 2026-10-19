@@ -108,7 +108,10 @@ public class MoodManager : MonoBehaviour
 
         float moodChange = mood - previousValue;
         if (!Mathf.Approximately(moodChange, 0f))
+        {
+            SoundEffectManager.Play(moodChange > 0f ? "MoodUp" : "MoodDown");
             ShowMoodChangePopup(moodChange);
+        }
 
         HouseholdMood newMood = CurrentMood;
         if (newMood != previousMood)

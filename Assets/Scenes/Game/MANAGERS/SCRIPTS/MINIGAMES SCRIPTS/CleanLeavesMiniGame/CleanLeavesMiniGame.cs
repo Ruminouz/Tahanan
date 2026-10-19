@@ -93,6 +93,7 @@ public class CleanLeavesMiniGame : MonoBehaviour
             return;
 
         leaf.SetActive(false);
+        SoundEffectManager.Play("Sweep");
 
         Debug.Log("Leaves cleaned!");
 
@@ -119,6 +120,7 @@ public class CleanLeavesMiniGame : MonoBehaviour
             currentChore.Complete();
         }
 
+        SoundEffectManager.Play("ChoreFinished");
         panel.SetActive(false);
 
         currentChore = null;

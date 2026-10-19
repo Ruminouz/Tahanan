@@ -5280,7 +5280,7 @@ MonoBehaviour:
   slipperPrefab: {fileID: 6663689240787838783, guid: de28a577bc3e411469bcc4290e0472d0, type: 3}
   waypointMover: {fileID: 1493128261299710533}
   slowMultiplier: 0.5
-  slowDuration: 3
+  slowDuration: 7
   reprimandCooldown: 2
   bubbleDuration: 3
   angryBubbleInterval: 8

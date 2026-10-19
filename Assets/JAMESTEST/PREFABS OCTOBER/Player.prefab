@@ -289,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 3.5
   dailySpawnPoint: {fileID: 8848158183791021635}
+  slowIconSprite: {fileID: 4505920951284908434, guid: d36a18584ce5c6a41acc6993f003ccdb, type: 3}
   footstepSpeed: 0.5
 --- !u!95 &4454071993540466150
 Animator:

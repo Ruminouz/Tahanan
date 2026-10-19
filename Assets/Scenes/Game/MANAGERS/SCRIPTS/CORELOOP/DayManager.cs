@@ -52,6 +52,7 @@ public class DayManager : MonoBehaviour
     [SerializeField] private TMP_Text summaryPointsText;
     [SerializeField] private float transitionDuration = 0.5f;
     [SerializeField, Min(0f)] private float summaryLineDelay = 0.25f;
+    [SerializeField, Min(0f)] private float transitionCardHoldDuration = 1f;
 
     [Header("Day 2 Introduction")]
     [SerializeField, Min(0.01f)] private float shopCameraMoveDuration = 1.5f;
@@ -87,6 +88,7 @@ public class DayManager : MonoBehaviour
     private bool gameOver;
     private bool weekComplete;
     private int dailyCoinsEarned;
+    private int bunsoBadMoodChoresDroppedToday;
     private Chore dailyAdditionalQuestChore;
     private string previousDailyAdditionalQuestName;
     private bool dailyAdditionalQuestCompleted;
@@ -135,6 +137,27 @@ public class DayManager : MonoBehaviour
     public bool HasReachedMissedChoreGameOverThreshold => choreManager != null &&
         choreManager.missedChores >= GetMissedChoreGameOverThreshold();
 
+    public bool CanRegisterBunsoBadMoodChoreDrop(int dailyMaximum)
+    {
+        return dailyMaximum > 0 &&
+            bunsoBadMoodChoresDroppedToday < dailyMaximum;
+    }
+
+    public bool TryRegisterBunsoBadMoodChoreDrop(int dailyMaximum)
+    {
+        if (!CanRegisterBunsoBadMoodChoreDrop(dailyMaximum))
+            return false;
+
+        bunsoBadMoodChoresDroppedToday++;
+        return true;
+    }
+
+    public void UnregisterBunsoBadMoodChoreDrop()
+    {
+        if (bunsoBadMoodChoresDroppedToday > 0)
+            bunsoBadMoodChoresDroppedToday--;
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -146,6 +169,20 @@ public class DayManager : MonoBehaviour
         Instance = this;
         currentDay = Mathf.Clamp(currentDay, 1, FinalDay);
         normalTimeScale = Time.timeScale;
+        if (transitionFade != null)
+        {
+            if (daySummaryPanel != null &&
+                transitionFade.transform.IsChildOf(daySummaryPanel.transform) &&
+                daySummaryPanel.transform.parent != null)
+            {
+                transitionFade.transform.SetParent(daySummaryPanel.transform.parent, false);
+                transitionFade.transform.SetAsLastSibling();
+            }
+
+            transitionFade.alpha = 0f;
+            transitionFade.blocksRaycasts = false;
+        }
+
         CacheSceneManagers();
         moodManager = MoodManager.Instance != null
             ? MoodManager.Instance
@@ -365,6 +402,7 @@ public class DayManager : MonoBehaviour
         ResolveWaterSpawner();
 
         Debug.Log("=== START DAY " + currentDay + " ===");
+        bunsoBadMoodChoresDroppedToday = 0;
 
         if (economyManager == null)
             economyManager = EconomyManager.Instance != null
@@ -1196,10 +1234,90 @@ public class DayManager : MonoBehaviour
     {
         yield return Fade(1f);
         ResetAllChores();
-        yield return new WaitForSecondsRealtime(1f);
-        StartNextDay();
+
+        bool showTransitionCards = daySummaryPanel != null && summaryChoresText != null;
+        GameObject[] summaryDetails =
+        {
+            summarySuccessRateText != null ? summarySuccessRateText.gameObject : null,
+            summaryPointsText != null ? summaryPointsText.gameObject : null,
+            continueButton != null ? continueButton.gameObject : null,
+            mainMenuButton != null ? mainMenuButton.gameObject : null
+        };
+        bool[] summaryDetailsWereActive = new bool[summaryDetails.Length];
+        RectTransform summaryTextRect = null;
+        Vector2 originalAnchorMin = Vector2.zero;
+        Vector2 originalAnchorMax = Vector2.zero;
+        Vector2 originalAnchoredPosition = Vector2.zero;
+        Vector2 originalSizeDelta = Vector2.zero;
+        TextAlignmentOptions originalAlignment = TextAlignmentOptions.TopLeft;
+        float originalFontSize = 0f;
+
+        if (showTransitionCards)
+        {
+            daySummaryPanel.SetActive(true);
+            for (int i = 0; i < summaryDetails.Length; i++)
+            {
+                GameObject detail = summaryDetails[i];
+                if (detail == null)
+                    continue;
+
+                summaryDetailsWereActive[i] = detail.activeSelf;
+                detail.SetActive(false);
+            }
+
+            summaryTextRect = summaryChoresText.rectTransform;
+            originalAnchorMin = summaryTextRect.anchorMin;
+            originalAnchorMax = summaryTextRect.anchorMax;
+            originalAnchoredPosition = summaryTextRect.anchoredPosition;
+            originalSizeDelta = summaryTextRect.sizeDelta;
+            originalAlignment = summaryChoresText.alignment;
+            originalFontSize = summaryChoresText.fontSize;
+
+            summaryTextRect.anchorMin = new Vector2(0.5f, 0.5f);
+            summaryTextRect.anchorMax = new Vector2(0.5f, 0.5f);
+            summaryTextRect.anchoredPosition = Vector2.zero;
+            summaryTextRect.sizeDelta = new Vector2(320f, 100f);
+            summaryChoresText.alignment = TextAlignmentOptions.Center;
+            summaryChoresText.fontSize = 36f;
+            summaryChoresText.text =
+                "<size=125%><b>GOOD NIGHT</b></size>\n\nThe house settles in for the night.";
+            yield return Fade(0f);
+            yield return WaitForRealtime(transitionCardHoldDuration);
+
+            yield return Fade(1f);
+            StartNextDay();
+            summaryChoresText.text =
+                "<size=125%><b>DAY " + currentDay +
+                "</b></size>\n\nA fresh morning begins.";
+            yield return Fade(0f);
+            yield return WaitForRealtime(transitionCardHoldDuration);
+            yield return Fade(1f);
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(1f);
+            StartNextDay();
+        }
+
         if (daySummaryPanel != null)
             daySummaryPanel.SetActive(false);
+
+        if (showTransitionCards)
+        {
+            summaryTextRect.anchorMin = originalAnchorMin;
+            summaryTextRect.anchorMax = originalAnchorMax;
+            summaryTextRect.anchoredPosition = originalAnchoredPosition;
+            summaryTextRect.sizeDelta = originalSizeDelta;
+            summaryChoresText.alignment = originalAlignment;
+            summaryChoresText.fontSize = originalFontSize;
+
+            for (int i = 0; i < summaryDetails.Length; i++)
+            {
+                if (summaryDetails[i] != null)
+                    summaryDetails[i].SetActive(summaryDetailsWereActive[i]);
+            }
+        }
+
         yield return Fade(0f);
         if (currentDay == 2)
         {
@@ -1971,8 +2089,6 @@ public class DayManager : MonoBehaviour
         dayFinished = false;
         summaryRevealComplete = false;
         Debug.Log("Starting Next Day: " + currentDay);
-        if (currentDay != 2)
-            StartDay();
     }
 
     private void ResetMoppingMinigames()

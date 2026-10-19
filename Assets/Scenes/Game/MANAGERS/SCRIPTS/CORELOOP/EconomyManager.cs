@@ -151,6 +151,7 @@ public class EconomyManager : MonoBehaviour
 
         mopUpgradeLevel = 1;
         MopUpgradeChanged?.Invoke(mopUpgradeLevel);
+        SoundEffectManager.Play("Buy");
         return true;
     }
 
@@ -170,6 +171,21 @@ public class EconomyManager : MonoBehaviour
 
         broomUpgradeLevel = 1;
         BroomUpgradeChanged?.Invoke(broomUpgradeLevel);
+        SoundEffectManager.Play("Buy");
+        return true;
+    }
+
+    public bool TryPurchaseBoost(BunsoBoostInventory inventory, BunsoBoostType boost, int cost)
+    {
+        if (inventory == null || cost <= 0 || coins < cost || !inventory.CanAdd(boost))
+            return false;
+
+        if (!inventory.Add(boost))
+            return false;
+
+        coins -= cost;
+        CoinsChanged?.Invoke(coins);
+        SoundEffectManager.Play("Buy");
         return true;
     }
 
@@ -186,6 +202,7 @@ public class EconomyManager : MonoBehaviour
 
         catPurchased = true;
         CatPurchaseChanged?.Invoke(catPurchased);
+        SoundEffectManager.Play("Buy");
         return true;
     }
 
@@ -209,6 +226,7 @@ public class EconomyManager : MonoBehaviour
         dishwashingLiquidSprite = liquidSprite;
         dishwashingLiquidPurchased = true;
         DishwashingLiquidPurchaseChanged?.Invoke(dishwashingLiquidPurchased);
+        SoundEffectManager.Play("Buy");
         return true;
     }
 

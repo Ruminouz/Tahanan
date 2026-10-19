@@ -8053,6 +8053,10 @@ MonoBehaviour:
   buyButton: {fileID: 1532249510517768138}
   closeButton: {fileID: 8456375768233427567}
   vacuumUpgradeIcon: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  chocolateCost: 10
+  timeFreezerCost: 10
+  chocolateIcon: {fileID: 8386067457128398079, guid: aab55cf87ab958d46981b995b26257f7, type: 3}
+  timeFreezerIcon: {fileID: -7754988575891523622, guid: 8d782902958a6354797c1a649a2949a0, type: 3}
 --- !u!1 &4510546254457828161
 GameObject:
   m_ObjectHideFlags: 0

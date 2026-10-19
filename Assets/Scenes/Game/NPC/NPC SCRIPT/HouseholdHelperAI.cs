@@ -425,6 +425,8 @@ public class HouseholdHelperAI : MonoBehaviour
                 yield break;
             }
 
+            SoundEffectManager.Play("NPC Help");
+
             float workDuration = selectedTask.Chore != null
                 ? GetChoreDuration(selectedTask.Chore)
                 : defaultChoreDuration;

@@ -17,8 +17,13 @@ public class PlayerMovement : MonoBehaviour
     private bool movementInputEnabled = true;
     private float speedMultiplier = 1f;
     private float temporarySpeedMultiplier = 1f;
+    private float temporarySlowMultiplier = 1f;
+    private Coroutine temporarySlowCoroutine;
+    private GameObject slowIcon;
+    [SerializeField] private Sprite slowIconSprite;
 
-    public float CurrentMoveSpeed => moveSpeed * speedMultiplier * temporarySpeedMultiplier;
+    public float CurrentMoveSpeed =>
+        moveSpeed * speedMultiplier * temporarySpeedMultiplier * temporarySlowMultiplier;
     private bool playingFootsteps = false;
     public float footstepSpeed = 0.5f;
 
@@ -44,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Vector2.zero;
         temporarySpeedMultiplier = 1f;
+        ClearTemporarySlow();
 
         if (hasDailySpawnPoint)
             transform.SetPositionAndRotation(dailySpawnPosition, dailySpawnRotation);
@@ -139,6 +145,86 @@ public class PlayerMovement : MonoBehaviour
     public void ApplyTemporarySpeedBoost(float multiplier, float duration)
     {
         StartCoroutine(TemporarySpeedBoost(multiplier, duration));
+    }
+
+    public void ApplyTemporarySlow(float multiplier, float duration)
+    {
+        if (duration <= 0f)
+        {
+            ClearTemporarySlow();
+            return;
+        }
+
+        temporarySlowMultiplier = Mathf.Min(temporarySlowMultiplier, Mathf.Clamp(multiplier, 0.1f, 1f));
+        ShowSlowIcon();
+
+        if (temporarySlowCoroutine != null)
+            StopCoroutine(temporarySlowCoroutine);
+
+        temporarySlowCoroutine = StartCoroutine(TemporarySlow(duration));
+    }
+
+    private IEnumerator TemporarySlow(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        temporarySlowCoroutine = null;
+        temporarySlowMultiplier = 1f;
+        DestroySlowIcon();
+    }
+
+    private void ClearTemporarySlow()
+    {
+        if (temporarySlowCoroutine != null)
+        {
+            StopCoroutine(temporarySlowCoroutine);
+            temporarySlowCoroutine = null;
+        }
+
+        temporarySlowMultiplier = 1f;
+        DestroySlowIcon();
+    }
+
+    private void DestroySlowIcon()
+    {
+        if (slowIcon != null)
+        {
+            Destroy(slowIcon);
+            slowIcon = null;
+        }
+    }
+
+    private void ShowSlowIcon()
+    {
+        if (slowIcon != null)
+            return;
+
+        if (slowIconSprite == null)
+        {
+            Debug.LogWarning("Slow icon sprite is not assigned on PlayerMovement.", this);
+            return;
+        }
+
+        SpriteRenderer playerRenderer = GetComponentInChildren<SpriteRenderer>();
+        slowIcon = new GameObject("Slow Debuff Icon");
+        slowIcon.transform.SetParent(transform, false);
+        slowIcon.transform.localPosition = new Vector3(
+            0f,
+            playerRenderer != null
+                ? transform.InverseTransformPoint(playerRenderer.bounds.max).y + 0.2f
+                : 1f,
+            0f);
+        slowIcon.transform.localScale = Vector3.one * 0.05f;
+
+        GameObject iconVisual = new GameObject("Icon Visual");
+        iconVisual.transform.SetParent(slowIcon.transform, false);
+        SpriteRenderer iconRenderer = iconVisual.AddComponent<SpriteRenderer>();
+        iconRenderer.sprite = slowIconSprite;
+        iconVisual.transform.localPosition = -iconRenderer.sprite.bounds.center;
+        if (playerRenderer != null)
+        {
+            iconRenderer.sortingLayerID = playerRenderer.sortingLayerID;
+            iconRenderer.sortingOrder = playerRenderer.sortingOrder + 1;
+        }
     }
 
     private IEnumerator TemporarySpeedBoost(float multiplier, float duration)
