@@ -1245,10 +1245,15 @@ public class DayManager : MonoBehaviour
         };
         bool[] summaryDetailsWereActive = new bool[summaryDetails.Length];
         RectTransform summaryTextRect = null;
+        Transform originalSummaryTextParent = null;
+        int originalSummaryTextSiblingIndex = -1;
+        Vector3 originalSummaryTextLocalScale = Vector3.one;
         Vector2 originalAnchorMin = Vector2.zero;
         Vector2 originalAnchorMax = Vector2.zero;
         Vector2 originalAnchoredPosition = Vector2.zero;
         Vector2 originalSizeDelta = Vector2.zero;
+        Vector2 originalOffsetMin = Vector2.zero;
+        Vector2 originalOffsetMax = Vector2.zero;
         TextAlignmentOptions originalAlignment = TextAlignmentOptions.TopLeft;
         float originalFontSize = 0f;
 
@@ -1266,21 +1271,34 @@ public class DayManager : MonoBehaviour
             }
 
             summaryTextRect = summaryChoresText.rectTransform;
+            originalSummaryTextParent = summaryTextRect.parent;
+            originalSummaryTextSiblingIndex = summaryTextRect.GetSiblingIndex();
+            originalSummaryTextLocalScale = summaryTextRect.localScale;
             originalAnchorMin = summaryTextRect.anchorMin;
             originalAnchorMax = summaryTextRect.anchorMax;
             originalAnchoredPosition = summaryTextRect.anchoredPosition;
             originalSizeDelta = summaryTextRect.sizeDelta;
+            originalOffsetMin = summaryTextRect.offsetMin;
+            originalOffsetMax = summaryTextRect.offsetMax;
             originalAlignment = summaryChoresText.alignment;
             originalFontSize = summaryChoresText.fontSize;
 
-            summaryTextRect.anchorMin = new Vector2(0.5f, 0.5f);
-            summaryTextRect.anchorMax = new Vector2(0.5f, 0.5f);
+            if (daySummaryPanel.transform.parent != null)
+            {
+                summaryTextRect.SetParent(daySummaryPanel.transform.parent, false);
+                summaryTextRect.SetAsLastSibling();
+            }
+
+            summaryTextRect.anchorMin = Vector2.zero;
+            summaryTextRect.anchorMax = Vector2.one;
             summaryTextRect.anchoredPosition = Vector2.zero;
-            summaryTextRect.sizeDelta = new Vector2(320f, 100f);
+            summaryTextRect.offsetMin = Vector2.zero;
+            summaryTextRect.offsetMax = Vector2.zero;
+            summaryTextRect.localScale = Vector3.one;
             summaryChoresText.alignment = TextAlignmentOptions.Center;
-            summaryChoresText.fontSize = 36f;
+            summaryChoresText.fontSize = 50f;
             summaryChoresText.text =
-                "<size=125%><b>GOOD NIGHT</b></size>\n\nThe house settles in for the night.";
+                "<size=125%><b>Tologs na</b></size>\n\nNanaginip na sila :).";
             yield return Fade(0f);
             yield return WaitForRealtime(transitionCardHoldDuration);
 
@@ -1304,10 +1322,19 @@ public class DayManager : MonoBehaviour
 
         if (showTransitionCards)
         {
+            if (originalSummaryTextParent != null)
+            {
+                summaryTextRect.SetParent(originalSummaryTextParent, false);
+                summaryTextRect.SetSiblingIndex(originalSummaryTextSiblingIndex);
+            }
+
             summaryTextRect.anchorMin = originalAnchorMin;
             summaryTextRect.anchorMax = originalAnchorMax;
             summaryTextRect.anchoredPosition = originalAnchoredPosition;
             summaryTextRect.sizeDelta = originalSizeDelta;
+            summaryTextRect.offsetMin = originalOffsetMin;
+            summaryTextRect.offsetMax = originalOffsetMax;
+            summaryTextRect.localScale = originalSummaryTextLocalScale;
             summaryChoresText.alignment = originalAlignment;
             summaryChoresText.fontSize = originalFontSize;
 
