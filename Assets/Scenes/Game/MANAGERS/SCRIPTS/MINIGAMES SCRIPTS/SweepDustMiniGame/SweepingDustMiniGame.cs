@@ -38,12 +38,16 @@ public class SweepingMinigame : MonoBehaviour
     [SerializeField] private Sprite broomDownSprite;
     [SerializeField] private Sprite broomLeftSprite;
     [SerializeField] private Sprite broomRightSprite;
+    [SerializeField] private Sprite[] broomAnimationFrames;
+    [SerializeField, Min(0.1f)] private float broomAnimationFramesPerSecond = 8f;
     [SerializeField, Min(1f)] private float tutorialPulseScale = 1.15f;
     [SerializeField, Min(0.1f)] private float tutorialPulseSpeed = 3f;
     [Tooltip("Walong sunod-sunod na frame ng animation para sa upgraded na vacuum.")]
     [SerializeField] private Sprite[] vacuumAnimationFrames = new Sprite[8];
     [SerializeField, Min(0.1f)] private float vacuumAnimationFramesPerSecond = 8f;
+    [Tooltip("Base-frame collider offset, scaled to match the currently displayed broom frame.")]
     [SerializeField] private Vector2 brushColliderOffset = new Vector2(0f, -28f);
+    [Tooltip("Base-frame collider radius, scaled to match the currently displayed broom frame.")]
     [SerializeField] private float brushColliderRadius = 52f;
     [SerializeField] private Vector2 vacuumNozzleOffset = new Vector2(0f, 35f);
     [SerializeField, Min(1f)] private float vacuumSuctionRadius = 180f;
@@ -207,6 +211,7 @@ public class SweepingMinigame : MonoBehaviour
 
         isVacuumUpgrade = HasVacuumUpgrade();
         ApplyCleaningToolVisual(isVacuumUpgrade);
+        SetBroomAnimationFrame(0);
         SetVacuumAnimationFrame(0);
         CreateDustVisuals();
         EnsureBroomOnTop();
@@ -471,29 +476,26 @@ public class SweepingMinigame : MonoBehaviour
         if (!insideArea || dustVisuals.Count == 0 || activeBroom == null)
             return;
 
-        Vector3 brushWorldPos = GetBrushWorldPosition();
-
         if (isVacuumUpgrade)
         {
-            UpdateVacuumDustVisuals(brushWorldPos, rewardMultiplier);
+            UpdateVacuumDustVisuals(GetBrushWorldPosition(), rewardMultiplier);
             return;
         }
 
+        GetBroomDustCollider(out Vector3 brushWorldPosition, out float brushRadius);
         for (int i = 0; i < dustVisuals.Count; i++)
         {
             Image dustImage = dustVisuals[i];
             if (dustImage == null)
                 continue;
-
             RectTransform dustRect = dustImage.GetComponent<RectTransform>();
-            Vector3 dustWorldPos = dustRect.TransformPoint(dustRect.rect.center);
-            float distance = Vector3.Distance(brushWorldPos, dustWorldPos);
+            float distance = GetDistanceToDustBounds(brushWorldPosition, dustRect);
             Color color = dustImage.color;
 
-            bool nearBrush = distance < brushColliderRadius;
+            bool nearBrush = distance < brushRadius;
             if (insideArea && nearBrush)
             {
-                float fade = Mathf.Max(0f, 1f - (distance / brushColliderRadius));
+                float fade = Mathf.Max(0f, 1f - (distance / brushRadius));
                 float cleanAmount = (Time.deltaTime * (0.85f + rewardMultiplier * 0.55f)) * Mathf.Clamp01(fade + 0.5f);
                 color.a = SnapDustAlphaToCompletion(color.a - cleanAmount);
                 dustImage.color = color;
@@ -501,6 +503,41 @@ public class SweepingMinigame : MonoBehaviour
                 dustImage.transform.localScale = Vector3.one * Mathf.Lerp(1f, 0.25f, 1f - color.a);
             }
         }
+    }
+
+    private void GetBroomDustCollider(out Vector3 worldPosition, out float radius)
+    {
+        worldPosition = GetBrushWorldPosition();
+        radius = Mathf.Max(1f, brushColliderRadius);
+
+        if (activeBroomImage == null || !HasBroomAnimationFrames())
+            return;
+
+        Sprite currentFrame = activeBroomImage.sprite;
+        Sprite referenceFrame = broomAnimationFrames[0];
+        if (currentFrame == null || referenceFrame == null)
+            return;
+
+        Vector2 referenceSize = referenceFrame.rect.size;
+        if (referenceSize.x <= 0f || referenceSize.y <= 0f)
+            return;
+
+        Vector2 frameScale = new Vector2(
+            currentFrame.rect.width / referenceSize.x,
+            currentFrame.rect.height / referenceSize.y);
+        worldPosition = activeBroom.TransformPoint(Vector2.Scale(brushColliderOffset, frameScale));
+        radius *= Mathf.Sqrt(frameScale.x * frameScale.y);
+    }
+
+    private float GetDistanceToDustBounds(Vector3 worldPosition, RectTransform dustRect)
+    {
+        Vector3 localPosition = dustRect.InverseTransformPoint(worldPosition);
+        Rect bounds = dustRect.rect;
+        Vector2 closestPoint = new Vector2(
+            Mathf.Clamp(localPosition.x, bounds.xMin, bounds.xMax),
+            Mathf.Clamp(localPosition.y, bounds.yMin, bounds.yMax));
+        Vector3 closestWorldPosition = dustRect.TransformPoint(closestPoint);
+        return Vector3.Distance(worldPosition, closestWorldPosition);
     }
 
     private void UpdateVacuumDustVisuals(Vector3 nozzleWorldPosition, float rewardMultiplier)
@@ -633,7 +670,8 @@ public class SweepingMinigame : MonoBehaviour
 
     private void UpdateBroomSprite(Vector3 brushDelta)
     {
-        if (isVacuumUpgrade || activeBroomImage == null || brushDelta.sqrMagnitude < 0.01f)
+        if (isVacuumUpgrade || HasBroomAnimationFrames()
+            || activeBroomImage == null || brushDelta.sqrMagnitude < 0.01f)
             return;
 
         Sprite directionalSprite;
@@ -709,11 +747,33 @@ public class SweepingMinigame : MonoBehaviour
         float bob = Mathf.Sin(broomAnimationTime * broomBobSpeed * 1.35f) * broomBobAmount * movement;
         float squash = 1f + Mathf.Sin(broomAnimationTime * broomBobSpeed * 1.8f) * broomMotionScale * movement;
 
+        if (HasBroomAnimationFrames())
+        {
+            int frameIndex = Mathf.FloorToInt(
+                broomAnimationTime * broomAnimationFramesPerSecond) % broomAnimationFrames.Length;
+            SetBroomAnimationFrame(frameIndex);
+        }
+
         activeBroom.localRotation = activeBroomBaseRotation * Quaternion.Euler(0f, 0f, swing);
         activeBroom.localScale = Vector3.Scale(
             activeBroomBaseScale * broomDisplayScale,
             new Vector3(1f + (squash - 1f) * 0.35f, squash, 1f));
         activeBroom.anchoredPosition = broomTargetPosition + Vector2.up * bob;
+    }
+
+    private bool HasBroomAnimationFrames()
+    {
+        return broomAnimationFrames != null && broomAnimationFrames.Length > 0;
+    }
+
+    private void SetBroomAnimationFrame(int frameIndex)
+    {
+        if (isVacuumUpgrade || activeBroomImage == null || !HasBroomAnimationFrames())
+            return;
+
+        Sprite frame = broomAnimationFrames[frameIndex % broomAnimationFrames.Length];
+        if (frame != null)
+            activeBroomImage.sprite = frame;
     }
 
     private void SetVacuumAnimationFrame(int frameIndex)

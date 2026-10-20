@@ -1381,12 +1381,26 @@ public class DayManager : MonoBehaviour
             "MOOD",
             "Ito naman ang mood ng mga magiging kasama mo sa bahay. Huwag mong hayaang bumaba ito, baka mahirapan ka.");
 
-        DustSpot dustSpot = FindFirstObjectByType<DustSpot>();
-        if (dustSpot != null)
+        Vector2 nearestDustPosition = Vector2.zero;
+        bool hasDustSpot = sweepingManager != null &&
+            sweepingManager.TryGetNearestDustSpotPosition(
+                player.transform.position,
+                out nearestDustPosition);
+        if (!hasDustSpot)
+        {
+            DustSpot fallbackDustSpot = FindFirstObjectByType<DustSpot>();
+            if (fallbackDustSpot != null)
+            {
+                nearestDustPosition = fallbackDustSpot.transform.position;
+                hasDustSpot = true;
+            }
+        }
+
+        if (hasDustSpot)
         {
             yield return MoveDayOneCameraTo(
                 mainCamera,
-                dustSpot.transform.position,
+                nearestDustPosition,
                 dayOneCameraOrthographicSize,
                 dayOneCameraMoveDuration);
         }
