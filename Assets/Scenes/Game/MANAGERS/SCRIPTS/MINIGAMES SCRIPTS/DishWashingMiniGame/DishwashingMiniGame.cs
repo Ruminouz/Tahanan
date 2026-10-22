@@ -169,12 +169,6 @@ private void RefreshDishwashingLiquidVisual()
     if (economyManager == null || !economyManager.HasPurchasedDishwashingLiquid)
         return;
 
-    if (soap == null)
-    {
-        Debug.LogWarning("Dishwashing liquid was purchased, but the soap visual is not assigned.", this);
-        return;
-    }
-
     Sprite liquidSprite = economyManager.DishwashingLiquidSprite;
     if (liquidSprite == null)
     {
@@ -182,15 +176,25 @@ private void RefreshDishwashingLiquidVisual()
         return;
     }
 
-    Image soapImage = soap.GetComponentInChildren<Image>(true);
-    if (soapImage == null)
+    Transform visualRoot = panel != null ? panel.transform : transform;
+    Image sabonVisual = null;
+    foreach (Image image in visualRoot.GetComponentsInChildren<Image>(true))
     {
-        Debug.LogWarning("Dishwashing liquid visual has no UI Image to update.", soap);
+        if (image.gameObject.name == "SabonVisual")
+        {
+            sabonVisual = image;
+            break;
+        }
+    }
+
+    if (sabonVisual == null)
+    {
+        Debug.LogWarning("Dishwashing liquid was purchased, but the SabonVisual image was not found in the dishwashing panel.", visualRoot);
         return;
     }
 
-    soapImage.sprite = liquidSprite;
-    soapImage.preserveAspect = true;
+    sabonVisual.sprite = liquidSprite;
+    sabonVisual.preserveAspect = true;
 }
 
 private void OnDestroy()
@@ -460,14 +464,14 @@ if(manager != null)
 
             case WashStage.AddSoap:
                 SetTutorialStep(
-                    "Pangalawang hakbang: i-drag ang espongha sa sabon para ma-sabon ang mga pinggan.",
+                    "Pangalawang hakbang: i-drag ang esponge sa sabon para ma-sabon ang mga pinggan.",
                     GetTransform(sponge),
                     GetTransform(soap));
                 break;
 
             case WashStage.Scrub:
                 SetTutorialStep(
-                    "Pangatlong hakbang: kuskusin ang maruming pinggan gamit ang espongha hanggang maging malinis ito.",
+                    "Pangatlong hakbang: kuskusin ang maruming pinggan gamit ang esponge hanggang maging malinis ito.",
                     currentScrubbingPlate != null ? currentScrubbingPlate.transform : null,
                     GetTransform(sponge));
                 break;

@@ -379,7 +379,7 @@ public class MoppingMinigame : MonoBehaviour
             progress = Mathf.Max(0f, progress - progressDecay * Time.deltaTime);
             if (!firstTimeTutorialActive || waitingForTutorialStroke)
                 ShowFeedback(insideArea
-                    ? "Mas mabilis na pagkiskis!"
+                    ? "Bilisan mo pa!"
                     : "Ilipat ang mop sa basang bahagi!");
         }
 

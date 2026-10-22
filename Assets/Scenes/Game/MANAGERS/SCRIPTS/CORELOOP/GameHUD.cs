@@ -62,6 +62,10 @@ public class GameHUD : MonoBehaviour
     private RectTransform clockHand;
     private RectTransform clockRoot;
     private Vector3 clockRootOriginalScale = Vector3.one;
+    private bool clockVisibilityInitialized;
+    private bool clockWasActiveBeforeMiniGame;
+    private bool clockProgressWasActiveBeforeMiniGame;
+    private bool clockHiddenForMiniGame;
     private Image clockFaceImage;
     private Image clockHandImage;
     private Image clockCenterImage;
@@ -120,6 +124,7 @@ public class GameHUD : MonoBehaviour
         ResolveDailyQuestPanel();
         if (clockFaceSprite != null)
             CreateClockDisplay();
+        CacheClockVisibility();
 
         SetupChoreListMinimizeButton();
         CreateCoinCounter();
@@ -133,6 +138,7 @@ public class GameHUD : MonoBehaviour
 
     private void Update()
     {
+        UpdateMiniGameClockVisibility();
         ResolveEconomyManager();
         UpdateCoinCounter();
         UpdateCoinPopups();
@@ -147,6 +153,44 @@ public class GameHUD : MonoBehaviour
         UpdateTime();
         UpdateChoreList();
         UpdateDailyStats();
+    }
+
+    private void CacheClockVisibility()
+    {
+        GameObject clockObject = clockAnchor != null
+            ? clockAnchor.gameObject
+            : clockRoot != null
+                ? clockRoot.gameObject
+                : null;
+        clockWasActiveBeforeMiniGame =
+            clockObject != null && clockObject.activeSelf;
+        clockProgressWasActiveBeforeMiniGame =
+            clockProgressSlider != null && clockProgressSlider.gameObject.activeSelf;
+        clockVisibilityInitialized = true;
+    }
+
+    private void UpdateMiniGameClockVisibility()
+    {
+        if (!clockVisibilityInitialized)
+            CacheClockVisibility();
+
+        bool hideClock = MiniGameInteractionBlocker.IsAnyMiniGameActive;
+        if (hideClock == clockHiddenForMiniGame)
+            return;
+
+        clockHiddenForMiniGame = hideClock;
+        GameObject clockObject = clockAnchor != null
+            ? clockAnchor.gameObject
+            : clockRoot != null
+                ? clockRoot.gameObject
+                : null;
+        if (clockObject != null)
+            clockObject.SetActive(!hideClock && clockWasActiveBeforeMiniGame);
+        if (clockProgressSlider != null)
+        {
+            clockProgressSlider.gameObject.SetActive(
+                !hideClock && clockProgressWasActiveBeforeMiniGame);
+        }
     }
 
     private void UpdateDay()
@@ -424,11 +468,11 @@ public class GameHUD : MonoBehaviour
                 ? "HINDI NATAPOS"
                 : dayManager.IsDailyAdditionalQuestFailed
                     ? "NABIGO ANG HAMON"
-                    : "GINAGAWA PA";
+                    : "IN PROGRESS";
 
-        dailyQuestText.text = "Hamon: " + questName +
+        dailyQuestText.text = "CHALLENGE: " + questName +
             "\n" + dayManager.DailyAdditionalQuestGoal +
-            "\nGantimpala: +" + dayManager.DailyAdditionalQuestRewardCoins + " barya" +
+            "\nGantimpala: +" + dayManager.DailyAdditionalQuestRewardCoins + " COINS" +
             "\n" + status;
     }
 

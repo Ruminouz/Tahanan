@@ -27,6 +27,7 @@ public class PlayerInventoryUI : MonoBehaviour
     [SerializeField] private RectTransform inventoryPanel;
     private Image inventoryPanelBackground;
     private bool inventoryOpen;
+    private bool miniGameActive;
     private bool slotContentsInitialized;
     private bool tutorialInputEnabled = true;
     private bool hideHotbarForTutorial;
@@ -66,6 +67,7 @@ public class PlayerInventoryUI : MonoBehaviour
         ResolveEconomyManager();
 
         boostInventory.InventoryChanged += Refresh;
+        miniGameActive = MiniGameInteractionBlocker.IsAnyMiniGameActive;
         Refresh();
     }
 
@@ -74,13 +76,25 @@ public class PlayerInventoryUI : MonoBehaviour
         ResolveEquipmentInventory();
         ResolveEconomyManager();
 
+        bool isMiniGameActive = MiniGameInteractionBlocker.IsAnyMiniGameActive;
+        bool miniGameStateChanged = isMiniGameActive != miniGameActive;
+        miniGameActive = isMiniGameActive;
+        if (miniGameActive && inventoryOpen)
+        {
+            SetInventoryPanelVisible(false);
+            miniGameStateChanged = true;
+        }
+        if (miniGameStateChanged)
+            Refresh();
+
         if (!tutorialInputEnabled || Keyboard.current == null)
             return;
 
         if (Keyboard.current.qKey.wasPressedThisFrame)
             SelectNextItem();
 
-        if (Keyboard.current.iKey.wasPressedThisFrame)
+        if (Keyboard.current.iKey.wasPressedThisFrame &&
+            !MiniGameInteractionBlocker.IsAnyMiniGameActive)
             ToggleInventoryPanel();
 
         if (Keyboard.current.eKey.wasPressedThisFrame)
@@ -188,8 +202,8 @@ public class PlayerInventoryUI : MonoBehaviour
                 continue;
 
             bool isHotbarSlot = index == 0;
-            bool slotIsVisible = (isHotbarSlot && !hideHotbarForTutorial) ||
-                inventoryOpen;
+            bool slotIsVisible = !miniGameActive &&
+                ((isHotbarSlot && !hideHotbarForTutorial) || inventoryOpen);
             slot.gameObject.SetActive(slotIsVisible);
 
             int itemIndex = inventoryOpen ? index : selectedIndex;
