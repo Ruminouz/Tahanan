@@ -153,6 +153,14 @@ MonoBehaviour:
   - name: Buy
     audioClips:
     - {fileID: 8300000, guid: 9137d3256ca769d499d36377bad2aef1, type: 3}
+  - name: Water Stream
+    audioClips:
+    - {fileID: 8300000, guid: 3ab9f8868c163944fa5de947fae13b55, type: 3}
+  - name: Sparkle
+    audioClips: []
+  - name: Good Night
+    audioClips:
+    - {fileID: 8300000, guid: be5e92a8e5689fe43a9a684ad7d3e52b, type: 3}
 --- !u!114 &3317586156217844872
 MonoBehaviour:
   m_ObjectHideFlags: 0

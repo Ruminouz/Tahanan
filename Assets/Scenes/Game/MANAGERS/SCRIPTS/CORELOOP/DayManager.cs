@@ -34,10 +34,9 @@ public class DayManager : MonoBehaviour
 
     [Header("Daily Additional Quest")]
     [SerializeField, Min(0)] private int dailyAdditionalQuestRewardCoins = 5;
-    [SerializeField, Min(0.1f)] private float dailyQuestSweepTimeLimit = 45f;
-    [SerializeField, Min(0.1f)] private float dailyQuestMopTimeLimit = 45f;
-    [SerializeField, Min(0.1f)] private float dailyQuestToyPickupTimeLimit = 30f;
-    [SerializeField, Min(0f)] private float dailyQuestDishwashingTimeRemaining = 30f;
+    [SerializeField, Min(0.1f)] private float dailyQuestSweepTimeLimit = 30f;
+    [SerializeField, Min(0.1f)] private float dailyQuestMopTimeLimit = 30f;
+    [SerializeField, Min(0f)] private float dailyQuestDishwashingTimeBeforeDeadline = 60f;
 
     [Header("Garbage System")]
     [SerializeField] private GarbageChore garbageChore;
@@ -116,6 +115,19 @@ public class DayManager : MonoBehaviour
         : dailyAdditionalQuestChore != null
             ? dailyAdditionalQuestChore.ChoreName
             : string.Empty;
+    public string DailyAdditionalQuestDisplayName => dailyAdditionalQuestIsMopping
+        ? "Mop"
+        : dailyAdditionalQuestChore == feedDog
+            ? "Pakainin Ang Aso"
+            : dailyAdditionalQuestChore == sweepDust
+                ? "Magwalis"
+                : dailyAdditionalQuestChore == washDishes
+                    ? "Maghugas ng Pinggan"
+                    : dailyAdditionalQuestChore == garbageChore
+                        ? "Segregate ng Basura"
+                        : dailyAdditionalQuestChore == cleanLeaves
+                            ? "Iligpit ang mga Laruan"
+                            : DailyAdditionalQuestName;
     public string DailyAdditionalQuestGoal => GetDailyAdditionalQuestGoal();
     public bool IsDailyAdditionalQuestCompleted => dailyAdditionalQuestCompleted;
     public bool IsDailyAdditionalQuestMissed => dailyAdditionalQuestIsMopping
@@ -126,8 +138,8 @@ public class DayManager : MonoBehaviour
     public int DailyAdditionalQuestRewardCoins => dailyAdditionalQuestRewardCoins;
     public float DailyQuestSweepTimeLimit => dailyQuestSweepTimeLimit;
     public float DailyQuestMopTimeLimit => dailyQuestMopTimeLimit;
-    public float DailyQuestToyPickupTimeLimit => dailyQuestToyPickupTimeLimit;
-    public float DailyQuestDishwashingTimeRemaining => dailyQuestDishwashingTimeRemaining;
+    public float DailyQuestDishwashingTimeBeforeDeadline =>
+        dailyQuestDishwashingTimeBeforeDeadline;
     // Difficulty is intentionally one-based so every playable day has a
     // distinct level, including Day 1.
     public int CurrentDifficulty => Mathf.Clamp(currentDay, 1, 7);
@@ -417,6 +429,8 @@ public class DayManager : MonoBehaviour
 
         dailyCoinsEarned = 0;
         ResetDayDependencies();
+        if (currentDay == 1)
+            GrantDayOneTutorialBoosts();
         ResetAllChores();
         SetupGarbage();
 
@@ -779,34 +793,33 @@ public class DayManager : MonoBehaviour
             return string.Empty;
 
         if (dailyAdditionalQuestIsMopping)
-            return "Clean all water from one spill within " +
-                dailyQuestMopTimeLimit.ToString("0") + " seconds.";
+            return "Punasan ang natapong tubig sa loob ng " +
+                dailyQuestMopTimeLimit.ToString("0") + " segundo.";
 
         if (questName.IndexOf("garbage", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("trash", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("segregat", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("basura", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Sort all trash correctly with no mistakes.";
+            return "Ihiwalay nang tama ang lahat ng basura nang walang pagkakamali.";
 
         if (questName.IndexOf("dog", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("feed", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Feed the dog 3 times without a miss.";
+            return "Pakainin ang aso nang walang pagkakamali.";
 
         if (questName.IndexOf("sweep", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Sweep all dust within " +
-                dailyQuestSweepTimeLimit.ToString("0") + " seconds.";
+            return "Walisin ang isang dumi sa loob ng " +
+                dailyQuestSweepTimeLimit.ToString("0") + " segundo.";
 
         if (questName.IndexOf("toy", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("leaves", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Put every toy in the box within " +
-                dailyQuestToyPickupTimeLimit.ToString("0") + " seconds.";
+            return "Iligpit ang lahat ng laruan nang hindi nahahawakan ng mga langgam.";
 
         if (questName.IndexOf("dish", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Finish with at least " +
-                dailyQuestDishwashingTimeRemaining.ToString("0") +
-                " seconds left.";
+            return "Tapusin ang paghuhugas ng pinggan nang hindi bababa sa " +
+                dailyQuestDishwashingTimeBeforeDeadline.ToString("0") +
+                " segundo bago ang takdang oras.";
 
-        return "Complete " + questName + " without mistakes.";
+        return "Tapusin ang gawain nang walang pagkakamali.";
     }
 
     private void AssignRandomDeadline(Chore chore)
@@ -1299,6 +1312,7 @@ public class DayManager : MonoBehaviour
             summaryChoresText.fontSize = 50f;
             summaryChoresText.text =
                 "<size=125%><b>Tologs na</b></size>\n\nNanaginip na sila :).";
+            SoundEffectManager.Play("Good Night");
             yield return Fade(0f);
             yield return WaitForRealtime(transitionCardHoldDuration);
 
@@ -1307,6 +1321,7 @@ public class DayManager : MonoBehaviour
             summaryChoresText.text =
                 "<size=125%><b>DAY " + currentDay +
                 "</b></size>\n\nA fresh morning begins.";
+            SoundEffectManager.Play("Good Morning");
             yield return Fade(0f);
             yield return WaitForRealtime(transitionCardHoldDuration);
             yield return Fade(1f);
@@ -1373,6 +1388,13 @@ public class DayManager : MonoBehaviour
 
         player.ResetToDailySpawn();
         player.SetMovementInputEnabled(false);
+        PlayerInventoryUI inventoryUI = FindFirstObjectByType<PlayerInventoryUI>(
+            FindObjectsInactive.Include);
+        if (inventoryUI != null)
+        {
+            inventoryUI.SetTutorialInputEnabled(false);
+            inventoryUI.SetHotbarHiddenForTutorial(true);
+        }
 
         dayOneIntroCameras = FindObjectsByType<CinemachineCamera>(
             FindObjectsSortMode.None);
@@ -1469,6 +1491,17 @@ public class DayManager : MonoBehaviour
             "WALIS TAMBO",
             "Kunin mo muna ito at i-equip para ma-walisan mo ang dumi.");
 
+        StartDay();
+        yield return null;
+
+        if (hud != null)
+            hud.PulseDailyChallengeCardForTutorial();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "HAMON NG ARAW",
+            "Tingnan ang Daily Challenge card para sa dagdag na gawain at bonus coins. Makikita rito ang layunin at progreso ng hamon mo.");
+
         Destroy(dayOneIntroOverlay);
         dayOneIntroOverlay = null;
         yield return MoveDayOneCameraTo(
@@ -1479,10 +1512,168 @@ public class DayManager : MonoBehaviour
 
         SetDayOneCameraFollowTarget(player.transform);
 
-        StartDay();
+        player.SetMovementInputEnabled(true);
+        if (inventoryUI != null)
+            inventoryUI.SetTutorialInputEnabled(true);
+        ResumeDayOneIntro();
+        dayStartIntroInProgress = false;
+
+        PlayerEquipmentInventory equipmentInventory =
+            player.GetComponent<PlayerEquipmentInventory>();
+        if (broom != null)
+        {
+            while (!dayFinished &&
+                (equipmentInventory == null ||
+                 !equipmentInventory.Owns(EquipmentType.Broom)))
+            {
+                yield return null;
+            }
+        }
+
+        if (inventoryUI != null)
+            inventoryUI.SetHotbarHiddenForTutorial(false);
+
+        if (!dayFinished && broom != null)
+            yield return StartCoroutine(PlayDayOneInventoryTutorial(
+                player,
+                mainCamera,
+                originalOrthographicSize,
+                inventoryUI));
+    }
+
+    private IEnumerator PlayDayOneInventoryTutorial(
+        PlayerMovement player,
+        Camera mainCamera,
+        float originalOrthographicSize,
+        PlayerInventoryUI inventoryUI)
+    {
+        if (inventoryUI == null ||
+            !inventoryUI.HasInventoryPanel ||
+            !inventoryUI.SelectEquipmentForTutorial(EquipmentType.Broom))
+        {
+            Debug.LogWarning(
+                "The Day 1 inventory tutorial was skipped because the broom or inventory UI is unavailable.",
+                this);
+            yield break;
+        }
+
+        inventoryUI.CloseInventoryForTutorial();
+        inventoryUI.SetTutorialInputEnabled(true);
+        player.SetMovementInputEnabled(false);
+        dayStartIntroInProgress = true;
+        dayOneIntroCameras = FindObjectsByType<CinemachineCamera>(
+            FindObjectsSortMode.None);
+        SetDayOneCameraFollowTarget(null);
+        PauseDayOneIntro();
+
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            player.transform.position,
+            dayOneCameraOrthographicSize,
+            dayOneCameraMoveDuration);
+        inventoryUI.HighlightSelectedHotbarForTutorial(true);
+
+        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
+        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "NAKUHA MO NA ANG WALIS",
+            "Naka-equip na ang walis. Tingnan ang naka-highlight na icon sa hotbar para malaman kung anong gamit ang hawak mo.");
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "LUMIPAT NG GAMIT",
+            "Pindutin ang Q para lumipat sa susunod na gamit. Subukan mo ngayon.");
+
+        while (!WasDayOneIntroKeyPressed(Key.Q))
+            yield return null;
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "BUKSAN ANG IMBENTARYO",
+            "Pindutin ang I para buksan ang imbentaryo at makita ang mga gamit mo.");
+        while (!inventoryUI.IsInventoryOpen)
+            yield return null;
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "GAMITIN ANG ITEM",
+            "Pindutin ulit ang I para isara ang imbentaryo. Kapag naka-equip ang Chocolate o Time Freezer, pindutin ang E para gamitin ito.");
+        while (inventoryUI.IsInventoryOpen)
+            yield return null;
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "GAMITIN ANG NAKA-EQUIP NA ITEM",
+            "Naka-equip ang Chocolate. Pindutin ang E para kainin ito at bumilis ang takbo mo. Gamitin din ang E kapag naka-equip ang Time Freezer para ihinto sandali ang oras.");
+        while (!WasDayOneIntroKeyPressed(Key.E))
+            yield return null;
+
+        inventoryUI.HighlightSelectedHotbarForTutorial(false);
+        inventoryUI.SetTutorialInputEnabled(true);
+        Destroy(dayOneIntroOverlay);
+        dayOneIntroOverlay = null;
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            player.transform.position,
+            originalOrthographicSize,
+            dayOneCameraMoveDuration);
+        SetDayOneCameraFollowTarget(player.transform);
         player.SetMovementInputEnabled(true);
         ResumeDayOneIntro();
         dayStartIntroInProgress = false;
+    }
+
+    private static bool WasDayOneIntroKeyPressed(Key key)
+    {
+        if (Keyboard.current == null)
+            return false;
+
+        switch (key)
+        {
+            case Key.Q:
+                return Keyboard.current.qKey.wasPressedThisFrame;
+            case Key.I:
+                return Keyboard.current.iKey.wasPressedThisFrame;
+            case Key.E:
+                return Keyboard.current.eKey.wasPressedThisFrame;
+            default:
+                return false;
+        }
+    }
+
+    private void GrantDayOneTutorialBoosts()
+    {
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        if (player == null)
+        {
+            Debug.LogError(
+                "The Day 1 tutorial Time Freezer could not be granted because the player is missing.",
+                this);
+            return;
+        }
+
+        BunsoBoostInventory inventory = player.GetComponent<BunsoBoostInventory>();
+        if (inventory == null)
+            inventory = player.gameObject.AddComponent<BunsoBoostInventory>();
+
+        if (!inventory.Add(BunsoBoostType.Chocolate))
+        {
+            Debug.LogError(
+                "The Day 1 tutorial Chocolate could not be added to the player's inventory.",
+                this);
+        }
+
+        if (!inventory.Add(BunsoBoostType.TimeFreezer))
+        {
+            Debug.LogError(
+                "The Day 1 tutorial Time Freezer could not be added to the player's inventory.",
+                this);
+        }
     }
 
     private IEnumerator StartDayOneFollowupIntroduction()
@@ -1844,14 +2035,14 @@ public class DayManager : MonoBehaviour
         string message)
     {
         text.font = dayOneIntroFont;
-        text.outlineWidth = 0.2f;
+        text.outlineWidth = 0.4f;
         text.outlineColor = Color.black;
         text.text = "<b>" + title + "</b>\n\n" + message;
         text.ForceMeshUpdate();
         text.maxVisibleCharacters = 0;
 
         continuePrompt.font = dayOneIntroFont;
-        continuePrompt.outlineWidth = 0.2f;
+        continuePrompt.outlineWidth = 0.4f;
         continuePrompt.outlineColor = Color.black;
         continuePrompt.text = "Press Space or Esc to continue";
         Vector3 originalScale = continuePrompt.rectTransform.localScale;

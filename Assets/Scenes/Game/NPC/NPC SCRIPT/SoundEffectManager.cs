@@ -37,7 +37,7 @@ public class SoundEffectManager : MonoBehaviour
             AudioClip audioClip = Instance.soundEffectLibrary.GetRandomClip(soundName);
             if (audioClip != null)
             {
-                if (soundName == "Faucet")
+                if (soundName == "Faucet" || soundName == "Water Stream")
                 {
                     AudioSource source = Instance.GetFaucetAudioSource();
                     source.PlayOneShot(audioClip);
@@ -59,7 +59,7 @@ public class SoundEffectManager : MonoBehaviour
 
     public static void Stop(string soundName)
     {
-        if (soundName == "Faucet" &&
+        if ((soundName == "Faucet" || soundName == "Water Stream") &&
             Instance != null &&
             Instance.faucetAudioSource != null)
         {

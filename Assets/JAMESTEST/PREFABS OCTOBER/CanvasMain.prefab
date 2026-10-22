@@ -10438,6 +10438,7 @@ MonoBehaviour:
   broomSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   vacuumSprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   mopSprite: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
+  upgradedMopSprite: {fileID: 748762685943578018, guid: d69ed0c6579282b4caf33ad2cb77a435, type: 3}
   garbageBagSprite: {fileID: -1984049885866873280, guid: 84f25f985d9b459489ba4ce0a630f699, type: 3}
 --- !u!1 &5079518721244795791
 GameObject:

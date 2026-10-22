@@ -388,7 +388,7 @@ public class WashableDish : MonoBehaviour
             ? rinseSparkleSprite
             : GetGeneratedRinseSparkleSprite();
 
-        SoundEffectManager.Play("Clean");
+        SoundEffectManager.Play("Sparkle");
 
         for (int i = 0; i < rinseSparkleCount; i++)
         {

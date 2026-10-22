@@ -484,7 +484,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
             {
                 dayManager.ResolveDailyAdditionalQuest(
                     currentChore,
-                    elapsedTime <= dayManager.DailyQuestToyPickupTimeLimit);
+                    antHitCount == 0);
             }
 
             Debug.Log($"Completing chore: {currentChore.ChoreName}");

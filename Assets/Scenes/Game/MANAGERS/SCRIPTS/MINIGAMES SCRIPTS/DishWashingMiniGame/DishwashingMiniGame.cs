@@ -826,7 +826,7 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
 private IEnumerator FillRinsingArea()
 {
     waterFilled = false;
-    SoundEffectManager.Play("Faucet");
+    SoundEffectManager.Play("Water Stream");
 
     float fillDuration = Mathf.Max(0.1f, waterFillDuration);
     RectTransform rinseRect = rinsingArea as RectTransform;
@@ -1485,7 +1485,8 @@ private void ResetSponge()
         {
             resolvedDayManager.ResolveDailyAdditionalQuest(
                 currentChore,
-                currentTimer >= resolvedDayManager.DailyQuestDishwashingTimeRemaining);
+                currentChore.RemainingDeadline >=
+                    resolvedDayManager.DailyQuestDishwashingTimeBeforeDeadline);
         }
 
         currentChore.Complete();

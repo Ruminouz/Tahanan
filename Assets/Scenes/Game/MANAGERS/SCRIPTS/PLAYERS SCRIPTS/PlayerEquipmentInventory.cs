@@ -23,8 +23,12 @@ public class PlayerEquipmentInventory : MonoBehaviour
     private readonly Dictionary<EquipmentType, Collider2D[]> itemColliders = new();
     private readonly Dictionary<EquipmentType, bool[]> originalColliderStates = new();
     private readonly Dictionary<EquipmentType, bool> originalInteractableStates = new();
+    private GameObject heldBoostVisual;
+    private SpriteRenderer heldBoostSpriteRenderer;
+    private BunsoBoostType? selectedBoost;
 
     public EquipmentType? SelectedEquipment { get; private set; }
+    public BunsoBoostType? SelectedBoost => selectedBoost;
     public event Action InventoryChanged;
 
     private void Awake()
@@ -86,6 +90,9 @@ public class PlayerEquipmentInventory : MonoBehaviour
 
         ResolveEquipmentHandPoint();
         SelectedEquipment = equipment;
+        selectedBoost = null;
+        if (heldBoostVisual != null)
+            heldBoostVisual.SetActive(false);
 
         foreach (KeyValuePair<EquipmentType, GameObject> item in ownedItems)
         {
@@ -105,6 +112,51 @@ public class PlayerEquipmentInventory : MonoBehaviour
         }
 
         InventoryChanged?.Invoke();
+    }
+
+    public bool SelectBoost(BunsoBoostType boost, Sprite sprite)
+    {
+        if (sprite == null)
+        {
+            Debug.LogWarning(
+                "Cannot equip " + boost + " because its held-item sprite is missing.",
+                this);
+            return false;
+        }
+
+        ResolveEquipmentHandPoint();
+        EnsureBoostVisual();
+        heldBoostSpriteRenderer.sprite = sprite;
+        heldBoostVisual.transform.SetParent(equipmentHandPoint, false);
+        heldBoostVisual.transform.localPosition = Vector3.zero;
+        heldBoostVisual.transform.localRotation = Quaternion.identity;
+
+        Bounds spriteBounds = sprite.bounds;
+        float largestDimension = Mathf.Max(spriteBounds.size.x, spriteBounds.size.y);
+        if (largestDimension > 0f)
+        {
+            float scale = 0.45f / largestDimension;
+            heldBoostVisual.transform.localScale = Vector3.one * scale;
+        }
+
+        SpriteRenderer playerRenderer = GetComponent<SpriteRenderer>();
+        if (playerRenderer != null)
+        {
+            heldBoostSpriteRenderer.sortingLayerID = playerRenderer.sortingLayerID;
+            heldBoostSpriteRenderer.sortingOrder = playerRenderer.sortingOrder + 1;
+        }
+
+        foreach (KeyValuePair<EquipmentType, GameObject> item in ownedItems)
+        {
+            if (item.Value != null)
+                item.Value.SetActive(false);
+        }
+
+        SelectedEquipment = null;
+        selectedBoost = boost;
+        heldBoostVisual.SetActive(true);
+        InventoryChanged?.Invoke();
+        return true;
     }
 
     public void ResetForDay()
@@ -139,6 +191,9 @@ public class PlayerEquipmentInventory : MonoBehaviour
         originalColliderStates.Clear();
         originalInteractableStates.Clear();
         SelectedEquipment = null;
+        selectedBoost = null;
+        if (heldBoostVisual != null)
+            heldBoostVisual.SetActive(false);
         InventoryChanged?.Invoke();
     }
 
@@ -168,6 +223,7 @@ public class PlayerEquipmentInventory : MonoBehaviour
         if (SelectedEquipment == equipment)
         {
             SelectedEquipment = null;
+            selectedBoost = null;
             foreach (EquipmentType remainingEquipment in ownedItems.Keys)
             {
                 Select(remainingEquipment);
@@ -194,6 +250,17 @@ public class PlayerEquipmentInventory : MonoBehaviour
         equipmentHandPoint = point.transform;
         equipmentHandPoint.SetParent(transform, false);
         equipmentHandPoint.localPosition = new Vector3(-0.37f, -0.234f, 0f);
+    }
+
+    private void EnsureBoostVisual()
+    {
+        if (heldBoostVisual != null)
+            return;
+
+        heldBoostVisual = new GameObject("HeldBoost");
+        heldBoostVisual.transform.SetParent(equipmentHandPoint, false);
+        heldBoostSpriteRenderer = heldBoostVisual.AddComponent<SpriteRenderer>();
+        heldBoostVisual.SetActive(false);
     }
 
     private void PrepareVisual(GameObject visual)

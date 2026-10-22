@@ -10,11 +10,19 @@ public class GameHUD : MonoBehaviour
     private static Sprite minimizeButtonSprite;
     private const string CompletedChoreColor = "#4CAF50";
     private const string MissedChoreColor = "#F44336";
+    private const string DailyChallengeTitle = "DAILY CHALLENGE";
 
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text timeText;
+    [SerializeField, Tooltip("Optional TMP text that displays AM or PM.")]
+    private TMP_Text timePeriodText;
     [SerializeField] private TMP_Text choreListText;
     [SerializeField] private Slider timeBar;
+    [Header("Clock Progress")]
+    [SerializeField, Tooltip("Optional slider that fills as the in-game day progresses.")]
+    private Slider clockProgressSlider;
+    [SerializeField, Min(0f)] private float clockNearEndWarningSeconds = 30f;
+    [SerializeField] private Color clockProgressWarningColor = new Color(1f, 0.2f, 0.12f);
     [SerializeField] private Sprite clockFaceSprite;
     [SerializeField, Tooltip("Optional Canvas RectTransform used to control the clock's position and size.")]
     private RectTransform clockAnchor;
@@ -24,6 +32,8 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private Sprite coinSprite;
     [SerializeField] private GameObject dailyQuestPanel;
     [SerializeField] private TMP_Text dailyQuestText;
+    [SerializeField, Tooltip("Assign the dedicated title text for the daily challenge card.")]
+    private TMP_Text dailyChallengeTitleText;
     [SerializeField, Min(0f)] private float nearDeadlineWarningSeconds = 30f;
     [SerializeField] private Color nearDeadlineColor = new Color(1f, 0.35f, 0.2f, 1f);
 
@@ -50,9 +60,13 @@ public class GameHUD : MonoBehaviour
     private ChoreManager choreManager;
     private EconomyManager economyManager;
     private RectTransform clockHand;
+    private RectTransform clockRoot;
+    private Vector3 clockRootOriginalScale = Vector3.one;
     private Image clockFaceImage;
     private Image clockHandImage;
     private Image clockCenterImage;
+    private Image clockProgressFillImage;
+    private Color clockProgressDefaultColor = Color.white;
     private Canvas currencyCanvas;
     private readonly List<CoinPopup> coinPopups = new();
     private RectTransform hoverTooltipRect;
@@ -100,6 +114,7 @@ public class GameHUD : MonoBehaviour
         currencyCanvas = coinsText != null
             ? coinsText.GetComponentInParent<Canvas>()
             : FindFirstObjectByType<Canvas>();
+        InitializeClockProgressSlider();
 
         ResolveChoreListText();
         ResolveDailyQuestPanel();
@@ -111,7 +126,8 @@ public class GameHUD : MonoBehaviour
         SetupHoverTooltips();
         ResolveEconomyManager();
 
-        if (GetComponent<PlayerInventoryUI>() == null)
+        if (FindFirstObjectByType<PlayerInventoryUI>(
+                FindObjectsInactive.Include) == null)
             gameObject.AddComponent<PlayerInventoryUI>();
     }
 
@@ -142,6 +158,28 @@ public class GameHUD : MonoBehaviour
     private void UpdateTime()
     {
         bool isTimeFrozen = timeManager.IsTimeFrozen;
+        float dayProgress = timeManager.GetDayProgress();
+        float remainingDaySeconds = Mathf.Max(
+            0f,
+            timeManager.DayLength - timeManager.GetTime());
+        bool isDayNearEnd = remainingDaySeconds <= clockNearEndWarningSeconds;
+        float pulse = isDayNearEnd
+            ? 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 4f)
+            : 0f;
+
+        if (clockProgressSlider != null)
+        {
+            float sliderValue = Mathf.Lerp(
+                clockProgressSlider.minValue,
+                clockProgressSlider.maxValue,
+                dayProgress);
+            clockProgressSlider.SetValueWithoutNotify(sliderValue);
+        }
+
+        if (clockProgressFillImage != null)
+            clockProgressFillImage.color = isDayNearEnd
+                ? Color.Lerp(clockProgressDefaultColor, clockProgressWarningColor, pulse)
+                : clockProgressDefaultColor;
 
         if (clockHand != null)
             clockHand.localRotation = Quaternion.Euler(
@@ -156,10 +194,18 @@ public class GameHUD : MonoBehaviour
                         Mathf.CeilToInt(timeManager.FreezeTimeRemaining) + "s)"
                     : string.Empty);
 
+        if (timePeriodText != null)
+            timePeriodText.text = timeManager.GetClockPeriodLabel();
+
         if (clockFaceImage != null)
-            clockFaceImage.color = isTimeFrozen
+        {
+            Color faceColor = isTimeFrozen
                 ? new Color(0.62f, 0.84f, 1f)
                 : Color.white;
+            clockFaceImage.color = isDayNearEnd
+                ? Color.Lerp(faceColor, clockProgressWarningColor, pulse)
+                : faceColor;
+        }
 
         if (clockHandImage != null)
             clockHandImage.color = isTimeFrozen
@@ -170,6 +216,23 @@ public class GameHUD : MonoBehaviour
             clockCenterImage.color = isTimeFrozen
                 ? new Color(0.05f, 0.35f, 0.72f)
                 : new Color(0.08f, 0.06f, 0.03f);
+
+        if (clockRoot != null)
+            clockRoot.localScale = clockRootOriginalScale *
+                (isDayNearEnd ? 1f + pulse * 0.08f : 1f);
+    }
+
+    private void InitializeClockProgressSlider()
+    {
+        if (clockProgressSlider == null)
+            return;
+
+        clockProgressSlider.interactable = false;
+        clockProgressFillImage = clockProgressSlider.fillRect != null
+            ? clockProgressSlider.fillRect.GetComponent<Image>()
+            : null;
+        if (clockProgressFillImage != null)
+            clockProgressDefaultColor = clockProgressFillImage.color;
     }
 
     private void CreateClockDisplay()
@@ -190,7 +253,7 @@ public class GameHUD : MonoBehaviour
             return;
         }
 
-        if (timeBar != null)
+        if (timeBar != null && timeBar != clockProgressSlider)
             timeBar.gameObject.SetActive(false);
 
         GameObject clockObject = new GameObject(
@@ -200,6 +263,7 @@ public class GameHUD : MonoBehaviour
             typeof(Image));
         clockObject.layer = canvas.gameObject.layer;
         RectTransform clockRect = clockObject.GetComponent<RectTransform>();
+        clockRoot = clockRect;
         if (clockAnchor != null)
         {
             clockRect.SetParent(clockAnchor, false);
@@ -217,6 +281,7 @@ public class GameHUD : MonoBehaviour
             clockRect.anchoredPosition = new Vector2(-32f, -32f);
             clockRect.sizeDelta = new Vector2(144f, 144f);
         }
+        clockRootOriginalScale = clockRoot.localScale;
 
         clockFaceImage = clockObject.GetComponent<Image>();
         clockFaceImage.sprite = clockFaceSprite;
@@ -338,13 +403,15 @@ public class GameHUD : MonoBehaviour
 
     private void UpdateDailyQuestPanel()
     {
+        SetDailyChallengeCardTitle();
+
         if (dailyQuestPanel == null || dailyQuestText == null)
             ResolveDailyQuestPanel();
 
         if (dailyQuestPanel == null || dailyQuestText == null || dayManager == null)
             return;
 
-        string questName = dayManager.DailyAdditionalQuestName;
+        string questName = dayManager.DailyAdditionalQuestDisplayName;
         bool hasQuest = !string.IsNullOrEmpty(questName);
         UpdateDailyQuestPanelVisibility(hasQuest);
 
@@ -352,16 +419,16 @@ public class GameHUD : MonoBehaviour
             return;
 
         string status = dayManager.IsDailyAdditionalQuestCompleted
-            ? "COMPLETED!"
+            ? "TAPOS NA!"
             : dayManager.IsDailyAdditionalQuestMissed
-                ? "MISSED"
+                ? "HINDI NATAPOS"
                 : dayManager.IsDailyAdditionalQuestFailed
-                    ? "CHALLENGE FAILED"
-                    : "IN PROGRESS";
+                    ? "NABIGO ANG HAMON"
+                    : "GINAGAWA PA";
 
-        dailyQuestText.text = "DAILY BONUS QUEST: " + questName.ToUpperInvariant() +
+        dailyQuestText.text = "Hamon: " + questName +
             "\n" + dayManager.DailyAdditionalQuestGoal +
-            "\nReward: +" + dayManager.DailyAdditionalQuestRewardCoins + " coins" +
+            "\nGantimpala: +" + dayManager.DailyAdditionalQuestRewardCoins + " barya" +
             "\n" + status;
     }
 
@@ -448,6 +515,12 @@ public class GameHUD : MonoBehaviour
 
         if (fallbackCard != null)
             dailyQuestPanel = fallbackCard.gameObject;
+    }
+
+    private void SetDailyChallengeCardTitle()
+    {
+        if (dailyChallengeTitleText != null)
+            dailyChallengeTitleText.text = DailyChallengeTitle;
     }
 
     private void ResolveChoreListText()
@@ -605,6 +678,27 @@ public class GameHUD : MonoBehaviour
         StartTutorialPulse(resolvedMoodManager.MoodSlider.transform);
     }
 
+    public void PulseDailyChallengeCardForTutorial()
+    {
+        if (dailyQuestPanel == null || dailyQuestText == null)
+            ResolveDailyQuestPanel();
+
+        if (dailyQuestPanel == null || dayManager == null ||
+            string.IsNullOrEmpty(dayManager.DailyAdditionalQuestName))
+        {
+            Debug.LogWarning(
+                "Cannot highlight the daily challenge because its card or challenge is unavailable.",
+                this);
+            return;
+        }
+
+        UpdateDailyQuestPanel();
+        Transform target = isDailyQuestMinimized && dailyQuestCollapsedPanel != null
+            ? dailyQuestCollapsedPanel.transform
+            : dailyQuestPanel.transform;
+        StartTutorialPulse(target);
+    }
+
     private void StartTutorialPulse(Transform target)
     {
         if (tutorialPulseCoroutine != null)
@@ -709,11 +803,24 @@ public class GameHUD : MonoBehaviour
         titleRect.offsetMin = new Vector2(12f, 0f);
         titleRect.offsetMax = new Vector2(-48f, 0f);
         TMP_Text collapsedTitle = collapsedTitleObject.GetComponent<TMP_Text>();
-        collapsedTitle.font = dailyQuestText.font;
-        collapsedTitle.fontSize = dailyQuestText.fontSize;
-        collapsedTitle.color = dailyQuestText.color;
-        collapsedTitle.alignment = TextAlignmentOptions.MidlineLeft;
-        collapsedTitle.text = "DAILY CHALLENGE";
+        TMP_Text titleStyleSource = dailyChallengeTitleText != null
+            ? dailyChallengeTitleText
+            : dailyQuestText;
+        collapsedTitle.font = titleStyleSource.font;
+        collapsedTitle.fontSize = titleStyleSource.fontSize;
+        collapsedTitle.fontSizeMin = titleStyleSource.fontSizeMin;
+        collapsedTitle.fontSizeMax = titleStyleSource.fontSizeMax;
+        collapsedTitle.enableAutoSizing = titleStyleSource.enableAutoSizing;
+        collapsedTitle.fontStyle = titleStyleSource.fontStyle;
+        collapsedTitle.color = titleStyleSource.color;
+        collapsedTitle.alignment = titleStyleSource.alignment;
+        collapsedTitle.characterSpacing = titleStyleSource.characterSpacing;
+        collapsedTitle.wordSpacing = titleStyleSource.wordSpacing;
+        collapsedTitle.lineSpacing = titleStyleSource.lineSpacing;
+        collapsedTitle.enableWordWrapping = titleStyleSource.enableWordWrapping;
+        collapsedTitle.overflowMode = titleStyleSource.overflowMode;
+        collapsedTitle.margin = titleStyleSource.margin;
+        collapsedTitle.text = DailyChallengeTitle;
         collapsedTitle.raycastTarget = false;
 
         Transform existingButton = dailyQuestPanel.transform.Find(
@@ -749,16 +856,6 @@ public class GameHUD : MonoBehaviour
         }
 
         EnsureMinimizeButtonLabel(button, dailyQuestText);
-
-        RectTransform textRect = dailyQuestText.rectTransform;
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = new Vector2(12f, 10f);
-        textRect.offsetMax = new Vector2(-52f, -10f);
-        dailyQuestText.enableAutoSizing = true;
-        dailyQuestText.fontSizeMin = 12f;
-        dailyQuestText.fontSizeMax = 18f;
-        dailyQuestText.fontSize = 18f;
 
         button.onClick.AddListener(ToggleDailyQuestMinimized);
         dailyQuestMinimizeButton = button;

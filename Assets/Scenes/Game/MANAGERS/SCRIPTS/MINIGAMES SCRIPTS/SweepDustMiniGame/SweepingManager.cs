@@ -332,6 +332,18 @@ public class SweepingManager : MonoBehaviour
         {
             activeDust.Remove(cleanedDust);
             cleanedDustCount++;
+
+            DayManager questDayManager = ResolveDayManager();
+            if (questDayManager != null &&
+                questDayManager.IsDailyAdditionalQuestFor(sweepDustChore))
+            {
+                float elapsedSeconds = dailyQuestAttemptStartedAt >= 0f
+                    ? Time.time - dailyQuestAttemptStartedAt
+                    : float.PositiveInfinity;
+                questDayManager.ResolveDailyAdditionalQuest(
+                    sweepDustChore,
+                    elapsedSeconds <= questDayManager.DailyQuestSweepTimeLimit);
+            }
         }
 
 
@@ -376,17 +388,6 @@ public class SweepingManager : MonoBehaviour
 
         if (sweepDustChore != null)
         {
-            DayManager questDayManager = ResolveDayManager();
-            if (questDayManager != null)
-            {
-                float elapsedSeconds = dailyQuestAttemptStartedAt >= 0f
-                    ? Time.time - dailyQuestAttemptStartedAt
-                    : float.PositiveInfinity;
-                questDayManager.ResolveDailyAdditionalQuest(
-                    sweepDustChore,
-                    elapsedSeconds <= questDayManager.DailyQuestSweepTimeLimit);
-            }
-
             sweepDustChore.Complete();
 
             Debug.Log(
