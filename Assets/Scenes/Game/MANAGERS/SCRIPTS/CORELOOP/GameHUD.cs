@@ -1364,15 +1364,8 @@ public class GameHUD : MonoBehaviour
 
         if (missedChoreText != null)
         {
-            int totalChoresForDay = 0;
-            if (dayManager != null)
-            {
-                Chore[] activeChores = dayManager.GetActiveChores();
-                totalChoresForDay = activeChores != null ? activeChores.Length : 0;
-            }
-
-            int totalDailyChores = Mathf.Max(1, totalChoresForDay);
-            missedChoreText.text = "Missed " + choreManager.missedChores + "/" + totalDailyChores;
+            missedChoreText.text = "Missed " + choreManager.missedChores
+                + "/" + dayManager.MissedChoreGameOverThreshold;
         }
     }
 

@@ -153,6 +153,7 @@ public class DayManager : MonoBehaviour
     public Chore MopFloorChore => mopFloor;
     public Chore SweepDustChore => sweepDust;
     public bool IsGameOver => gameOver;
+    public int MissedChoreGameOverThreshold => GetMissedChoreGameOverThreshold();
     public bool HasReachedMissedChoreGameOverThreshold => choreManager != null &&
         choreManager.missedChores >= GetMissedChoreGameOverThreshold();
 
