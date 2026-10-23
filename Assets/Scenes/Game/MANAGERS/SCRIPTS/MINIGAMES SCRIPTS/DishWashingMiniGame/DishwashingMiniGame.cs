@@ -115,6 +115,8 @@ private Image waterSurfaceImage;
 private Sprite[] waterStreamFrames;
 private Coroutine waterFillCoroutine;
 private bool waterFilled;
+private bool waterFillInProgress;
+private float waterFillElapsed;
 private EconomyManager economyManager;
 
 private void OnEnable()
@@ -143,6 +145,12 @@ private void OnDisable()
 
     if (economyManager != null)
         economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
+
+    if (waterFillCoroutine != null)
+    {
+        StopCoroutine(waterFillCoroutine);
+        waterFillCoroutine = null;
+    }
 }
 
 private void SubscribeToEconomy()
@@ -220,10 +228,16 @@ public void StartGame(Chore chore)
     if (currentChore == chore && timerRunning)
     {
         MiniGamePanelMinimizer.Attach(panel, PauseDishwashingAudio);
+        panel.GetComponent<MiniGamePanelMinimizer>().EnableFirstOpenTutorial();
         MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
-        if (waterFillCoroutine != null)
-            SoundEffectManager.Play("Water Stream");
+        if (waterFillInProgress)
+        {
+            if (waterFillCoroutine == null)
+                waterFillCoroutine = StartCoroutine(FillRinsingArea());
+            else
+                SoundEffectManager.Play("Water Stream");
+        }
         return;
     }
 
@@ -246,6 +260,7 @@ public void StartGame(Chore chore)
     if(panel != null)
     {
         MiniGamePanelMinimizer.Attach(panel, PauseDishwashingAudio);
+        panel.GetComponent<MiniGamePanelMinimizer>().EnableFirstOpenTutorial();
         MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
     }
@@ -368,6 +383,8 @@ private void PauseDishwashingAudio()
         if (firstTimeTutorialActive)
             SetTutorialStep("Maghintay ng ilang segundo para mapuno ang lababo bago ilagay ang mga pinggan sa ilalim ng tubig.");
 
+        waterFillElapsed = 0f;
+        waterFillInProgress = true;
         waterFillCoroutine = StartCoroutine(FillRinsingArea());
     }
     private void Update()
@@ -862,16 +879,16 @@ private IEnumerator FillRinsingArea()
         parentRect != null &&
         UpdateWaterStreamPosition(parentRect, rinseRect);
 
+    float elapsed = waterFillElapsed;
     if (waterFillImage != null)
     {
-        waterFillImage.fillAmount = 0f;
+        waterFillImage.fillAmount = Mathf.Clamp01(elapsed / fillDuration);
         waterFillImage.gameObject.SetActive(true);
     }
 
     if (waterStreamImage != null)
         waterStreamImage.gameObject.SetActive(streamPositionValid);
 
-    float elapsed = 0f;
     int lastFrame = -1;
     while (elapsed < fillDuration)
     {
@@ -882,6 +899,7 @@ private IEnumerator FillRinsingArea()
         }
 
         elapsed += Time.deltaTime;
+        waterFillElapsed = elapsed;
         float fillAmount = Mathf.Clamp01(elapsed / fillDuration);
         if (waterFillImage != null)
             waterFillImage.fillAmount = fillAmount;
@@ -916,6 +934,8 @@ private IEnumerator FillRinsingArea()
         waterFillImage.gameObject.SetActive(false);
 
     waterFilled = true;
+    waterFillInProgress = false;
+    waterFillElapsed = 0f;
     waterFillCoroutine = null;
     SetTutorialStep("Ilagay ang mga pinggan sa ilalim ng tubig para banlawan.");
 
@@ -1223,6 +1243,9 @@ private void ResetRinseState()
         StopCoroutine(waterFillCoroutine);
         waterFillCoroutine = null;
     }
+
+    waterFillInProgress = false;
+    waterFillElapsed = 0f;
 
     if (waterFillImage != null)
     {

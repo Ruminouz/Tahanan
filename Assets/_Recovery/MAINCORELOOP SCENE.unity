@@ -6286,7 +6286,7 @@ MonoBehaviour:
   sweepingArea: {fileID: 5639939925889187073}
   broomDisplayScale: 8
   broomSwingAngle: 28
-  broomBobAmount: 3
+  broomBobAmount: 0
   broomBobSpeed: 0
   broomMotionScale: 0.14
   broomUpSprite: {fileID: 0}
@@ -12041,7 +12041,7 @@ RectTransform:
   m_Father: {fileID: 3575011832030547790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16487,8 +16487,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10.095947}
-  m_SizeDelta: {x: 0.00012207, y: 20.192}
+  m_AnchoredPosition: {x: -1.5004272, y: 0.000061035156}
+  m_SizeDelta: {x: -243.85, y: -135.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5639939925889187074
 MonoBehaviour:
@@ -16503,6 +16503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGamePanelMinimizer
   minimizeButtonSprite: {fileID: 8000682628159011477, guid: c6da1d7da1da99f43bfb10b93a2ac5e7, type: 3}
+  showFirstOpenTutorial: 0
 --- !u!224 &5655922901413711878
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16577,6 +16578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGamePanelMinimizer
   minimizeButtonSprite: {fileID: 8000682628159011477, guid: c6da1d7da1da99f43bfb10b93a2ac5e7, type: 3}
+  showFirstOpenTutorial: 0
 --- !u!222 &5734588590038015452
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17897,6 +17899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGamePanelMinimizer
   minimizeButtonSprite: {fileID: 8000682628159011477, guid: c6da1d7da1da99f43bfb10b93a2ac5e7, type: 3}
+  showFirstOpenTutorial: 0
 --- !u!114 &6332548764822094126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20980,6 +20983,10 @@ PrefabInstance:
       value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 1903010344839228725, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
+      propertyPath: angryThreshold
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903010344839228725, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: concernedThreshold
       value: 60
       objectReference: {fileID: 0}
@@ -22252,7 +22259,7 @@ RectTransform:
   m_Father: {fileID: 3724980268616427494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -23829,6 +23836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGamePanelMinimizer
   minimizeButtonSprite: {fileID: 8000682628159011477, guid: c6da1d7da1da99f43bfb10b93a2ac5e7, type: 3}
+  showFirstOpenTutorial: 0
 --- !u!114 &8880809273601331394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24321,6 +24329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGamePanelMinimizer
   minimizeButtonSprite: {fileID: 8000682628159011477, guid: c6da1d7da1da99f43bfb10b93a2ac5e7, type: 3}
+  showFirstOpenTutorial: 0
 --- !u!224 &9094150070678484499
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24390,6 +24399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGamePanelMinimizer
   minimizeButtonSprite: {fileID: 8000682628159011477, guid: c6da1d7da1da99f43bfb10b93a2ac5e7, type: 3}
+  showFirstOpenTutorial: 0
 --- !u!114 &9151702201030294985
 MonoBehaviour:
   m_ObjectHideFlags: 0

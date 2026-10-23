@@ -53,6 +53,9 @@ MonoBehaviour:
   moodRecoveryPerCompletedChore: 10
   moodGainSprite: {fileID: 5951587013162271021, guid: 4ab192c131e22bd40bd4dab15b920f7d, type: 3}
   moodLossSprite: {fileID: -3151740070689166471, guid: 08c6851420614cd4d83e1ec64aa46e38, type: 3}
+  happyMoodHandleSprite: {fileID: 2969606046672856934, guid: 107ea15438e006b4c900379f3c3f6f7b, type: 3}
+  neutralMoodHandleSprite: {fileID: 7882799506682143018, guid: e19658964963cde4cb92eddc03fb63f7, type: 3}
+  sadMoodHandleSprite: {fileID: -6416144266904240849, guid: e19658964963cde4cb92eddc03fb63f7, type: 3}
 --- !u!1 &4084431142148791782
 GameObject:
   m_ObjectHideFlags: 0

@@ -131,6 +131,7 @@ public class GameHUD : MonoBehaviour
 
         SetupChoreListMinimizeButton();
         CreateCoinCounter();
+        CreateMissedChoreCounter();
         SetupHoverTooltips();
         ResolveEconomyManager();
 
@@ -148,6 +149,7 @@ public class GameHUD : MonoBehaviour
         if (dailyQuestPanel == null || dailyQuestText == null)
             ResolveDailyQuestPanel();
         UpdateDailyQuestPanel();
+        UpdateMissedChoreCounter();
 
         if (timeManager == null || dayManager == null)
             return;
@@ -720,6 +722,19 @@ public class GameHUD : MonoBehaviour
         }
 
         StartTutorialPulse(resolvedMoodManager.MoodSlider.transform);
+    }
+
+    public void PulseMissedChoreCounterForTutorial()
+    {
+        if (missedChoreText == null)
+        {
+            Debug.LogWarning(
+                "Cannot highlight the missed-chore counter because it is unavailable.",
+                this);
+            return;
+        }
+
+        StartTutorialPulse(missedChoreText.rectTransform);
     }
 
     public void PulseDailyChallengeCardForTutorial()
@@ -1362,11 +1377,80 @@ public class GameHUD : MonoBehaviour
         if (successRateText != null)
             successRateText.text = "Success: " + choreManager.SuccessRate.ToString("0") + "%";
 
-        if (missedChoreText != null)
+    }
+
+    private void CreateMissedChoreCounter()
+    {
+        if (missedChoreText == null && currencyCanvas != null)
         {
-            missedChoreText.text = "Missed " + choreManager.missedChores
-                + "/" + dayManager.MissedChoreGameOverThreshold;
+            TMP_Text[] canvasTexts =
+                currencyCanvas.GetComponentsInChildren<TMP_Text>(true);
+            foreach (TMP_Text canvasText in canvasTexts)
+            {
+                if (canvasText.gameObject.name == "Missed Chore Counter")
+                {
+                    missedChoreText = canvasText;
+                    break;
+                }
+            }
         }
+
+        if (missedChoreText == null)
+        {
+            if (currencyCanvas == null)
+                currencyCanvas = FindFirstObjectByType<Canvas>();
+
+            if (currencyCanvas == null)
+            {
+                Debug.LogWarning(
+                    "Missed-chore counter could not be created because no Canvas was found.",
+                    this);
+                return;
+            }
+
+            GameObject counterObject = new GameObject(
+                "Missed Chore Counter",
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(TextMeshProUGUI));
+            counterObject.layer = currencyCanvas.gameObject.layer;
+
+            RectTransform counterRect = counterObject.GetComponent<RectTransform>();
+            counterRect.SetParent(currencyCanvas.transform, false);
+            counterRect.anchorMin = new Vector2(0f, 1f);
+            counterRect.anchorMax = new Vector2(0f, 1f);
+            counterRect.pivot = new Vector2(0f, 1f);
+            counterRect.anchoredPosition = new Vector2(24f, -76f);
+            counterRect.sizeDelta = new Vector2(220f, 40f);
+
+            missedChoreText = counterObject.GetComponent<TMP_Text>();
+            missedChoreText.font = TMP_Settings.defaultFontAsset;
+            missedChoreText.fontSize = 24f;
+            missedChoreText.color = Color.white;
+            missedChoreText.alignment = TextAlignmentOptions.MidlineLeft;
+            missedChoreText.raycastTarget = false;
+        }
+
+        UpdateMissedChoreCounter();
+    }
+
+    private void UpdateMissedChoreCounter()
+    {
+        if (missedChoreText == null || choreManager == null)
+            return;
+
+        if (dayManager == null)
+        {
+            dayManager = DayManager.Instance != null
+                ? DayManager.Instance
+                : FindFirstObjectByType<DayManager>();
+        }
+
+        if (dayManager == null)
+            return;
+
+        missedChoreText.text = "Missed " + choreManager.missedChores
+            + "/" + dayManager.MissedChoreGameOverThreshold;
     }
 
     private void CreateCoinCounter()

@@ -26,8 +26,12 @@ public class MoodManager : MonoBehaviour
     [SerializeField, Min(0f)] private float moodRecoveryPerCompletedChore = 5f;
     [SerializeField] private Sprite moodGainSprite;
     [SerializeField] private Sprite moodLossSprite;
+    [SerializeField] private Sprite happyMoodHandleSprite;
+    [SerializeField] private Sprite neutralMoodHandleSprite;
+    [SerializeField] private Sprite sadMoodHandleSprite;
 
     private float mood;
+    private Image moodSliderHandleImage;
     private Canvas popupCanvas;
     private int activePopupCount;
     private bool warnedAboutPopupSetup;
@@ -49,6 +53,16 @@ public class MoodManager : MonoBehaviour
         }
 
         Instance = this;
+        if (moodSlider == null)
+        {
+            GameObject moodSliderObject = GameObject.Find("MoodSlider");
+            if (moodSliderObject != null)
+                moodSlider = moodSliderObject.GetComponent<Slider>();
+        }
+
+        moodSliderHandleImage = moodSlider != null && moodSlider.handleRect != null
+            ? moodSlider.handleRect.GetComponent<Image>()
+            : null;
         mood = Mathf.Clamp(startingMood, 0f, 100f);
         UpdateSlider();
     }
@@ -301,5 +315,15 @@ public class MoodManager : MonoBehaviour
     {
         if (moodSlider != null)
             moodSlider.value = mood / 100f;
+
+        if (moodSliderHandleImage == null)
+            return;
+
+        Sprite handleSprite = mood <= angryThreshold
+            ? sadMoodHandleSprite
+            : mood <= concernedThreshold
+                ? neutralMoodHandleSprite
+                : happyMoodHandleSprite;
+        moodSliderHandleImage.sprite = handleSprite;
     }
 }

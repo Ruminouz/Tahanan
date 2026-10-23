@@ -1573,7 +1573,7 @@ public class DayManager : MonoBehaviour
             introText,
             continuePrompt,
             "WELCOME SA TAHANAN!",
-            "Welcome sa Tahanan game! Sa game na ito matututunan mo ang mga pangkaraniwang araw-araw na buhay sa loob ng bahay :D");
+            "Sa game na ito matututunan mo ang mga pangkaraniwang araw-araw na buhay sa loob ng bahay");
         GameHUD hud = FindFirstObjectByType<GameHUD>();
         if (hud != null)
             hud.PulseChoreListForTutorial();
@@ -1581,7 +1581,7 @@ public class DayManager : MonoBehaviour
             introText,
             continuePrompt,
             "CHORE LIST",
-            "Sa papel na ito nakasulat ang mga task na dapat mong gawin daily. Huwag mong kalimutang gawin kahit isa, magagalit si Nanay!");
+            "Sa papel na ito nakasulat ang mga task na dapat mong gawin daily. Huwag mong kalimutang gawin kahit isa, Baka mapalo ni nanay!");
         if (hud != null)
             hud.PulseMoodSliderForTutorial();
         yield return ShowDayOneIntroText(
@@ -1589,6 +1589,13 @@ public class DayManager : MonoBehaviour
             continuePrompt,
             "MOOD",
             "Ito naman ang mood ng mga magiging kasama mo sa bahay. Huwag mong hayaang bumaba ito, baka mahirapan ka.");
+        if (hud != null)
+            hud.PulseMissedChoreCounterForTutorial();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "MISSED CHORES",
+            " Kapag umabot sa limit ang mga chore na hindi mo natapos,Game Over na.");
 
         Vector2 nearestDustPosition = Vector2.zero;
         bool hasDustSpot = sweepingManager != null &&
@@ -1659,8 +1666,8 @@ public class DayManager : MonoBehaviour
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "HAMON NG ARAW",
-            "Tingnan ang Daily Challenge card para sa dagdag na gawain at bonus coins. Makikita rito ang layunin at progreso ng hamon mo.");
+            "Bonus Task",
+            "Tingnan ang Daily Challenge card para sa dagdag na hamon at bonus coins.");
 
         Destroy(dayOneIntroOverlay);
         dayOneIntroOverlay = null;
@@ -1746,32 +1753,23 @@ public class DayManager : MonoBehaviour
             "LUMIPAT NG GAMIT",
             "Pindutin ang Q para lumipat sa susunod na gamit. Subukan mo ngayon.");
 
-        while (!WasDayOneIntroKeyPressed(Key.Q))
-            yield return null;
-
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
             "BUKSAN ANG IMBENTARYO",
             "Pindutin ang I para buksan ang imbentaryo at makita ang mga gamit mo.");
-        while (!inventoryUI.IsInventoryOpen)
-            yield return null;
 
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
             "GAMITIN ANG ITEM",
-            "Pindutin ulit ang I para isara ang imbentaryo. Kapag naka-equip ang Chocolate o Time Freezer, pindutin ang E para gamitin ito.");
-        while (inventoryUI.IsInventoryOpen)
-            yield return null;
+            "Pindutin ulit ang I para isara ang inventory. Kapag naka-equip ang Chocolate o Time Freezer, pindutin ang E para gamitin ito.");
 
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
             "GAMITIN ANG NAKA-EQUIP NA ITEM",
             "Naka-equip ang Chocolate. Pindutin ang E para kainin ito at bumilis ang takbo mo. Gamitin din ang E kapag naka-equip ang Time Freezer para ihinto sandali ang oras.");
-        while (!WasDayOneIntroKeyPressed(Key.E))
-            yield return null;
 
         inventoryUI.HighlightSelectedHotbarForTutorial(false);
         inventoryUI.SetTutorialInputEnabled(true);
@@ -1786,24 +1784,6 @@ public class DayManager : MonoBehaviour
         player.SetMovementInputEnabled(true);
         ResumeDayOneIntro();
         dayStartIntroInProgress = false;
-    }
-
-    private static bool WasDayOneIntroKeyPressed(Key key)
-    {
-        if (Keyboard.current == null)
-            return false;
-
-        switch (key)
-        {
-            case Key.Q:
-                return Keyboard.current.qKey.wasPressedThisFrame;
-            case Key.I:
-                return Keyboard.current.iKey.wasPressedThisFrame;
-            case Key.E:
-                return Keyboard.current.eKey.wasPressedThisFrame;
-            default:
-                return false;
-        }
     }
 
     private void GrantDayOneTutorialBoosts()
