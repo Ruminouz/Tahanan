@@ -53,6 +53,12 @@ public class DayManager : MonoBehaviour
     [SerializeField, Min(0f)] private float summaryLineDelay = 0.25f;
     [SerializeField, Min(0f)] private float transitionCardHoldDuration = 1f;
 
+    [Header("Day Win Celebration")]
+    [SerializeField] private Image dayWinCelebrationImage;
+    [SerializeField] private Image[] additionalDayWinCelebrationImages = new Image[6];
+    [SerializeField] private Sprite[] dayWinCelebrationFrames = new Sprite[8];
+    [SerializeField, Min(1f)] private float dayWinCelebrationFramesPerSecond = 12f;
+
     [Header("Day 2 Introduction")]
     [SerializeField, Min(0.01f)] private float shopCameraMoveDuration = 1.5f;
     [SerializeField, Min(0f)] private float shopDialogueDuration = 4f;
@@ -94,6 +100,7 @@ public class DayManager : MonoBehaviour
     private bool dailyAdditionalQuestResolved;
     private bool dailyAdditionalQuestIsMopping;
     private Coroutine summaryCoroutine;
+    private Coroutine dayWinCelebrationCoroutine;
     private bool summaryRevealComplete;
     private bool transitionInProgress;
     private bool dayStartIntroInProgress;
@@ -181,6 +188,7 @@ public class DayManager : MonoBehaviour
         Instance = this;
         currentDay = Mathf.Clamp(currentDay, 1, FinalDay);
         normalTimeScale = Time.timeScale;
+        EnsureDayWinCelebrationImage();
         if (transitionFade != null)
         {
             if (daySummaryPanel != null &&
@@ -211,6 +219,146 @@ public class DayManager : MonoBehaviour
 
         if (mainMenuButton != null)
             mainMenuButton.onClick.AddListener(ReturnToMainMenu);
+    }
+
+    private void EnsureDayWinCelebrationImage()
+    {
+        if (dayWinCelebrationImage == null && daySummaryPanel != null)
+        {
+            GameObject celebrationObject = new GameObject(
+                "DayWinCelebration",
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(Image));
+            celebrationObject.layer = daySummaryPanel.layer;
+
+            RectTransform celebrationRect = celebrationObject.GetComponent<RectTransform>();
+            celebrationRect.SetParent(daySummaryPanel.transform, false);
+            celebrationRect.anchorMin = new Vector2(0.5f, 1f);
+            celebrationRect.anchorMax = new Vector2(0.5f, 1f);
+            celebrationRect.pivot = new Vector2(0.5f, 0.5f);
+            celebrationRect.anchoredPosition = new Vector2(0f, -110f);
+            celebrationRect.sizeDelta = new Vector2(220f, 220f);
+            celebrationRect.SetAsFirstSibling();
+
+            dayWinCelebrationImage = celebrationObject.GetComponent<Image>();
+        }
+
+        PrepareDayWinCelebrationImage(dayWinCelebrationImage);
+        if (additionalDayWinCelebrationImages == null)
+            return;
+
+        foreach (Image image in additionalDayWinCelebrationImages)
+            PrepareDayWinCelebrationImage(image);
+    }
+
+    private void PrepareDayWinCelebrationImage(Image image)
+    {
+        if (image == null)
+            return;
+
+        image.raycastTarget = false;
+        image.preserveAspect = true;
+        image.enabled = false;
+        image.sprite = null;
+    }
+
+    private bool HasDayWinCelebrationFrames()
+    {
+        if (dayWinCelebrationFrames == null)
+            return false;
+
+        foreach (Sprite frame in dayWinCelebrationFrames)
+        {
+            if (frame != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    private IEnumerator PlayDayWinCelebration()
+    {
+        if (!HasDayWinCelebrationImage())
+            yield break;
+
+        float frameDelay = 1f / Mathf.Max(1f, dayWinCelebrationFramesPerSecond);
+        while (true)
+        {
+            foreach (Sprite frame in dayWinCelebrationFrames)
+            {
+                if (frame == null)
+                    continue;
+
+                SetDayWinCelebrationFrame(frame);
+                yield return new WaitForSecondsRealtime(frameDelay);
+            }
+        }
+    }
+
+    private bool HasDayWinCelebrationImage()
+    {
+        if (dayWinCelebrationImage != null)
+            return true;
+
+        if (additionalDayWinCelebrationImages == null)
+            return false;
+
+        foreach (Image image in additionalDayWinCelebrationImages)
+        {
+            if (image != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void SetDayWinCelebrationFrame(Sprite frame)
+    {
+        if (dayWinCelebrationImage != null)
+        {
+            dayWinCelebrationImage.sprite = frame;
+            dayWinCelebrationImage.enabled = true;
+        }
+
+        if (additionalDayWinCelebrationImages == null)
+            return;
+
+        foreach (Image image in additionalDayWinCelebrationImages)
+        {
+            if (image == null)
+                continue;
+
+            image.sprite = frame;
+            image.enabled = true;
+        }
+    }
+
+    private void StopDayWinCelebration()
+    {
+        if (dayWinCelebrationCoroutine != null)
+        {
+            StopCoroutine(dayWinCelebrationCoroutine);
+            dayWinCelebrationCoroutine = null;
+        }
+
+        if (dayWinCelebrationImage != null)
+        {
+            dayWinCelebrationImage.enabled = false;
+            dayWinCelebrationImage.sprite = null;
+        }
+
+        if (additionalDayWinCelebrationImages == null)
+            return;
+
+        foreach (Image image in additionalDayWinCelebrationImages)
+        {
+            if (image == null)
+                continue;
+
+            image.enabled = false;
+            image.sprite = null;
+        }
     }
 
     private void CacheSceneManagers()
@@ -413,6 +561,7 @@ public class DayManager : MonoBehaviour
         ResolveCleanLeavesChore();
         ResolveWaterSpawner();
 
+        SoundEffectManager.PlayLoop("BGM");
         Debug.Log("=== START DAY " + currentDay + " ===");
         bunsoBadMoodChoresDroppedToday = 0;
 
@@ -1079,6 +1228,15 @@ public class DayManager : MonoBehaviour
         if (daySummaryPanel != null)
             daySummaryPanel.SetActive(true);
 
+        StopDayWinCelebration();
+        if (gameOver)
+            SoundEffectManager.Play("GameOver");
+        else
+            SoundEffectManager.Play("Win");
+
+        if (!gameOver && HasDayWinCelebrationFrames())
+            dayWinCelebrationCoroutine = StartCoroutine(PlayDayWinCelebration());
+
         float successRate = choreManager != null ? choreManager.SuccessRate : 0f;
         int totalPoints = choreManager != null ? choreManager.totalPoints : 0;
         HouseholdMood endingMood = moodManager != null
@@ -1175,7 +1333,7 @@ public class DayManager : MonoBehaviour
             }
 
             summary.AppendLine();
-            summary.AppendLine("Family mood: " + FormatMood(endingMood));
+            summary.AppendLine();
             summaryChoresText.text = summary.ToString();
             yield return new WaitForSecondsRealtime(summaryLineDelay);
 
@@ -1239,6 +1397,7 @@ public class DayManager : MonoBehaviour
             !summaryRevealComplete || transitionInProgress)
             return;
 
+        StopDayWinCelebration();
         transitionInProgress = true;
         StartCoroutine(TransitionToNextDay());
     }

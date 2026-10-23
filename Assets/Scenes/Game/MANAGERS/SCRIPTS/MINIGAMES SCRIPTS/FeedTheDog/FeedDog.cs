@@ -31,6 +31,8 @@ public class FeedDogMiniGame : MonoBehaviour
     private TMP_Text feedButtonText;
     private Vector3 feedButtonBaseScale;
 
+    public bool IsPanelVisible => panel != null && panel.activeInHierarchy;
+
     private const float TutorialPulseSpeed = 5f;
     private const float TutorialPulseScale = 1.15f;
 
@@ -52,6 +54,9 @@ public class FeedDogMiniGame : MonoBehaviour
 
     private void Update()
     {
+        if (!IsPanelVisible)
+            return;
+
         if (!firstTimeTutorialActive || !feedingStarted)
         {
             RestoreTutorialPulse();
@@ -72,6 +77,14 @@ public class FeedDogMiniGame : MonoBehaviour
     {
         if (chore == null || !chore.CanInteract() || panel == null)
             return;
+
+        if (currentChore == chore && feedingStarted)
+        {
+            MiniGamePanelMinimizer.Attach(panel);
+            MiniGameInteractionBlocker.RegisterPanel(panel);
+            panel.SetActive(true);
+            return;
+        }
 
         if(resultCoroutine != null)
         {
@@ -99,6 +112,7 @@ public class FeedDogMiniGame : MonoBehaviour
         score = 0;
 
         MiniGameInteractionBlocker.RegisterPanel(panel);
+        MiniGamePanelMinimizer.Attach(panel);
         panel.SetActive(true);
         if (feedButtonText != null)
             feedButtonText.text = "PAKAIN";

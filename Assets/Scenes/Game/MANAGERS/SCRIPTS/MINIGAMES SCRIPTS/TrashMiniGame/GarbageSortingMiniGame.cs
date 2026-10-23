@@ -36,6 +36,8 @@ public class GarbageSortingMiniGame : MonoBehaviour
     private int totalTrash;
 
     private DayManager dayManager;
+
+    public bool IsPanelVisible => panel != null && panel.activeInHierarchy;
     
 
 
@@ -87,6 +89,15 @@ public class GarbageSortingMiniGame : MonoBehaviour
         return;
     }
 
+    if (currentChore == chore)
+    {
+        MiniGamePanelMinimizer.Attach(panel, PauseSpawning);
+        MiniGameInteractionBlocker.RegisterPanel(panel);
+        panel.SetActive(true);
+        spawner.ResumeSpawning();
+        return;
+    }
+
     currentChore = chore;
     if (tutorialManager == null)
         tutorialManager = FindFirstObjectByType<TutorialManager>();
@@ -114,6 +125,7 @@ public class GarbageSortingMiniGame : MonoBehaviour
     totalTrash = GetTrashAmount();
     UpdateCounterTexts();
     MiniGameInteractionBlocker.RegisterPanel(panel);
+    MiniGamePanelMinimizer.Attach(panel, PauseSpawning);
     panel.SetActive(true);
     ShowTutorial(
         "I-drag ang bawat nahuhulog na basura sa tamang lalagyan. Itugma ang uri sa label: Nabubulok, Di-nabubulok, o Recyclable. Bawat maling lagay o hindi nasagip na basura ay dagdag sa 5 pagkakamali; kapag umabot dito, matatalo ka.");
@@ -132,6 +144,12 @@ public class GarbageSortingMiniGame : MonoBehaviour
         GetFallSpeed()
     );
 
+}
+
+private void PauseSpawning()
+{
+    if (spawner != null)
+        spawner.PauseSpawning();
 }
 
 
@@ -173,7 +191,7 @@ private void CorrectTrash(TrashItem trash)
 
     correct++;
     UpdateCounterTexts();
-    SoundEffectManager.Play("Trash");
+    SoundEffectManager.Play("TrashCorrect");
     ShowTutorial(
         $"Tama! {GetTrashTypeLabel(trash.trashType)} ay nasa tamang lalagyan. Naayos: {correct}/{totalTrash}  |  Pagkakamali: {mistakes}/{maxMistakes}");
 
@@ -206,7 +224,7 @@ private void CorrectTrash(TrashItem trash)
 
         mistakes++;
         UpdateCounterTexts();
-        SoundEffectManager.Play("Wrong");
+        SoundEffectManager.Play("TrashWrong");
         ShowTutorial(
             $"Hindi tugma: {GetTrashTypeLabel(itemType)} ay napunta sa {GetTrashTypeLabel(binType)}. Itugma ang basura sa parehong label. Pagkakamali: {mistakes}/{maxMistakes}");
 

@@ -56,7 +56,7 @@ public class MoppingMinigame : MonoBehaviour
     private Vector2 lastMousePosition;
     private float currentMomentum;
     private float currentStrokeDistance;
-    private float moppingStartTime;
+    private float moppingElapsedTime;
     private int currentStrokeDirection;
     private int expectedStrokeDirection;
     private float mopAnimationTime;
@@ -110,7 +110,7 @@ public class MoppingMinigame : MonoBehaviour
         lastMousePosition = Vector2.zero;
         currentMomentum = 0f;
         currentStrokeDistance = 0f;
-        moppingStartTime = 0f;
+        moppingElapsedTime = 0f;
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
         mopAnimationTime = 0f;
@@ -151,6 +151,11 @@ public class MoppingMinigame : MonoBehaviour
             return;
         }
 
+        if (minigamePanel == null || !minigamePanel.activeInHierarchy)
+            return;
+
+        moppingElapsedTime += Time.deltaTime;
+
         if (currentWetArea == null || !currentWetArea.gameObject.activeInHierarchy)
         {
             ResetMopping();
@@ -185,6 +190,13 @@ public class MoppingMinigame : MonoBehaviour
             return;
         }
 
+        if (isMopping && currentWetArea == wetArea)
+        {
+            if (minigamePanel != null)
+                minigamePanel.SetActive(true);
+            return;
+        }
+
         currentWetArea = wetArea;
         progress = 0f;
         isMopping = true;
@@ -192,7 +204,7 @@ public class MoppingMinigame : MonoBehaviour
         lastMousePosition = Vector2.zero;
         currentMomentum = 0f;
         currentStrokeDistance = 0f;
-        moppingStartTime = Time.time;
+        moppingElapsedTime = 0f;
         currentStrokeDirection = 0;
         expectedStrokeDirection = 0;
         mopAnimationTime = 0f;
@@ -217,6 +229,7 @@ public class MoppingMinigame : MonoBehaviour
 
         if (minigamePanel != null)
         {
+            MiniGamePanelMinimizer.Attach(minigamePanel, PauseMoppingInput);
             MiniGameInteractionBlocker.RegisterPanel(minigamePanel);
             minigamePanel.SetActive(true);
         }
@@ -234,6 +247,14 @@ public class MoppingMinigame : MonoBehaviour
             ? "Hawakan ang kaliwang pindutan ng mouse\npara humawak sa mop."
             : "Ikiskis ang mop pabalik-balik sa basang sahig.");
         Debug.Log("MOPPING MINIGAME STARTED!");
+    }
+
+    private void PauseMoppingInput()
+    {
+        mouseIsDown = false;
+        currentStrokeDistance = 0f;
+        SetMopMovementSprite(false);
+        RestoreMopTransform();
     }
 
     private void ClosePanelIfSessionIsInvalid()
@@ -569,7 +590,7 @@ public class MoppingMinigame : MonoBehaviour
 
         float targetDuration = Mathf.Max(0.1f, mopDuration);
         float speedRatio = Mathf.Clamp01(
-            (targetDuration - (Time.time - moppingStartTime)) / targetDuration);
+            (targetDuration - moppingElapsedTime) / targetDuration);
         int rewardCoins = baseSpeedRewardCoins
             + Mathf.RoundToInt(maximumSpeedBonusCoins * speedRatio);
         if (EconomyManager.Instance != null)

@@ -18,7 +18,13 @@ public class MenuController : MonoBehaviour
         {
              return;
         }
-            menuCanvas.SetActive(!menuCanvas.activeSelf);
+            bool showMenu = !menuCanvas.activeSelf;
+            menuCanvas.SetActive(showMenu);
+            if (showMenu)
+            {
+                menuCanvas.transform.SetAsLastSibling();
+            }
+
             PauseController.SetPause(menuCanvas.activeSelf);
         }
     }

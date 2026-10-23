@@ -107,7 +107,7 @@ public class FeedDogSlider : MonoBehaviour
 
     private void Update()
     {
-        if(!active)
+        if(!active || miniGame == null || !miniGame.IsPanelVisible)
             return;
 
 

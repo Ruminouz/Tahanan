@@ -3,14 +3,17 @@ using UnityEngine.UI;
 
 public class SoundEffectManager : MonoBehaviour
 {
+    private const string VolumePrefsKey = "SFXVolume";
     private static SoundEffectManager Instance;
 
     private AudioSource audioSource;
     private AudioSource randomPitchAudioSource;
     private AudioSource voiceAudioSource;
     private AudioSource faucetAudioSource;
+    private AudioSource musicAudioSource;
     private SoundEffectLibrary soundEffectLibrary;
     [SerializeField] private Slider sfxSlider;
+    private float currentVolume = 1f;
 
     private void Awake()
     {
@@ -18,16 +21,28 @@ public class SoundEffectManager : MonoBehaviour
         {
             Instance = this;
             AudioSource[] audioSources = GetComponents<AudioSource>();
-            audioSource = audioSources[0];
-            randomPitchAudioSource = audioSources[1];
-            voiceAudioSource = audioSources[2];
+            audioSource = GetOrAddAudioSource(audioSources, 0);
+            randomPitchAudioSource = GetOrAddAudioSource(audioSources, 1);
+            voiceAudioSource = GetOrAddAudioSource(audioSources, 2);
             soundEffectLibrary = GetComponent<SoundEffectLibrary>();
             DontDestroyOnLoad(gameObject);
+            currentVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(VolumePrefsKey, currentVolume));
+            ApplyVolume(currentVolume);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private AudioSource GetOrAddAudioSource(AudioSource[] audioSources, int index)
+    {
+        if (index < audioSources.Length)
+            return audioSources[index];
+
+        AudioSource source = gameObject.AddComponent<AudioSource>();
+        source.playOnAwake = false;
+        return source;
     }
 
     public static void Play(string soundName, bool randomPitch = false)
@@ -59,12 +74,57 @@ public class SoundEffectManager : MonoBehaviour
 
     public static void Stop(string soundName)
     {
+        if (soundName == "BGM" &&
+            Instance != null &&
+            Instance.musicAudioSource != null)
+        {
+            Instance.musicAudioSource.Stop();
+        }
+
         if ((soundName == "Faucet" || soundName == "Water Stream") &&
             Instance != null &&
             Instance.faucetAudioSource != null)
         {
             Instance.faucetAudioSource.Stop();
         }
+    }
+
+    public static void PlayLoop(string soundName)
+    {
+        if (Instance == null || Instance.soundEffectLibrary == null)
+            return;
+
+        AudioClip audioClip = Instance.soundEffectLibrary.GetRandomClip(soundName);
+        if (audioClip == null)
+            return;
+
+        AudioSource source = Instance.GetMusicAudioSource();
+        if (source.isPlaying && source.clip == audioClip)
+            return;
+
+        source.clip = audioClip;
+        source.loop = true;
+        source.Play();
+    }
+
+    private AudioSource GetMusicAudioSource()
+    {
+        if (musicAudioSource != null)
+            return musicAudioSource;
+
+        musicAudioSource = gameObject.AddComponent<AudioSource>();
+        musicAudioSource.playOnAwake = false;
+        musicAudioSource.loop = true;
+        musicAudioSource.spatialBlend = 0f;
+        if (audioSource != null)
+        {
+            musicAudioSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+            musicAudioSource.volume = audioSource.volume;
+            musicAudioSource.mute = audioSource.mute;
+            musicAudioSource.priority = audioSource.priority;
+        }
+
+        return musicAudioSource;
     }
 
     private AudioSource GetFaucetAudioSource()
@@ -110,19 +170,37 @@ public class SoundEffectManager : MonoBehaviour
     {
         if (sfxSlider != null)
         {
+            sfxSlider.SetValueWithoutNotify(currentVolume);
             sfxSlider.onValueChanged.AddListener(delegate { OnValueChanged(); });
         }
     }
 
     public static void SetVolume(float volume)
     {
+        volume = Mathf.Clamp01(volume);
+        PlayerPrefs.SetFloat(VolumePrefsKey, volume);
+
         if (Instance != null)
         {
-            if (Instance.audioSource != null) Instance.audioSource.volume = volume;
-            if (Instance.randomPitchAudioSource != null) Instance.randomPitchAudioSource.volume = volume;
-            if (Instance.voiceAudioSource != null) Instance.voiceAudioSource.volume = volume;
-            if (Instance.faucetAudioSource != null) Instance.faucetAudioSource.volume = volume;
+            Instance.currentVolume = volume;
+            Instance.ApplyVolume(volume);
         }
+    }
+
+    public static float GetVolume()
+    {
+        return Instance != null
+            ? Instance.currentVolume
+            : Mathf.Clamp01(PlayerPrefs.GetFloat(VolumePrefsKey, 1f));
+    }
+
+    private void ApplyVolume(float volume)
+    {
+        if (audioSource != null) audioSource.volume = volume;
+        if (randomPitchAudioSource != null) randomPitchAudioSource.volume = volume;
+        if (voiceAudioSource != null) voiceAudioSource.volume = volume;
+        if (faucetAudioSource != null) faucetAudioSource.volume = volume;
+        if (musicAudioSource != null) musicAudioSource.volume = volume;
     }
 
     public void OnValueChanged()

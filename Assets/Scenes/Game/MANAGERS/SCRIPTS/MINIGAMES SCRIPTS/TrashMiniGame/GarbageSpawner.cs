@@ -173,5 +173,23 @@ public class GarbageSpawner : MonoBehaviour
 
     }
 
+    public void PauseSpawning()
+    {
+        if (!isSpawning)
+            return;
+
+        isSpawning = false;
+        CancelInvoke(nameof(SpawnTrash));
+    }
+
+    public void ResumeSpawning()
+    {
+        if (isSpawning || spawnDelay <= 0f)
+            return;
+
+        isSpawning = true;
+        InvokeRepeating(nameof(SpawnTrash), 0.5f, spawnDelay);
+    }
+
 
 }

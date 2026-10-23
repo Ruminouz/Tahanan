@@ -30,6 +30,10 @@ public class FallingTrash : MonoBehaviour
 
     private void Update()
     {
+        GarbageSortingMiniGame miniGame = GarbageSortingMiniGame.Instance;
+        if (miniGame != null && !miniGame.IsPanelVisible)
+            return;
+
 
         rectTransform.anchoredPosition +=
         Vector2.down *

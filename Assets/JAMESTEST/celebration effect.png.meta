@@ -1,0 +1,6470 @@
+fileFormatVersion: 2
+guid: a7f3f81d85bc31d44b4027d472bc7e00
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2120630890461744340
+    second: celebration effect_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: celebration effect_0
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 976
+        width: 39
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dc41bd2f8efd6d10800000000000000
+      internalID: 2120630890461744340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_1
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 1008
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1000ace0ce70a24a85c97e55a823857
+      internalID: -1803226853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_2
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 962
+        width: 79
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90b89c4d0303ade4ea7a3d833804524b
+      internalID: 482364000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_3
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 1008
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5e967edb9c6a0944b697c1299442a90
+      internalID: 2054475860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_4
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 1010
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 138e0945a79548e499512b09b50dba61
+      internalID: 923937409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_5
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 1008
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23cd4cc7ee1e9d34f83ec6df69c0ac76
+      internalID: -605295415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_6
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 1002
+        width: 23
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 265699b7c4e3b884aafeac42e6752f93
+      internalID: 848369642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_7
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 968
+        width: 25
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb593c4b51a86ed47aef88ea9ed6208d
+      internalID: -1702807076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_8
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 990
+        width: 11
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dfa9427a4b19654f936036d8a87aa60
+      internalID: -942024286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_9
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 912
+        width: 115
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec2da8cbd29d700438702aaf0f1540c3
+      internalID: 279179804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_10
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 920
+        width: 151
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c18e7e58c7300a4298501cb69250f8a
+      internalID: 756403088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_11
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 960
+        width: 39
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2734e944733cc7488b628b5ef14f0c2
+      internalID: -2108112096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_12
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 975
+        width: 54
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06f0ea1887b539a448c42325133e64dc
+      internalID: -1300738243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_13
+      rect:
+        serializedVersion: 2
+        x: 645
+        y: 982
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 323ab9acd08e5744285af452402d3705
+      internalID: 850002756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 568
+        width: 313
+        height: 316
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3509651a12cfe4419d546c9b020b1e3
+      internalID: -292971211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_15
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 994
+        width: 31
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10cddcc770f9b0246aac07cbfb471fca
+      internalID: -628992789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_16
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 974
+        width: 51
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42009c18e6bd44b4e8475066644556bb
+      internalID: -682452342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_17
+      rect:
+        serializedVersion: 2
+        x: 1179
+        y: 922
+        width: 71
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47e548fa3b4e05f4b90e5ce452df8bda
+      internalID: 1833713045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_18
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 962
+        width: 42
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07b27c50c5caa6f4f937c4a3587a09da
+      internalID: -1773008894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_19
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 882
+        width: 71
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4459384f82053d646988913f86a28683
+      internalID: 1664490394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_20
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 812
+        width: 157
+        height: 179
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b448620f6da7664da4cdf6db4323ab3
+      internalID: 186903918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_21
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 950
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd781ab1f9fefd240956f569d804f79e
+      internalID: 750744145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_22
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 959
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6e0d29046dc93346a366d0d7d31068f
+      internalID: 1730281681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_23
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 958
+        width: 12
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11c071c394814c54799e796d1cfa7b91
+      internalID: 2017124406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_24
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 970
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f3b60b2081148d4fb02c9f5bcdd7f60
+      internalID: 1055994318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_25
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 792
+        width: 83
+        height: 165
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88b5711de4f31ef4a8978309bf0d61a8
+      internalID: 963037039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_26
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 930
+        width: 27
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8665d1bd67ffd214bacc38f51b5d11d1
+      internalID: 1388200728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_27
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 856
+        width: 97
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52771a6ba1c482e4881fa10f8c2c4496
+      internalID: 1613857411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_28
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 944
+        width: 5
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c227cc51a43109744b96ec5be7103bf8
+      internalID: -725057092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_29
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 844
+        width: 169
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 908321e7a069b804c9ad70658dde4f0b
+      internalID: 91072379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_30
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 766
+        width: 73
+        height: 166
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9584cf866a9a7cf4e8a7740969e75f35
+      internalID: 88858787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_31
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 906
+        width: 7
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50a40ede56a4a6a45b78a1e9dcc52a9f
+      internalID: 981518880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_32
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 916
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e42bfb3fbcd4274e900f790a624b206
+      internalID: 1692581330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_33
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 864
+        width: 55
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b9dbf365ca33d547b0539e34fb24c34
+      internalID: -1898324595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_34
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 888
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38969318e3dc2944db3ec1a74fc99f49
+      internalID: 1124174572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_35
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 889
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78516fd480352ce47bb50537c0fce345
+      internalID: 1840587020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_36
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 896
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a701f92989fe1af48a47a9eda64b6571
+      internalID: 159069416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_37
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 870
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0483d4b8e595f5240ac3ce9fefa556df
+      internalID: 1675584528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_38
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 867
+        width: 11
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e5e4e3e522908242a2e104b8d3b1fc6
+      internalID: 1726278112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_39
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 880
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd9537c91e98b5343a4eae590f243637
+      internalID: 1645838386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_40
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 784
+        width: 41
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84932b06ee5b6d24aa01472af2b84552
+      internalID: 1861838843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_41
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 840
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fb07c1d3b4c8dd4c95ad6c95304cc8c
+      internalID: -90078256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_42
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 822
+        width: 41
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad0b405ee5e45e24789d4786d7ba6bda
+      internalID: 1622810210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_43
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 824
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e712948cc99d4cf4788f8e1284280146
+      internalID: -1292095367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 595
+        width: 315
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7f38d7084bea48488f8a2564a6ed6f6
+      internalID: 70906326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_45
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 776
+        width: 35
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e71e31706f5e2654bb746d56946eff65
+      internalID: -780431066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_46
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 846
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 908819515768bb64dad998237da4ef2d
+      internalID: -820867298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_47
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 772
+        width: 34
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faeef454bca2c2d4a87dd7b46beccd71
+      internalID: -1109156436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_48
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 814
+        width: 39
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3fa488a0166b6747a9ba087cd5b7dc9
+      internalID: 489779304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_49
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 830
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da76af633cea1e048841ce1f98d7bbbd
+      internalID: 1102869643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_50
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 742
+        width: 49
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b92d0874a95ce94888d1cde64bdbf3c
+      internalID: -24742700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_51
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 824
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c0f957a843286741ae71db10c4f7e88
+      internalID: 903218723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_52
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 796
+        width: 20
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f30e8c26837399947af3718cd8f91d50
+      internalID: -1343340667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_53
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 812
+        width: 5
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8af5ecd265ecd64e946cb4db890bd6d
+      internalID: -1170084064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_54
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 796
+        width: 11
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e79832fc41e7a594fa080cddff8fe0db
+      internalID: 1604893278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_55
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 792
+        width: 19
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dc601623bddee740895d06fe1219506
+      internalID: 1005705990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_56
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 772
+        width: 57
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18b73d336097384498c5d58caff16c8a
+      internalID: 1824710964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_57
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 791
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f59b60b1b9727d14ba62ebbf5e89a49e
+      internalID: -1591560510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_58
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 472
+        width: 173
+        height: 324
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef89c3421260d924c9042aef5a8ac97a
+      internalID: 1759044990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_59
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 664
+        width: 65
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f34178f0211b654e88ad55d8e3c6cc6
+      internalID: 1554913221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 604
+        width: 161
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45fe9a389b3d0824582e67a6e13a0236
+      internalID: -1977660878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_61
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 768
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b059b002fd06ab44a5982dfd5a690cf
+      internalID: 1743933637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_62
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 766
+        width: 5
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65d689ad4ee4332409769334a41278b4
+      internalID: 1734121520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_63
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 760
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6563dde242a6b741922ef9b596de4d1
+      internalID: -751724696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_64
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 744
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 088b4586d48d12e4182e461d1d73c19d
+      internalID: 1575322009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_65
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 750
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6a2dc710a0ce6c4682107352b717767
+      internalID: 846313578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_66
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 726
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a1f6d85e4cda3d4d89cf2470bab47cc
+      internalID: -611578406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_67
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 730
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b84150fa61670474c9f286f162e95e6a
+      internalID: -2100524125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_68
+      rect:
+        serializedVersion: 2
+        x: 1529
+        y: 686
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bf728032da7e0a4fa8a458fea04049e
+      internalID: 204195448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_69
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 632
+        width: 65
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e8dbf5673392ee4eb8235aeca7c099d
+      internalID: -311886886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_70
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 668
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c5ddd4915f07264f8783efedeacbf08
+      internalID: -475993110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_71
+      rect:
+        serializedVersion: 2
+        x: 1503
+        y: 644
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b871569c6f5a6346b38b30d20b501a8
+      internalID: -965899413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_72
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 574
+        width: 50
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e1dee642b462864dbe6f2469c15fbb6
+      internalID: 224901855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_73
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 637
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c39c578271b55a47b1a4e62f9aefcd2
+      internalID: 1670876716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_74
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 644
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4e1babf4ba9b0447bba7e17b3389f4d
+      internalID: -25242866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_75
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 589
+        width: 83
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edc0c47dd7b953242967e86732e326e6
+      internalID: -1843402326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_76
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 626
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 730e44dad27e3c14abe26c3112a28b31
+      internalID: 1571207589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_77
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 604
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d87064216fe5be14d94a3dec7a338cad
+      internalID: -2090950959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_78
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 614
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcd943caa39ed6b4dbd8330bd68550b7
+      internalID: -1859473999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_79
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 582
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8669c769afbe72d47b1d7c45ae653a86
+      internalID: 1506823411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_80
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 580
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a744dcb067fc954384c61bbf8ac3762
+      internalID: -912566082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_81
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 562
+        width: 27
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 970d15121fc989a4e9d90c4a916dd8d9
+      internalID: 18732043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_82
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 584
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3114e04422dc2d74fac94aa6c36bc1b3
+      internalID: -1606153382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_83
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 452
+        width: 147
+        height: 115
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5eb9c1bb984a3454aa0df1bec7df179b
+      internalID: 136401862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_84
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 544
+        width: 15
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 017f52f0eb2507a418a5f241bec89cd3
+      internalID: 1417457728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_85
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 560
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 120815fa02420474291feaccf9970c35
+      internalID: -1626083744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_86
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 531
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54a2f58f741461a469b906187bbc7ad8
+      internalID: -719775857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_87
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 564
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cf89cad414833a4a84f60e6458670df
+      internalID: 8651567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_88
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 458
+        width: 81
+        height: 105
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e880753cf34ab4a4abc73c20db861e79
+      internalID: 1425456958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_89
+      rect:
+        serializedVersion: 2
+        x: 947
+        y: 514
+        width: 91
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd9f8255f8f28924aa06acde1a535bf0
+      internalID: -57970285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_90
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 554
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6409a1c831e496843b1f741f5154437d
+      internalID: -750989225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_91
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 460
+        width: 82
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 077765beaef7c4344828dadcaaa058b0
+      internalID: 1951595700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_92
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 528
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15c9198910d74e14eb78d6f46d9fe907
+      internalID: 518435068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_93
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 523
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eb25ba07c8a6714da293e3edcf3fe77
+      internalID: 1785040910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_94
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 526
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d842e752e09faf04baa27f545c2e7134
+      internalID: -911804971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_95
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 526
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c43cb675dd537343a758d931cf73e13
+      internalID: -1708402573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_96
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 504
+        width: 23
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8672a42bf2c6f7478b11428c5649dec
+      internalID: 395099238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_97
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 532
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64989661bdb2a9746abb1b70f024a74f
+      internalID: -691315580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_98
+      rect:
+        serializedVersion: 2
+        x: 1175
+        y: 526
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc3b9b747c0ca7942bd0581231668830
+      internalID: 789219719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_99
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 499
+        width: 55
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 954c41ff9f8761444b059d843f9184c9
+      internalID: 76445675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_100
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 520
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36dd1690e3327ad44ac3b78e81f80c78
+      internalID: 1052545237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_101
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 522
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2723913ddfd1f8408a6c34cee94b1aa
+      internalID: -1921243520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_102
+      rect:
+        serializedVersion: 2
+        x: 1223
+        y: 474
+        width: 45
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18e9c3c4a019a5941b54d4fbffcc6ffa
+      internalID: 91099293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_103
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 498
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7552ceb0c58a5b44f96bcd660b778948
+      internalID: 555875828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_104
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 486
+        width: 17
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c7ad9b8a985d6a43aa97bf7e46b1ffa
+      internalID: 2100191484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_105
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 494
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fee89c01a48f76e498c0befc2bae7031
+      internalID: 1559243934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_106
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 500
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45107320bda2d0743b3e9b1e6d28678b
+      internalID: -1995909258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_107
+      rect:
+        serializedVersion: 2
+        x: 809
+        y: 504
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d09181a6a05e7e7438637f2229d6d8c7
+      internalID: 250314342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_108
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 504
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb25c3df2b84f20419115ebb03b478c6
+      internalID: -487931653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_109
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 510
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 078f4204d379cc44a9a22364ad3a7283
+      internalID: 1423214285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_110
+      rect:
+        serializedVersion: 2
+        x: 1351
+        y: 502
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e00ad3c3feb13d4eb86b4a17e770a5b
+      internalID: 1380843895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_111
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 494
+        width: 7
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fe0e2f6cfd481d4994c74587067ef48
+      internalID: 282302019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_112
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 484
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7040d3fbbd3340243986fb1a906549a6
+      internalID: 1616242430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_113
+      rect:
+        serializedVersion: 2
+        x: 1303
+        y: 476
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2115d1f84665c80438f8552eeea6f8c1
+      internalID: -28337313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_114
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 486
+        width: 5
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fd8f8a35dd627044ac06c8598a1a0a7
+      internalID: -397344506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_115
+      rect:
+        serializedVersion: 2
+        x: 1375
+        y: 464
+        width: 13
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5051932770d8cef489075a243c4c5b83
+      internalID: -293943203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_116
+      rect:
+        serializedVersion: 2
+        x: 1423
+        y: 498
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b556d0f260ca004088d37fa0d1a82af
+      internalID: 1701768731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_117
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 466
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b03a4ec18d69abf4199e7d10d80b9000
+      internalID: -128871105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_118
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 486
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f765521e85c813c478ffb03d8ccfa7a6
+      internalID: 1427593280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_119
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 482
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a3faf77be820bd47b915f9b6817a0b2
+      internalID: 960944137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_120
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 464
+        width: 29
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 039e0a1d02caf6446a07024e4ce13f47
+      internalID: -823574534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_121
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 480
+        width: 5
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d09b9418a894f76458dafa0fa45c2e74
+      internalID: -1220676080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_122
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 483
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6f71d0c927306d45a405b6c3e8b795f
+      internalID: 1915659042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_123
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 478
+        width: 5
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c0632ceb637a6244b7006a92bb55280
+      internalID: -984653382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_124
+      rect:
+        serializedVersion: 2
+        x: 1277
+        y: 463
+        width: 11
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79723ab97b5eb154ab44f9517558e8b2
+      internalID: -522374391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_125
+      rect:
+        serializedVersion: 2
+        x: 1337
+        y: 482
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4adbb16f55fa854f83dadff8e3b3abe
+      internalID: -2129613637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_126
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 480
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 936ce7f6c22463a4caf862f5c866580c
+      internalID: -1042921015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_127
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 488
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33c2a2e78d2166d42a2e9d67c9777c27
+      internalID: -1423934927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_128
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 410
+        width: 30
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 885549703491f3741a3a6dac87cf0abd
+      internalID: -329177010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_129
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 466
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7188d1a6faaf5844aabd0b90e6076bc0
+      internalID: -590455448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_130
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 474
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 954b559fb7a196d468f2431c2d833c97
+      internalID: 2143599538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_131
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 461
+        width: 39
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e28de87125f18a64cb18d37705d9970f
+      internalID: 1621217464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_132
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 473
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92dfd18e053a76f4c92d7386f5c0104b
+      internalID: -1389352282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_133
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 468
+        width: 5
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93190b042ef22b54f9665080719cbd99
+      internalID: -1278805533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_134
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 466
+        width: 25
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2f9b7d0e9a24b746bc5cdeab067cd11
+      internalID: 1712183858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_135
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 468
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f6df157a45f42d4d8021d931e2049ef
+      internalID: -600096386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_136
+      rect:
+        serializedVersion: 2
+        x: 1137
+        y: 480
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bacf2d0f4d8379b448e5ba26d44cdf9d
+      internalID: -375589454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_137
+      rect:
+        serializedVersion: 2
+        x: 1228
+        y: 470
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 261d41868fd676a4d9f548d6a94385a6
+      internalID: -1740568383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_138
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 402
+        width: 65
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 467f69a92c5ef9e4182eff4bc56ac416
+      internalID: -918321905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_139
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 451
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bac5234a670d4d146913c51238f3adea
+      internalID: -924775820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_140
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 472
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 770b4118588b8234493c9d13c6f233c1
+      internalID: 1051725270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_141
+      rect:
+        serializedVersion: 2
+        x: 1242
+        y: 470
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3926fd0be30b1c64abed74f9e52f49a1
+      internalID: -1953435875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_142
+      rect:
+        serializedVersion: 2
+        x: 1399
+        y: 458
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deabc42f6088d2e469277fe3732ca4a8
+      internalID: -967540250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 438
+        height: 466
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae9ea9a8b2290024a926cea4a00345ca
+      internalID: -1348504855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_144
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 450
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8bf6d43dbec3414ea3318590171ee14
+      internalID: -1950680142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_145
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 448
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49746e255d648db4ea4b5d0f6ec64285
+      internalID: -175902991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_146
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 450
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c98f7864e2520294cb6ecf6604de8c95
+      internalID: 755874158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_147
+      rect:
+        serializedVersion: 2
+        x: 917
+        y: 450
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b56ec6864cede27449a0e28675b548fd
+      internalID: -847500200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 33
+        width: 341
+        height: 417
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3525ba0cca042d43bf6d57666d0f3d0
+      internalID: -1370267343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_149
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 451
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b39fce7e39d331a46877123671e1f3bd
+      internalID: 924017701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_150
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 458
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f5f058f109401646b2fd3d9a630a391
+      internalID: 989288299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 6
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 0
+        width: 349
+        height: 455
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4c26221cd7815046ab80019510ad03c
+      internalID: 1169489544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_152
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 417
+        width: 24
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb19be3ae2b9da445af8b8bed8e0cfc7
+      internalID: 132331236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_153
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 418
+        width: 27
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aff47bd0ff1aca42b0be504d7dd105b
+      internalID: 11980170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_154
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 430
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f474d24b46a1ec48b52826e34ccb001
+      internalID: 232758279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_155
+      rect:
+        serializedVersion: 2
+        x: 1071
+        y: 424
+        width: 17
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec266850c8891574cb3c53d98d357b2e
+      internalID: -551305362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_156
+      rect:
+        serializedVersion: 2
+        x: 1081
+        y: 308
+        width: 109
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d07fe4d0cc9429e4795ae4e6a8f97aa9
+      internalID: 1912123828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_157
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 428
+        width: 5
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c52346b036328dd4c82802629fc9635e
+      internalID: -1353995462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_158
+      rect:
+        serializedVersion: 2
+        x: 1133
+        y: 429
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90b8fcbdf90edb34ca5c11ab1bf22ee2
+      internalID: 1935105991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_159
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 412
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce7bf066f27f3fb49b9c23974aecd8bc
+      internalID: 1465306514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_160
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 341
+        width: 39
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f31d7322620c64ea2ddc2b973b8670
+      internalID: 1564938447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_161
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 406
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de624e39ad54f0a42ad3811cd89ec978
+      internalID: 1907525660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_162
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 400
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92d25b973dadea548b91305701a95024
+      internalID: -1883632466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_163
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 392
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25c5188631b62d749a2d26a2e0e9c75b
+      internalID: -460431278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_164
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 360
+        width: 55
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd492fae741579c4ca6940269338df83
+      internalID: 351988273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_165
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 370
+        width: 35
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b7883e6459e92345a26215d80d34334
+      internalID: -391744528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_166
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 378
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe8a0abbf72739f41acb258a34b6ec53
+      internalID: 1875283178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_167
+      rect:
+        serializedVersion: 2
+        x: 1443
+        y: 358
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 568e56e173dcbee429181aee022cb7b1
+      internalID: 227974332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_168
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 382
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb444dbff9d4667408da878c46866ccd
+      internalID: 363032943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_169
+      rect:
+        serializedVersion: 2
+        x: 807
+        y: 368
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba9b84010bbfb2d438eda52df177e4b3
+      internalID: 1424714447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_170
+      rect:
+        serializedVersion: 2
+        x: 1259
+        y: 336
+        width: 39
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b94b6ad0eae69854e890b3b12d2f0532
+      internalID: 793827269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_171
+      rect:
+        serializedVersion: 2
+        x: 1433
+        y: 360
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f89180291e8f4044b7b0af417f5b45a
+      internalID: 210826844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_172
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 316
+        width: 57
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e0752f0ea566c4da7ca21eca36b45b
+      internalID: -267105408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_173
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 234
+        width: 153
+        height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e66b1a1b042a3b24780ba00b7ebb64a7
+      internalID: 722016482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_174
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 340
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b44daa23ce86cf143b8c11c59c739217
+      internalID: 1169985581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_175
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 282
+        width: 55
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05d328e82bfbb0a4ebdfe83ec3db97b1
+      internalID: -1934093944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_176
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 342
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8faed0a81d91a8459b3b1c58d31a10d
+      internalID: -1912802699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_177
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 330
+        width: 16
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8c0477907b48644c800d565e549dd62
+      internalID: 1044408784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_178
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 302
+        width: 51
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaf8e6d78b245664e91c6b9d89b3edc4
+      internalID: -166304016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_179
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 304
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b054eabbb331724b84fff6de4e8fc46
+      internalID: -37596377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_180
+      rect:
+        serializedVersion: 2
+        x: 987
+        y: 312
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8467470c3fb1f80458647d0bc5e41aab
+      internalID: 1159436686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_181
+      rect:
+        serializedVersion: 2
+        x: 1151
+        y: 312
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf2208b94d8c37f4a85eb6db9abe128d
+      internalID: 540686243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_182
+      rect:
+        serializedVersion: 2
+        x: 1173
+        y: 302
+        width: 11
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de1c0bd2303b6454aa0a580758f3aacf
+      internalID: -878127603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_183
+      rect:
+        serializedVersion: 2
+        x: 1203
+        y: 272
+        width: 51
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f86be801fcfbc2844a3a10ec2e003617
+      internalID: 1735186234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 8
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 40
+        width: 283
+        height: 355
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2aaf1c9b61e1d194e843cbbcd159702a
+      internalID: 123413015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_185
+      rect:
+        serializedVersion: 2
+        x: 1373
+        y: 301
+        width: 35
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5fb906002cb82744b1a31e1aeec03aa
+      internalID: 1733211490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_186
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 304
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69597ea9f526b8647b2afc6b395941ef
+      internalID: -304079327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_187
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 278
+        width: 31
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51756bcd7803cee419cafc1d1a221531
+      internalID: 1285104738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_188
+      rect:
+        serializedVersion: 2
+        x: 991
+        y: 254
+        width: 27
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e68adec06e713447bb6a5c419b50f38
+      internalID: -1964455770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_189
+      rect:
+        serializedVersion: 2
+        x: 1085
+        y: 252
+        width: 37
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0e9efbcf005478438f5f979b2f4a291
+      internalID: -1357956913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_190
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 270
+        width: 23
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5266c020ee985fa4b831c8182043d5d4
+      internalID: -2136015958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_191
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 234
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff950efab133519459e292f67fe4540d
+      internalID: 1005234766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_192
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 234
+        width: 5
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 835ca68f2b9c3c2428bb8194351d5f1b
+      internalID: -1700206285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_193
+      rect:
+        serializedVersion: 2
+        x: 969
+        y: 208
+        width: 43
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78d9622ede3773d48ac9645dfda33c17
+      internalID: -878717631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_194
+      rect:
+        serializedVersion: 2
+        x: 999
+        y: 240
+        width: 7
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27c25812f84ba8a4cb8a8a92567e7252
+      internalID: -1747217540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_195
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 48
+        width: 171
+        height: 201
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10dc7070cbf769e44b2415a51b2a84f7
+      internalID: -2126359164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_196
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 218
+        width: 39
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76da6f0e1f77a844eaa6a7b342a3dc79
+      internalID: -1483149224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_197
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 212
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6d69035d93efc2418c046ef8c430727
+      internalID: 1332711934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_198
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 147
+        width: 69
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ace9b0e886d76504bac15552784c5644
+      internalID: -2011173902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_199
+      rect:
+        serializedVersion: 2
+        x: 839
+        y: 171
+        width: 47
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ac4222dc8a82d34aa39962b7f38aa6f
+      internalID: 2028923869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_200
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 214
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e02ea5cde01266d4797187be324fbace
+      internalID: -1416814304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_201
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 184
+        width: 4
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05edd944747605041854b9f04ccaf24b
+      internalID: -1694698842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_202
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 190
+        width: 27
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe42558f80bfcaa4f9bac9e8cd7731cb
+      internalID: -1624313300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_203
+      rect:
+        serializedVersion: 2
+        x: 961
+        y: 126
+        width: 51
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 718e3a8f964692c458c04640cab30b93
+      internalID: 615096831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_204
+      rect:
+        serializedVersion: 2
+        x: 1289
+        y: 184
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 940e17fe1b0c5b143aaa701b01f62fe1
+      internalID: 2015372731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_205
+      rect:
+        serializedVersion: 2
+        x: 1303
+        y: 188
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c34ca7a1de2188340bd17b8e347fc7f0
+      internalID: -970808966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_206
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 144
+        width: 37
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e74bb5698abfb1642a46e294fdf27f6d
+      internalID: -1139383269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_207
+      rect:
+        serializedVersion: 2
+        x: 1299
+        y: 179
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a00732699d05414eacb060fc2a47ee2
+      internalID: 276383227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_208
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 166
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b42d930717f71640b5f2e4a1f31b0b6
+      internalID: 911966019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_209
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 144
+        width: 48
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03912b1b96cb55f4a8cf2685f1c01f33
+      internalID: -716878948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_210
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 141
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ad9f154d47776a42811258524cf0cb2
+      internalID: -1398507059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_211
+      rect:
+        serializedVersion: 2
+        x: 846
+        y: 152
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1461ba39240dcea4194b3c7035d4d176
+      internalID: -1951048839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_212
+      rect:
+        serializedVersion: 2
+        x: 1185
+        y: 130
+        width: 13
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78df8d7dd9a4b2849a6b6a664de4078e
+      internalID: 863415599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_213
+      rect:
+        serializedVersion: 2
+        x: 1231
+        y: 141
+        width: 35
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1772412eb1ac1c4ebebcfd52904a688
+      internalID: -808869991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_214
+      rect:
+        serializedVersion: 2
+        x: 1413
+        y: 116
+        width: 43
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d6bebca712133b4793b0a1f80ce4d86
+      internalID: -257308588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_215
+      rect:
+        serializedVersion: 2
+        x: 1505
+        y: 144
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a60c4e545e56b74c917dd8efe709bb7
+      internalID: 1670005760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_216
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 106
+        width: 31
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9edde6257b73ac745a5ba8850a6354ce
+      internalID: 104521075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_217
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 82
+        width: 81
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5db43b217a7689409817f8e49979a27
+      internalID: -822701311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_218
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 98
+        width: 51
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d8089699f3068043bc76f88701001d6
+      internalID: 1359637545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_219
+      rect:
+        serializedVersion: 2
+        x: 979
+        y: 106
+        width: 11
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18a71b389acbfe346b42547866dd4fda
+      internalID: 1672493852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_220
+      rect:
+        serializedVersion: 2
+        x: 1009
+        y: 76
+        width: 23
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7861d14b45b68c4a872dc939cc91ae0
+      internalID: 1601828906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_221
+      rect:
+        serializedVersion: 2
+        x: 1311
+        y: 94
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25193cbdd07f8894ba7eb204856766ad
+      internalID: 976365768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_222
+      rect:
+        serializedVersion: 2
+        x: 1339
+        y: 96
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c514b64f4ffae94382145c49072b5d1
+      internalID: 428055288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_223
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 102
+        width: 11
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bab0b5cf2eb14c4db5cdf8c95440c7c
+      internalID: -1804104647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_224
+      rect:
+        serializedVersion: 2
+        x: 1417
+        y: 110
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bee717ade6472e49bc226fb37ef2a45
+      internalID: 1350222313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_225
+      rect:
+        serializedVersion: 2
+        x: 759
+        y: 66
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 570d3ecbd84e87342b116d18f2a88db8
+      internalID: -365627575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_226
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 76
+        width: 42
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6777966a3e587094ab2bd5d19b2d5ace
+      internalID: 2111767390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_227
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 96
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b285c19af9a164cac2e8677ccb0b0c
+      internalID: -1752594156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_228
+      rect:
+        serializedVersion: 2
+        x: 1423
+        y: 62
+        width: 33
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 542781786023a214ba9eb4fd65926971
+      internalID: -1181523738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_229
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 76
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7332707e96f111448fa8e77abf05d6e
+      internalID: -350950871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_230
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 68
+        width: 5
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6cff3b34b5b49a4aaa869c6442e123e
+      internalID: -682450016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_231
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 64
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65d0d4b1a18972a4fa26e9c45e025845
+      internalID: -318671750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_232
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 58
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b393acd5fb19ed4898d079a9cd473d6
+      internalID: 8582348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_233
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 48
+        width: 19
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff291e814eeb2394f89fea6dd3067d85
+      internalID: 1226890857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_234
+      rect:
+        serializedVersion: 2
+        x: 839
+        y: 78
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c676e70c5d15744ca5906070e25b46f
+      internalID: -582130985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_235
+      rect:
+        serializedVersion: 2
+        x: 857
+        y: 32
+        width: 73
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d78b67459d5802e428feb8de4dd6e505
+      internalID: -379773618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_236
+      rect:
+        serializedVersion: 2
+        x: 1285
+        y: 80
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e5f710fcc1ccc74399327eab6ed2603
+      internalID: -1181932540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_237
+      rect:
+        serializedVersion: 2
+        x: 1315
+        y: 78
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f89f28d7f1a0ea41b0569654ffede9f
+      internalID: 176031190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_238
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 42
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3b7378700047a741a366b833204d425
+      internalID: -2117537783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_239
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 66
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e7c43365127ef24bb9ba6dd382351d4
+      internalID: 1312470843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_240
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 70
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af633c6225f0c8b4da36e4818c32ae39
+      internalID: 1414063137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_241
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 68
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0589742bfcbed149856ba92b32de479
+      internalID: 1519221628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_242
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 66
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18406c3eebaa77847807a041aec4d780
+      internalID: -1297943750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_243
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 48
+        width: 11
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc645601f74b8b34c81135aca299a815
+      internalID: -787798294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_244
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 66
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baa1e328262e207489ba5318c9472f77
+      internalID: -2123631583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_245
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 33
+        width: 35
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27b8aa3039ec61c41afddd0430345b62
+      internalID: -897911465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_246
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 48
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9d85cd710b517d45bcf020e199f8b30
+      internalID: -317954915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_247
+      rect:
+        serializedVersion: 2
+        x: 1383
+        y: 64
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c47f3850be25c2489616add17ff5f8e
+      internalID: 617752151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_248
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 20
+        width: 39
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c366180ea6399f4f89c8475ff4d9b46
+      internalID: 2018503184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_249
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 50
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb306fa181fe6274f8496296349a9f6d
+      internalID: -1171844532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_250
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 46
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44c1dfd442cc30748ba5db2aaa44b423
+      internalID: -1734957278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_251
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 46
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cb4d4a2c5067b941b25585bb6c87332
+      internalID: 192910132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_252
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 42
+        width: 25
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5091f07fa7b5c7f4786a9422adcf564e
+      internalID: 1610178754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_253
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 50
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92dd9830d3bb77d45b101fe3bb531b12
+      internalID: -1365412574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_254
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 48
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7af8143223cdf9b4280d927210767b7b
+      internalID: -1391856054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_255
+      rect:
+        serializedVersion: 2
+        x: 1071
+        y: 34
+        width: 19
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 531610a1eb6341842b629ebf1bf2f52e
+      internalID: 2134293644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_256
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 18
+        width: 21
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 066a1d5b3527e124390574f291af0d61
+      internalID: -1595675347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_257
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 46
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbfa2603ec4d42644889187dfaf4dd23
+      internalID: 1211854090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_258
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 48
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a77a49302194834bb505c19427290f0
+      internalID: 1003217883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_259
+      rect:
+        serializedVersion: 2
+        x: 1433
+        y: 34
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41f321d1d3f9fe04fba617df5f1c45d5
+      internalID: -165134105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_260
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 23
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cecc29906a4f58c4ab47f5bb57c8e6b0
+      internalID: -1939553667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_261
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 13
+        width: 31
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a8b6ebb924c94e40b9728c41f39b501
+      internalID: 969066248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_262
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 28
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57cb5b90c3fa73b449680c59b3c54ca6
+      internalID: 1493551970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_263
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 22
+        width: 15
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f334afbdc1d1e1340b2d92a5e83d2466
+      internalID: 191431353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_264
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 35
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 172ebd6a6344d6e4cb52234750f625bf
+      internalID: 1033807762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_265
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 32
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2d32ea16d5dc2844bfd194c1b5245a3
+      internalID: 2057586506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_266
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 34
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 666a6255ded929f46b559319c64d55a3
+      internalID: 1138876017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_267
+      rect:
+        serializedVersion: 2
+        x: 1141
+        y: 18
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e97c76efd48068840952dbf69af24c9d
+      internalID: 960389498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_268
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 32
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fc7a272e73bfed4581ea2137e21e1ac
+      internalID: 1786845094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_269
+      rect:
+        serializedVersion: 2
+        x: 1289
+        y: 34
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d464eed08c6c6b348a5eddff341b4914
+      internalID: -512493182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_270
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 8
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c2417c8f49f234fb5571e83f5982a3
+      internalID: 546051523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_271
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 16
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bcaa02ae1755584fad5b1b9ca94b497
+      internalID: -611718763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_272
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 6
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af1d91304e4c0b14caa0fec6a075798c
+      internalID: 382220608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_273
+      rect:
+        serializedVersion: 2
+        x: 1073
+        y: 16
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c9ab4abb8d153541bfdce2b8e5a87a4
+      internalID: -66903630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: celebration effect_274
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 0
+        width: 85
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4063f2e767e93904bbdc68b7a00e9cf0
+      internalID: 1828482535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4
+      rect:
+        serializedVersion: 2
+        x: 1096
+        y: 538
+        width: 427
+        height: 396
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cc3636677231ee4eabc60318209f5b1
+      internalID: -1690378127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ca79e2f571d0ecf49a502b49e8d27f91
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":120.0,"y":120.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      1: -1977660878
+      2: 70906326
+      3: -292971211
+      4: -1690378127
+      5: -1348504855
+      6: 1169489544
+      7: -1370267343
+      8: 123413015
+      celebration effect_0: 2120630890461744340
+      celebration effect_1: -1803226853
+      celebration effect_10: 756403088
+      celebration effect_100: 1052545237
+      celebration effect_101: -1921243520
+      celebration effect_102: 91099293
+      celebration effect_103: 555875828
+      celebration effect_104: 2100191484
+      celebration effect_105: 1559243934
+      celebration effect_106: -1995909258
+      celebration effect_107: 250314342
+      celebration effect_108: -487931653
+      celebration effect_109: 1423214285
+      celebration effect_11: -2108112096
+      celebration effect_110: 1380843895
+      celebration effect_111: 282302019
+      celebration effect_112: 1616242430
+      celebration effect_113: -28337313
+      celebration effect_114: -397344506
+      celebration effect_115: -293943203
+      celebration effect_116: 1701768731
+      celebration effect_117: -128871105
+      celebration effect_118: 1427593280
+      celebration effect_119: 960944137
+      celebration effect_12: -1300738243
+      celebration effect_120: -823574534
+      celebration effect_121: -1220676080
+      celebration effect_122: 1915659042
+      celebration effect_123: -984653382
+      celebration effect_124: -522374391
+      celebration effect_125: -2129613637
+      celebration effect_126: -1042921015
+      celebration effect_127: -1423934927
+      celebration effect_128: -329177010
+      celebration effect_129: -590455448
+      celebration effect_13: 850002756
+      celebration effect_130: 2143599538
+      celebration effect_131: 1621217464
+      celebration effect_132: -1389352282
+      celebration effect_133: -1278805533
+      celebration effect_134: 1712183858
+      celebration effect_135: -600096386
+      celebration effect_136: -375589454
+      celebration effect_137: -1740568383
+      celebration effect_138: -918321905
+      celebration effect_139: -924775820
+      celebration effect_140: 1051725270
+      celebration effect_141: -1953435875
+      celebration effect_142: -967540250
+      celebration effect_144: -1950680142
+      celebration effect_145: -175902991
+      celebration effect_146: 755874158
+      celebration effect_147: -847500200
+      celebration effect_149: 924017701
+      celebration effect_15: -628992789
+      celebration effect_150: 989288299
+      celebration effect_152: 132331236
+      celebration effect_153: 11980170
+      celebration effect_154: 232758279
+      celebration effect_155: -551305362
+      celebration effect_156: 1912123828
+      celebration effect_157: -1353995462
+      celebration effect_158: 1935105991
+      celebration effect_159: 1465306514
+      celebration effect_16: -682452342
+      celebration effect_160: 1564938447
+      celebration effect_161: 1907525660
+      celebration effect_162: -1883632466
+      celebration effect_163: -460431278
+      celebration effect_164: 351988273
+      celebration effect_165: -391744528
+      celebration effect_166: 1875283178
+      celebration effect_167: 227974332
+      celebration effect_168: 363032943
+      celebration effect_169: 1424714447
+      celebration effect_17: 1833713045
+      celebration effect_170: 793827269
+      celebration effect_171: 210826844
+      celebration effect_172: -267105408
+      celebration effect_173: 722016482
+      celebration effect_174: 1169985581
+      celebration effect_175: -1934093944
+      celebration effect_176: -1912802699
+      celebration effect_177: 1044408784
+      celebration effect_178: -166304016
+      celebration effect_179: -37596377
+      celebration effect_18: -1773008894
+      celebration effect_180: 1159436686
+      celebration effect_181: 540686243
+      celebration effect_182: -878127603
+      celebration effect_183: 1735186234
+      celebration effect_185: 1733211490
+      celebration effect_186: -304079327
+      celebration effect_187: 1285104738
+      celebration effect_188: -1964455770
+      celebration effect_189: -1357956913
+      celebration effect_19: 1664490394
+      celebration effect_190: -2136015958
+      celebration effect_191: 1005234766
+      celebration effect_192: -1700206285
+      celebration effect_193: -878717631
+      celebration effect_194: -1747217540
+      celebration effect_195: -2126359164
+      celebration effect_196: -1483149224
+      celebration effect_197: 1332711934
+      celebration effect_198: -2011173902
+      celebration effect_199: 2028923869
+      celebration effect_2: 482364000
+      celebration effect_20: 186903918
+      celebration effect_200: -1416814304
+      celebration effect_201: -1694698842
+      celebration effect_202: -1624313300
+      celebration effect_203: 615096831
+      celebration effect_204: 2015372731
+      celebration effect_205: -970808966
+      celebration effect_206: -1139383269
+      celebration effect_207: 276383227
+      celebration effect_208: 911966019
+      celebration effect_209: -716878948
+      celebration effect_21: 750744145
+      celebration effect_210: -1398507059
+      celebration effect_211: -1951048839
+      celebration effect_212: 863415599
+      celebration effect_213: -808869991
+      celebration effect_214: -257308588
+      celebration effect_215: 1670005760
+      celebration effect_216: 104521075
+      celebration effect_217: -822701311
+      celebration effect_218: 1359637545
+      celebration effect_219: 1672493852
+      celebration effect_22: 1730281681
+      celebration effect_220: 1601828906
+      celebration effect_221: 976365768
+      celebration effect_222: 428055288
+      celebration effect_223: -1804104647
+      celebration effect_224: 1350222313
+      celebration effect_225: -365627575
+      celebration effect_226: 2111767390
+      celebration effect_227: -1752594156
+      celebration effect_228: -1181523738
+      celebration effect_229: -350950871
+      celebration effect_23: 2017124406
+      celebration effect_230: -682450016
+      celebration effect_231: -318671750
+      celebration effect_232: 8582348
+      celebration effect_233: 1226890857
+      celebration effect_234: -582130985
+      celebration effect_235: -379773618
+      celebration effect_236: -1181932540
+      celebration effect_237: 176031190
+      celebration effect_238: -2117537783
+      celebration effect_239: 1312470843
+      celebration effect_24: 1055994318
+      celebration effect_240: 1414063137
+      celebration effect_241: 1519221628
+      celebration effect_242: -1297943750
+      celebration effect_243: -787798294
+      celebration effect_244: -2123631583
+      celebration effect_245: -897911465
+      celebration effect_246: -317954915
+      celebration effect_247: 617752151
+      celebration effect_248: 2018503184
+      celebration effect_249: -1171844532
+      celebration effect_25: 963037039
+      celebration effect_250: -1734957278
+      celebration effect_251: 192910132
+      celebration effect_252: 1610178754
+      celebration effect_253: -1365412574
+      celebration effect_254: -1391856054
+      celebration effect_255: 2134293644
+      celebration effect_256: -1595675347
+      celebration effect_257: 1211854090
+      celebration effect_258: 1003217883
+      celebration effect_259: -165134105
+      celebration effect_26: 1388200728
+      celebration effect_260: -1939553667
+      celebration effect_261: 969066248
+      celebration effect_262: 1493551970
+      celebration effect_263: 191431353
+      celebration effect_264: 1033807762
+      celebration effect_265: 2057586506
+      celebration effect_266: 1138876017
+      celebration effect_267: 960389498
+      celebration effect_268: 1786845094
+      celebration effect_269: -512493182
+      celebration effect_27: 1613857411
+      celebration effect_270: 546051523
+      celebration effect_271: -611718763
+      celebration effect_272: 382220608
+      celebration effect_273: -66903630
+      celebration effect_274: 1828482535
+      celebration effect_28: -725057092
+      celebration effect_29: 91072379
+      celebration effect_3: 2054475860
+      celebration effect_30: 88858787
+      celebration effect_31: 981518880
+      celebration effect_32: 1692581330
+      celebration effect_33: -1898324595
+      celebration effect_34: 1124174572
+      celebration effect_35: 1840587020
+      celebration effect_36: 159069416
+      celebration effect_37: 1675584528
+      celebration effect_38: 1726278112
+      celebration effect_39: 1645838386
+      celebration effect_4: 923937409
+      celebration effect_40: 1861838843
+      celebration effect_41: -90078256
+      celebration effect_42: 1622810210
+      celebration effect_43: -1292095367
+      celebration effect_45: -780431066
+      celebration effect_46: -820867298
+      celebration effect_47: -1109156436
+      celebration effect_48: 489779304
+      celebration effect_49: 1102869643
+      celebration effect_5: -605295415
+      celebration effect_50: -24742700
+      celebration effect_51: 903218723
+      celebration effect_52: -1343340667
+      celebration effect_53: -1170084064
+      celebration effect_54: 1604893278
+      celebration effect_55: 1005705990
+      celebration effect_56: 1824710964
+      celebration effect_57: -1591560510
+      celebration effect_58: 1759044990
+      celebration effect_59: 1554913221
+      celebration effect_6: 848369642
+      celebration effect_61: 1743933637
+      celebration effect_62: 1734121520
+      celebration effect_63: -751724696
+      celebration effect_64: 1575322009
+      celebration effect_65: 846313578
+      celebration effect_66: -611578406
+      celebration effect_67: -2100524125
+      celebration effect_68: 204195448
+      celebration effect_69: -311886886
+      celebration effect_7: -1702807076
+      celebration effect_70: -475993110
+      celebration effect_71: -965899413
+      celebration effect_72: 224901855
+      celebration effect_73: 1670876716
+      celebration effect_74: -25242866
+      celebration effect_75: -1843402326
+      celebration effect_76: 1571207589
+      celebration effect_77: -2090950959
+      celebration effect_78: -1859473999
+      celebration effect_79: 1506823411
+      celebration effect_8: -942024286
+      celebration effect_80: -912566082
+      celebration effect_81: 18732043
+      celebration effect_82: -1606153382
+      celebration effect_83: 136401862
+      celebration effect_84: 1417457728
+      celebration effect_85: -1626083744
+      celebration effect_86: -719775857
+      celebration effect_87: 8651567
+      celebration effect_88: 1425456958
+      celebration effect_89: -57970285
+      celebration effect_9: 279179804
+      celebration effect_90: -750989225
+      celebration effect_91: 1951595700
+      celebration effect_92: 518435068
+      celebration effect_93: 1785040910
+      celebration effect_94: -911804971
+      celebration effect_95: -1708402573
+      celebration effect_96: 395099238
+      celebration effect_97: -691315580
+      celebration effect_98: 789219719
+      celebration effect_99: 76445675
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

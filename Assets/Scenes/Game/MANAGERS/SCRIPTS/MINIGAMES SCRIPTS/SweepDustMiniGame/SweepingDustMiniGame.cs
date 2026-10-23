@@ -78,7 +78,7 @@ public class SweepingMinigame : MonoBehaviour
     private Image activeBroomImage;
     private Vector2 lastMousePosition;
     private float currentMomentum;
-    private float sweepStartTime;
+    private float sweepElapsedTime;
     private Vector2 baseSweepingAreaPosition;
     private float driftPhase;
     private Vector3 activeBroomBaseScale;
@@ -116,7 +116,7 @@ public class SweepingMinigame : MonoBehaviour
         activeBroom = null;
         lastMousePosition = Vector2.zero;
         currentMomentum = 0f;
-        sweepStartTime = 0f;
+        sweepElapsedTime = 0f;
         driftPhase = 0f;
         broomAnimationTime = 0f;
         lastBrushWorldPosition = Vector3.zero;
@@ -157,6 +157,11 @@ public class SweepingMinigame : MonoBehaviour
         if (!isSweeping)
             return;
 
+        if (minigamePanel == null || !minigamePanel.activeInHierarchy)
+            return;
+
+        sweepElapsedTime += Time.deltaTime;
+
         if (waitingForTutorialHold)
             PulseBroomForTutorial();
 
@@ -178,7 +183,17 @@ public class SweepingMinigame : MonoBehaviour
         bool showFirstTimeTutorial = false,
         System.Action tutorialCompleted = null)
     {
-        if (dustSpot == null || isSweeping)
+        if (dustSpot == null)
+            return;
+
+        if (isSweeping && currentDustSpot == dustSpot)
+        {
+            if (minigamePanel != null)
+                minigamePanel.SetActive(true);
+            return;
+        }
+
+        if (isSweeping)
             return;
 
         if (dustSpawnArea == null)
@@ -196,7 +211,7 @@ public class SweepingMinigame : MonoBehaviour
         progress = 0f;
         isSweeping = true;
         mouseIsDown = false;
-        sweepStartTime = Time.time;
+        sweepElapsedTime = 0f;
         currentMomentum = 0f;
         lastMousePosition = Vector2.zero;
         driftPhase = 0f;
@@ -222,6 +237,7 @@ public class SweepingMinigame : MonoBehaviour
 
         if (minigamePanel != null)
         {
+            MiniGamePanelMinimizer.Attach(minigamePanel, PauseSweepingInput);
             MiniGameInteractionBlocker.RegisterPanel(minigamePanel);
             minigamePanel.SetActive(true);
         }
@@ -237,6 +253,12 @@ public class SweepingMinigame : MonoBehaviour
         }
 
         Debug.Log("NAGSIMULA NA ANG PAGWAWALIS");
+    }
+
+    private void PauseSweepingInput()
+    {
+        mouseIsDown = false;
+        currentStrokeDistance = 0f;
     }
 
     private void ApplyDifficulty()
@@ -846,7 +868,7 @@ public class SweepingMinigame : MonoBehaviour
             speedGradeText.fontSize = defaultSpeedGradeFontSize;
         tutorialCompleted?.Invoke();
 
-        int rewardCoins = CalculateSpeedRewardCoins(Time.time - sweepStartTime, targetSweepDuration);
+        int rewardCoins = CalculateSpeedRewardCoins(sweepElapsedTime, targetSweepDuration);
         if (EconomyManager.Instance != null)
             EconomyManager.Instance.AddCoins(rewardCoins);
 

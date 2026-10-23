@@ -82,8 +82,16 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
     public void StartGame(Chore chore)
     {
-        if (chore == null)
+        if (chore == null || panel == null)
             return;
+
+        if (currentChore == chore && gameStarted)
+        {
+            MiniGamePanelMinimizer.Attach(panel);
+            MiniGameInteractionBlocker.RegisterPanel(panel);
+            panel.SetActive(true);
+            return;
+        }
 
         currentChore = chore;
         ResolveTutorialText();
@@ -99,6 +107,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
         gameStarted = false;
 
         MiniGameInteractionBlocker.RegisterPanel(panel);
+        MiniGamePanelMinimizer.Attach(panel);
         panel.SetActive(true);
         if (tutorialManager == null)
             tutorialManager = FindFirstObjectByType<TutorialManager>();
@@ -223,6 +232,9 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
     private void Update()
     {
+        if (panel == null || !panel.activeInHierarchy)
+            return;
+
         UpdateTutorialPulse();
 
         if (!gameStarted)

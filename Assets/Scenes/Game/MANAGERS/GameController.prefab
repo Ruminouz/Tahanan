@@ -73,6 +73,12 @@ MonoBehaviour:
   - name: Trash
     audioClips:
     - {fileID: 8300000, guid: ba19c83b0a10dea4eb57a3c37ee5196e, type: 3}
+  - name: TrashCorrect
+    audioClips:
+    - {fileID: 8300000, guid: 14fbaa15e0cd576458c38f9765e9b66f, type: 3}
+  - name: TrashWrong
+    audioClips:
+    - {fileID: 8300000, guid: c65a5696060224147a3a2cb68c34ee4b, type: 3}
   - name: Scrub
     audioClips:
     - {fileID: 8300000, guid: 2f34e37ad84309944b126a552dd2db1a, type: 3}
@@ -122,9 +128,18 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 3ab9f8868c163944fa5de947fae13b55, type: 3}
   - name: Sparkle
     audioClips: []
+  - name: Win
+    audioClips:
+    - {fileID: 8300000, guid: 240526e733f756149a0beaddede771b3, type: 3}
+  - name: GameOver
+    audioClips:
+    - {fileID: 8300000, guid: 6aa380f4ad6cebb4ba1afc379c6eb30b, type: 3}
   - name: Good Night
     audioClips:
     - {fileID: 8300000, guid: be5e92a8e5689fe43a9a684ad7d3e52b, type: 3}
+  - name: BGM
+    audioClips:
+    - {fileID: 8300000, guid: fbb86bb14c28e2f45b257d77e51660b7, type: 3}
 --- !u!114 &3602414614963774326
 MonoBehaviour:
   m_ObjectHideFlags: 0

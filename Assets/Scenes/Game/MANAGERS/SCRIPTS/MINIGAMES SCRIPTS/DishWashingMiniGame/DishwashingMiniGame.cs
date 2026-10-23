@@ -214,8 +214,18 @@ private void OnDestroy()
 
 public void StartGame(Chore chore)
 {
-    if (chore == null)
+    if (chore == null || panel == null)
         return;
+
+    if (currentChore == chore && timerRunning)
+    {
+        MiniGamePanelMinimizer.Attach(panel, PauseDishwashingAudio);
+        MiniGameInteractionBlocker.RegisterPanel(panel);
+        panel.SetActive(true);
+        if (waterFillCoroutine != null)
+            SoundEffectManager.Play("Water Stream");
+        return;
+    }
 
     if (resultCoroutine != null)
     {
@@ -235,6 +245,7 @@ public void StartGame(Chore chore)
     // OPEN PANEL
     if(panel != null)
     {
+        MiniGamePanelMinimizer.Attach(panel, PauseDishwashingAudio);
         MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
     }
@@ -315,6 +326,12 @@ public void StartGame(Chore chore)
         "Dishwashing Started"
     );
 }
+
+private void PauseDishwashingAudio()
+{
+    SoundEffectManager.Stop("Faucet");
+}
+
    private void StartMiniGameTimer()
 {
     currentTimer = dishwashingTime;
@@ -355,7 +372,10 @@ public void StartGame(Chore chore)
     }
     private void Update()
 {
-    UpdateFaucetCue();
+        if (panel == null || !panel.activeInHierarchy)
+            return;
+
+        UpdateFaucetCue();
     UpdateTutorialPulse();
 
     if(!timerRunning)
@@ -855,6 +875,12 @@ private IEnumerator FillRinsingArea()
     int lastFrame = -1;
     while (elapsed < fillDuration)
     {
+        if (panel == null || !panel.activeInHierarchy)
+        {
+            yield return null;
+            continue;
+        }
+
         elapsed += Time.deltaTime;
         float fillAmount = Mathf.Clamp01(elapsed / fillDuration);
         if (waterFillImage != null)

@@ -3,15 +3,15 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Attach this to the same GameObject as your volume Slider.
-/// Binds the slider to AudioManager.Instance at runtime instead of via an
-/// Inspector-dragged reference, so it keeps working correctly even after
-/// the persisted AudioManager singleton survives a scene reload (which
-/// destroys any new AudioManager instance spawned in the reloaded scene,
-/// breaking Inspector references pointed at that local copy).
+/// Binds the slider to the music or sound-effect manager at runtime instead
+/// of via an Inspector-dragged reference, so it remains valid across scenes.
 /// </summary>
 [RequireComponent(typeof(Slider))]
 public class VolumeSliderBinder : MonoBehaviour
 {
+    [SerializeField, Tooltip("Bind this slider to sound-effect volume instead of music volume.")]
+    private bool bindToSoundEffects;
+
     private Slider slider;
 
     private void Awake()
@@ -21,6 +21,14 @@ public class VolumeSliderBinder : MonoBehaviour
 
     private void OnEnable()
     {
+        if (bindToSoundEffects)
+        {
+            slider.SetValueWithoutNotify(SoundEffectManager.GetVolume());
+            slider.onValueChanged.RemoveListener(SoundEffectManager.SetVolume);
+            slider.onValueChanged.AddListener(SoundEffectManager.SetVolume);
+            return;
+        }
+
         if (AudioManager.Instance == null)
         {
             Debug.LogWarning("[VolumeSliderBinder] No AudioManager.Instance found yet.");
@@ -38,7 +46,13 @@ public class VolumeSliderBinder : MonoBehaviour
 
     private void OnDisable()
     {
-        if (AudioManager.Instance != null)
+        if (bindToSoundEffects)
+        {
+            slider.onValueChanged.RemoveListener(SoundEffectManager.SetVolume);
+        }
+        else if (AudioManager.Instance != null)
+        {
             slider.onValueChanged.RemoveListener(AudioManager.Instance.SetVolume);
+        }
     }
 }
