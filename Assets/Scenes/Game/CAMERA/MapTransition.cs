@@ -62,6 +62,109 @@ public class MapTransition : MonoBehaviour
         }
     }
 
+    public static void MoveCameraToPosition(Vector3 destination)
+    {
+        Physics2D.SyncTransforms();
+
+        SetConfinerBoundaryAtPosition(destination);
+
+        CinemachineCamera cameraRig = FindFirstObjectByType<CinemachineCamera>(
+            FindObjectsInactive.Include);
+        if (cameraRig == null)
+            return;
+
+        cameraRig.Follow = null;
+        Vector3 cameraPosition = cameraRig.transform.position;
+        cameraPosition.x = destination.x;
+        cameraPosition.y = destination.y;
+        cameraRig.transform.position = cameraPosition;
+        cameraRig.ForceCameraPosition(cameraPosition, cameraRig.transform.rotation);
+    }
+
+    public static void SetConfinerBoundaryAtPosition(Vector3 destination)
+    {
+        Physics2D.SyncTransforms();
+
+        CinemachineCamera cameraRig = FindFirstObjectByType<CinemachineCamera>(
+            FindObjectsInactive.Include);
+        if (cameraRig == null)
+            return;
+
+        CinemachineConfiner2D cameraConfiner = cameraRig.GetComponent<CinemachineConfiner2D>();
+        if (cameraConfiner != null)
+        {
+            MapTransition[] transitions = FindObjectsByType<MapTransition>(
+                FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
+            PolygonCollider2D destinationBoundary = null;
+            float boundaryArea = float.PositiveInfinity;
+
+            foreach (MapTransition transition in transitions)
+            {
+                PolygonCollider2D boundary = transition.mapBoundary;
+                if (boundary == null ||
+                    !boundary.enabled ||
+                    !boundary.gameObject.activeInHierarchy ||
+                    !boundary.OverlapPoint(destination))
+                {
+                    continue;
+                }
+
+                float area = boundary.bounds.size.x * boundary.bounds.size.y;
+                if (area < boundaryArea)
+                {
+                    destinationBoundary = boundary;
+                    boundaryArea = area;
+                }
+            }
+
+            if (destinationBoundary != null)
+            {
+                cameraConfiner.BoundingShape2D = destinationBoundary;
+                cameraConfiner.InvalidateBoundingShapeCache();
+            }
+            else
+            {
+                Debug.LogWarning(
+                    "No map boundary contains the requested camera position; the camera may not be confined correctly.",
+                    cameraRig);
+            }
+        }
+    }
+
+    public static void ReturnCameraToPlayer(PlayerMovement player, Vector3 previousPosition)
+    {
+        if (player == null)
+            return;
+
+        Vector3 destination = player.transform.position;
+        CinemachineCamera cameraRig = FindFirstObjectByType<CinemachineCamera>(
+            FindObjectsInactive.Include);
+        if (cameraRig == null)
+            return;
+
+        MoveCameraToPosition(destination);
+        cameraRig.Follow = player.transform;
+        cameraRig.OnTargetObjectWarped(player.transform, destination - previousPosition);
+        Vector3 cameraPosition = cameraRig.transform.position;
+        cameraPosition.x = destination.x;
+        cameraPosition.y = destination.y;
+        cameraRig.transform.position = cameraPosition;
+        cameraRig.ForceCameraPosition(cameraPosition, cameraRig.transform.rotation);
+    }
+
+    public static void PanCamera(Vector3 worldOffset)
+    {
+        CinemachineCamera cameraRig = FindFirstObjectByType<CinemachineCamera>(
+            FindObjectsInactive.Include);
+        if (cameraRig == null)
+            return;
+
+        Vector3 cameraPosition = cameraRig.transform.position + worldOffset;
+        cameraRig.transform.position = cameraPosition;
+        cameraRig.ForceCameraPosition(cameraPosition, cameraRig.transform.rotation);
+    }
+
     private Vector3 GetOffsetVector()
     {
         switch (direction)

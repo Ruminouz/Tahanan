@@ -816,7 +816,7 @@ public class SweepingMinigame : MonoBehaviour
 
         if (isVacuumUpgrade && insideArea && currentMomentum >= minimumSweepSpeed)
         {
-            speedGradeText.text = "Suck it up!";
+            speedGradeText.text = "Use the vacuum!";
             return;
         }
 

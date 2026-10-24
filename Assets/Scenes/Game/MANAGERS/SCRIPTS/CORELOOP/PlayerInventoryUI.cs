@@ -51,29 +51,18 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void Start()
     {
-        playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject == null)
-            return;
-
         ResolveInventoryPanel();
         SetInventoryPanelVisible(false);
-
-        boostInventory = playerObject.GetComponent<BunsoBoostInventory>();
-        if (boostInventory == null)
-            boostInventory = playerObject.AddComponent<BunsoBoostInventory>();
-        if (playerObject.GetComponent<PlayerEquipmentInventory>() == null)
-            playerObject.AddComponent<PlayerEquipmentInventory>();
-        ResolveEquipmentInventory();
+        ResolvePlayerInventories();
         ResolveEconomyManager();
 
-        boostInventory.InventoryChanged += Refresh;
         miniGameActive = MiniGameInteractionBlocker.IsAnyMiniGameActive;
         Refresh();
     }
 
     private void Update()
     {
-        ResolveEquipmentInventory();
+        ResolvePlayerInventories();
         ResolveEconomyManager();
 
         bool isMiniGameActive = MiniGameInteractionBlocker.IsAnyMiniGameActive;
@@ -159,6 +148,30 @@ public class PlayerInventoryUI : MonoBehaviour
         if (equipmentInventory != null)
             equipmentInventory.InventoryChanged += Refresh;
         Refresh();
+    }
+
+    private void ResolvePlayerInventories()
+    {
+        if (playerObject == null)
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject == null)
+            return;
+
+        BunsoBoostInventory currentBoostInventory =
+            playerObject.GetComponent<BunsoBoostInventory>();
+        if (currentBoostInventory == null)
+            currentBoostInventory = playerObject.AddComponent<BunsoBoostInventory>();
+        if (currentBoostInventory != boostInventory)
+        {
+            if (boostInventory != null)
+                boostInventory.InventoryChanged -= Refresh;
+            boostInventory = currentBoostInventory;
+            boostInventory.InventoryChanged += Refresh;
+        }
+
+        if (playerObject.GetComponent<PlayerEquipmentInventory>() == null)
+            playerObject.AddComponent<PlayerEquipmentInventory>();
+        ResolveEquipmentInventory();
     }
 
     private void UnsubscribeEquipmentInventory()
@@ -347,6 +360,8 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public bool SelectEquipmentForTutorial(EquipmentType equipment)
     {
+        ResolvePlayerInventories();
+
         if (equipmentInventory == null ||
             !equipmentInventory.Owns(equipment))
             return false;

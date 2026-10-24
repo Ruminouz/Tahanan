@@ -24,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
 
     public float CurrentMoveSpeed =>
         moveSpeed * speedMultiplier * temporarySpeedMultiplier * temporarySlowMultiplier;
+    public Vector3 DailySpawnPosition => hasDailySpawnPoint
+        ? dailySpawnPosition
+        : transform.position;
     private bool playingFootsteps = false;
     public float footstepSpeed = 0.5f;
 

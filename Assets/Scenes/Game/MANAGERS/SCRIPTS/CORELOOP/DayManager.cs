@@ -17,6 +17,7 @@ public class DayManager : MonoBehaviour
     public static DayManager Instance;
 
     [SerializeField] private int currentDay = 1;
+    [SerializeField] private GameObject day1Wall;
 
     [Header("Debug")]
     [Tooltip("Doubles the speed of gameplay while enabled.")]
@@ -214,6 +215,7 @@ public class DayManager : MonoBehaviour
         SubscribeToEconomy();
         FindSweepDustChore();
         ResolveCleanLeavesChore();
+        ResolveDay1Wall();
 
         if (continueButton != null)
             continueButton.onClick.AddListener(ContinueToNextDay);
@@ -432,6 +434,8 @@ public class DayManager : MonoBehaviour
 
     private void Start()
     {
+        UpdateDay1Wall();
+
         if (currentDay == 1)
         {
             HideSceneNpcs();
@@ -1547,6 +1551,7 @@ public class DayManager : MonoBehaviour
         }
 
         player.ResetToDailySpawn();
+        MapTransition.MoveCameraToPosition(player.transform.position);
         player.SetMovementInputEnabled(false);
         PlayerInventoryUI inventoryUI = FindFirstObjectByType<PlayerInventoryUI>(
             FindObjectsInactive.Include);
@@ -2279,6 +2284,7 @@ public class DayManager : MonoBehaviour
         if (cinematicCamera != null)
             cinematicCamera.Follow = null;
 
+        MapTransition.SetConfinerBoundaryAtPosition(shop.transform.position);
         yield return MoveCameraTo(
             cameraRig,
             cinematicCamera,
@@ -2301,6 +2307,7 @@ public class DayManager : MonoBehaviour
                 FindObjectsInactive.Include);
             if (cat != null && cat.gameObject.activeInHierarchy)
             {
+                MapTransition.SetConfinerBoundaryAtPosition(cat.transform.position);
                 yield return MoveCameraTo(
                     cameraRig,
                     cinematicCamera,
@@ -2318,6 +2325,7 @@ public class DayManager : MonoBehaviour
             }
         }
 
+        MapTransition.SetConfinerBoundaryAtPosition(player.transform.position);
         yield return MoveCameraTo(
             cameraRig,
             cinematicCamera,
@@ -2450,6 +2458,7 @@ public class DayManager : MonoBehaviour
 
         CancelInvoke();
         currentDay++;
+        UpdateDay1Wall();
 
         if (choreManager != null)
             choreManager.ResetDailyProgress();
@@ -2461,6 +2470,32 @@ public class DayManager : MonoBehaviour
         dayFinished = false;
         summaryRevealComplete = false;
         Debug.Log("Starting Next Day: " + currentDay);
+    }
+
+    private void ResolveDay1Wall()
+    {
+        if (day1Wall != null)
+            return;
+
+        Transform[] sceneTransforms = FindObjectsByType<Transform>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (Transform sceneTransform in sceneTransforms)
+        {
+            if (sceneTransform.name == "Day1Wall")
+            {
+                day1Wall = sceneTransform.gameObject;
+                return;
+            }
+        }
+
+        Debug.LogWarning("Day1Wall was not found; day-based wall gating is unavailable.", this);
+    }
+
+    private void UpdateDay1Wall()
+    {
+        if (day1Wall != null)
+            day1Wall.SetActive(currentDay == 1);
     }
 
     private void ResetMoppingMinigames()

@@ -8,6 +8,13 @@ public enum EconomyRewardType
     ExtraTime
 }
 
+public enum FurnitureType
+{
+    Refrigerator,
+    Fan,
+    Television
+}
+
 public class EconomyManager : MonoBehaviour
 {
     public static EconomyManager Instance { get; private set; }
@@ -37,6 +44,9 @@ public class EconomyManager : MonoBehaviour
     [SerializeField, Min(1)] private int dishwashingLiquidBaseCost = 10;
     [SerializeField, Min(1f)] private float dishwashingLiquidScrubSpeedMultiplier = 1.5f;
 
+    [Header("Shop - Furniture")]
+    [SerializeField, Min(1)] private int furnitureBaseCost = 10;
+
     private int coins;
     private int points;
     private float movementBoostEndTime;
@@ -44,6 +54,7 @@ public class EconomyManager : MonoBehaviour
     private int broomUpgradeLevel;
     private bool catPurchased;
     private bool dishwashingLiquidPurchased;
+    private readonly bool[] purchasedFurniture = new bool[3];
     private Sprite dishwashingLiquidSprite;
 
     public event Action<int> CoinsChanged;
@@ -52,6 +63,7 @@ public class EconomyManager : MonoBehaviour
     public event Action<int> BroomUpgradeChanged;
     public event Action<bool> CatPurchaseChanged;
     public event Action<bool> DishwashingLiquidPurchaseChanged;
+    public event Action<FurnitureType, bool> FurniturePurchaseChanged;
 
     public int Coins => coins;
     public int Points => points;
@@ -92,6 +104,7 @@ public class EconomyManager : MonoBehaviour
         broomUpgradeLevel = 0;
         catPurchased = false;
         dishwashingLiquidPurchased = false;
+        Array.Clear(purchasedFurniture, 0, purchasedFurniture.Length);
         DontDestroyOnLoad(gameObject);
     }
 
@@ -227,6 +240,45 @@ public class EconomyManager : MonoBehaviour
         dishwashingLiquidPurchased = true;
         DishwashingLiquidPurchaseChanged?.Invoke(dishwashingLiquidPurchased);
         SoundEffectManager.Play("Buy");
+        return true;
+    }
+
+    public int GetFurnitureCost()
+    {
+        return furnitureBaseCost;
+    }
+
+    public bool HasPurchasedFurniture(FurnitureType furniture)
+    {
+        int index = (int)furniture;
+        return index >= 0 && index < purchasedFurniture.Length && purchasedFurniture[index];
+    }
+
+    public bool TryPurchaseFurniture(FurnitureType furniture)
+    {
+        int index = (int)furniture;
+        if (index < 0 || index >= purchasedFurniture.Length ||
+            purchasedFurniture[index] || !TrySpendCoins(furnitureBaseCost))
+        {
+            return false;
+        }
+
+        purchasedFurniture[index] = true;
+        FurniturePurchaseChanged?.Invoke(furniture, true);
+        SoundEffectManager.Play("Buy");
+        return true;
+    }
+
+    public bool RefundFurniturePurchase(FurnitureType furniture)
+    {
+        int index = (int)furniture;
+        if (index < 0 || index >= purchasedFurniture.Length || !purchasedFurniture[index])
+            return false;
+
+        purchasedFurniture[index] = false;
+        coins += furnitureBaseCost;
+        CoinsChanged?.Invoke(coins);
+        FurniturePurchaseChanged?.Invoke(furniture, false);
         return true;
     }
 

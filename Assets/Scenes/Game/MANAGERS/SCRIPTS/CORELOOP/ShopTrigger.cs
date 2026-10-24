@@ -12,6 +12,13 @@ public class ShopTrigger : Interactable
             return;
         }
 
+        MopShopUI shopUI = shopPanel.GetComponent<MopShopUI>();
+        if (shopUI != null)
+        {
+            shopUI.OpenShop();
+            return;
+        }
+
         shopPanel.SetActive(true);
     }
 

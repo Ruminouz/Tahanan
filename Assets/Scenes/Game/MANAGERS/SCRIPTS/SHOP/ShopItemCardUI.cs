@@ -59,9 +59,10 @@ public class ShopItemCardUI : MonoBehaviour
         Sprite icon,
         string itemName,
         string description,
-        UnityAction onPurchase)
+        UnityAction onPurchase,
+        bool furnitureRow = false)
     {
-        Transform grid = EnsureGrid(shopRoot);
+        Transform grid = EnsureGrid(shopRoot, furnitureRow);
         Transform existing = grid.Find(itemKey + "Card");
         ShopItemCardUI card = existing != null
             ? existing.GetComponent<ShopItemCardUI>()
@@ -83,30 +84,80 @@ public class ShopItemCardUI : MonoBehaviour
             actionButton.interactable = canPurchase;
     }
 
-    private static Transform EnsureGrid(Transform shopRoot)
+    private static Transform EnsureGrid(Transform shopRoot, bool furnitureRow)
     {
-        Transform grid = shopRoot.Find(GridName);
-        if (grid != null)
-            return grid;
+        string viewportName = furnitureRow ? "FurnitureShopRow" : GridName;
+        Transform viewportTransform = shopRoot.Find(viewportName);
+        if (viewportTransform != null)
+        {
+            RectTransform existingViewportRect =
+                viewportTransform.GetComponent<RectTransform>();
+            SetRowBounds(existingViewportRect, furnitureRow);
+            Transform existingContent = viewportTransform.Find("Content");
+            return existingContent != null ? existingContent : viewportTransform;
+        }
 
-        GameObject gridObject = new GameObject(GridName, typeof(RectTransform), typeof(HorizontalLayoutGroup));
-        gridObject.transform.SetParent(shopRoot, false);
+        GameObject viewportObject = new GameObject(
+            viewportName,
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image),
+            typeof(RectMask2D),
+            typeof(ScrollRect));
+        viewportObject.transform.SetParent(shopRoot, false);
+        RectTransform viewportRect = viewportObject.GetComponent<RectTransform>();
+        SetRowBounds(viewportRect, furnitureRow);
+        viewportRect.offsetMin = Vector2.zero;
+        viewportRect.offsetMax = Vector2.zero;
 
-        RectTransform rect = gridObject.GetComponent<RectTransform>();
-        rect.anchorMin = new Vector2(0.08f, 0.16f);
-        rect.anchorMax = new Vector2(0.92f, 0.8f);
-        rect.offsetMin = Vector2.zero;
-        rect.offsetMax = Vector2.zero;
+        Image viewportImage = viewportObject.GetComponent<Image>();
+        viewportImage.color = Color.clear;
+        viewportImage.raycastTarget = true;
 
-        HorizontalLayoutGroup layout = gridObject.GetComponent<HorizontalLayoutGroup>();
+        GameObject contentObject = new GameObject(
+            "Content",
+            typeof(RectTransform),
+            typeof(HorizontalLayoutGroup),
+            typeof(ContentSizeFitter));
+        contentObject.transform.SetParent(viewportObject.transform, false);
+
+        RectTransform contentRect = contentObject.GetComponent<RectTransform>();
+        contentRect.anchorMin = new Vector2(0f, 0f);
+        contentRect.anchorMax = new Vector2(0f, 1f);
+        contentRect.pivot = new Vector2(0f, 0.5f);
+        contentRect.anchoredPosition = Vector2.zero;
+
+        ScrollRect scrollRect = viewportObject.GetComponent<ScrollRect>();
+        scrollRect.viewport = viewportRect;
+        scrollRect.content = contentRect;
+        scrollRect.horizontal = true;
+        scrollRect.vertical = false;
+        scrollRect.movementType = ScrollRect.MovementType.Clamped;
+
+        ContentSizeFitter contentSize = contentObject.GetComponent<ContentSizeFitter>();
+        contentSize.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        contentSize.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+
+        HorizontalLayoutGroup layout = contentObject.GetComponent<HorizontalLayoutGroup>();
         layout.padding = new RectOffset(12, 12, 12, 12);
         layout.spacing = 18f;
-        layout.childAlignment = TextAnchor.MiddleCenter;
+        layout.childAlignment = TextAnchor.MiddleLeft;
         layout.childControlWidth = true;
         layout.childControlHeight = true;
         layout.childForceExpandWidth = false;
         layout.childForceExpandHeight = false;
-        return gridObject.transform;
+        return contentObject.transform;
+    }
+
+    private static void SetRowBounds(RectTransform viewportRect, bool furnitureRow)
+    {
+        if (viewportRect == null)
+            return;
+
+        viewportRect.anchorMin = new Vector2(0.06f, furnitureRow ? 0.12f : 0.52f);
+        viewportRect.anchorMax = new Vector2(0.94f, furnitureRow ? 0.46f : 0.86f);
+        viewportRect.offsetMin = Vector2.zero;
+        viewportRect.offsetMax = Vector2.zero;
     }
 
     private static void EnsureTitle(Transform shopRoot)
@@ -146,7 +197,7 @@ public class ShopItemCardUI : MonoBehaviour
 
         LayoutElement cardSize = cardObject.GetComponent<LayoutElement>();
         cardSize.preferredWidth = 250f;
-        cardSize.preferredHeight = 450f;
+        cardSize.preferredHeight = 320f;
         cardSize.flexibleWidth = 0f;
         cardSize.flexibleHeight = 0f;
 
@@ -173,7 +224,7 @@ public class ShopItemCardUI : MonoBehaviour
             typeof(Image),
             typeof(LayoutElement));
         iconObject.transform.SetParent(cardRoot, false);
-        iconObject.GetComponent<LayoutElement>().preferredHeight = 170f;
+        iconObject.GetComponent<LayoutElement>().preferredHeight = 92f;
         iconObject.GetComponent<Image>().preserveAspect = true;
         iconObject.GetComponent<Image>().raycastTarget = false;
 
@@ -182,20 +233,20 @@ public class ShopItemCardUI : MonoBehaviour
         nameText.fontStyle = FontStyles.Bold;
         nameText.color = new Color(0.24f, 0.14f, 0.08f);
         nameText.alignment = TextAlignmentOptions.Center;
-        nameText.GetComponent<LayoutElement>().preferredHeight = 42f;
+        nameText.GetComponent<LayoutElement>().preferredHeight = 34f;
 
         TMP_Text descriptionText = CreateTextObject("ItemDescription", cardRoot).GetComponent<TMP_Text>();
         descriptionText.fontSize = 17f;
         descriptionText.color = new Color(0.28f, 0.24f, 0.18f);
         descriptionText.alignment = TextAlignmentOptions.Center;
-        descriptionText.GetComponent<LayoutElement>().preferredHeight = 88f;
+        descriptionText.GetComponent<LayoutElement>().preferredHeight = 62f;
 
         costText = CreateTextObject("ItemCost", cardRoot).GetComponent<TMP_Text>();
         costText.fontSize = 21f;
         costText.fontStyle = FontStyles.Bold;
         costText.color = new Color(0.12f, 0.38f, 0.12f);
         costText.alignment = TextAlignmentOptions.Center;
-        costText.GetComponent<LayoutElement>().preferredHeight = 34f;
+        costText.GetComponent<LayoutElement>().preferredHeight = 28f;
 
         GameObject buttonObject = new GameObject(
             "PurchaseButton",
@@ -205,7 +256,7 @@ public class ShopItemCardUI : MonoBehaviour
             typeof(Button),
             typeof(LayoutElement));
         buttonObject.transform.SetParent(cardRoot, false);
-        buttonObject.GetComponent<LayoutElement>().preferredHeight = 48f;
+        buttonObject.GetComponent<LayoutElement>().preferredHeight = 40f;
 
         Image buttonImage = buttonObject.GetComponent<Image>();
         buttonImage.color = new Color(0.19f, 0.62f, 0.2f);

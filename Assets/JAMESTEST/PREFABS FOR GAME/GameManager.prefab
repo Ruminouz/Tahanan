@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b33e59b2e0d71498e5369b5271faaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
-  currentDay: 1
+  currentDay: 2
   doubleGameSpeed: 0
   washDishes: {fileID: 0}
   mopFloor: {fileID: 0}
