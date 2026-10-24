@@ -253,9 +253,9 @@ MonoBehaviour:
   displayName: Kuya
   speechAnchor: {fileID: 1042943640945524530}
   waypointMover: {fileID: 8564069997886501912}
-  calmLine: Ako na diyan mamaya.
-  concernedLine: Asikasuhin na natin ang bahay.
-  angryLine: Nakakatamad naman, ah.
+  calmLine: I'll take care of it later.
+  concernedLine: We should take care of the house.
+  angryLine: I don't feel like it.
 --- !u!114 &8049838704480278140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
   badMoodBubbleInterval: 8
   badMoodBubbleChance: 50
   bubbleDuration: 3
-  badMoodLine: Katamad naman tulungan to
+  badMoodLine: I don't feel like helping right now.
 --- !u!1 &3489870828818604819
 GameObject:
   m_ObjectHideFlags: 0

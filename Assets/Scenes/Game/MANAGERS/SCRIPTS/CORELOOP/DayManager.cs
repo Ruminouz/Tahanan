@@ -125,15 +125,15 @@ public class DayManager : MonoBehaviour
     public string DailyAdditionalQuestDisplayName => dailyAdditionalQuestIsMopping
         ? "Mop"
         : dailyAdditionalQuestChore == feedDog
-            ? "Pakainin Ang Aso"
+            ? "Feed the Dog"
             : dailyAdditionalQuestChore == sweepDust
-                ? "Magwalis"
+                ? "Sweep the Floor"
                 : dailyAdditionalQuestChore == washDishes
-                    ? "Maghugas ng Pinggan"
+                    ? "Wash the Dishes"
                     : dailyAdditionalQuestChore == garbageChore
-                        ? "Segregate ng Basura"
+                        ? "Sort the Trash"
                         : dailyAdditionalQuestChore == cleanLeaves
-                            ? "Iligpit ang mga Laruan"
+                            ? "Pick Up the Toys"
                             : DailyAdditionalQuestName;
     public string DailyAdditionalQuestGoal => GetDailyAdditionalQuestGoal();
     public bool IsDailyAdditionalQuestCompleted => dailyAdditionalQuestCompleted;
@@ -943,33 +943,33 @@ public class DayManager : MonoBehaviour
             return string.Empty;
 
         if (dailyAdditionalQuestIsMopping)
-            return "Punasan ang natapong tubig sa loob ng " +
-                dailyQuestMopTimeLimit.ToString("0") + " segundo.";
+            return "Mop up the spilled water within " +
+                dailyQuestMopTimeLimit.ToString("0") + " seconds.";
 
         if (questName.IndexOf("garbage", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("trash", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("segregat", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("basura", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Ihiwalay nang tama ang lahat ng basura nang walang pagkakamali.";
+            return "Sort all the trash correctly without making a mistake.";
 
         if (questName.IndexOf("dog", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("feed", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Pakainin ang aso nang walang pagkakamali.";
+            return "Feed the dog without missing a single attempt.";
 
         if (questName.IndexOf("sweep", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Walisin ang isang dumi sa loob ng " +
-                dailyQuestSweepTimeLimit.ToString("0") + " segundo.";
+            return "Sweep up one dust pile within " +
+                dailyQuestSweepTimeLimit.ToString("0") + " seconds.";
 
         if (questName.IndexOf("toy", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             questName.IndexOf("leaves", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Iligpit ang lahat ng laruan nang hindi nahahawakan ng mga langgam.";
+            return "Pick up all the toys without touching any ants.";
 
         if (questName.IndexOf("dish", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Tapusin ang paghuhugas ng pinggan nang hindi bababa sa " +
+            return "Finish washing the dishes with at least " +
                 dailyQuestDishwashingTimeBeforeDeadline.ToString("0") +
-                " segundo bago ang takdang oras.";
+                " seconds remaining before the deadline.";
 
-        return "Tapusin ang gawain nang walang pagkakamali.";
+        return "Complete the task without making a mistake.";
     }
 
     private void AssignRandomDeadline(Chore chore)
@@ -1469,9 +1469,9 @@ public class DayManager : MonoBehaviour
             summaryTextRect.offsetMax = Vector2.zero;
             summaryTextRect.localScale = Vector3.one;
             summaryChoresText.alignment = TextAlignmentOptions.Center;
-            summaryChoresText.fontSize = 50f;
+            summaryChoresText.fontSize = 70f;
             summaryChoresText.text =
-                "<size=125%><b>Tologs na</b></size>\n\nNanaginip na sila :).";
+                "<size=125%><b>Sleep Time</b></size>\n\nGood Night! :).";
             SoundEffectManager.Play("Good Night");
             yield return Fade(0f);
             yield return WaitForRealtime(transitionCardHoldDuration);
@@ -1572,8 +1572,8 @@ public class DayManager : MonoBehaviour
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "WELCOME SA TAHANAN!",
-            "Sa game na ito matututunan mo ang mga pangkaraniwang araw-araw na buhay sa loob ng bahay");
+            "WELCOME TO TAHANAN!",
+            "In this game, you'll experience everyday life at home.");
         GameHUD hud = FindFirstObjectByType<GameHUD>();
         if (hud != null)
             hud.PulseChoreListForTutorial();
@@ -1581,21 +1581,21 @@ public class DayManager : MonoBehaviour
             introText,
             continuePrompt,
             "CHORE LIST",
-            "Sa papel na ito nakasulat ang mga task na dapat mong gawin daily. Huwag mong kalimutang gawin kahit isa, Baka mapalo ni nanay!");
+            "This list shows the chores you need to complete each day. Don't forget any of them, or Mom might get upset!");
         if (hud != null)
             hud.PulseMoodSliderForTutorial();
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
             "MOOD",
-            "Ito naman ang mood ng mga magiging kasama mo sa bahay. Huwag mong hayaang bumaba ito, baka mahirapan ka.");
+            "This shows your family's mood. Try to keep it from dropping, or things may get harder.");
         if (hud != null)
             hud.PulseMissedChoreCounterForTutorial();
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
             "MISSED CHORES",
-            " Kapag umabot sa limit ang mga chore na hindi mo natapos,Game Over na.");
+            "If you miss too many chores, the game will be over.");
 
         Vector2 nearestDustPosition = Vector2.zero;
         bool hasDustSpot = sweepingManager != null &&
@@ -1630,8 +1630,8 @@ public class DayManager : MonoBehaviour
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "DUST SPOTS",
-            "Nako, may mga dumi! Mag-umpisa na tayo maglinis.");
+            "DUST PILES",
+            "There are dust piles around the house. Let's start cleaning!");
 
         Component broom = FindFirstObjectByType<BroomChore>();
         if (broom == null)
@@ -1655,8 +1655,8 @@ public class DayManager : MonoBehaviour
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "WALIS TAMBO",
-            "Kunin mo muna ito at i-equip para ma-walisan mo ang dumi.");
+            "BROOM",
+            "Pick up and equip the broom to sweep the dust.");
 
         StartDay();
         yield return null;
@@ -1667,7 +1667,7 @@ public class DayManager : MonoBehaviour
             introText,
             continuePrompt,
             "Bonus Task",
-            "Tingnan ang Daily Challenge card para sa dagdag na hamon at bonus coins.");
+            "Check the Daily Challenge card for an extra challenge and bonus coins.");
 
         Destroy(dayOneIntroOverlay);
         dayOneIntroOverlay = null;
@@ -1745,31 +1745,31 @@ public class DayManager : MonoBehaviour
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "NAKUHA MO NA ANG WALIS",
-            "Naka-equip na ang walis. Tingnan ang naka-highlight na icon sa hotbar para malaman kung anong gamit ang hawak mo.");
+            "YOU'VE PICKED UP THE BROOM",
+            "The broom is equipped. Check the highlighted hotbar icon to see which item you're holding.");
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "LUMIPAT NG GAMIT",
-            "Pindutin ang Q para lumipat sa susunod na gamit. Subukan mo ngayon.");
+            "SWITCH ITEMS",
+            "Press Q to switch to the next item. Try it now.");
 
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "BUKSAN ANG IMBENTARYO",
-            "Pindutin ang I para buksan ang imbentaryo at makita ang mga gamit mo.");
+            "OPEN YOUR INVENTORY",
+            "Press I to open your inventory and view your items.");
 
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "GAMITIN ANG ITEM",
-            "Pindutin ulit ang I para isara ang inventory. Kapag naka-equip ang Chocolate o Time Freezer, pindutin ang E para gamitin ito.");
+            "USE AN ITEM",
+            "Press I again to close your inventory. Equip Chocolate or the Time Freezer, then press E to use it.");
 
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "GAMITIN ANG NAKA-EQUIP NA ITEM",
-            "Naka-equip ang Chocolate. Pindutin ang E para kainin ito at bumilis ang takbo mo. Gamitin din ang E kapag naka-equip ang Time Freezer para ihinto sandali ang oras.");
+            "USE YOUR EQUIPPED ITEM",
+            "Equip Chocolate and press E to eat it and run faster. Equip the Time Freezer and press E to briefly stop time.");
 
         inventoryUI.HighlightSelectedHotbarForTutorial(false);
         inventoryUI.SetTutorialInputEnabled(true);
@@ -1868,8 +1868,8 @@ public class DayManager : MonoBehaviour
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "WATER SPOT",
-            "Nako, may natapon na tubig! Puntahan natin at linisin bago may madulas.");
+            "SPILLED WATER",
+            "There's water on the floor! Clean it up before someone slips.");
 
         MopChore mopEquipment = FindFirstObjectByType<MopChore>(
             FindObjectsInactive.Include);
@@ -1892,7 +1892,7 @@ public class DayManager : MonoBehaviour
             introText,
             continuePrompt,
             "MOP",
-            "Kunin mo ang mop at i-equip ito para malinis ang natapong tubig.");
+            "Pick up and equip the mop to clean up the spill.");
 
         Destroy(dayOneIntroOverlay);
         dayOneIntroOverlay = null;
@@ -1949,8 +1949,8 @@ public class DayManager : MonoBehaviour
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
-            "KUSINA",
-            "Pagkatapos mag-mop, dito sa kusina ka naman maghuhugas ng mga plato!");
+            "KITCHEN",
+            "After mopping, head to the kitchen to wash the dishes!");
 
         Destroy(dayOneIntroOverlay);
         dayOneIntroOverlay = null;
@@ -2289,7 +2289,7 @@ public class DayManager : MonoBehaviour
 
         SpeechBubbleCanvas.Show(
             shop.transform,
-            "sa tindahan na ito pwede ka makabili ng mas magandang mga gamit if mayroon kang sapat na pera",
+            "You can buy better equipment here if you have enough coins.",
             shopDialogueDuration,
             new Vector2(480f, 104f),
             18);

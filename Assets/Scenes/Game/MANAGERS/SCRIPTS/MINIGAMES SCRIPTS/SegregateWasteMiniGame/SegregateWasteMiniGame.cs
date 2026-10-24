@@ -17,6 +17,8 @@ public class SegregateWasteMiniGame : MonoBehaviour
     [SerializeField] private TMP_Text tutorialText;
     [SerializeField] private WasteSpawner spawner;
     [SerializeField] private ChoreTutorial tutorial;
+    [Tooltip("Enable the roaming ant challenge during this minigame.")]
+    [SerializeField] private bool enableAnts = true;
     [SerializeField] private Sprite[] antWalkUpFrames = new Sprite[AntFramesPerDirection];
     [SerializeField] private Sprite[] antWalkDownFrames = new Sprite[AntFramesPerDirection];
     [SerializeField] private Sprite[] antWalkLeftFrames = new Sprite[AntFramesPerDirection];
@@ -77,7 +79,8 @@ public class SegregateWasteMiniGame : MonoBehaviour
         antArea = spawnArea as RectTransform;
         Canvas canvas = panel != null ? panel.GetComponentInParent<Canvas>() : null;
         eventCamera = canvas != null ? canvas.worldCamera : null;
-        ValidateAntFrames();
+        if (enableAnts)
+            ValidateAntFrames();
     }
 
     public void StartGame(Chore chore)
@@ -118,7 +121,7 @@ public class SegregateWasteMiniGame : MonoBehaviour
         if (tutorialManager == null)
         {
             Debug.LogWarning(
-                "Hindi maipapakita ang unang tutorial dahil walang TutorialManager.",
+                "The first-time tutorial cannot be shown because TutorialManager is missing.",
                 this);
             firstTimeTutorialActive = false;
         }
@@ -315,15 +318,18 @@ public class SegregateWasteMiniGame : MonoBehaviour
     private void UpdateUI()
     {
         if (toysRemainingText != null)
-            toysRemainingText.text =
-                $"Mali: {antHitCount}/{MaximumAntHits}  Mga laruan: {totalItemsNeeded - correctlySegregatedCount}";
+        {
+            toysRemainingText.text = enableAnts
+                ? $"Ant hits: {antHitCount}/{MaximumAntHits}  Toys: {totalItemsNeeded - correctlySegregatedCount}"
+                : $"Toys: {totalItemsNeeded - correctlySegregatedCount}";
+        }
 
         if (progressText != null)
         {
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
             float seconds = elapsedTime - minutes * 60f;
             progressText.text =
-                $"Nakuha: {correctlySegregatedCount}/{totalItemsNeeded}  |  Oras: {minutes:00}:{seconds:00.0}";
+                $"Collected: {correctlySegregatedCount}/{totalItemsNeeded}  |  Time: {minutes:00}:{seconds:00.0}";
         }
     }
 
@@ -338,9 +344,13 @@ public class SegregateWasteMiniGame : MonoBehaviour
         {
             int remaining = Mathf.Max(0, totalItemsNeeded - correctlySegregatedCount);
             tutorialText.gameObject.SetActive(true);
-            tutorialText.text = toyCollected
-                ? $"Ayos! {remaining} laruan pa. Iwasan ang mga langgam, 2 beses mong mahawakan to talo na!"
-                : "Pulutin ang mga laruan at ilagay sa kahon!";
+            tutorialText.text = enableAnts
+                ? toyCollected
+                    ? $"Great! {remaining} toys left. Avoid the ants—two hits and you lose!"
+                    : "Pick up the toys and put them in the box!"
+                : toyCollected
+                    ? $"Great! {remaining} toys left."
+                    : "Pick up the toys and put them in the box!";
         }
 
         RestoreTutorialPulseTargets();
@@ -574,6 +584,15 @@ public class SegregateWasteMiniGame : MonoBehaviour
 
     private void UpdateAntChallenge()
     {
+        if (!enableAnts)
+        {
+            CleanupAnts();
+            antSpawnTimer = 0f;
+            antHitCooldown = 0f;
+            antHitCount = 0;
+            return;
+        }
+
         if (antArea == null || !AreAntFramesAssigned())
             return;
 

@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8dc3d5f5df41f2a75a4e2f0d4c6b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCInteractionManager
+  speechBubbleFontAsset: {fileID: 11400000, guid: 1cb780c78e6b6174b82d2efea0702b23, type: 2}
+  speechBubbleBackgroundSprite: {fileID: 852052284539156526, guid: 7858bc7a3fa14984e90a3fbd3088c53f, type: 3}
   checkInterval: 5
   conversationDuration: 4
   interactionCooldown: 12

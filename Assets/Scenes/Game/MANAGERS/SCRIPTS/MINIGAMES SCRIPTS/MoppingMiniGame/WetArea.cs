@@ -74,7 +74,7 @@ public class WetArea : Interactable
 
         if (!playerState.HasMop)
         {
-            SpeechBubbleCanvas.Show(player.transform, "Pulutin mo muna ang mop!", 2f);
+            SpeechBubbleCanvas.Show(player.transform, "Pick up the mop first!", 2f);
 
             return;
         }
@@ -82,7 +82,7 @@ public class WetArea : Interactable
         PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
         if (inventory == null || inventory.SelectedEquipment != EquipmentType.Mop)
         {
-            SpeechBubbleCanvas.Show(player.transform, "I-equip muna ang mop bago maglinis.", 2f);
+            SpeechBubbleCanvas.Show(player.transform, "Equip the mop before cleaning.", 2f);
 
             return;
         }

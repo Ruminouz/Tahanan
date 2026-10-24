@@ -146,7 +146,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -258,6 +258,7 @@ MonoBehaviour:
   moveSpeed: 2
   waitTime: 2
   loopWaypoints: 1
+  waypointOrderOverride: 
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 192
@@ -284,9 +285,9 @@ MonoBehaviour:
   displayName: Kuya
   speechAnchor: {fileID: 3486924319661128138}
   waypointMover: {fileID: 3738273542447587238}
-  calmLine: Ako najan mamaya
+  calmLine: I'll take care of it later.
   concernedLine: We should take care of the house.
-  angryLine: katamad ah
+  angryLine: I don't feel like it.
 --- !u!114 &5434769264184484477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,20 +300,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53d8b1a63c473d46945d85ccac980d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HelperNPC
-  minimumMood: 60
-  helpChance: 100
-  checkInterval: 5
-  maximumChoresPerDay: 03000000030000000300000003000000040000000400000006000000
+  minimumMood: 50
+  checkInterval: 40
+  maximumChoresPerDay: 02000000020000000200000003000000030000000400000004000000
   defaultMaximumChoresPerDay: 2
-  moveSpeed: 1.5
-  arriveDistance: 0.2
-  helpTimeout: 60
-  choreStuckTimeout: 0.5
-  choreSpeedMultiplier: 2
-  playerChoreDistance: 2
+  movementSpeed: 4
+  playerApproachDistance: 1.2
+  choreArrivalDistance: 0.35
+  defaultChoreDuration: 15
+  dishwashingDuration: 20
+  garbageSortingDuration: 20
+  cleanLeavesDuration: 18
+  feedDogDuration: 15
+  dishwashingIcon: {fileID: -3046087512825148780, guid: 3869be0001773df44924dc49472665d5, type: 3}
+  garbageSortingIcon: {fileID: -1984049885866873280, guid: 84f25f985d9b459489ba4ce0a630f699, type: 3}
+  cleanLeavesIcon: {fileID: 2584518139663198581, guid: a39b56e62439a054781039cd4bd86c37, type: 3}
+  feedDogIcon: {fileID: 8547402250504553676, guid: ac7777586342a114cafe57a15162339a, type: 3}
+  sweepingIcon: {fileID: 663463509561187115, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  moppingIcon: {fileID: -1868639071, guid: e3fccd402dd12ad43a6eb25c09b530f3, type: 3}
+  choreIconSize: 1
+  choreIconOffset: 0.1
   bubbleAnchor: {fileID: 3486924319661128138}
   moodBubblePrefab: {fileID: 0}
   badMoodBubbleInterval: 8
   badMoodBubbleChance: 50
   bubbleDuration: 3
-  badMoodLine: Katamad naman tulungan to
+  badMoodLine: I don't feel like helping right now.

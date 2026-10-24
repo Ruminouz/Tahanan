@@ -15,13 +15,13 @@ public class BunsoAI : MonoBehaviour
     [Header("Mood")]
     [SerializeField, Min(0f)] private float actionInterval = 12f;
     [SerializeField, Range(0f, 100f)] private float actionChance = 60f;
-    [SerializeField] private string dustBadMoodLine = "Pakiwalisan to kuya! bwhahaah!";
-    [SerializeField] private string waterBadMoodLine = "paki mop to kuya! bwhaahah!";
-    [SerializeField] private string segregateBadMoodLine = "pakiligpit to kuya! bwahahah!";
-    [SerializeField] private string garbageBagBadMoodLine = "pakitapon to sa basura kuya! bwaahha!";
-    [SerializeField] private string chocolateRewardLine = "May chocolate ako para sa'yo!";
-    [SerializeField] private string chocolateConsumedLine = "Mama! kinain ni kuya chocolate ko!";
-    [SerializeField] private string timeFreezerRewardLine = "Eto, pampahinto ng oras!";
+    [SerializeField] private string dustBadMoodLine = "Sweep this up, big brother! Hahaha!";
+    [SerializeField] private string waterBadMoodLine = "Mop this up, big brother! Hahaha!";
+    [SerializeField] private string segregateBadMoodLine = "Put these away, big brother! Hahaha!";
+    [SerializeField] private string garbageBagBadMoodLine = "Throw this in the trash, big brother! Hahaha!";
+    [SerializeField] private string chocolateRewardLine = "I have some chocolate for you!";
+    [SerializeField] private string chocolateConsumedLine = "Mom! Big brother ate my chocolate!";
+    [SerializeField] private string timeFreezerRewardLine = "Here, this can stop time!";
 
     [Header("Good Mood Rewards")]
     [SerializeField] private BunsoBoostType[] possibleBoosts =

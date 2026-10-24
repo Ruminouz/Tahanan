@@ -1044,7 +1044,7 @@ PrefabInstance:
       objectReference: {fileID: 3676107591083303862}
     - target: {fileID: 3778430799984237516, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: choreName
-      value: Magpakain ng aso
+      value: Feed the dog
       objectReference: {fileID: 0}
     - target: {fileID: 4389894921041702907, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: m_Size.x
@@ -1068,7 +1068,7 @@ PrefabInstance:
       objectReference: {fileID: 8162935241039720953}
     - target: {fileID: 5284176278301698377, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: choreName
-      value: Itapon ang basura
+      value: Throw away the trash
       objectReference: {fileID: 0}
     - target: {fileID: 5284176278301698377, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: garbageBag
@@ -1080,7 +1080,7 @@ PrefabInstance:
       objectReference: {fileID: 5292845960082814051}
     - target: {fileID: 6653447056419113867, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: choreName
-      value: Pulutin ang mga laruan.
+      value: Pick up the toys.
       objectReference: {fileID: 0}
     - target: {fileID: 6916284537871387907, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: miniGame
@@ -1088,7 +1088,7 @@ PrefabInstance:
       objectReference: {fileID: 444929842543889871}
     - target: {fileID: 6916284537871387907, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: choreName
-      value: Maghugas ng plato.
+      value: Wash the dishes.
       objectReference: {fileID: 0}
     - target: {fileID: 7296286528992300464, guid: f6969e462be497a4c96a7645deeaa683, type: 3}
       propertyPath: m_LocalScale.x

@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 7131201423735770341}
   - component: {fileID: 8847016149893401128}
   - component: {fileID: 4776089970569189581}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1008816216748069464, guid: 47c448d1e7cc35c4381ae54ff186ef96, type: 3}
+  m_Sprite: {fileID: 4035959289877228764, guid: 47c448d1e7cc35c4381ae54ff186ef96, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -377,9 +377,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
   m_CategoryHash: 1.8625731e-11
-  m_labelHash: 2.6175869e-27
+  m_labelHash: 2.6263963e-13
   m_SpriteKey: 0
-  m_SpriteHash: 81887837
+  m_SpriteHash: 1027422969
 --- !u!114 &7131201423735770341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5072558672999362735}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EquipmentPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ Transform:
   m_GameObject: {fileID: 2145606768447960466}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.37, y: -0.262, z: 0}
+  m_LocalPosition: {x: -0.32, y: -0.262, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 8841658762654080295}
   - component: {fileID: 8711824002552263289}
   - component: {fileID: 865063929935100365}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: InteractableDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8321263901440317533}
   - component: {fileID: 1884290364043283749}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: InteractionIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +631,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3752848352782695718}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ' '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +662,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7649413113570709559}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GarbagePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -693,7 +693,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8848158183791021635}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerSpan
   m_TagString: Untagged
   m_Icon: {fileID: 0}

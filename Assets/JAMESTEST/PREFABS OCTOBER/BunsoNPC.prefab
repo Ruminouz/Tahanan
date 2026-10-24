@@ -423,7 +423,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -513,6 +513,7 @@ MonoBehaviour:
   moveSpeed: 2
   waitTime: 2
   loopWaypoints: 1
+  waypointOrderOverride: 
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -536,15 +537,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BunsoAI
   actionInterval: 30
-  actionChance: 60.7
-  dustBadMoodLine: Pakiwalisan to kuya! bwhahaah!
-  waterBadMoodLine: paki mop to kuya! bwhaahah!
-  segregateBadMoodLine: pakiligpit to kuya! bwahahah!
-  garbageBagBadMoodLine: pakitapon to sa basura kuya! bwaahha!
+  actionChance: 60.9
+  dustBadMoodLine: Sweep this up, big brother! Hahaha!
+  waterBadMoodLine: Mop this up, big brother! Hahaha!
+  segregateBadMoodLine: Put these away, big brother! Hahaha!
+  garbageBagBadMoodLine: Throw this in the trash, big brother! Hahaha!
+  chocolateRewardLine: May chocolate ako para sa'yo!
+  chocolateConsumedLine: Mama! kinain ni kuya chocolate ko!
+  timeFreezerRewardLine: Eto, pampahinto ng oras!
   possibleBoosts: 0000000001000000
   chocolatePrefab: {fileID: 2093951337509963342, guid: 86d7c508fe0eba54eb85686efa87b206, type: 3}
   timeFreezerPrefab: {fileID: 6014960946341728753, guid: c313d8be4311359489f1b34ed95ac3a8, type: 3}
   rewardDropGap: 0.15
+  maximumBadMoodChoresByDay: 00000000020000000200000002000000020000000200000002000000
   segregateWastePrefab: {fileID: 0}
   dustSpotPrefab: {fileID: 6552050211545809342, guid: 10c7e0e6b72a2f24aab7c74fa974ab65, type: 3}
   wetAreaPrefab: {fileID: 6995687946688838214, guid: 22f1d286bcd5f4c4c80aedbe6bb2e753, type: 3}
@@ -555,8 +560,11 @@ MonoBehaviour:
   followStopDistance: 2.25
   wanderRadius: 1.75
   arriveDistance: 0.2
+  dialogueApproachDistance: 1.2
+  dialogueApproachTimeout: 30
   minimumWanderWait: 1
   maximumWanderWait: 3
+  dialogueDisplayDuration: 2
   topAnchor: {fileID: 4049634607692134718}
   moodBubblePrefab: {fileID: 0}
   bubbleDuration: 3
@@ -576,6 +584,6 @@ MonoBehaviour:
   displayName: Bunso
   speechAnchor: {fileID: 4049634607692134718}
   waypointMover: {fileID: 1215113636064767911}
-  calmLine: Maamaa!
-  concernedLine: Tamad naman ni kuya
-  angryLine: Madadamay nanaman ako pag nagalit si mama.
+  calmLine: Mom!
+  concernedLine: Big brother is so lazy.
+  angryLine: I'll get in trouble if Mom gets mad again.

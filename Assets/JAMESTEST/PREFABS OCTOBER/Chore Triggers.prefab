@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 81887978343356820}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.00103, y: 1.6969702, z: 0}
+  m_LocalPosition: {x: -8.50103, y: 2.1969702, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -72,7 +72,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.42, y: 0.86}
+    oldSize: {x: 0.44, y: 0.86}
     newSize: {x: 3.74, y: 13.58}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -93,7 +93,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MopChore
   mopVisual: {fileID: 81887978343356820}
-  upgradedMopVisual: {fileID: 0}
+  classicMopSprite: {fileID: -1789762712091594678, guid: 8700283bca25c1140895c03cdc76a8c6, type: 3}
+  upgradedMopSprite: {fileID: 6459997509234188002, guid: 5e2bdcde9b059ce40b8782328fea214b, type: 3}
 --- !u!212 &943650338192125000
 SpriteRenderer:
   serializedVersion: 2
@@ -143,7 +144,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1789762712091594678, guid: 8700283bca25c1140895c03cdc76a8c6, type: 3}
+  m_Sprite: {fileID: 6459997509234188002, guid: 5e2bdcde9b059ce40b8782328fea214b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -741,7 +742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d97051485ab38c4eb850559f4248765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThrowTrashChore
-  choreName: Itapon ang basura
+  choreName: Basura
   points: 1
   deadlineSeconds: 250
   earlyBonusPoints: 1
@@ -898,7 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bc6498afe253e48ae9a007ac955825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishwashingChore
-  choreName: Maghugas ng plato.
+  choreName: Pinggan
   points: 1
   deadlineSeconds: 250
   earlyBonusPoints: 1
@@ -1110,7 +1111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bb914ca8a491a4ba782e634ab5affd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FeedDogChore
-  choreName: Magpakain ng aso
+  choreName: Feed Dog
   points: 1
   deadlineSeconds: 250
   earlyBonusPoints: 1
@@ -1161,7 +1162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4b1591fba57fe408cc4d67fe8bccb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SegregateWasteChore
-  choreName: Ligpit ang Laruan
+  choreName: Laruan
   points: 1
   deadlineSeconds: 180
   earlyBonusPoints: 1
@@ -1255,7 +1256,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

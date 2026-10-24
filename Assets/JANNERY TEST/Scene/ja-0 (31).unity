@@ -8214,9 +8214,9 @@ MonoBehaviour:
   displayName: Kuya
   speechAnchor: {fileID: 1895825523723791353}
   waypointMover: {fileID: 7129097854483259603}
-  calmLine: Ako najan mamaya
+  calmLine: I'll take care of it later.
   concernedLine: We should take care of the house.
-  angryLine: katamad ah
+  angryLine: I don't feel like it.
 --- !u!4 &5583211196672629926
 Transform:
   m_ObjectHideFlags: 0
@@ -8652,15 +8652,15 @@ PrefabInstance:
       objectReference: {fileID: 1566746761}
     - target: {fileID: 1131196457020619718, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: calmLine
-      value: Maamaa!
+      value: Mom!
       objectReference: {fileID: 0}
     - target: {fileID: 1131196457020619718, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: angryLine
-      value: Madadamay nanaman ako pag nagalit si mama.
+      value: I'll get in trouble if Mom gets mad again.
       objectReference: {fileID: 0}
     - target: {fileID: 1131196457020619718, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: concernedLine
-      value: Tamad naman ni kuya
+      value: Big brother is so lazy.
       objectReference: {fileID: 0}
     - target: {fileID: 2955472342297103682, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: stuckTimeout
@@ -9760,7 +9760,7 @@ MonoBehaviour:
   badMoodBubbleInterval: 8
   badMoodBubbleChance: 50
   bubbleDuration: 3
-  badMoodLine: Katamad naman tulungan to
+  badMoodLine: I don't feel like helping right now.
 --- !u!1 &8917508650539123761 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3279296464216118212, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}

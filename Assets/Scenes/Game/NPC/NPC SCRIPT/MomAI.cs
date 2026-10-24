@@ -429,31 +429,31 @@ public class MomAI : MonoBehaviour
     private string GetMissedChoreLine(Chore chore)
     {
         if (chore == null && waterSpawner != null && waterSpawner.IsMoppingMissed)
-            return "Yung basa pag may nadulas dito";
+            return "The floor is wet. Someone could slip!";
 
         if (chore is DishwashingChore)
-            return "Yung hugasin!";
+            return "The dishes are still dirty!";
 
         if (chore is FeedDogChore)
-            return "Di mo napakain yung aso!";
+            return "You forgot to feed the dog!";
 
         if (chore is GarbageChore)
-            return "Di mo na segregate ng tama!";
+            return "You didn't sort the trash correctly!";
 
         string choreName = chore != null ? chore.ChoreName ?? string.Empty : string.Empty;
         if (choreName.IndexOf("mop", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             choreName.IndexOf("wet", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "Yung basa pag may nadulas dito";
+            return "The floor is wet. Someone could slip!";
 
         if (choreName.IndexOf("sweep", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             (dayManager != null && chore == dayManager.SweepDustChore))
-            return "Yung pinapawalis ko sayo!";
+            return "I asked you to sweep this!";
 
         if (chore is CleanLeavesChore ||
             chore is SegregateWasteChore ||
             choreName.IndexOf("toy", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             choreName.IndexOf("pickup", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            return "yung laruan ng kapatid mo di mo niligpit!";
+            return "You forgot to put your sibling's toys away!";
 
         return GetMoodLine();
     }

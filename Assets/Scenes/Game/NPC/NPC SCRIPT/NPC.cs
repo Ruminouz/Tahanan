@@ -282,14 +282,14 @@ public class NPC : MonoBehaviour, IInteractable
 
     private void ShowChoices()
     {
-        StringBuilder choicesText = new StringBuilder("Pumili ng gawain (pindutin ang numero):\n");
+        StringBuilder choicesText = new StringBuilder("Choose a task (press its number):\n");
         for (int index = 0; index < activeChoices.Length; index++)
         {
             choicesText.Append(index + 1)
                 .Append(". ")
                 .AppendLine(activeChoices[index]);
         }
-        choicesText.Append("0. Wala muna / Esc para batalin");
+        choicesText.Append("0. Nothing for now / Esc to cancel");
         dialogueTextAutoSizing = dialogueText.enableAutoSizing;
         dialogueTextFontSize = dialogueText.fontSize;
         restoreDialogueTextSizing = true;

@@ -115,7 +115,7 @@ public class FeedDogMiniGame : MonoBehaviour
         MiniGamePanelMinimizer.Attach(panel);
         panel.SetActive(true);
         if (feedButtonText != null)
-            feedButtonText.text = "PAKAIN";
+            feedButtonText.text = "FEED";
 
         StartFeeding();
     }
@@ -205,21 +205,21 @@ public class FeedDogMiniGame : MonoBehaviour
     private void UpdateStatusText(bool lastAttemptSucceeded = false)
     {
         string feedback = lastAttemptSucceeded
-            ? "Magaling! Tumama ang pagkain. Ihanda ang susunod na subok."
+            ? "Great hit! Get ready for the next try."
             : attemptsMade > 0
-                ? "Hindi tumama. Abangan ang mangkok at subukan ulit."
-                : "Pindutin ang SPACE o PAKAIN kapag tumapat ang pagkain sa mangkok.";
+                ? "Missed! Watch the bowl and try again."
+                : "Press SPACE or FEED when the food is over the bowl.";
 
         SetStatusText(
-            $"KAIN: {successfulBites}/{BitesNeeded}  |  PAGKAKATAON: {AttemptsPerMeal - attemptsMade}\n" +
-            $"SUBOK: {attemptsMade}/{AttemptsPerMeal}  |  SUNOD-SUNOD x{combo}  |  PUNTOS: {score}" +
+            $"FED: {successfulBites}/{BitesNeeded}  |  TRIES LEFT: {AttemptsPerMeal - attemptsMade}\n" +
+            $"ATTEMPTS: {attemptsMade}/{AttemptsPerMeal}  |  COMBO x{combo}  |  SCORE: {score}" +
             (firstTimeTutorialActive ? string.Empty : $"\n{feedback}")
         );
 
         SetTutorialText(!firstTimeTutorialActive
             ? string.Empty
             : attemptsMade == 0
-                ? $"Hintaying tumapat ang pagkain sa mangkok, saka pindutin ang SPACE o PAKAIN.\n{feedback}"
+                ? $"Wait until the food is over the bowl, then press SPACE or FEED.\n{feedback}"
                 : feedback);
     }
 
@@ -235,8 +235,8 @@ public class FeedDogMiniGame : MonoBehaviour
                 successfulBites == AttemptsPerMeal);
 
         SetStatusText(successfulBites == AttemptsPerMeal
-            ? $"PERPEKTONG KAIN!\n3 subok ang tumama | Puntos: {score}"
-            : $"BUSOG NA ANG TUTA!\nTapos ang pagkain | Puntos: {score}");
+            ? $"PERFECT FEED!\nAll 3 attempts hit | Score: {score}"
+            : $"PUPPY IS FULL!\nFeeding complete | Score: {score}");
 
         if (firstTimeTutorialActive && tutorialManager != null && currentChore != null)
             tutorialManager.MarkAsLearned(currentChore.ChoreName);
@@ -268,8 +268,8 @@ public class FeedDogMiniGame : MonoBehaviour
         }
 
         SetStatusText(
-            $"GUTOM PA ANG TUTA!\n{successfulBites}/{BitesNeeded} pagkain ang tumama.\n" +
-            "Hindi natapos ang gawain ngayong araw."
+            $"THE PUPPY IS STILL HUNGRY!\n{successfulBites}/{BitesNeeded} feeds hit.\n" +
+            "Today's chore was not completed."
         );
 
         firstTimeTutorialActive = false;

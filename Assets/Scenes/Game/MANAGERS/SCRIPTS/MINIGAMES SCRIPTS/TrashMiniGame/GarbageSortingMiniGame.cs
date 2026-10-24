@@ -128,7 +128,7 @@ public class GarbageSortingMiniGame : MonoBehaviour
     MiniGamePanelMinimizer.Attach(panel, PauseSpawning);
     panel.SetActive(true);
     ShowTutorial(
-        "I-drag ang bawat nahuhulog na basura sa tamang lalagyan. Itugma ang uri sa label: Nabubulok, Di-nabubulok, o Recyclable. Bawat maling lagay o hindi nasagip na basura ay dagdag sa 5 pagkakamali; kapag umabot dito, matatalo ka.");
+        "Drag each falling piece of trash into the correct bin. Match it to the label: Organic, Non-Organic, or Recyclable. Each wrong bin or missed item adds a mistake. Reach 5 mistakes and you lose.");
 
 
 
@@ -193,7 +193,7 @@ private void CorrectTrash(TrashItem trash)
     UpdateCounterTexts();
     SoundEffectManager.Play("TrashCorrect");
     ShowTutorial(
-        $"Tama! {GetTrashTypeLabel(trash.trashType)} ay nasa tamang lalagyan. Naayos: {correct}/{totalTrash}  |  Pagkakamali: {mistakes}/{maxMistakes}");
+        $"Correct! {GetTrashTypeLabel(trash.trashType)} is in the right bin. Sorted: {correct}/{totalTrash}  |  Mistakes: {mistakes}/{maxMistakes}");
 
     
 
@@ -226,7 +226,7 @@ private void CorrectTrash(TrashItem trash)
         UpdateCounterTexts();
         SoundEffectManager.Play("TrashWrong");
         ShowTutorial(
-            $"Hindi tugma: {GetTrashTypeLabel(itemType)} ay napunta sa {GetTrashTypeLabel(binType)}. Itugma ang basura sa parehong label. Pagkakamali: {mistakes}/{maxMistakes}");
+            $"Wrong bin: {GetTrashTypeLabel(itemType)} went into {GetTrashTypeLabel(binType)}. Match the trash to the correct label. Mistakes: {mistakes}/{maxMistakes}");
 
 
         Debug.Log(
@@ -259,7 +259,7 @@ private void CorrectTrash(TrashItem trash)
         UpdateCounterTexts();
         SoundEffectManager.Play("Wrong");
         ShowTutorial(
-            $"May basurang nahulog. Bilisan ang pag-drag sa susunod na basura papunta sa tamang lalagyan. Pagkakamali: {mistakes}/{maxMistakes}");
+            $"A piece of trash fell. Drag the next one to the correct bin quickly. Mistakes: {mistakes}/{maxMistakes}");
 
 
         Debug.Log(
@@ -418,10 +418,10 @@ private void SetTutorialText(string message)
 private void UpdateCounterTexts()
 {
     if (mistakesCounterText != null)
-        mistakesCounterText.text = $"Mali : {mistakes}";
+        mistakesCounterText.text = $"Mistakes: {mistakes}";
 
     if (correctCounterText != null)
-        correctCounterText.text = $"Tama : {correct}";
+        correctCounterText.text = $"Correct: {correct}";
 }
 
 private static string GetTrashTypeLabel(TrashType type)
@@ -429,9 +429,9 @@ private static string GetTrashTypeLabel(TrashType type)
     switch (type)
     {
         case TrashType.Nabubulok:
-            return "Nabubulok";
+            return "Organic";
         case TrashType.DiNabubulok:
-            return "Di-nabubulok";
+            return "Non-Organic";
         case TrashType.Recyclable:
             return "Recyclable";
         default:

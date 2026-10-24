@@ -10,9 +10,9 @@ public class GameHUD : MonoBehaviour
     private static Sprite minimizeButtonSprite;
     private const string CompletedChoreColor = "#4CAF50";
     private const string DailyChallengeTitle = "DAILY CHALLENGE";
-    private const string ToyPickupDisplayName = "Laruan";
-    private const string SweepDisplayName = "Magwalis";
-    private const string MopDisplayName = "Mag Mop";
+    private const string ToyPickupDisplayName = "Toys";
+    private const string SweepDisplayName = "Sweep";
+    private const string MopDisplayName = "Mop";
 
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text timeText;
@@ -465,16 +465,16 @@ public class GameHUD : MonoBehaviour
             return;
 
         string status = dayManager.IsDailyAdditionalQuestCompleted
-            ? "TAPOS NA!"
+            ? "COMPLETED!"
             : dayManager.IsDailyAdditionalQuestMissed
-                ? "HINDI NATAPOS"
+                ? "NOT COMPLETED"
                 : dayManager.IsDailyAdditionalQuestFailed
-                    ? "NABIGO ANG HAMON"
+                    ? "CHALLENGE FAILED"
                     : "IN PROGRESS";
 
         dailyQuestText.text = "CHALLENGE: " + questName +
             "\n" + dayManager.DailyAdditionalQuestGoal +
-            "\nGantimpala: +" + dayManager.DailyAdditionalQuestRewardCoins + " COINS" +
+            "\nReward: +" + dayManager.DailyAdditionalQuestRewardCoins + " COINS" +
             "\n" + status;
     }
 

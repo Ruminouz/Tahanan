@@ -381,7 +381,7 @@ private void PauseDishwashingAudio()
             return;
 
         if (firstTimeTutorialActive)
-            SetTutorialStep("Maghintay ng ilang segundo para mapuno ang lababo bago ilagay ang mga pinggan sa ilalim ng tubig.");
+            SetTutorialStep("Wait a few seconds for the sink to fill before placing the dishes in the water.");
 
         waterFillElapsed = 0f;
         waterFillInProgress = true;
@@ -495,20 +495,20 @@ if(manager != null)
                     leftoverTargets.Add(trashBin.transform);
 
                 SetTutorialStep(
-                    "Unang hakbang: i-drag ang mga tira-tirang pagkain sa basurahan. Kapag naalis mo na ang lahat, saka magpatuloy sa susunod na hakbang.",
+                    "Step 1: Drag the leftover food into the trash. Once it's all gone, move on to the next step.",
                     leftoverTargets.ToArray());
                 break;
 
             case WashStage.AddSoap:
                 SetTutorialStep(
-                    "Pangalawang hakbang: i-drag ang esponge sa sabon para ma-sabon ang mga pinggan.",
+                    "Step 2: Drag the sponge over the soap to apply it to the dishes.",
                     GetTransform(sponge),
                     GetTransform(soap));
                 break;
 
             case WashStage.Scrub:
                 SetTutorialStep(
-                    "Pangatlong hakbang: kuskusin ang maruming pinggan gamit ang esponge hanggang maging malinis ito.",
+                    "Step 3: Scrub each dirty dish with the soapy sponge until it's clean.",
                     currentScrubbingPlate != null ? currentScrubbingPlate.transform : null,
                     GetTransform(sponge));
                 break;
@@ -517,26 +517,26 @@ if(manager != null)
                 if (platesToRinse >= currentPlateAmount)
                 {
                     SetTutorialStep(
-                        "Pang-apat na hakbang: pindutin ang gripo at hintayin itong mapuno ang lababo bago ilagay ang mga pinggan.");
+                        "Step 4: Turn on the faucet and wait for the sink to fill before placing the dishes in it.");
                 }
                 else if (currentScrubbingPlate != null)
                 {
                     SetTutorialStep(
-                        "Kuskusin pa ang natitirang maruming pinggan bago ilagay ang mga malinis na pinggan sa lababo.",
+                        "Scrub the remaining dirty dish before placing the clean dishes in the sink.",
                         currentScrubbingPlate.transform,
                         GetTransform(sponge));
                 }
                 else
                 {
                     SetTutorialStep(
-                        "I-drag ang mga malinis na pinggan papunta sa lababo para banlawan.",
+                        "Drag the clean dishes into the sink to rinse them.",
                         rinsingArea);
                 }
                 break;
 
             case WashStage.Dry:
                 SetTutorialStep(
-                    "Panghuling hakbang: i-drag ang mga nabanlawang pinggan sa drying rack para patuyuin.",
+                    "Final step: Drag the rinsed dishes onto the drying rack to dry.",
                     dryingRack);
                 break;
         }
@@ -632,7 +632,7 @@ if(manager != null)
     if (leftoversRemaining < 0)
         leftoversRemaining = 0;
 
-        AwardComboScore(30, "Naalis na ang tira-tira!");
+        AwardComboScore(30, "Leftovers cleared!");
 
         Debug.Log("Leftover removed!");
         Debug.Log("Leftovers remaining: " + leftoversRemaining);
@@ -772,7 +772,7 @@ private void EnableNextPlate()
     if(dish != currentScrubbingPlate)
         return;
 
-    AwardComboScore(45, "Magaling magkusot!");
+    AwardComboScore(45, "Great scrubbing!");
 
     Debug.Log(
         "Plate scrubbed."
@@ -789,7 +789,7 @@ private void EnableNextPlate()
     }
 
     SetTutorialStep(
-        "Malinis na! I-drag ang pinggan papunta sa palanggana.",
+        "Clean! Drag the dish to the sink to rinse it.",
         rinsingArea);
 
     Debug.Log(
@@ -840,7 +840,7 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
         return;
 
     platesRinsed++;
-    AwardComboScore(35, "Dagdag puntos sa pagbabanlaw!");
+    AwardComboScore(35, "Bonus points for rinsing!");
 
     Debug.Log(
         "Rinsed: " +
@@ -937,7 +937,7 @@ private IEnumerator FillRinsingArea()
     waterFillInProgress = false;
     waterFillElapsed = 0f;
     waterFillCoroutine = null;
-    SetTutorialStep("Ilagay ang mga pinggan sa ilalim ng tubig para banlawan.");
+    SetTutorialStep("Place the dishes under the water to rinse them.");
 
     DishRinseArea area = rinsingArea != null
         ? rinsingArea.GetComponent<DishRinseArea>()
@@ -1298,7 +1298,7 @@ private void ResetRinseState()
             return;
 
         platesToDry--;
-            AwardComboScore(60, "Dalubhasa sa pagpapatuyo!");
+            AwardComboScore(60, "Drying expert!");
 
             if (platesToDry < 0)
                 platesToDry = 0;
@@ -1502,7 +1502,7 @@ private void ResetSponge()
     if (firstTimeTutorialActive && tutorialManager != null && currentChore != null)
         tutorialManager.MarkAsLearned(currentChore.ChoreName);
 
-    SetTutorialStep("Ayos! Tapos mo nang hugasan ang mga pinggan!");
+    SetTutorialStep("Great! You've finished washing the dishes!");
     firstTimeTutorialActive = false;
 
     Debug.Log("DISHWASHING COMPLETE!");
@@ -1599,18 +1599,18 @@ private void UpdateScoreUI()
 {
     if(scoreText != null)
     {
-        scoreText.text = "Puntos: " + currentScore;
+        scoreText.text = "Score: " + currentScore;
     }
 
     if(comboText != null)
     {
         if(currentCombo > 1)
         {
-            comboText.text = "Sunod-sunod x" + currentCombo;
+            comboText.text = "Combo x" + currentCombo;
         }
         else
         {
-            comboText.text = "Sunod-sunod na linis";
+            comboText.text = "Clean streak";
         }
     }
 }

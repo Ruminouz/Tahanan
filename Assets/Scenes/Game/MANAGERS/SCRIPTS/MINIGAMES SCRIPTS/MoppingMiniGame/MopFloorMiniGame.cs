@@ -244,8 +244,8 @@ public class MoppingMinigame : MonoBehaviour
         }
 
         ShowFeedback(waitingForTutorialHold
-            ? "Hawakan ang kaliwang pindutan ng mouse\npara humawak sa mop."
-            : "Ikiskis ang mop pabalik-balik sa basang sahig.");
+            ? "Hold the left mouse button\nto pick up the mop."
+            : "Move the mop back and forth across the wet floor.");
         Debug.Log("MOPPING MINIGAME STARTED!");
     }
 
@@ -350,7 +350,7 @@ public class MoppingMinigame : MonoBehaviour
                 waitingForTutorialStroke = true;
                 if (activeMop != null)
                     activeMop.localScale = mopBaseScale;
-                ShowFeedback("Magaling! Ikiskis pabalik-balik\nsa basang bahagi.");
+                ShowFeedback("Great! Move the mop back and forth\nacross the wet area.");
             }
         }
 
@@ -379,7 +379,7 @@ public class MoppingMinigame : MonoBehaviour
         {
             waitingForTutorialStroke = false;
             firstTimeTutorialActive = false;
-            ShowFeedback("Tama! Ipagpatuloy hanggang\nmatuyo ang sahig.");
+            ShowFeedback("That's right! Keep going until\nthe floor is dry.");
         }
 
         if (insideArea && validStroke && currentMomentum >= minimumMopSpeed)
@@ -400,8 +400,8 @@ public class MoppingMinigame : MonoBehaviour
             progress = Mathf.Max(0f, progress - progressDecay * Time.deltaTime);
             if (!firstTimeTutorialActive || waitingForTutorialStroke)
                 ShowFeedback(insideArea
-                    ? "Bilisan mo pa!"
-                    : "Ilipat ang mop sa basang bahagi!");
+                    ? "Move faster!"
+                    : "Move the mop over the wet area!");
         }
 
         UpdateWetAreaVisual();
@@ -577,7 +577,7 @@ public class MoppingMinigame : MonoBehaviour
         mouseIsDown = false;
         progress = 1f;
         UpdateWetAreaVisual();
-        ShowFeedback("Malinis na ang sahig!");
+        ShowFeedback("The floor is clean!");
         SoundEffectManager.Play("ChoreFinished");
 
         if (currentWetArea != null)
