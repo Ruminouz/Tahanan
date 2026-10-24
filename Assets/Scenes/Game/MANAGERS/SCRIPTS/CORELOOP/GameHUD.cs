@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -8,22 +9,35 @@ public class GameHUD : MonoBehaviour
 {
     private static Sprite minimizeButtonSprite;
     private const string CompletedChoreColor = "#4CAF50";
-    private const string MissedChoreColor = "#F44336";
+    private const string DailyChallengeTitle = "DAILY CHALLENGE";
+    private const string ToyPickupDisplayName = "Toys";
+    private const string SweepDisplayName = "Sweep";
+    private const string MopDisplayName = "Mop";
 
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text timeText;
+    [SerializeField, Tooltip("Optional TMP text that displays AM or PM.")]
+    private TMP_Text timePeriodText;
     [SerializeField] private TMP_Text choreListText;
     [SerializeField] private Slider timeBar;
+    [Header("Clock Progress")]
+    [SerializeField, Tooltip("Optional slider that fills as the in-game day progresses.")]
+    private Slider clockProgressSlider;
+    [SerializeField, Min(0f)] private float clockNearEndWarningSeconds = 30f;
+    [SerializeField] private Color clockProgressWarningColor = new Color(1f, 0.2f, 0.12f);
     [SerializeField] private Sprite clockFaceSprite;
     [SerializeField, Tooltip("Optional Canvas RectTransform used to control the clock's position and size.")]
     private RectTransform clockAnchor;
     [SerializeField] private TMP_Text pointsText;
     [SerializeField] private TMP_Text coinsText;
     [SerializeField] private TMP_Text successRateText;
+    [SerializeField] private TMP_Text missedChoreText;
     [SerializeField] private Sprite coinSprite;
     [SerializeField] private GameObject dailyQuestPanel;
     [SerializeField] private TMP_Text dailyQuestText;
-    [SerializeField, Min(0f)] private float nearDeadlineWarningSeconds = 30f;
+    [SerializeField, Tooltip("Assign the dedicated title text for the daily challenge card.")]
+    private TMP_Text dailyChallengeTitleText;
+    [SerializeField, Min(0f)] private float nearDeadlineWarningSeconds = 60f;
     [SerializeField] private Color nearDeadlineColor = new Color(1f, 0.35f, 0.2f, 1f);
 
     private Button choreListMinimizeButton;
@@ -49,9 +63,17 @@ public class GameHUD : MonoBehaviour
     private ChoreManager choreManager;
     private EconomyManager economyManager;
     private RectTransform clockHand;
+    private RectTransform clockRoot;
+    private Vector3 clockRootOriginalScale = Vector3.one;
+    private bool clockVisibilityInitialized;
+    private bool clockWasActiveBeforeMiniGame;
+    private bool clockProgressWasActiveBeforeMiniGame;
+    private bool clockHiddenForMiniGame;
     private Image clockFaceImage;
     private Image clockHandImage;
     private Image clockCenterImage;
+    private Image clockProgressFillImage;
+    private Color clockProgressDefaultColor = Color.white;
     private Canvas currencyCanvas;
     private readonly List<CoinPopup> coinPopups = new();
     private RectTransform hoverTooltipRect;
@@ -61,6 +83,9 @@ public class GameHUD : MonoBehaviour
     private readonly List<Image> helperIndicatorImages = new();
     private Sprite helperSprite;
     private bool dailyQuestPanelLookupAttempted;
+    private Coroutine tutorialPulseCoroutine;
+    private Transform tutorialPulseTarget;
+    private Vector3 tutorialPulseOriginalScale;
 
     private sealed class CoinPopup
     {
@@ -96,29 +121,35 @@ public class GameHUD : MonoBehaviour
         currencyCanvas = coinsText != null
             ? coinsText.GetComponentInParent<Canvas>()
             : FindFirstObjectByType<Canvas>();
+        InitializeClockProgressSlider();
 
         ResolveChoreListText();
         ResolveDailyQuestPanel();
         if (clockFaceSprite != null)
             CreateClockDisplay();
+        CacheClockVisibility();
 
         SetupChoreListMinimizeButton();
         CreateCoinCounter();
+        CreateMissedChoreCounter();
         SetupHoverTooltips();
         ResolveEconomyManager();
 
-        if (GetComponent<PlayerInventoryUI>() == null)
+        if (FindFirstObjectByType<PlayerInventoryUI>(
+                FindObjectsInactive.Include) == null)
             gameObject.AddComponent<PlayerInventoryUI>();
     }
 
     private void Update()
     {
+        UpdateMiniGameClockVisibility();
         ResolveEconomyManager();
         UpdateCoinCounter();
         UpdateCoinPopups();
         if (dailyQuestPanel == null || dailyQuestText == null)
             ResolveDailyQuestPanel();
         UpdateDailyQuestPanel();
+        UpdateMissedChoreCounter();
 
         if (timeManager == null || dayManager == null)
             return;
@@ -127,6 +158,44 @@ public class GameHUD : MonoBehaviour
         UpdateTime();
         UpdateChoreList();
         UpdateDailyStats();
+    }
+
+    private void CacheClockVisibility()
+    {
+        GameObject clockObject = clockAnchor != null
+            ? clockAnchor.gameObject
+            : clockRoot != null
+                ? clockRoot.gameObject
+                : null;
+        clockWasActiveBeforeMiniGame =
+            clockObject != null && clockObject.activeSelf;
+        clockProgressWasActiveBeforeMiniGame =
+            clockProgressSlider != null && clockProgressSlider.gameObject.activeSelf;
+        clockVisibilityInitialized = true;
+    }
+
+    private void UpdateMiniGameClockVisibility()
+    {
+        if (!clockVisibilityInitialized)
+            CacheClockVisibility();
+
+        bool hideClock = MiniGameInteractionBlocker.IsAnyMiniGameActive;
+        if (hideClock == clockHiddenForMiniGame)
+            return;
+
+        clockHiddenForMiniGame = hideClock;
+        GameObject clockObject = clockAnchor != null
+            ? clockAnchor.gameObject
+            : clockRoot != null
+                ? clockRoot.gameObject
+                : null;
+        if (clockObject != null)
+            clockObject.SetActive(!hideClock && clockWasActiveBeforeMiniGame);
+        if (clockProgressSlider != null)
+        {
+            clockProgressSlider.gameObject.SetActive(
+                !hideClock && clockProgressWasActiveBeforeMiniGame);
+        }
     }
 
     private void UpdateDay()
@@ -138,6 +207,28 @@ public class GameHUD : MonoBehaviour
     private void UpdateTime()
     {
         bool isTimeFrozen = timeManager.IsTimeFrozen;
+        float dayProgress = timeManager.GetDayProgress();
+        float remainingDaySeconds = Mathf.Max(
+            0f,
+            timeManager.DayLength - timeManager.GetTime());
+        bool isDayNearEnd = remainingDaySeconds <= clockNearEndWarningSeconds;
+        float pulse = isDayNearEnd
+            ? 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 4f)
+            : 0f;
+
+        if (clockProgressSlider != null)
+        {
+            float sliderValue = Mathf.Lerp(
+                clockProgressSlider.minValue,
+                clockProgressSlider.maxValue,
+                dayProgress);
+            clockProgressSlider.SetValueWithoutNotify(sliderValue);
+        }
+
+        if (clockProgressFillImage != null)
+            clockProgressFillImage.color = isDayNearEnd
+                ? Color.Lerp(clockProgressDefaultColor, clockProgressWarningColor, pulse)
+                : clockProgressDefaultColor;
 
         if (clockHand != null)
             clockHand.localRotation = Quaternion.Euler(
@@ -152,10 +243,18 @@ public class GameHUD : MonoBehaviour
                         Mathf.CeilToInt(timeManager.FreezeTimeRemaining) + "s)"
                     : string.Empty);
 
+        if (timePeriodText != null)
+            timePeriodText.text = timeManager.GetClockPeriodLabel();
+
         if (clockFaceImage != null)
-            clockFaceImage.color = isTimeFrozen
+        {
+            Color faceColor = isTimeFrozen
                 ? new Color(0.62f, 0.84f, 1f)
                 : Color.white;
+            clockFaceImage.color = isDayNearEnd
+                ? Color.Lerp(faceColor, clockProgressWarningColor, pulse)
+                : faceColor;
+        }
 
         if (clockHandImage != null)
             clockHandImage.color = isTimeFrozen
@@ -166,6 +265,23 @@ public class GameHUD : MonoBehaviour
             clockCenterImage.color = isTimeFrozen
                 ? new Color(0.05f, 0.35f, 0.72f)
                 : new Color(0.08f, 0.06f, 0.03f);
+
+        if (clockRoot != null)
+            clockRoot.localScale = clockRootOriginalScale *
+                (isDayNearEnd ? 1f + pulse * 0.08f : 1f);
+    }
+
+    private void InitializeClockProgressSlider()
+    {
+        if (clockProgressSlider == null)
+            return;
+
+        clockProgressSlider.interactable = false;
+        clockProgressFillImage = clockProgressSlider.fillRect != null
+            ? clockProgressSlider.fillRect.GetComponent<Image>()
+            : null;
+        if (clockProgressFillImage != null)
+            clockProgressDefaultColor = clockProgressFillImage.color;
     }
 
     private void CreateClockDisplay()
@@ -186,7 +302,7 @@ public class GameHUD : MonoBehaviour
             return;
         }
 
-        if (timeBar != null)
+        if (timeBar != null && timeBar != clockProgressSlider)
             timeBar.gameObject.SetActive(false);
 
         GameObject clockObject = new GameObject(
@@ -196,6 +312,7 @@ public class GameHUD : MonoBehaviour
             typeof(Image));
         clockObject.layer = canvas.gameObject.layer;
         RectTransform clockRect = clockObject.GetComponent<RectTransform>();
+        clockRoot = clockRect;
         if (clockAnchor != null)
         {
             clockRect.SetParent(clockAnchor, false);
@@ -213,6 +330,7 @@ public class GameHUD : MonoBehaviour
             clockRect.anchoredPosition = new Vector2(-32f, -32f);
             clockRect.sizeDelta = new Vector2(144f, 144f);
         }
+        clockRootOriginalScale = clockRoot.localScale;
 
         clockFaceImage = clockObject.GetComponent<Image>();
         clockFaceImage.sprite = clockFaceSprite;
@@ -302,23 +420,20 @@ public class GameHUD : MonoBehaviour
             string status = sweepingManager.IsSweepingCompleted
                 ? string.Empty
                 : " · " + Mathf.Max(0, sweepingManager.RemainingDust) + " remaining";
-            choreListText.text += sweepingManager.IsSweepingCompleted
-                ? "<color=" + CompletedChoreColor + ">✓ <s>Sweep Dust</s></color>\n"
-                : marker + "Sweep Dust" + status + "\n";
+            AppendChoreListEntry(sweepingManager.IsSweepingCompleted
+                ? "<color=" + CompletedChoreColor + ">✓ <s>" + SweepDisplayName
+                    + "</s></color>"
+                : marker + SweepDisplayName + status);
         }
 
         if (waterSpawner != null && waterSpawner.MopTaskStarted &&
-            waterSpawner.IsMoppingMissed)
-        {
-            choreListText.text += "<color=" + MissedChoreColor + ">X Mop Floor</color>\n";
-        }
-        else if (waterSpawner != null && waterSpawner.MopTaskStarted &&
             waterSpawner.IsMoppingCompleted && !waterSpawner.IsSpawning)
         {
-            choreListText.text += "<color=" + CompletedChoreColor
-                + ">✓ <s>Mop Floor</s></color>\n";
+            AppendChoreListEntry("<color=" + CompletedChoreColor
+                + ">✓ <s>" + MopDisplayName + "</s></color>");
         }
         else if (waterSpawner != null &&
+            !waterSpawner.IsMoppingMissed &&
             (waterSpawner.MopTaskStarted || waterSpawner.IsSpawning))
         {
             string mopStatus = waterSpawner.RemainingWetAreas > 0
@@ -326,7 +441,7 @@ public class GameHUD : MonoBehaviour
                     + (waterSpawner.RemainingWetAreas == 1 ? "wet area" : "wet areas")
                     + " remaining"
                 : " · waiting for water";
-            choreListText.text += "○ Mop Floor" + mopStatus + "\n";
+            AppendChoreListEntry("○ " + MopDisplayName + mopStatus);
         }
 
         UpdateHelperIndicators();
@@ -334,13 +449,15 @@ public class GameHUD : MonoBehaviour
 
     private void UpdateDailyQuestPanel()
     {
+        SetDailyChallengeCardTitle();
+
         if (dailyQuestPanel == null || dailyQuestText == null)
             ResolveDailyQuestPanel();
 
         if (dailyQuestPanel == null || dailyQuestText == null || dayManager == null)
             return;
 
-        string questName = dayManager.DailyAdditionalQuestName;
+        string questName = dayManager.DailyAdditionalQuestDisplayName;
         bool hasQuest = !string.IsNullOrEmpty(questName);
         UpdateDailyQuestPanelVisibility(hasQuest);
 
@@ -350,14 +467,14 @@ public class GameHUD : MonoBehaviour
         string status = dayManager.IsDailyAdditionalQuestCompleted
             ? "COMPLETED!"
             : dayManager.IsDailyAdditionalQuestMissed
-                ? "MISSED"
+                ? "NOT COMPLETED"
                 : dayManager.IsDailyAdditionalQuestFailed
                     ? "CHALLENGE FAILED"
                     : "IN PROGRESS";
 
-        dailyQuestText.text = "DAILY BONUS QUEST: " + questName.ToUpperInvariant() +
+        dailyQuestText.text = "CHALLENGE: " + questName +
             "\n" + dayManager.DailyAdditionalQuestGoal +
-            "\nReward: +" + dayManager.DailyAdditionalQuestRewardCoins + " coins" +
+            "\nReward: +" + dayManager.DailyAdditionalQuestRewardCoins + " COINS" +
             "\n" + status;
     }
 
@@ -444,6 +561,12 @@ public class GameHUD : MonoBehaviour
 
         if (fallbackCard != null)
             dailyQuestPanel = fallbackCard.gameObject;
+    }
+
+    private void SetDailyChallengeCardTitle()
+    {
+        if (dailyChallengeTitleText != null)
+            dailyChallengeTitleText.text = DailyChallengeTitle;
     }
 
     private void ResolveChoreListText()
@@ -576,6 +699,100 @@ public class GameHUD : MonoBehaviour
         UpdateMinimizeButtonLabel(choreListRestoreButton, isChoreListMinimized);
     }
 
+    public void PulseChoreListForTutorial()
+    {
+        if (choreListPanelRect == null)
+        {
+            Debug.LogWarning("Cannot highlight the chore list because its panel is unavailable.", this);
+            return;
+        }
+
+        StartTutorialPulse(choreListPanelRect);
+    }
+
+    public void PulseMoodSliderForTutorial()
+    {
+        MoodManager resolvedMoodManager = MoodManager.Instance != null
+            ? MoodManager.Instance
+            : FindFirstObjectByType<MoodManager>();
+        if (resolvedMoodManager == null || resolvedMoodManager.MoodSlider == null)
+        {
+            Debug.LogWarning("Cannot highlight the mood slider because it is unavailable.", this);
+            return;
+        }
+
+        StartTutorialPulse(resolvedMoodManager.MoodSlider.transform);
+    }
+
+    public void PulseMissedChoreCounterForTutorial()
+    {
+        if (missedChoreText == null)
+        {
+            Debug.LogWarning(
+                "Cannot highlight the missed-chore counter because it is unavailable.",
+                this);
+            return;
+        }
+
+        StartTutorialPulse(missedChoreText.rectTransform);
+    }
+
+    public void PulseDailyChallengeCardForTutorial()
+    {
+        if (dailyQuestPanel == null || dailyQuestText == null)
+            ResolveDailyQuestPanel();
+
+        if (dailyQuestPanel == null || dayManager == null ||
+            string.IsNullOrEmpty(dayManager.DailyAdditionalQuestName))
+        {
+            Debug.LogWarning(
+                "Cannot highlight the daily challenge because its card or challenge is unavailable.",
+                this);
+            return;
+        }
+
+        UpdateDailyQuestPanel();
+        Transform target = isDailyQuestMinimized && dailyQuestCollapsedPanel != null
+            ? dailyQuestCollapsedPanel.transform
+            : dailyQuestPanel.transform;
+        StartTutorialPulse(target);
+    }
+
+    private void StartTutorialPulse(Transform target)
+    {
+        if (tutorialPulseCoroutine != null)
+        {
+            StopCoroutine(tutorialPulseCoroutine);
+            if (tutorialPulseTarget != null)
+                tutorialPulseTarget.localScale = tutorialPulseOriginalScale;
+        }
+
+        tutorialPulseTarget = target;
+        tutorialPulseOriginalScale = target.localScale;
+        tutorialPulseCoroutine = StartCoroutine(PulseTutorialTarget(target));
+    }
+
+    private IEnumerator PulseTutorialTarget(Transform target)
+    {
+        const float pulseDuration = 1.5f;
+        const float pulseCount = 3f;
+        float elapsed = 0f;
+        while (elapsed < pulseDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float pulse = 0.5f - 0.5f * Mathf.Cos(
+                elapsed / pulseDuration * pulseCount * Mathf.PI * 2f);
+            target.localScale = tutorialPulseOriginalScale * (1f + pulse * 0.12f);
+            yield return null;
+        }
+
+        if (target != null)
+            target.localScale = tutorialPulseOriginalScale;
+
+        tutorialPulseTarget = null;
+        tutorialPulseCoroutine = null;
+    }
+
     private static GameObject FindPanelObject(Transform panel, string objectName)
     {
         Transform textTransform = panel.Find(objectName);
@@ -645,11 +862,24 @@ public class GameHUD : MonoBehaviour
         titleRect.offsetMin = new Vector2(12f, 0f);
         titleRect.offsetMax = new Vector2(-48f, 0f);
         TMP_Text collapsedTitle = collapsedTitleObject.GetComponent<TMP_Text>();
-        collapsedTitle.font = dailyQuestText.font;
-        collapsedTitle.fontSize = dailyQuestText.fontSize;
-        collapsedTitle.color = dailyQuestText.color;
-        collapsedTitle.alignment = TextAlignmentOptions.MidlineLeft;
-        collapsedTitle.text = "DAILY CHALLENGE";
+        TMP_Text titleStyleSource = dailyChallengeTitleText != null
+            ? dailyChallengeTitleText
+            : dailyQuestText;
+        collapsedTitle.font = titleStyleSource.font;
+        collapsedTitle.fontSize = titleStyleSource.fontSize;
+        collapsedTitle.fontSizeMin = titleStyleSource.fontSizeMin;
+        collapsedTitle.fontSizeMax = titleStyleSource.fontSizeMax;
+        collapsedTitle.enableAutoSizing = titleStyleSource.enableAutoSizing;
+        collapsedTitle.fontStyle = titleStyleSource.fontStyle;
+        collapsedTitle.color = titleStyleSource.color;
+        collapsedTitle.alignment = titleStyleSource.alignment;
+        collapsedTitle.characterSpacing = titleStyleSource.characterSpacing;
+        collapsedTitle.wordSpacing = titleStyleSource.wordSpacing;
+        collapsedTitle.lineSpacing = titleStyleSource.lineSpacing;
+        collapsedTitle.enableWordWrapping = titleStyleSource.enableWordWrapping;
+        collapsedTitle.overflowMode = titleStyleSource.overflowMode;
+        collapsedTitle.margin = titleStyleSource.margin;
+        collapsedTitle.text = DailyChallengeTitle;
         collapsedTitle.raycastTarget = false;
 
         Transform existingButton = dailyQuestPanel.transform.Find(
@@ -685,16 +915,6 @@ public class GameHUD : MonoBehaviour
         }
 
         EnsureMinimizeButtonLabel(button, dailyQuestText);
-
-        RectTransform textRect = dailyQuestText.rectTransform;
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = new Vector2(12f, 10f);
-        textRect.offsetMax = new Vector2(-52f, -10f);
-        dailyQuestText.enableAutoSizing = true;
-        dailyQuestText.fontSizeMin = 12f;
-        dailyQuestText.fontSizeMax = 18f;
-        dailyQuestText.fontSize = 18f;
 
         button.onClick.AddListener(ToggleDailyQuestMinimized);
         dailyQuestMinimizeButton = button;
@@ -897,14 +1117,14 @@ public class GameHUD : MonoBehaviour
                 CleanLeavesChore.ToyPickupChoreName,
                 System.StringComparison.OrdinalIgnoreCase))
         {
-            return CleanLeavesChore.ToyPickupChoreName;
+            return ToyPickupDisplayName;
         }
 
         if (trimmedName.IndexOf("sweep", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             trimmedName.IndexOf("dust", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
             string.Equals(trimmedName, "SweepDust", System.StringComparison.OrdinalIgnoreCase))
         {
-            return "Sweep Dust";
+            return SweepDisplayName;
         }
 
         return trimmedName;
@@ -934,7 +1154,6 @@ public class GameHUD : MonoBehaviour
     {
         int remainingCount = 0;
         int completedCount = 0;
-        int missedCount = 0;
         float nextDeadline = float.MaxValue;
         bool allCompletedByHelper = true;
         int remainingGarbageBags = 0;
@@ -957,11 +1176,7 @@ public class GameHUD : MonoBehaviour
                 allCompletedByHelper &= choreManager != null &&
                     choreManager.WasCompletedByHelper(chore);
             }
-            else if (chore.IsMissed)
-            {
-                missedCount++;
-            }
-            else
+            else if (!chore.IsMissed)
             {
                 remainingCount++;
                 nextDeadline = Mathf.Min(nextDeadline, chore.DeadlineTime);
@@ -983,7 +1198,7 @@ public class GameHUD : MonoBehaviour
             }
             else if (string.Equals(
                 displayName,
-                "Sweep Dust",
+                SweepDisplayName,
                 System.StringComparison.OrdinalIgnoreCase) && sweepingManager != null)
             {
                 int remainingDust = sweepingManager.RemainingDust;
@@ -994,7 +1209,7 @@ public class GameHUD : MonoBehaviour
             }
             else if (string.Equals(
                 displayName,
-                CleanLeavesChore.ToyPickupChoreName,
+                ToyPickupDisplayName,
                 System.StringComparison.OrdinalIgnoreCase) &&
                 toyPickupMiniGame != null &&
                 toyPickupMiniGame.IsGameStarted)
@@ -1012,30 +1227,40 @@ public class GameHUD : MonoBehaviour
 
             string pendingLine = "○ " + displayName + remainingSuffix;
 
+            float secondsUntilDeadline = nextDeadline - timeManager.GetTime();
             if (showDeadline)
+            {
                 pendingLine += " · " + timeManager.FormatClockTime(nextDeadline);
+                pendingLine += " · " + Mathf.CeilToInt(
+                    Mathf.Max(0f, secondsUntilDeadline)) + "s left";
+            }
 
-            if (showDeadline && nextDeadline - timeManager.GetTime() <= nearDeadlineWarningSeconds)
-                pendingLine = "<color=#" + ColorUtility.ToHtmlStringRGBA(nearDeadlineColor)
+            if (showDeadline && secondsUntilDeadline > 0f &&
+                secondsUntilDeadline <= nearDeadlineWarningSeconds)
+            {
+                float pulse = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 6f);
+                Color pulseColor = Color.Lerp(nearDeadlineColor, Color.red, pulse);
+                pendingLine = "<color=#" + ColorUtility.ToHtmlStringRGBA(pulseColor)
                     + ">" + pendingLine + "</color>";
+            }
 
-            choreListText.text += pendingLine + "\n";
+            AppendChoreListEntry(pendingLine);
         }
         else if (completedCount == choreGroup.chores.Count)
         {
             string completedLine = "✓ " + displayName;
             int helperCharacterIndex = GetVisibleCharacterCount(choreListText.text)
                 + completedLine.Length - 1;
-            choreListText.text += "<color=" + CompletedChoreColor + ">✓ <s>"
-                + displayName + "</s></color>\n";
+            AppendChoreListEntry("<color=" + CompletedChoreColor + ">✓ <s>"
+                + displayName + "</s></color>");
             if (allCompletedByHelper)
                 helperIndicatorCharacterIndices.Add(helperCharacterIndex);
         }
-        else
-        {
-            choreListText.text += "<color=" + MissedChoreColor + ">X "
-                + displayName + "</color>\n";
-        }
+    }
+
+    private void AppendChoreListEntry(string entry)
+    {
+        choreListText.text += entry + "\n\n";
     }
 
     private int GetVisibleCharacterCount(string text)
@@ -1151,6 +1376,81 @@ public class GameHUD : MonoBehaviour
 
         if (successRateText != null)
             successRateText.text = "Success: " + choreManager.SuccessRate.ToString("0") + "%";
+
+    }
+
+    private void CreateMissedChoreCounter()
+    {
+        if (missedChoreText == null && currencyCanvas != null)
+        {
+            TMP_Text[] canvasTexts =
+                currencyCanvas.GetComponentsInChildren<TMP_Text>(true);
+            foreach (TMP_Text canvasText in canvasTexts)
+            {
+                if (canvasText.gameObject.name == "Missed Chore Counter")
+                {
+                    missedChoreText = canvasText;
+                    break;
+                }
+            }
+        }
+
+        if (missedChoreText == null)
+        {
+            if (currencyCanvas == null)
+                currencyCanvas = FindFirstObjectByType<Canvas>();
+
+            if (currencyCanvas == null)
+            {
+                Debug.LogWarning(
+                    "Missed-chore counter could not be created because no Canvas was found.",
+                    this);
+                return;
+            }
+
+            GameObject counterObject = new GameObject(
+                "Missed Chore Counter",
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(TextMeshProUGUI));
+            counterObject.layer = currencyCanvas.gameObject.layer;
+
+            RectTransform counterRect = counterObject.GetComponent<RectTransform>();
+            counterRect.SetParent(currencyCanvas.transform, false);
+            counterRect.anchorMin = new Vector2(0f, 1f);
+            counterRect.anchorMax = new Vector2(0f, 1f);
+            counterRect.pivot = new Vector2(0f, 1f);
+            counterRect.anchoredPosition = new Vector2(24f, -76f);
+            counterRect.sizeDelta = new Vector2(220f, 40f);
+
+            missedChoreText = counterObject.GetComponent<TMP_Text>();
+            missedChoreText.font = TMP_Settings.defaultFontAsset;
+            missedChoreText.fontSize = 24f;
+            missedChoreText.color = Color.white;
+            missedChoreText.alignment = TextAlignmentOptions.MidlineLeft;
+            missedChoreText.raycastTarget = false;
+        }
+
+        UpdateMissedChoreCounter();
+    }
+
+    private void UpdateMissedChoreCounter()
+    {
+        if (missedChoreText == null || choreManager == null)
+            return;
+
+        if (dayManager == null)
+        {
+            dayManager = DayManager.Instance != null
+                ? DayManager.Instance
+                : FindFirstObjectByType<DayManager>();
+        }
+
+        if (dayManager == null)
+            return;
+
+        missedChoreText.text = "Missed " + choreManager.missedChores
+            + "/" + dayManager.MissedChoreGameOverThreshold;
     }
 
     private void CreateCoinCounter()

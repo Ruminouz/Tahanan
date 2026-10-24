@@ -27,6 +27,8 @@ public class NPC : MonoBehaviour, IInteractable
     private float dialogueTextFontSize;
     private float reprimandDialogueDuration;
 
+    public bool IsDialogueActive => isDialogueActive;
+
     public bool CanInteract()
     {
         return (dialogueData != null || GetComponent<HouseholdHelperAI>() != null) &&
@@ -58,21 +60,20 @@ public class NPC : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (isDialogueActive)
+        {
+            NextLine();
+            return;
+        }
+
         if (!CanInteract())
             return;
 
-        if (!isDialogueActive)
-        {
-            HouseholdHelperAI helper = GetComponent<HouseholdHelperAI>();
-            if (helper != null)
-                helper.Interact();
-            else
-                StartDialogue();
-        }
+        HouseholdHelperAI helper = GetComponent<HouseholdHelperAI>();
+        if (helper != null)
+            helper.Interact();
         else
-        {
-            NextLine();
-        }
+            StartDialogue();
     }
 
     private void Update()
@@ -262,7 +263,7 @@ public class NPC : MonoBehaviour, IInteractable
         float typingSpeed = dialogueData != null
             ? Mathf.Max(0f, dialogueData.typingSpeed)
             : 0.03f;
-        yield return new WaitForSeconds(typingSpeed);
+        yield return new WaitForSecondsRealtime(typingSpeed);
     }
 
     isTyping = false;
@@ -274,21 +275,21 @@ public class NPC : MonoBehaviour, IInteractable
         dialogueData.autoProgressLines.Length > dialogueIndex &&
         dialogueData.autoProgressLines[dialogueIndex])
     {
-        yield return new WaitForSeconds(dialogueData.autoProgressDelay);
+        yield return new WaitForSecondsRealtime(dialogueData.autoProgressDelay);
         NextLine();
     }
 }
 
     private void ShowChoices()
     {
-        StringBuilder choicesText = new StringBuilder("Pumili ng gawain (pindutin ang numero):\n");
+        StringBuilder choicesText = new StringBuilder("Choose a task (press its number):\n");
         for (int index = 0; index < activeChoices.Length; index++)
         {
             choicesText.Append(index + 1)
                 .Append(". ")
                 .AppendLine(activeChoices[index]);
         }
-        choicesText.Append("0. Wala muna / Esc para batalin");
+        choicesText.Append("0. Nothing for now / Esc to cancel");
         dialogueTextAutoSizing = dialogueText.enableAutoSizing;
         dialogueTextFontSize = dialogueText.fontSize;
         restoreDialogueTextSizing = true;

@@ -19,9 +19,23 @@ public class CleanLeavesMiniGame : MonoBehaviour
 
     public void StartGame(Chore chore)
     {
+        if (chore == null || panel == null)
+            return;
+
+        if (currentChore == chore)
+        {
+            panel.SetActive(true);
+            if (tutorial != null)
+                tutorial.ResumeTutorial();
+            return;
+        }
+
         currentChore = chore;
         cleaningStarted = false;
 
+        MiniGamePanelMinimizer.Attach(panel, MinimizeGame);
+        if (tutorial != null)
+            tutorial.AttachMinimizeButton(MinimizeGame);
         MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
 
@@ -78,6 +92,14 @@ public class CleanLeavesMiniGame : MonoBehaviour
         Debug.Log("Cleaning leaves started!");
     }
 
+    private void MinimizeGame()
+    {
+        if (tutorial != null)
+            tutorial.HideTutorial();
+
+        panel.SetActive(false);
+    }
+
     public void CleanLeaves(GameObject leaf)
     {
         if (!cleaningStarted)
@@ -93,6 +115,7 @@ public class CleanLeavesMiniGame : MonoBehaviour
             return;
 
         leaf.SetActive(false);
+        SoundEffectManager.Play("Sweep");
 
         Debug.Log("Leaves cleaned!");
 
@@ -119,6 +142,7 @@ public class CleanLeavesMiniGame : MonoBehaviour
             currentChore.Complete();
         }
 
+        SoundEffectManager.Play("ChoreFinished");
         panel.SetActive(false);
 
         currentChore = null;

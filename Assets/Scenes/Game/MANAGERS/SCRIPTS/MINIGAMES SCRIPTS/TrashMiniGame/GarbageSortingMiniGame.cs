@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 
 public class GarbageSortingMiniGame : MonoBehaviour
@@ -10,9 +11,15 @@ public class GarbageSortingMiniGame : MonoBehaviour
     [SerializeField] private GameObject panel;
 
     [SerializeField] private GarbageSpawner spawner;
+    [SerializeField] private TMP_Text tutorialText;
+    [SerializeField] private TMP_Text mistakesCounterText;
+    [SerializeField] private TMP_Text correctCounterText;
 
 
     private Chore currentChore;
+    private TutorialManager tutorialManager;
+    private bool firstTimeTutorialActive;
+    private bool tutorialTextWarningLogged;
 
 
     [Header("DAY SETTINGS")]
@@ -29,6 +36,8 @@ public class GarbageSortingMiniGame : MonoBehaviour
     private int totalTrash;
 
     private DayManager dayManager;
+
+    public bool IsPanelVisible => panel != null && panel.activeInHierarchy;
     
 
 
@@ -42,6 +51,12 @@ public class GarbageSortingMiniGame : MonoBehaviour
         }
         Instance = this;
         Instance = this;
+    }
+
+    private void Start()
+    {
+        tutorialManager = FindFirstObjectByType<TutorialManager>();
+        ResolveTutorialText();
     }
 
     private void OnDestroy()
@@ -74,14 +89,29 @@ public class GarbageSortingMiniGame : MonoBehaviour
         return;
     }
 
+    if (currentChore == chore)
+    {
+        MiniGamePanelMinimizer.Attach(panel, PauseSpawning);
+        MiniGameInteractionBlocker.RegisterPanel(panel);
+        panel.SetActive(true);
+        spawner.ResumeSpawning();
+        return;
+    }
+
     currentChore = chore;
+    if (tutorialManager == null)
+        tutorialManager = FindFirstObjectByType<TutorialManager>();
+
+    ResolveTutorialText();
+    firstTimeTutorialActive = tutorialManager == null ||
+        !tutorialManager.HasLearned(chore.ChoreName);
+    SetTutorialText(string.Empty);
 
     spawner.StopSpawning();
 
 
     mistakes = 0;
     correct = 0;
-    
 
 
 
@@ -93,8 +123,12 @@ public class GarbageSortingMiniGame : MonoBehaviour
     currentDay = Mathf.Clamp(currentDay, 1, 7);
 
     totalTrash = GetTrashAmount();
+    UpdateCounterTexts();
     MiniGameInteractionBlocker.RegisterPanel(panel);
+    MiniGamePanelMinimizer.Attach(panel, PauseSpawning);
     panel.SetActive(true);
+    ShowTutorial(
+        "Drag each falling piece of trash into the correct bin. Match it to the label: Organic, Non-Organic, or Recyclable. Each wrong bin or missed item adds a mistake. Reach 5 mistakes and you lose.");
 
 
 
@@ -110,6 +144,12 @@ public class GarbageSortingMiniGame : MonoBehaviour
         GetFallSpeed()
     );
 
+}
+
+private void PauseSpawning()
+{
+    if (spawner != null)
+        spawner.PauseSpawning();
 }
 
 
@@ -137,7 +177,7 @@ public class GarbageSortingMiniGame : MonoBehaviour
         }
         else
         {
-            WrongTrash();
+            WrongTrash(trash.trashType, bin.binType);
         }
 
     }
@@ -150,7 +190,10 @@ private void CorrectTrash(TrashItem trash)
 {
 
     correct++;
-    SoundEffectManager.Play("ChoreFinished");
+    UpdateCounterTexts();
+    SoundEffectManager.Play("TrashCorrect");
+    ShowTutorial(
+        $"Correct! {GetTrashTypeLabel(trash.trashType)} is in the right bin. Sorted: {correct}/{totalTrash}  |  Mistakes: {mistakes}/{maxMistakes}");
 
     
 
@@ -176,11 +219,14 @@ private void CorrectTrash(TrashItem trash)
 
 
 
-    private void WrongTrash()
+    private void WrongTrash(TrashType itemType, TrashType binType)
     {
 
         mistakes++;
-        SoundEffectManager.Play("Wrong");
+        UpdateCounterTexts();
+        SoundEffectManager.Play("TrashWrong");
+        ShowTutorial(
+            $"Wrong bin: {GetTrashTypeLabel(itemType)} went into {GetTrashTypeLabel(binType)}. Match the trash to the correct label. Mistakes: {mistakes}/{maxMistakes}");
 
 
         Debug.Log(
@@ -210,6 +256,10 @@ private void CorrectTrash(TrashItem trash)
     {
 
         mistakes++;
+        UpdateCounterTexts();
+        SoundEffectManager.Play("Wrong");
+        ShowTutorial(
+            $"A piece of trash fell. Drag the next one to the correct bin quickly. Mistakes: {mistakes}/{maxMistakes}");
 
 
         Debug.Log(
@@ -258,6 +308,8 @@ private void CompleteGame()
         return;
 
     ResolveDailyQuest(mistakes == 0);
+    if (firstTimeTutorialActive && tutorialManager != null)
+        tutorialManager.MarkAsLearned(currentChore.ChoreName);
 
     Debug.Log(
         "Garbage Sorting Complete!"
@@ -275,6 +327,8 @@ private void CompleteGame()
 
 
     panel.SetActive(false);
+    SetTutorialText(string.Empty);
+    firstTimeTutorialActive = false;
 
 
     currentChore = null;
@@ -315,10 +369,74 @@ private void CompleteGame()
 
 
     panel.SetActive(false);
+    SetTutorialText(string.Empty);
+    firstTimeTutorialActive = false;
 
 
     currentChore = null;
 
+}
+
+private void ResolveTutorialText()
+{
+    if (tutorialText != null || panel == null)
+        return;
+
+    foreach (TMP_Text text in panel.GetComponentsInChildren<TMP_Text>(true))
+    {
+        if (text.gameObject.name == "Tutorial Text")
+        {
+            tutorialText = text;
+            break;
+        }
+    }
+
+    if (tutorialText == null && !tutorialTextWarningLogged)
+    {
+        Debug.LogWarning("Assign the garbage sorting Tutorial Text TMP object in the Inspector.", this);
+        tutorialTextWarningLogged = true;
+    }
+}
+
+private void ShowTutorial(string message)
+{
+    if (!firstTimeTutorialActive || tutorialText == null)
+        return;
+
+    SetTutorialText(message);
+}
+
+private void SetTutorialText(string message)
+{
+    if (tutorialText == null)
+        return;
+
+    tutorialText.text = message;
+    tutorialText.gameObject.SetActive(!string.IsNullOrEmpty(message));
+}
+
+private void UpdateCounterTexts()
+{
+    if (mistakesCounterText != null)
+        mistakesCounterText.text = $"Mistakes: {mistakes}";
+
+    if (correctCounterText != null)
+        correctCounterText.text = $"Correct: {correct}";
+}
+
+private static string GetTrashTypeLabel(TrashType type)
+{
+    switch (type)
+    {
+        case TrashType.Nabubulok:
+            return "Organic";
+        case TrashType.DiNabubulok:
+            return "Non-Organic";
+        case TrashType.Recyclable:
+            return "Recyclable";
+        default:
+            return type.ToString();
+    }
 }
 
 private void ResolveDailyQuest(bool metChallenge)

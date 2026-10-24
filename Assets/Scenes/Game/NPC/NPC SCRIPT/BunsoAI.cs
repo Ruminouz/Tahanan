@@ -15,13 +15,13 @@ public class BunsoAI : MonoBehaviour
     [Header("Mood")]
     [SerializeField, Min(0f)] private float actionInterval = 12f;
     [SerializeField, Range(0f, 100f)] private float actionChance = 60f;
-    [SerializeField] private string dustBadMoodLine = "Pakiwalisan to kuya! bwhahaah!";
-    [SerializeField] private string waterBadMoodLine = "paki mop to kuya! bwhaahah!";
-    [SerializeField] private string segregateBadMoodLine = "pakiligpit to kuya! bwahahah!";
-    [SerializeField] private string garbageBagBadMoodLine = "pakitapon to sa basura kuya! bwaahha!";
-    [SerializeField] private string chocolateRewardLine = "May chocolate ako para sa'yo!";
-    [SerializeField] private string chocolateConsumedLine = "Mama! kinain ni kuya chocolate ko!";
-    [SerializeField] private string timeFreezerRewardLine = "Eto, pampahinto ng oras!";
+    [SerializeField] private string dustBadMoodLine = "Sweep this up, big brother! Hahaha!";
+    [SerializeField] private string waterBadMoodLine = "Mop this up, big brother! Hahaha!";
+    [SerializeField] private string segregateBadMoodLine = "Put these away, big brother! Hahaha!";
+    [SerializeField] private string garbageBagBadMoodLine = "Throw this in the trash, big brother! Hahaha!";
+    [SerializeField] private string chocolateRewardLine = "I have some chocolate for you!";
+    [SerializeField] private string chocolateConsumedLine = "Mom! Big brother ate my chocolate!";
+    [SerializeField] private string timeFreezerRewardLine = "Here, this can stop time!";
 
     [Header("Good Mood Rewards")]
     [SerializeField] private BunsoBoostType[] possibleBoosts =
@@ -32,6 +32,8 @@ public class BunsoAI : MonoBehaviour
     [SerializeField, Min(0f)] private float rewardDropGap = 0.15f;
 
     [Header("Bad Mood Chore")]
+    [SerializeField, Min(0)] private int[] maximumBadMoodChoresByDay =
+        { 0, 2, 3, 3, 4, 4, 5 };
     [SerializeField] private SegregateWasteChore segregateWastePrefab;
     [SerializeField] private DustSpot dustSpotPrefab;
     [SerializeField] private WetArea wetAreaPrefab;
@@ -228,6 +230,7 @@ public class BunsoAI : MonoBehaviour
             droppedReward.AddComponent<BoxCollider2D>();
         PlaceRewardBesideBunso(droppedReward);
         pickup.Configure(boost);
+        SoundEffectManager.Play("BunsoLove");
     }
 
     private void PlaceRewardBesideBunso(GameObject reward)
@@ -264,7 +267,9 @@ public class BunsoAI : MonoBehaviour
 
     private void BeginBadMoodChore()
     {
-        if (dayManager.CurrentDay < 2)
+        int dailyChoreLimit = GetMaximumBadMoodChoresForDay(dayManager.CurrentDay);
+        if (dailyChoreLimit <= 0 ||
+            !dayManager.CanRegisterBunsoBadMoodChoreDrop(dailyChoreLimit))
             return;
 
         if (segregateWastePrefab == null)
@@ -297,9 +302,28 @@ public class BunsoAI : MonoBehaviour
 
         StartCoroutine(ApproachAndAct(dialogue, () =>
         {
+            if (!dayManager.TryRegisterBunsoBadMoodChoreDrop(dailyChoreLimit))
+                return;
+
             if (!spawnChore())
+            {
+                dayManager.UnregisterBunsoBadMoodChoreDrop();
                 Debug.LogWarning("Bunso's selected bad-mood chore could not be spawned.", this);
+                return;
+            }
+
+            SoundEffectManager.Play("BunsoTawa");
         }));
+    }
+
+    private int GetMaximumBadMoodChoresForDay(int day)
+    {
+        if (maximumBadMoodChoresByDay == null ||
+            day < 1 ||
+            day > maximumBadMoodChoresByDay.Length)
+            return 0;
+
+        return Mathf.Max(0, maximumBadMoodChoresByDay[day - 1]);
     }
 
     private System.Collections.IEnumerator ApproachAndAct(
@@ -492,7 +516,6 @@ public class BunsoAI : MonoBehaviour
         spawnedChores.Add(chore);
         TrackSpawnedObject(chore.gameObject);
 
-        SpawnGarbageBag();
         return true;
     }
 

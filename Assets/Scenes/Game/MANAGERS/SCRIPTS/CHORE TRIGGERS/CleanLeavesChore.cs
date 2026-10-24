@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 public class CleanLeavesChore : Chore
 {
-    public const string ToyPickupChoreName = "Iligpit ang mga laruan";
+    public const string ToyPickupChoreName = "Pick Up the Toys";
 
     [FormerlySerializedAs("segregationMiniGame")]
     [SerializeField] private SegregateWasteMiniGame toyPickupMiniGame;

@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class WetArea : Interactable
 {
-    private MoppingMinigame moppingMinigame;
+    private const string MoppingTutorialKey = "Mop";
 
+    private MoppingMinigame moppingMinigame;
     private WaterSpawner waterSpawner;
+    private TutorialManager tutorialManager;
     private Transform spawnPoint;
 
     private bool isCleaned = false;
@@ -72,7 +74,7 @@ public class WetArea : Interactable
 
         if (!playerState.HasMop)
         {
-            SpeechBubbleCanvas.Show(player.transform, "Pulutin mo muna ang mop!", 2f);
+            SpeechBubbleCanvas.Show(player.transform, "Pick up the mop first!", 2f);
 
             return;
         }
@@ -80,7 +82,7 @@ public class WetArea : Interactable
         PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
         if (inventory == null || inventory.SelectedEquipment != EquipmentType.Mop)
         {
-            SpeechBubbleCanvas.Show(player.transform, "I-equip muna ang mop bago maglinis.", 2f);
+            SpeechBubbleCanvas.Show(player.transform, "Equip the mop before cleaning.", 2f);
 
             return;
         }
@@ -102,7 +104,15 @@ public class WetArea : Interactable
 
 
 
-        moppingMinigame.StartMopping(this);
+        if (tutorialManager == null)
+            tutorialManager = FindFirstObjectByType<TutorialManager>();
+
+        bool showTutorial = tutorialManager == null
+            || !tutorialManager.HasLearned(MoppingTutorialKey);
+        moppingMinigame.StartMopping(
+            this,
+            showTutorial,
+            () => tutorialManager?.MarkAsLearned(MoppingTutorialKey));
     }
 
 

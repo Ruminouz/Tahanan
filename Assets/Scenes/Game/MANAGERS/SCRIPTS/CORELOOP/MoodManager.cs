@@ -26,8 +26,12 @@ public class MoodManager : MonoBehaviour
     [SerializeField, Min(0f)] private float moodRecoveryPerCompletedChore = 5f;
     [SerializeField] private Sprite moodGainSprite;
     [SerializeField] private Sprite moodLossSprite;
+    [SerializeField] private Sprite happyMoodHandleSprite;
+    [SerializeField] private Sprite neutralMoodHandleSprite;
+    [SerializeField] private Sprite sadMoodHandleSprite;
 
     private float mood;
+    private Image moodSliderHandleImage;
     private Canvas popupCanvas;
     private int activePopupCount;
     private bool warnedAboutPopupSetup;
@@ -49,6 +53,16 @@ public class MoodManager : MonoBehaviour
         }
 
         Instance = this;
+        if (moodSlider == null)
+        {
+            GameObject moodSliderObject = GameObject.Find("MoodSlider");
+            if (moodSliderObject != null)
+                moodSlider = moodSliderObject.GetComponent<Slider>();
+        }
+
+        moodSliderHandleImage = moodSlider != null && moodSlider.handleRect != null
+            ? moodSlider.handleRect.GetComponent<Image>()
+            : null;
         mood = Mathf.Clamp(startingMood, 0f, 100f);
         UpdateSlider();
     }
@@ -108,7 +122,10 @@ public class MoodManager : MonoBehaviour
 
         float moodChange = mood - previousValue;
         if (!Mathf.Approximately(moodChange, 0f))
+        {
+            SoundEffectManager.Play(moodChange > 0f ? "MoodUp" : "MoodDown");
             ShowMoodChangePopup(moodChange);
+        }
 
         HouseholdMood newMood = CurrentMood;
         if (newMood != previousMood)
@@ -151,6 +168,21 @@ public class MoodManager : MonoBehaviour
             return;
         }
 
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        Camera worldCamera = Camera.main;
+        if (player == null || worldCamera == null)
+        {
+            if (!warnedAboutPopupSetup)
+            {
+                Debug.LogWarning(
+                    "Mood change popup cannot be shown because the player or main camera was not found.",
+                    this);
+                warnedAboutPopupSetup = true;
+            }
+
+            return;
+        }
+
         GameObject popupObject = new GameObject(
             "Mood Change Popup",
             typeof(RectTransform),
@@ -162,8 +194,7 @@ public class MoodManager : MonoBehaviour
         popupRect.anchorMax = new Vector2(0.5f, 0.5f);
         popupRect.pivot = new Vector2(0.5f, 0.5f);
         popupRect.sizeDelta = new Vector2(180f, 52f);
-        popupRect.anchoredPosition = GetPopupPosition() +
-            Vector2.up * (activePopupCount * 52f);
+        float popupOffset = activePopupCount * 52f;
         activePopupCount++;
 
         GameObject iconObject = new GameObject(
@@ -178,7 +209,7 @@ public class MoodManager : MonoBehaviour
         iconRect.anchorMax = new Vector2(0f, 0.5f);
         iconRect.pivot = new Vector2(0f, 0.5f);
         iconRect.anchoredPosition = Vector2.zero;
-        iconRect.sizeDelta = new Vector2(48f, 48f);
+        iconRect.sizeDelta = new Vector2(100f, 100f);
 
         Image icon = iconObject.GetComponent<Image>();
         icon.sprite = moodSprite;
@@ -213,54 +244,55 @@ public class MoodManager : MonoBehaviour
         StartCoroutine(AnimateMoodPopup(
             popupObject,
             popupRect,
-            popupObject.GetComponent<CanvasGroup>()));
-    }
-
-    private Vector2 GetPopupPosition()
-    {
-        if (moodSlider == null)
-            return new Vector2(0f, 140f);
-
-        RectTransform canvasRect = popupCanvas.transform as RectTransform;
-        if (canvasRect == null)
-            return new Vector2(0f, 140f);
-
-        Camera eventCamera = popupCanvas.renderMode == RenderMode.ScreenSpaceOverlay
-            ? null
-            : popupCanvas.worldCamera;
-        Vector2 screenPosition = RectTransformUtility.WorldToScreenPoint(
-            eventCamera,
-            moodSlider.transform.position);
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,
-                screenPosition,
-                eventCamera,
-                out Vector2 localPosition))
-        {
-            return localPosition + Vector2.up * 38f;
-        }
-
-        return new Vector2(0f, 140f);
+            popupObject.GetComponent<CanvasGroup>(),
+            player,
+            worldCamera,
+            popupOffset));
     }
 
     private IEnumerator AnimateMoodPopup(
         GameObject popupObject,
         RectTransform popupRect,
-        CanvasGroup popupGroup)
+        CanvasGroup popupGroup,
+        PlayerMovement player,
+        Camera worldCamera,
+        float popupOffset)
     {
         const float duration = 1.2f;
-        Vector2 startPosition = popupRect.anchoredPosition;
-        Vector2 endPosition = startPosition + Vector2.up * 42f;
+        RectTransform canvasRect = popupCanvas.transform as RectTransform;
+        Camera canvasCamera = popupCanvas.renderMode == RenderMode.ScreenSpaceOverlay
+            ? null
+            : popupCanvas.worldCamera;
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
+            if (player == null || worldCamera == null || canvasRect == null)
+            {
+                activePopupCount = Mathf.Max(0, activePopupCount - 1);
+                Destroy(popupObject);
+                yield break;
+            }
+
             elapsed += Time.deltaTime;
             float progress = Mathf.Clamp01(elapsed / duration);
-            popupRect.anchoredPosition = Vector2.Lerp(
-                startPosition,
-                endPosition,
-                progress);
+            Vector3 headPosition = player.transform.position + Vector3.up;
+            SpriteRenderer playerSprite =
+                player.GetComponentInChildren<SpriteRenderer>();
+            if (playerSprite != null)
+                headPosition.y = playerSprite.bounds.max.y + 0.1f;
+
+            Vector3 screenPosition = worldCamera.WorldToScreenPoint(headPosition);
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    canvasRect,
+                    screenPosition,
+                    canvasCamera,
+                    out Vector2 localPosition))
+            {
+                popupRect.anchoredPosition = localPosition +
+                    Vector2.up * (38f + popupOffset + 42f * progress);
+            }
+
             popupGroup.alpha = 1f - progress;
             yield return null;
         }
@@ -283,5 +315,15 @@ public class MoodManager : MonoBehaviour
     {
         if (moodSlider != null)
             moodSlider.value = mood / 100f;
+
+        if (moodSliderHandleImage == null)
+            return;
+
+        Sprite handleSprite = mood <= angryThreshold
+            ? sadMoodHandleSprite
+            : mood <= concernedThreshold
+                ? neutralMoodHandleSprite
+                : happyMoodHandleSprite;
+        moodSliderHandleImage.sprite = handleSprite;
     }
 }

@@ -14,9 +14,17 @@ public class BroomShopUI : MonoBehaviour
     [Header("Shop Icon")]
     [FormerlySerializedAs("broomUpgradeIcon")]
     [SerializeField] private Sprite vacuumUpgradeIcon;
+    [Header("Consumables")]
+    [SerializeField, Min(1)] private int chocolateCost = 10;
+    [SerializeField, Min(1)] private int timeFreezerCost = 10;
+    [SerializeField] private Sprite chocolateIcon;
+    [SerializeField] private Sprite timeFreezerIcon;
 
     private EconomyManager economyManager;
     private ShopItemCardUI vacuumCard;
+    private ShopItemCardUI chocolateCard;
+    private ShopItemCardUI timeFreezerCard;
+    private BunsoBoostInventory boostInventory;
 
     private void OnEnable()
     {
@@ -37,6 +45,22 @@ public class BroomShopUI : MonoBehaviour
             "Vacuum Upgrade",
             "Suck up dust faster with an upgraded vacuum.",
             BuyBroomUpgrade);
+        chocolateCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "Chocolate",
+            1,
+            chocolateIcon,
+            "Chocolate Bar",
+            "Temporarily move faster, but it makes Bunso upset.",
+            BuyChocolate);
+        timeFreezerCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "TimeFreezer",
+            2,
+            timeFreezerIcon,
+            "Time Freezer",
+            "Freeze the timer for a short time.",
+            BuyTimeFreezer);
 
         Refresh();
     }
@@ -44,6 +68,7 @@ public class BroomShopUI : MonoBehaviour
     private void Start()
     {
         SubscribeToEconomy();
+        SubscribeToBoostInventory();
         Refresh();
     }
 
@@ -54,6 +79,11 @@ public class BroomShopUI : MonoBehaviour
             economyManager.CoinsChanged -= OnEconomyChanged;
             economyManager.BroomUpgradeChanged -= OnEconomyChanged;
         }
+        if (boostInventory != null)
+        {
+            boostInventory.InventoryChanged -= OnBoostInventoryChanged;
+            boostInventory = null;
+        }
 
         if (buyButton != null)
             buyButton.onClick.RemoveListener(BuyBroomUpgrade);
@@ -63,6 +93,11 @@ public class BroomShopUI : MonoBehaviour
     }
 
     private void OnEconomyChanged(int value)
+    {
+        Refresh();
+    }
+
+    private void OnBoostInventoryChanged()
     {
         Refresh();
     }
@@ -86,6 +121,27 @@ public class BroomShopUI : MonoBehaviour
         economyManager.BroomUpgradeChanged += OnEconomyChanged;
     }
 
+    private void SubscribeToBoostInventory()
+    {
+        BunsoBoostInventory currentInventory = BunsoBoostInventory.Instance;
+        if (currentInventory == null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+                currentInventory = player.GetComponent<BunsoBoostInventory>();
+        }
+
+        if (boostInventory == currentInventory)
+            return;
+
+        if (boostInventory != null)
+            boostInventory.InventoryChanged -= OnBoostInventoryChanged;
+
+        boostInventory = currentInventory;
+        if (boostInventory != null)
+            boostInventory.InventoryChanged += OnBoostInventoryChanged;
+    }
+
     public void BuyBroomUpgrade()
     {
         if (economyManager == null)
@@ -103,8 +159,31 @@ public class BroomShopUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void BuyChocolate()
+    {
+        BuyBoost(BunsoBoostType.Chocolate, chocolateCost);
+    }
+
+    public void BuyTimeFreezer()
+    {
+        BuyBoost(BunsoBoostType.TimeFreezer, timeFreezerCost);
+    }
+
+    private void BuyBoost(BunsoBoostType boost, int cost)
+    {
+        if (economyManager == null)
+            economyManager = EconomyManager.Instance;
+
+        SubscribeToBoostInventory();
+        if (economyManager != null)
+            economyManager.TryPurchaseBoost(boostInventory, boost, cost);
+
+        Refresh();
+    }
+
     private void Refresh()
     {
+        SubscribeToBoostInventory();
         if (economyManager == null)
         {
             if (statusText != null)
@@ -115,6 +194,12 @@ public class BroomShopUI : MonoBehaviour
 
             if (vacuumCard != null)
                 vacuumCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
+            if (chocolateCard != null)
+                chocolateCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
+            if (timeFreezerCard != null)
+                timeFreezerCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
 
             return;
         }
@@ -147,5 +232,38 @@ public class BroomShopUI : MonoBehaviour
                 !canUpgrade ? "MAXED" : economyManager.Coins >= cost ? "UPGRADE" : "NEED COINS",
                 canUpgrade && economyManager.Coins >= cost);
         }
+
+        SetConsumablePurchaseState(
+            chocolateCard,
+            BunsoBoostType.Chocolate,
+            chocolateCost,
+            chocolateIcon != null);
+        SetConsumablePurchaseState(
+            timeFreezerCard,
+            BunsoBoostType.TimeFreezer,
+            timeFreezerCost,
+            timeFreezerIcon != null);
+    }
+
+    private void SetConsumablePurchaseState(
+        ShopItemCardUI card,
+        BunsoBoostType boost,
+        int itemCost,
+        bool isConfigured)
+    {
+        if (card == null)
+            return;
+
+        bool canAfford = economyManager.Coins >= itemCost;
+        bool canAdd = boostInventory != null && boostInventory.CanAdd(boost);
+        bool canPurchase = isConfigured && canAfford && canAdd;
+        string action = boostInventory == null
+            ? "NO INVENTORY"
+            : !canAdd
+                ? "INVENTORY FULL"
+                : !isConfigured
+                    ? "NOT SET UP"
+                    : canAfford ? "BUY" : "NEED COINS";
+        card.SetPurchaseState(itemCost + " COINS", action, canPurchase);
     }
 }

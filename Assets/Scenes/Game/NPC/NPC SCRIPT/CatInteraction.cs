@@ -52,7 +52,7 @@ public class CatInteraction : MonoBehaviour
         bool wasMoving = npc.MovementEnabled;
         npc.SetMovementEnabled(false);
         npc.ResetWaypointRoute();
-        SpeechBubbleCanvas.Show(npc.transform, "Asan si ming ming", bubbleDuration);
+        SpeechBubbleCanvas.Show(npc.transform, "Where's the kitty?", bubbleDuration);
 
         Collider2D catCollider = GetPettingCollider();
         float elapsed = 0f;

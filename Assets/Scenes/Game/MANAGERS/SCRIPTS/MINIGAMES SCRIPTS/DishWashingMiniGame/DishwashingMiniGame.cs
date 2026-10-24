@@ -30,6 +30,8 @@ public class DishwashingMiniGame : MonoBehaviour, IPointerClickHandler
    private float comboTimer;
     [Header("Main Panel")]
     [SerializeField] private GameObject panel;
+    [SerializeField] private ChoreTutorial tutorial;
+    [SerializeField] private TMP_Text tutorialText;
     private DayManager dayManager;
 [SerializeField] private GameObject garbageBag;
 [SerializeField] private Transform garbageSpawnPoint;
@@ -68,6 +70,7 @@ private int currentLeftoverAmount;
 private int currentDay = 1;
 private Coroutine resultCoroutine;
 private const float ResultDisplayDuration = 1.5f;
+private const float TutorialPulseSpeed = 5f;
 
     [Header("Rinsing")]
     [SerializeField] private Transform rinsingArea;
@@ -82,9 +85,6 @@ private const float ResultDisplayDuration = 1.5f;
     [Header("Drying Rack")]
     [SerializeField] private Transform dryingRack;
 
-    [Header("Tutorial")]
-    [SerializeField] private ChoreTutorial tutorial;
-    
     private Chore currentChore;
     private TutorialManager tutorialManager;
 
@@ -98,6 +98,10 @@ private int platesRinsed;
 
 private int platesToRinse;
 private int platesToDry;
+private bool firstTimeTutorialActive;
+private TMP_Text tutorialPrompt;
+private readonly List<Transform> tutorialPulseTargets = new List<Transform>();
+private readonly List<Vector3> tutorialPulseBaseScales = new List<Vector3>();
 private Transform faucet;
 private Image faucetImage;
 private Outline faucetOutline;
@@ -111,6 +115,8 @@ private Image waterSurfaceImage;
 private Sprite[] waterStreamFrames;
 private Coroutine waterFillCoroutine;
 private bool waterFilled;
+private bool waterFillInProgress;
+private float waterFillElapsed;
 private EconomyManager economyManager;
 
 private void OnEnable()
@@ -139,6 +145,12 @@ private void OnDisable()
 
     if (economyManager != null)
         economyManager.DishwashingLiquidPurchaseChanged -= OnDishwashingLiquidPurchaseChanged;
+
+    if (waterFillCoroutine != null)
+    {
+        StopCoroutine(waterFillCoroutine);
+        waterFillCoroutine = null;
+    }
 }
 
 private void SubscribeToEconomy()
@@ -165,12 +177,6 @@ private void RefreshDishwashingLiquidVisual()
     if (economyManager == null || !economyManager.HasPurchasedDishwashingLiquid)
         return;
 
-    if (soap == null)
-    {
-        Debug.LogWarning("Dishwashing liquid was purchased, but the soap visual is not assigned.", this);
-        return;
-    }
-
     Sprite liquidSprite = economyManager.DishwashingLiquidSprite;
     if (liquidSprite == null)
     {
@@ -178,15 +184,25 @@ private void RefreshDishwashingLiquidVisual()
         return;
     }
 
-    Image soapImage = soap.GetComponentInChildren<Image>(true);
-    if (soapImage == null)
+    Transform visualRoot = panel != null ? panel.transform : transform;
+    Image sabonVisual = null;
+    foreach (Image image in visualRoot.GetComponentsInChildren<Image>(true))
     {
-        Debug.LogWarning("Dishwashing liquid visual has no UI Image to update.", soap);
+        if (image.gameObject.name == "SabonVisual")
+        {
+            sabonVisual = image;
+            break;
+        }
+    }
+
+    if (sabonVisual == null)
+    {
+        Debug.LogWarning("Dishwashing liquid was purchased, but the SabonVisual image was not found in the dishwashing panel.", visualRoot);
         return;
     }
 
-    soapImage.sprite = liquidSprite;
-    soapImage.preserveAspect = true;
+    sabonVisual.sprite = liquidSprite;
+    sabonVisual.preserveAspect = true;
 }
 
 private void OnDestroy()
@@ -206,8 +222,24 @@ private void OnDestroy()
 
 public void StartGame(Chore chore)
 {
-    if (chore == null)
+    if (chore == null || panel == null)
         return;
+
+    if (currentChore == chore && timerRunning)
+    {
+        MiniGamePanelMinimizer.Attach(panel, PauseDishwashingAudio);
+        panel.GetComponent<MiniGamePanelMinimizer>().EnableFirstOpenTutorial();
+        MiniGameInteractionBlocker.RegisterPanel(panel);
+        panel.SetActive(true);
+        if (waterFillInProgress)
+        {
+            if (waterFillCoroutine == null)
+                waterFillCoroutine = StartCoroutine(FillRinsingArea());
+            else
+                SoundEffectManager.Play("Water Stream");
+        }
+        return;
+    }
 
     if (resultCoroutine != null)
     {
@@ -227,6 +259,8 @@ public void StartGame(Chore chore)
     // OPEN PANEL
     if(panel != null)
     {
+        MiniGamePanelMinimizer.Attach(panel, PauseDishwashingAudio);
+        panel.GetComponent<MiniGamePanelMinimizer>().EnableFirstOpenTutorial();
         MiniGameInteractionBlocker.RegisterPanel(panel);
         panel.SetActive(true);
     }
@@ -287,38 +321,19 @@ public void StartGame(Chore chore)
 
     SpawnLeftovers();
 
+    bool hasLearnedBefore = tutorialManager != null && tutorialManager.HasLearned(chore.ChoreName);
+    firstTimeTutorialActive = tutorialText != null && !hasLearnedBefore;
 
-
-    currentStage = WashStage.RemoveLeftovers;
-
-
-
-
-
-    bool alreadyLearned = false;
-
-
-
-    if(tutorialManager != null)
+    if (tutorialText == null)
     {
-        alreadyLearned =
-            tutorialManager.HasLearned(
-                chore.ChoreName
-            );
+        Debug.LogWarning("Dishwashing tutorial is enabled but no Tutorial Text TMP object is assigned in the Inspector.", this);
+    }
+    else if (tutorialManager == null)
+    {
+        Debug.Log("TutorialManager missing; showing the first-time dishwashing tutorial anyway.");
     }
 
-
-
-
-
-    if(alreadyLearned)
-    {
-        StartDishwashing();
-    }
-    else
-    {
-        ShowTutorial();
-    }
+    StartDishwashing();
 
 
 
@@ -326,6 +341,12 @@ public void StartGame(Chore chore)
         "Dishwashing Started"
     );
 }
+
+private void PauseDishwashingAudio()
+{
+    SoundEffectManager.Stop("Faucet");
+}
+
    private void StartMiniGameTimer()
 {
     currentTimer = dishwashingTime;
@@ -343,26 +364,6 @@ public void StartGame(Chore chore)
     );
 }
 
-    private void ShowTutorial()
-    {
-        if (tutorial == null)
-        {
-            StartDishwashing();
-            return;
-        }
-
-        tutorial.ShowTutorial(
-            "DISHWASHING",
-            "1. Remove all leftovers and put them in the trash.\n" +
-            "2. Add dishwashing liquid to the sponge.\n" +
-            "3. Scrub each plate until clean.\n" +
-            "4. Put all clean plates in the rinsing area.\n" +
-            "5. Click the faucet and wait 3 seconds for the area to fill with water.\n" +
-            "6. Put the rinsed plates on the drying rack.",
-            FinishTutorial
-        );
-    }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         GameObject pressedObject = eventData.pointerPressRaycast.gameObject;
@@ -379,11 +380,20 @@ public void StartGame(Chore chore)
             platesToRinse < currentPlateAmount)
             return;
 
+        if (firstTimeTutorialActive)
+            SetTutorialStep("Wait a few seconds for the sink to fill before placing the dishes in the water.");
+
+        waterFillElapsed = 0f;
+        waterFillInProgress = true;
         waterFillCoroutine = StartCoroutine(FillRinsingArea());
     }
     private void Update()
 {
-    UpdateFaucetCue();
+        if (panel == null || !panel.activeInHierarchy)
+            return;
+
+        UpdateFaucetCue();
+    UpdateTutorialPulse();
 
     if(!timerRunning)
         return;
@@ -417,6 +427,8 @@ public void StartGame(Chore chore)
 private void FailDishwashing()
 {
     timerRunning = false;
+    firstTimeTutorialActive = false;
+    DestroyTutorialPrompt();
 
 
     Debug.Log(
@@ -451,24 +463,159 @@ if(manager != null)
     currentChore = null;
 }
 
-    private void FinishTutorial()
-    {
-        if (tutorialManager != null && currentChore != null)
-        {
-            tutorialManager.MarkAsLearned(
-                currentChore.ChoreName
-            );
-        }
-
-        StartDishwashing();
-    }
-
     private void StartDishwashing()
     {
         currentStage = WashStage.RemoveLeftovers;
+        ShowTutorialStepForCurrentStage();
 
         Debug.Log("Dishwashing started!");
         Debug.Log("Remove all leftovers first.");
+    }
+
+    private void ShowTutorialStepForCurrentStage()
+    {
+        if (!firstTimeTutorialActive)
+            return;
+
+        switch (currentStage)
+        {
+            case WashStage.RemoveLeftovers:
+                List<Transform> leftoverTargets = new List<Transform>();
+                if (leftoverSpawnArea != null)
+                {
+                    foreach (DishLeftOver leftover in
+                        leftoverSpawnArea.GetComponentsInChildren<DishLeftOver>(true))
+                    {
+                        leftoverTargets.Add(leftover.transform);
+                    }
+                }
+
+                GameObject trashBin = GameObject.FindWithTag("TrashBin");
+                if (trashBin != null)
+                    leftoverTargets.Add(trashBin.transform);
+
+                SetTutorialStep(
+                    "Step 1: Drag the leftover food into the trash. Once it's all gone, move on to the next step.",
+                    leftoverTargets.ToArray());
+                break;
+
+            case WashStage.AddSoap:
+                SetTutorialStep(
+                    "Step 2: Drag the sponge over the soap to apply it to the dishes.",
+                    GetTransform(sponge),
+                    GetTransform(soap));
+                break;
+
+            case WashStage.Scrub:
+                SetTutorialStep(
+                    "Step 3: Scrub each dirty dish with the soapy sponge until it's clean.",
+                    currentScrubbingPlate != null ? currentScrubbingPlate.transform : null,
+                    GetTransform(sponge));
+                break;
+
+            case WashStage.Rinse:
+                if (platesToRinse >= currentPlateAmount)
+                {
+                    SetTutorialStep(
+                        "Step 4: Turn on the faucet and wait for the sink to fill before placing the dishes in it.");
+                }
+                else if (currentScrubbingPlate != null)
+                {
+                    SetTutorialStep(
+                        "Scrub the remaining dirty dish before placing the clean dishes in the sink.",
+                        currentScrubbingPlate.transform,
+                        GetTransform(sponge));
+                }
+                else
+                {
+                    SetTutorialStep(
+                        "Drag the clean dishes into the sink to rinse them.",
+                        rinsingArea);
+                }
+                break;
+
+            case WashStage.Dry:
+                SetTutorialStep(
+                    "Final step: Drag the rinsed dishes onto the drying rack to dry.",
+                    dryingRack);
+                break;
+        }
+    }
+
+    private static Transform GetTransform(GameObject target)
+    {
+        return target != null ? target.transform : null;
+    }
+
+    private void SetTutorialStep(string message, params Transform[] targets)
+    {
+        if (!firstTimeTutorialActive)
+            return;
+
+        tutorialPrompt = tutorialText;
+        if (tutorialPrompt == null)
+            return;
+
+        if (tutorialPrompt.gameObject != null)
+            tutorialPrompt.gameObject.SetActive(true);
+
+        tutorialPrompt.text = message;
+
+        RestoreTutorialPulseTargets();
+        if (targets == null)
+            return;
+
+        foreach (Transform target in targets)
+        {
+            if (target == null || tutorialPulseTargets.Contains(target))
+                continue;
+
+            tutorialPulseTargets.Add(target);
+            tutorialPulseBaseScales.Add(target.localScale);
+        }
+    }
+
+    private void UpdateTutorialPulse()
+    {
+        if (!firstTimeTutorialActive)
+            return;
+
+        float pulse = 1f + (Mathf.Sin(Time.unscaledTime * TutorialPulseSpeed) + 1f) * 0.075f;
+        for (int i = tutorialPulseTargets.Count - 1; i >= 0; i--)
+        {
+            Transform target = tutorialPulseTargets[i];
+            if (target == null)
+            {
+                tutorialPulseTargets.RemoveAt(i);
+                tutorialPulseBaseScales.RemoveAt(i);
+                continue;
+            }
+
+            target.localScale = tutorialPulseBaseScales[i] * pulse;
+        }
+    }
+
+    private void RestoreTutorialPulseTargets()
+    {
+        for (int i = 0; i < tutorialPulseTargets.Count; i++)
+        {
+            if (tutorialPulseTargets[i] != null)
+                tutorialPulseTargets[i].localScale = tutorialPulseBaseScales[i];
+        }
+
+        tutorialPulseTargets.Clear();
+        tutorialPulseBaseScales.Clear();
+    }
+
+    private void DestroyTutorialPrompt()
+    {
+        RestoreTutorialPulseTargets();
+        tutorialPrompt = tutorialText;
+        if (tutorialPrompt == null)
+            return;
+
+        tutorialPrompt.text = string.Empty;
+        tutorialPrompt.gameObject.SetActive(false);
     }
 
     // =========================================================
@@ -485,7 +632,7 @@ if(manager != null)
     if (leftoversRemaining < 0)
         leftoversRemaining = 0;
 
-        AwardComboScore(30, "Leftover cleared!");
+        AwardComboScore(30, "Leftovers cleared!");
 
         Debug.Log("Leftover removed!");
         Debug.Log("Leftovers remaining: " + leftoversRemaining);
@@ -493,6 +640,10 @@ if(manager != null)
         if (leftoversRemaining <= 0)
         {
             StartAddSoap();
+        }
+        else
+        {
+            ShowTutorialStepForCurrentStage();
         }
     }
 
@@ -503,6 +654,7 @@ if(manager != null)
         Debug.Log("ALL LEFTOVERS REMOVED!");
         Debug.Log("CURRENT STAGE: " + currentStage);
         Debug.Log("Add dishwashing liquid to the sponge.");
+        ShowTutorialStepForCurrentStage();
     }
 
     // =========================================================
@@ -530,6 +682,7 @@ if(manager != null)
         Debug.Log("Start scrubbing the plates.");
 
         EnablePlateScrubbing();
+        ShowTutorialStepForCurrentStage();
     }
 
     public bool CanAddSoap()
@@ -585,6 +738,7 @@ private void EnableNextPlate()
         dish.DisableScrubbing();
     }
 
+    currentScrubbingPlate = null;
 
     // Hanapin next plate sa stack
     for(int i = spawnedPlates.Count - 1; i >= 0; i--)
@@ -618,7 +772,7 @@ private void EnableNextPlate()
     if(dish != currentScrubbingPlate)
         return;
 
-    AwardComboScore(45, "Nice scrub!");
+    AwardComboScore(45, "Great scrubbing!");
 
     Debug.Log(
         "Plate scrubbed."
@@ -634,6 +788,9 @@ private void EnableNextPlate()
         rinse.EnableRinsing();
     }
 
+    SetTutorialStep(
+        "Clean! Drag the dish to the sink to rinse it.",
+        rinsingArea);
 
     Debug.Log(
         "Plate ready for rinse."
@@ -661,6 +818,7 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
 
     // Allow the next plate to be scrubbed while this one waits in the rinse area.
     EnableNextPlate();
+    ShowTutorialStepForCurrentStage();
 }
 
 
@@ -682,7 +840,7 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
         return;
 
     platesRinsed++;
-    AwardComboScore(35, "Rinse bonus!");
+    AwardComboScore(35, "Bonus points for rinsing!");
 
     Debug.Log(
         "Rinsed: " +
@@ -709,7 +867,7 @@ public void PlateMovedToRinsing(DishRinsePlate plate)
 private IEnumerator FillRinsingArea()
 {
     waterFilled = false;
-    SoundEffectManager.Play("Faucet");
+    SoundEffectManager.Play("Water Stream");
 
     float fillDuration = Mathf.Max(0.1f, waterFillDuration);
     RectTransform rinseRect = rinsingArea as RectTransform;
@@ -721,20 +879,27 @@ private IEnumerator FillRinsingArea()
         parentRect != null &&
         UpdateWaterStreamPosition(parentRect, rinseRect);
 
+    float elapsed = waterFillElapsed;
     if (waterFillImage != null)
     {
-        waterFillImage.fillAmount = 0f;
+        waterFillImage.fillAmount = Mathf.Clamp01(elapsed / fillDuration);
         waterFillImage.gameObject.SetActive(true);
     }
 
     if (waterStreamImage != null)
         waterStreamImage.gameObject.SetActive(streamPositionValid);
 
-    float elapsed = 0f;
     int lastFrame = -1;
     while (elapsed < fillDuration)
     {
+        if (panel == null || !panel.activeInHierarchy)
+        {
+            yield return null;
+            continue;
+        }
+
         elapsed += Time.deltaTime;
+        waterFillElapsed = elapsed;
         float fillAmount = Mathf.Clamp01(elapsed / fillDuration);
         if (waterFillImage != null)
             waterFillImage.fillAmount = fillAmount;
@@ -769,7 +934,10 @@ private IEnumerator FillRinsingArea()
         waterFillImage.gameObject.SetActive(false);
 
     waterFilled = true;
+    waterFillInProgress = false;
+    waterFillElapsed = 0f;
     waterFillCoroutine = null;
+    SetTutorialStep("Place the dishes under the water to rinse them.");
 
     DishRinseArea area = rinsingArea != null
         ? rinsingArea.GetComponent<DishRinseArea>()
@@ -1076,6 +1244,9 @@ private void ResetRinseState()
         waterFillCoroutine = null;
     }
 
+    waterFillInProgress = false;
+    waterFillElapsed = 0f;
+
     if (waterFillImage != null)
     {
         waterFillImage.fillAmount = 0f;
@@ -1114,6 +1285,7 @@ private void ResetRinseState()
         plate.EnableDrying();
     }
 
+    ShowTutorialStepForCurrentStage();
 
     Debug.Log(
         "DRYING ENABLED FOR ALL PLATES"
@@ -1126,7 +1298,7 @@ private void ResetRinseState()
             return;
 
         platesToDry--;
-            AwardComboScore(60, "Rack master!");
+            AwardComboScore(60, "Drying expert!");
 
             if (platesToDry < 0)
                 platesToDry = 0;
@@ -1327,6 +1499,11 @@ private void ResetSponge()
 
     currentStage = WashStage.Complete;
 
+    if (firstTimeTutorialActive && tutorialManager != null && currentChore != null)
+        tutorialManager.MarkAsLearned(currentChore.ChoreName);
+
+    SetTutorialStep("Great! You've finished washing the dishes!");
+    firstTimeTutorialActive = false;
 
     Debug.Log("DISHWASHING COMPLETE!");
 
@@ -1361,7 +1538,8 @@ private void ResetSponge()
         {
             resolvedDayManager.ResolveDailyAdditionalQuest(
                 currentChore,
-                currentTimer >= resolvedDayManager.DailyQuestDishwashingTimeRemaining);
+                currentChore.RemainingDeadline >=
+                    resolvedDayManager.DailyQuestDishwashingTimeBeforeDeadline);
         }
 
         currentChore.Complete();
@@ -1376,6 +1554,7 @@ private void ResetSponge()
     }
     else
     {
+        DestroyTutorialPrompt();
         currentChore = null;
     }
 
@@ -1384,6 +1563,7 @@ private void ResetSponge()
 private IEnumerator ClosePanelAfterResult()
 {
     yield return new WaitForSecondsRealtime(ResultDisplayDuration);
+    DestroyTutorialPrompt();
 
     if (panel != null)
     {
@@ -1467,6 +1647,8 @@ private void AwardComboScore(int baseScore, string message)
 
 private void ResetMiniGameState()
 {
+    DestroyTutorialPrompt();
+    firstTimeTutorialActive = false;
     ResetRinseState();
 
     leftoversRemaining = 0;

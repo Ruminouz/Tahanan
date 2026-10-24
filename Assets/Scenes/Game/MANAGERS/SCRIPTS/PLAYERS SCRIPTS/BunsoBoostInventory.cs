@@ -26,6 +26,36 @@ public class BunsoBoostInventory : MonoBehaviour
     public event Action InventoryChanged;
     public int Count => items.Count;
 
+    public int StackCount
+    {
+        get
+        {
+            int stackCount = 0;
+            for (int index = 0; index < items.Count; index++)
+            {
+                bool alreadyCounted = false;
+                for (int previousIndex = 0; previousIndex < index; previousIndex++)
+                {
+                    if (items[previousIndex] == items[index])
+                    {
+                        alreadyCounted = true;
+                        break;
+                    }
+                }
+
+                if (!alreadyCounted)
+                    stackCount++;
+            }
+
+            return stackCount;
+        }
+    }
+
+    public bool CanAdd(BunsoBoostType boost)
+    {
+        return items.Contains(boost) || StackCount < capacity;
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -62,7 +92,7 @@ public class BunsoBoostInventory : MonoBehaviour
 
     public bool Add(BunsoBoostType boost)
     {
-        if (items.Count >= capacity)
+        if (!CanAdd(boost))
             return false;
 
         items.Add(boost);
@@ -73,6 +103,33 @@ public class BunsoBoostInventory : MonoBehaviour
     public BunsoBoostType GetItemAt(int index)
     {
         return items[index];
+    }
+
+    public BunsoBoostType GetStackAt(int stackIndex)
+    {
+        int currentStack = 0;
+        for (int index = 0; index < items.Count; index++)
+        {
+            bool alreadyCounted = false;
+            for (int previousIndex = 0; previousIndex < index; previousIndex++)
+            {
+                if (items[previousIndex] == items[index])
+                {
+                    alreadyCounted = true;
+                    break;
+                }
+            }
+
+            if (alreadyCounted)
+                continue;
+
+            if (currentStack == stackIndex)
+                return items[index];
+
+            currentStack++;
+        }
+
+        throw new System.ArgumentOutOfRangeException(nameof(stackIndex));
     }
 
     public void ResetForDay()
@@ -87,6 +144,17 @@ public class BunsoBoostInventory : MonoBehaviour
             return false;
 
         BunsoBoostType boost = items[index];
+        return ConsumeAt(index, boost);
+    }
+
+    public bool ConsumeOne(BunsoBoostType boost)
+    {
+        int index = items.IndexOf(boost);
+        return index >= 0 && ConsumeAt(index, boost);
+    }
+
+    private bool ConsumeAt(int index, BunsoBoostType boost)
+    {
         if (boost == BunsoBoostType.Chocolate)
         {
             if (playerMovement == null)
@@ -109,6 +177,8 @@ public class BunsoBoostInventory : MonoBehaviour
 
         items.RemoveAt(index);
         InventoryChanged?.Invoke();
+        SoundEffectManager.Play(
+            boost == BunsoBoostType.Chocolate ? "Chocolate" : "Frozen");
 
         if (boost == BunsoBoostType.Chocolate)
         {

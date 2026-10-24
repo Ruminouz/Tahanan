@@ -214,8 +214,8 @@ public class HouseholdHelperAI : MonoBehaviour
         if (moodManager.Mood < minimumMood)
         {
             npcDialogue.StartHelperDialogue(
-                "Medyo hindi maganda ang mood ko ngayon.",
-                "Baka makakatulong ako kapag mas maganda na ang mood natin.",
+                "I'm not in a very good mood right now.",
+                "I might be able to help when our mood improves.",
                 null,
                 null);
             return;
@@ -224,8 +224,8 @@ public class HouseholdHelperAI : MonoBehaviour
         if (choresHelpedToday >= GetMaximumChoresForCurrentDay())
         {
             npcDialogue.StartHelperDialogue(
-                "Dahil good mood ako ngayon!",
-                "Nakatulong na ako sa maximum na chores ko ngayong araw.",
+                "I'm in a good mood today!",
+                "I've already helped with the maximum number of chores today.",
                 null,
                 null);
             return;
@@ -235,8 +235,8 @@ public class HouseholdHelperAI : MonoBehaviour
         if (availableTasks.Count == 0)
         {
             npcDialogue.StartHelperDialogue(
-                "Dahil good mood ako ngayon!",
-                "Wala pang chore na kailangan ng tulong.",
+                "I'm in a good mood today!",
+                "There aren't any chores that need help right now.",
                 null,
                 null);
             return;
@@ -396,8 +396,8 @@ public class HouseholdHelperAI : MonoBehaviour
             playerChoice = -1;
             bool dialogueStarted = npcDialogue != null &&
                 npcDialogue.StartHelperDialogue(
-                    "Dahil good mood ako ngayon!",
-                    "Saan mo kailangan ng tulong?",
+                    "I'm in a good mood today!",
+                    "Where do you need help?",
                     choices,
                     choice =>
                     {
@@ -424,6 +424,8 @@ public class HouseholdHelperAI : MonoBehaviour
                     bubbleDuration);
                 yield break;
             }
+
+            SoundEffectManager.Play("NPC Help");
 
             float workDuration = selectedTask.Chore != null
                 ? GetChoreDuration(selectedTask.Chore)
@@ -894,19 +896,19 @@ public class HouseholdHelperAI : MonoBehaviour
     {
         string message;
         if (task.MopWetAreas)
-            message = "Ako na ang magmo-mop!";
+            message = "I'll mop this up!";
         else if (task.SweepDust)
-            message = "Ako na ang magwawalis!";
+            message = "I'll sweep this!";
         else if (task.DisplayName == CleanLeavesChore.ToyPickupChoreName)
-            message = "Ako na ang magliligpit ng mga laruan!";
+            message = "I'll put these toys away!";
         else if (task.Chore is DishwashingChore)
-            message = "Ako na mag huhugas";
+            message = "I'll wash these dishes!";
         else if (task.Chore is GarbageChore ||
                  (task.Chore != null &&
                   string.Equals(task.Chore.ChoreName, "Garbage", System.StringComparison.OrdinalIgnoreCase)))
-            message = "Ako na magtatapon ng basura";
+            message = "I'll take out the trash!";
         else
-            message = "Ako na ang bahala sa " + task.DisplayName + "!";
+            message = "I'll take care of " + task.DisplayName + "!";
 
         Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
         SpeechBubbleCanvas.Show(anchor, message, bubbleDuration);

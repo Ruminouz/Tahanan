@@ -230,10 +230,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BunsoAI
   actionInterval: 30
   actionChance: 60
-  dustBadMoodLine: Pakiwalisan to kuya! bwhahaah!
-  waterBadMoodLine: paki mop to kuya! bwhaahah!
-  segregateBadMoodLine: pakiligpit to kuya! bwahahah!
-  garbageBagBadMoodLine: pakitapon to sa basura kuya! bwaahha!
+  dustBadMoodLine: Sweep this up, big brother! Hahaha!
+  waterBadMoodLine: Mop this up, big brother! Hahaha!
+  segregateBadMoodLine: Put these away, big brother! Hahaha!
+  garbageBagBadMoodLine: Throw this in the trash, big brother! Hahaha!
   possibleBoosts: 0000000001000000
   chocolatePrefab: {fileID: 2093951337509963342, guid: 86d7c508fe0eba54eb85686efa87b206, type: 3}
   timeFreezerPrefab: {fileID: 6014960946341728753, guid: c313d8be4311359489f1b34ed95ac3a8, type: 3}
@@ -268,9 +268,9 @@ MonoBehaviour:
   displayName: Bunso
   speechAnchor: {fileID: 7061169537706405242}
   waypointMover: {fileID: 2955472342297103682}
-  calmLine: Maamaa!
-  concernedLine: Tamad naman ni kuya
-  angryLine: Madadamay nanaman ako pag nagalit si mama.
+  calmLine: Mom!
+  concernedLine: Big brother is so lazy.
+  angryLine: I'll get in trouble if Mom gets mad again.
 --- !u!1 &7435635158677249477
 GameObject:
   m_ObjectHideFlags: 0

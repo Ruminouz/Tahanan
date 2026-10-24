@@ -2900,6 +2900,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3617962589510342355}
   - component: {fileID: 3794952309370083644}
+  - component: {fileID: 991188773322114455}
   m_Layer: 5
   m_Name: SfxSlider
   m_TagString: Untagged
@@ -2968,7 +2969,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 6961356692320953990}
   m_FillRect: {fileID: 5714906733548009493}
   m_HandleRect: {fileID: 8401560253351559170}
@@ -2980,6 +2981,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &991188773322114455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664555577284650579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad83866d13f08641912202592407d9c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::VolumeSliderBinder
+  bindToSoundEffects: 1
 --- !u!1 &1715970762715643209
 GameObject:
   m_ObjectHideFlags: 0
@@ -4353,6 +4367,16 @@ MonoBehaviour:
   broomDownSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   broomLeftSprite: {fileID: -1291012852715099164, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   broomRightSprite: {fileID: 663463509561187115, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
+  broomAnimationFrames:
+  - {fileID: 972525476816025623, guid: 7c05c2278729bf741b9f0563dc8f8b3a, type: 3}
+  - {fileID: 2057514037310864441, guid: 7c05c2278729bf741b9f0563dc8f8b3a, type: 3}
+  - {fileID: -625489559169073173, guid: 7c05c2278729bf741b9f0563dc8f8b3a, type: 3}
+  - {fileID: -4824438645612456483, guid: 7c05c2278729bf741b9f0563dc8f8b3a, type: 3}
+  - {fileID: 5682875674781272365, guid: 7c05c2278729bf741b9f0563dc8f8b3a, type: 3}
+  - {fileID: 4096666212095633768, guid: 7c05c2278729bf741b9f0563dc8f8b3a, type: 3}
+  - {fileID: -1562006876832437040, guid: 7c05c2278729bf741b9f0563dc8f8b3a, type: 3}
+  - {fileID: 7885846702146331517, guid: 7c05c2278729bf741b9f0563dc8f8b3a, type: 3}
+  broomAnimationFramesPerSecond: 8
   vacuumAnimationFrames:
   - {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   - {fileID: -1541953373, guid: 4177b6146912e634bb497154311727e5, type: 3}
@@ -8053,6 +8077,10 @@ MonoBehaviour:
   buyButton: {fileID: 1532249510517768138}
   closeButton: {fileID: 8456375768233427567}
   vacuumUpgradeIcon: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
+  chocolateCost: 10
+  timeFreezerCost: 10
+  chocolateIcon: {fileID: 8386067457128398079, guid: aab55cf87ab958d46981b995b26257f7, type: 3}
+  timeFreezerIcon: {fileID: -7754988575891523622, guid: 8d782902958a6354797c1a649a2949a0, type: 3}
 --- !u!1 &4510546254457828161
 GameObject:
   m_ObjectHideFlags: 0
@@ -9129,6 +9157,42 @@ MonoBehaviour:
   progressText: {fileID: 3275122856824347903}
   spawner: {fileID: 6671465501330811638}
   tutorial: {fileID: 0}
+  antWalkUpFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  antWalkDownFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  antWalkLeftFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  antWalkRightFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &5078818463422745811
 GameObject:
   m_ObjectHideFlags: 0
@@ -14257,6 +14321,7 @@ MonoBehaviour:
   broomSprite: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   vacuumSprite: {fileID: -1264806772670995990, guid: 4177b6146912e634bb497154311727e5, type: 3}
   mopSprite: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
+  upgradedMopSprite: {fileID: 748762685943578018, guid: d69ed0c6579282b4caf33ad2cb77a435, type: 3}
   garbageBagSprite: {fileID: -1984049885866873280, guid: 84f25f985d9b459489ba4ce0a630f699, type: 3}
 --- !u!1 &7790154647851300767
 GameObject:
@@ -14872,7 +14937,6 @@ MonoBehaviour:
   waterStreamFrameCount: 8
   waterStreamFramesPerSecond: 12
   dryingRack: {fileID: 3815363860785365162}
-  tutorial: {fileID: 0}
 --- !u!1 &7948697018002906710
 GameObject:
   m_ObjectHideFlags: 0
@@ -16357,7 +16421,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 8332704669654888555}
   m_FillRect: {fileID: 861078355945738213}
   m_HandleRect: {fileID: 135629904053422561}

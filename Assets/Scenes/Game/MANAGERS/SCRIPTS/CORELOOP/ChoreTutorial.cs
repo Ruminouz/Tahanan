@@ -28,6 +28,22 @@ public class ChoreTutorial : MonoBehaviour
         tutorialPanel.SetActive(true);
     }
 
+    public void AttachMinimizeButton(System.Action onMinimize)
+    {
+        MiniGamePanelMinimizer.Attach(tutorialPanel, onMinimize);
+    }
+
+    public void HideTutorial()
+    {
+        tutorialPanel.SetActive(false);
+    }
+
+    public void ResumeTutorial()
+    {
+        if (onFinished != null)
+            tutorialPanel.SetActive(true);
+    }
+
     private void FinishTutorial()
     {
         tutorialPanel.SetActive(false);

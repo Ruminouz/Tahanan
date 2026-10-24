@@ -1,0 +1,1188 @@
+fileFormatVersion: 2
+guid: 80a1acb0c4ed994438bca39f1759c456
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1819744511594068938
+    second: WATER DRY_0
+  - first:
+      213: -1038466559544567375
+    second: WATER DRY_1
+  - first:
+      213: -6277536562859443721
+    second: WATER DRY_2
+  - first:
+      213: -4187534264725984544
+    second: WATER DRY_3
+  - first:
+      213: -3849935912980755862
+    second: WATER DRY_4
+  - first:
+      213: 3107026432351177610
+    second: WATER DRY_5
+  - first:
+      213: -6610462338469393823
+    second: WATER DRY_6
+  - first:
+      213: 2360506382851380890
+    second: WATER DRY_7
+  - first:
+      213: -9092333385849257797
+    second: WATER DRY_8
+  - first:
+      213: -1478331478128877121
+    second: WATER DRY_9
+  - first:
+      213: 1896953931626261466
+    second: WATER DRY_10
+  - first:
+      213: 4469597347704033575
+    second: WATER DRY_11
+  - first:
+      213: 7433334140884759345
+    second: WATER DRY_12
+  - first:
+      213: 976166408383964281
+    second: WATER DRY_13
+  - first:
+      213: 2435105354463983498
+    second: WATER DRY_14
+  - first:
+      213: -1074053029179931150
+    second: WATER DRY_15
+  - first:
+      213: 1814279182684888734
+    second: WATER DRY_16
+  - first:
+      213: 4415509488609483460
+    second: WATER DRY_17
+  - first:
+      213: 3880361745405205504
+    second: WATER DRY_18
+  - first:
+      213: 2069340279274327360
+    second: WATER DRY_19
+  - first:
+      213: -4229324344062027621
+    second: WATER DRY_20
+  - first:
+      213: 7078063185091769727
+    second: WATER DRY_21
+  - first:
+      213: -1153028064995542797
+    second: WATER DRY_22
+  - first:
+      213: 5036640076568580671
+    second: WATER DRY_23
+  - first:
+      213: -1197235231812374334
+    second: WATER DRY_24
+  - first:
+      213: 4908539828032747758
+    second: WATER DRY_25
+  - first:
+      213: -4529652792980428973
+    second: WATER DRY_26
+  - first:
+      213: -3092513068464537497
+    second: WATER DRY_27
+  - first:
+      213: -7635661497040238037
+    second: WATER DRY_28
+  - first:
+      213: 2408469934496751581
+    second: WATER DRY_29
+  - first:
+      213: 9033486588028636387
+    second: WATER DRY_30
+  - first:
+      213: -2350856695902451215
+    second: WATER DRY_31
+  - first:
+      213: 8171100656878820500
+    second: WATER DRY_32
+  - first:
+      213: 4737139557752987229
+    second: WATER DRY_33
+  - first:
+      213: 1647934444598999288
+    second: WATER DRY_34
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 1
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 125
+        width: 94
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63408741208feb6e0800000000000000
+      internalID: -1819744511594068938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_1
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 129
+        width: 30
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b959378a20a691f0800000000000000
+      internalID: -1038466559544567375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_2
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 125
+        width: 44
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f97c3281c5b1e8a0800000000000000
+      internalID: -6277536562859443721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_3
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 139
+        width: 42
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ea2b32d5c3e2e5c0800000000000000
+      internalID: -4187534264725984544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_4
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 135
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6a43ca5fa7429ac0800000000000000
+      internalID: -3849935912980755862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_5
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 128
+        width: 37
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8b8a0814106e1b20800000000000000
+      internalID: 3107026432351177610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_6
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 137
+        width: 39
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16a0f62e68be244a0800000000000000
+      internalID: -6610462338469393823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_7
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 135
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9616e77c0432c020800000000000000
+      internalID: 2360506382851380890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_8
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 134
+        width: 39
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb0c70575fa81d180800000000000000
+      internalID: -9092333385849257797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_9
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 140
+        width: 39
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1a9d96a59eb7be0800000000000000
+      internalID: -1478331478128877121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_10
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 122
+        width: 29
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adb2dd1ec85535a10800000000000000
+      internalID: 1896953931626261466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_11
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 112
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7215de65b13370e30800000000000000
+      internalID: 4469597347704033575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_12
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 124
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13338348402882760800000000000000
+      internalID: 7433334140884759345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_13
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 121
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 974256d2d2a0c8d00800000000000000
+      internalID: 976166408383964281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_14
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 43
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a873a7b0b6b3bc120800000000000000
+      internalID: 2435105354463983498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_15
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 38
+        width: 26
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f54cc5e5723811f0800000000000000
+      internalID: -1074053029179931150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_16
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 44
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9e915fdd4d9d2910800000000000000
+      internalID: 1814279182684888734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_17
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 44
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ca5fea4c7a074d30800000000000000
+      internalID: 4415509488609483460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_18
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 49
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00c54eac270d9d530800000000000000
+      internalID: 3880361745405205504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_19
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 41
+        width: 23
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04dcd892506c7bc10800000000000000
+      internalID: 2069340279274327360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_20
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 51
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b985540caeb6e45c0800000000000000
+      internalID: -4229324344062027621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_21
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 53
+        width: 20
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f753a2537f45a3260800000000000000
+      internalID: 7078063185091769727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_22
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 41
+        width: 23
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f872e9751f9fffe0800000000000000
+      internalID: -1153028064995542797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_23
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 51
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f32dd51e67db5e540800000000000000
+      internalID: 5036640076568580671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_24
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 53
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c0bd3f56e0926fe0800000000000000
+      internalID: -1197235231812374334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_25
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 41
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee8bfbf87f2ae1440800000000000000
+      internalID: 4908539828032747758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_26
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 51
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 357ab8ea8c07321c0800000000000000
+      internalID: -4529652792980428973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_27
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 24
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7600be2cfbf2515d0800000000000000
+      internalID: -3092513068464537497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_28
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 19
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2a0acbe25ea80690800000000000000
+      internalID: -7635661497040238037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_29
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 28
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddf13e115aa9c6120800000000000000
+      internalID: 2408469934496751581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_30
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 25
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ecc3bab0346d5d70800000000000000
+      internalID: 9033486588028636387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_31
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 33
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f9c2ea5a44106fd0800000000000000
+      internalID: -2350856695902451215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_32
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 31
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49c193d41c4956170800000000000000
+      internalID: 8171100656878820500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_33
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 33
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5e515f4453bdb140800000000000000
+      internalID: 4737139557752987229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WATER DRY_34
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 19
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f8347f65a3aed610800000000000000
+      internalID: 1647934444598999288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 125
+        width: 95
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8c9e43533d5f5345a5e704d193d0252
+      internalID: 806954885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 122
+        width: 93
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c7000abb2220c54c9d57597782efc43
+      internalID: 331395408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 108
+        width: 84
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0616e4a65781c80469835baf803cb3cb
+      internalID: 1749587539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 7
+        width: 91
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78d8bbc2165a5944aad7a8cb7cdf540a
+      internalID: 1680660671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 6
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 5
+        width: 94
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e71131d6a56c4540a4978d5a0d15e02
+      internalID: -1117390719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 14
+        width: 83
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93caa55908bc46144b8e0e2f3772d0fc
+      internalID: 3410530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 8
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 14
+        width: 69
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b572a189b53e499458987f08a0b7fd0b
+      internalID: 1423206839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1ec0e80b7281eb44bbb7a0fa26233415
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      1: -1819744511594068938
+      2: 806954885
+      3: 331395408
+      4: 1749587539
+      5: 1680660671
+      6: -1117390719
+      7: 3410530
+      8: 1423206839
+      WATER DRY_1: -1038466559544567375
+      WATER DRY_10: 1896953931626261466
+      WATER DRY_11: 4469597347704033575
+      WATER DRY_12: 7433334140884759345
+      WATER DRY_13: 976166408383964281
+      WATER DRY_14: 2435105354463983498
+      WATER DRY_15: -1074053029179931150
+      WATER DRY_16: 1814279182684888734
+      WATER DRY_17: 4415509488609483460
+      WATER DRY_18: 3880361745405205504
+      WATER DRY_19: 2069340279274327360
+      WATER DRY_2: -6277536562859443721
+      WATER DRY_20: -4229324344062027621
+      WATER DRY_21: 7078063185091769727
+      WATER DRY_22: -1153028064995542797
+      WATER DRY_23: 5036640076568580671
+      WATER DRY_24: -1197235231812374334
+      WATER DRY_25: 4908539828032747758
+      WATER DRY_26: -4529652792980428973
+      WATER DRY_27: -3092513068464537497
+      WATER DRY_28: -7635661497040238037
+      WATER DRY_29: 2408469934496751581
+      WATER DRY_3: -4187534264725984544
+      WATER DRY_30: 9033486588028636387
+      WATER DRY_31: -2350856695902451215
+      WATER DRY_32: 8171100656878820500
+      WATER DRY_33: 4737139557752987229
+      WATER DRY_34: 1647934444598999288
+      WATER DRY_4: -3849935912980755862
+      WATER DRY_5: 3107026432351177610
+      WATER DRY_6: -6610462338469393823
+      WATER DRY_7: 2360506382851380890
+      WATER DRY_8: -9092333385849257797
+      WATER DRY_9: -1478331478128877121
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

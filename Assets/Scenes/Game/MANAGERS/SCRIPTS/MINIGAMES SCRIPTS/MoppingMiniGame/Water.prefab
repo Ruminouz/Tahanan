@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3243625351041584669}
   - component: {fileID: 6690067129005700151}
-  - component: {fileID: 807758850194498296}
   - component: {fileID: 6995687946688838214}
+  - component: {fileID: 5957707982533756651}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.87, y: -3.58, z: 0}
-  m_LocalScale: {x: 0.08568557, y: 0.08568557, z: 0.08568557}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,8 +79,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1682360665
-  m_SortingLayer: 4
+  m_SortingLayerID: -736112421
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8509550459451208454, guid: 7459ec0b184bddd42956ece572d41717, type: 3}
@@ -93,7 +93,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!61 &807758850194498296
+--- !u!114 &6995687946688838214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434417254392206843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7a59fe8ec20d0c43b21d372b2a4de8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WetArea
+--- !u!61 &5957707982533756651
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,7 +139,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.62601113, y: 0}
+  m_Offset: {x: -0.0000014305115, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -137,17 +149,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 8.838455, y: 7.7}
+  m_Size: {x: 18.019997, y: 7.7}
   m_EdgeRadius: 0
---- !u!114 &6995687946688838214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8434417254392206843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7a59fe8ec20d0c43b21d372b2a4de8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WetArea

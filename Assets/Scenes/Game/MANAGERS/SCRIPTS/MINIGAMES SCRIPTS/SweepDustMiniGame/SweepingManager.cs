@@ -332,6 +332,18 @@ public class SweepingManager : MonoBehaviour
         {
             activeDust.Remove(cleanedDust);
             cleanedDustCount++;
+
+            DayManager questDayManager = ResolveDayManager();
+            if (questDayManager != null &&
+                questDayManager.IsDailyAdditionalQuestFor(sweepDustChore))
+            {
+                float elapsedSeconds = dailyQuestAttemptStartedAt >= 0f
+                    ? Time.time - dailyQuestAttemptStartedAt
+                    : float.PositiveInfinity;
+                questDayManager.ResolveDailyAdditionalQuest(
+                    sweepDustChore,
+                    elapsedSeconds <= questDayManager.DailyQuestSweepTimeLimit);
+            }
         }
 
 
@@ -366,11 +378,7 @@ public class SweepingManager : MonoBehaviour
         if(sweepingCompleted)
             return;
 
-
-
         sweepingCompleted = true;
-
-
 
         Debug.Log(
             "ALL DUST CLEANED! SWEEPING COMPLETE!"
@@ -380,17 +388,6 @@ public class SweepingManager : MonoBehaviour
 
         if (sweepDustChore != null)
         {
-            DayManager resolvedDayManager = ResolveDayManager();
-            if (resolvedDayManager != null)
-            {
-                float elapsedSeconds = dailyQuestAttemptStartedAt >= 0f
-                    ? Time.time - dailyQuestAttemptStartedAt
-                    : float.PositiveInfinity;
-                resolvedDayManager.ResolveDailyAdditionalQuest(
-                    sweepDustChore,
-                    elapsedSeconds <= resolvedDayManager.DailyQuestSweepTimeLimit);
-            }
-
             sweepDustChore.Complete();
 
             Debug.Log(
@@ -412,5 +409,9 @@ public class SweepingManager : MonoBehaviour
                 "ChoreManager not found."
             );
         }
+
+        DayManager resolvedDayManager = ResolveDayManager();
+        if (resolvedDayManager != null)
+            resolvedDayManager.NotifyDayOneSweepingCompleted();
     }
 }

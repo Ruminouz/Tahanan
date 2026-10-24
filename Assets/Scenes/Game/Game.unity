@@ -2739,6 +2739,42 @@ MonoBehaviour:
   progressText: {fileID: 757806946}
   spawner: {fileID: 1371290760}
   tutorial: {fileID: 446849630}
+  antWalkUpFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  antWalkDownFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  antWalkLeftFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  antWalkRightFrames:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1778551172 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6886635278600969398, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}

@@ -349,6 +349,7 @@ public class DishRinsePlate : MonoBehaviour,
             rack.transform
         );
 
+        transform.SetAsLastSibling();
 
         rectTransform
         .anchoredPosition =

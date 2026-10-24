@@ -1,0 +1,637 @@
+fileFormatVersion: 2
+guid: 9cf73a84f24758f4588762e2bc970e64
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5782351067348198790
+    second: vaccumbackandforth_0
+  - first:
+      213: 3983496703952347438
+    second: vaccumbackandforth_1
+  - first:
+      213: -6756079107739521040
+    second: vaccumbackandforth_2
+  - first:
+      213: -51986522070341305
+    second: vaccumbackandforth_3
+  - first:
+      213: 7569389893227049219
+    second: vaccumbackandforth_4
+  - first:
+      213: -7173350487608294335
+    second: vaccumbackandforth_5
+  - first:
+      213: -4932880068295723813
+    second: vaccumbackandforth_6
+  - first:
+      213: -48442387434118164
+    second: vaccumbackandforth_7
+  - first:
+      213: -5893431051584257474
+    second: vaccumbackandforth_8
+  - first:
+      213: -5874777677194238935
+    second: vaccumbackandforth_9
+  - first:
+      213: 7218473236981595689
+    second: vaccumbackandforth_10
+  - first:
+      213: -5778987346268476118
+    second: vaccumbackandforth_11
+  - first:
+      213: -7178992788247633819
+    second: vaccumbackandforth_12
+  - first:
+      213: -8672984194156189003
+    second: vaccumbackandforth_13
+  - first:
+      213: 6070002083522873359
+    second: vaccumbackandforth_14
+  - first:
+      213: 4955848550219586149
+    second: vaccumbackandforth_15
+  - first:
+      213: 3925646741086869866
+    second: vaccumbackandforth_16
+  - first:
+      213: 5237367134610082827
+    second: vaccumbackandforth_17
+  - first:
+      213: -8474059010613154674
+    second: vaccumbackandforth_18
+  - first:
+      213: 5501338249727159672
+    second: vaccumbackandforth_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 97
+        width: 58
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 685e3e7d8a90f3050800000000000000
+      internalID: 5782351067348198790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_1
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 166
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e21e4039529384730800000000000000
+      internalID: 3983496703952347438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 97
+        width: 61
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ff6fb4c8d59d32a0800000000000000
+      internalID: -6756079107739521040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_3
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 166
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 749a3ea988e474ff0800000000000000
+      internalID: -51986522070341305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_4
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 166
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 301fa38e000eb0960800000000000000
+      internalID: 7569389893227049219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 97
+        width: 62
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1448bb0dcb3237c90800000000000000
+      internalID: -7173350487608294335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_6
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 171
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd4f0a1a6b3ea8bb0800000000000000
+      internalID: -4932880068295723813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_7
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 171
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce3eae0c7e5e35ff0800000000000000
+      internalID: -48442387434118164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_8
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 166
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e32401eeea3563ea0800000000000000
+      internalID: -5893431051584257474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 97
+        width: 58
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 924617814d8987ea0800000000000000
+      internalID: -5874777677194238935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_10
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 172
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92eb3f6f92b2d2460800000000000000
+      internalID: 7218473236981595689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_11
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 172
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2da03080a9eccfa0800000000000000
+      internalID: -5778987346268476118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_12
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 149
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 560a86358181f5c90800000000000000
+      internalID: -7178992788247633819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_13
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 149
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ba2ebca3de53a780800000000000000
+      internalID: -8672984194156189003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_14
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 149
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0803461cbafc3450800000000000000
+      internalID: 6070002083522873359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: vaccumbackandforth_15
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 149
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56a197ccff5b6c440800000000000000
+      internalID: 4955848550219586149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 1
+        width: 58
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a69172c79e2ba7630800000000000000
+      internalID: 3925646741086869866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 6
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 1
+        width: 64
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0c4db009addea840800000000000000
+      internalID: 5237367134610082827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 7
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 1
+        width: 62
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8c64b23a38166a80800000000000000
+      internalID: -8474059010613154674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 8
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 1
+        width: 58
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87da144adfda85c40800000000000000
+      internalID: 5501338249727159672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 75a743f2368305f4a85a338cf373056c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      1: 5782351067348198790
+      2: -6756079107739521040
+      3: -7173350487608294335
+      4: -5874777677194238935
+      5: 3925646741086869866
+      6: 5237367134610082827
+      7: -8474059010613154674
+      8: 5501338249727159672
+      vaccumbackandforth_1: 3983496703952347438
+      vaccumbackandforth_10: 7218473236981595689
+      vaccumbackandforth_11: -5778987346268476118
+      vaccumbackandforth_12: -7178992788247633819
+      vaccumbackandforth_13: -8672984194156189003
+      vaccumbackandforth_14: 6070002083522873359
+      vaccumbackandforth_15: 4955848550219586149
+      vaccumbackandforth_3: -51986522070341305
+      vaccumbackandforth_4: 7569389893227049219
+      vaccumbackandforth_6: -4932880068295723813
+      vaccumbackandforth_7: -48442387434118164
+      vaccumbackandforth_8: -5893431051584257474
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

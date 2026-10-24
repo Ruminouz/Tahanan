@@ -719,8 +719,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -745, y: 44}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -555, y: 44}
+  m_SizeDelta: {x: 580, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4834676274238336317
 CanvasRenderer:
@@ -777,8 +777,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1556,6 +1556,8 @@ MonoBehaviour:
   mop: {fileID: 2345663616407008226}
   moppingArea: {fileID: 6874033942141153493}
   upgradedMopVisual: {fileID: 1629867142720154345}
+  tutorialPulseScale: 1.15
+  tutorialPulseSpeed: 3
   classicMopMovementSprites:
   - {fileID: -1868639071, guid: e3fccd402dd12ad43a6eb25c09b530f3, type: 3}
   - {fileID: 209922517, guid: e3fccd402dd12ad43a6eb25c09b530f3, type: 3}

@@ -12,12 +12,25 @@ public class InteractionDetector : MonoBehaviour
     }
 
     public void OnInteract(InputAction.CallbackContext context)
-{
-    if (context.started)
     {
+        if (!context.started)
+            return;
+
+        NPC[] npcs = FindObjectsByType<NPC>(FindObjectsSortMode.None);
+        foreach (NPC npc in npcs)
+        {
+            if (npc != null && npc.IsDialogueActive)
+            {
+                npc.Interact();
+                return;
+            }
+        }
+
+        if (PauseController.IsGamePaused)
+            return;
+
         interactableInRange?.Interact();
     }
-}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

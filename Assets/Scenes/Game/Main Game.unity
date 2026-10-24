@@ -5245,9 +5245,9 @@ MonoBehaviour:
   displayName: Tatay
   speechAnchor: {fileID: 129610332}
   waypointMover: {fileID: 1493128261299710533}
-  calmLine: Ang payapa naman ng araw ngayon.
-  concernedLine: Asikasuhin na natin ang bahay.
-  angryLine: Kailangan na nating kumilos.
+  calmLine: It's a peaceful day today.
+  concernedLine: We should take care of the house.
+  angryLine: We need to get moving.
 --- !u!1 &1594257851
 GameObject:
   m_ObjectHideFlags: 0
@@ -5322,7 +5322,7 @@ MonoBehaviour:
   slipperPrefab: {fileID: 6663689240787838783, guid: de28a577bc3e411469bcc4290e0472d0, type: 3}
   waypointMover: {fileID: 1493128261299710533}
   slowMultiplier: 0.5
-  slowDuration: 3
+  slowDuration: 7
   reprimandCooldown: 2
   bubbleDuration: 3
   angryBubbleInterval: 8
@@ -5339,9 +5339,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   collisionPadding: 0.02
-  calmLine: Ayos, ang sipag mong tumulong sa bahay!
-  concernedLine: Tapusin mo na sana ang mga gawain mo.
-  angryLine: May na-miss ka na namang gawain! Galaw-galaw na!
+  calmLine: Great job helping around the house!
+  concernedLine: Please try to finish your chores.
+  angryLine: You missed another chore! Get moving!
   angrySpriteColor: {r: 1, g: 0.45, b: 0.45, a: 1}
 --- !u!50 &1609937395
 Rigidbody2D:
@@ -7029,9 +7029,9 @@ MonoBehaviour:
   displayName: Tatay
   speechAnchor: {fileID: 8157910243762772216}
   waypointMover: {fileID: 1493128261299710533}
-  calmLine: Ang payapa naman ng araw ngayon.
-  concernedLine: Asikasuhin na natin ang bahay.
-  angryLine: Kailangan na nating kumilos.
+  calmLine: It's a peaceful day today.
+  concernedLine: We should take care of the house.
+  angryLine: We need to get moving.
 --- !u!4 &437580079482569656
 Transform:
   m_ObjectHideFlags: 0
@@ -8040,9 +8040,9 @@ MonoBehaviour:
   displayName: Kuya
   speechAnchor: {fileID: 1895825523723791353}
   waypointMover: {fileID: 7129097854483259603}
-  calmLine: Ako najan mamaya
-  concernedLine: Asikasuhin na natin ang bahay.
-  angryLine: Nakakatamad naman, ah.
+  calmLine: I'll take care of it later.
+  concernedLine: We should take care of the house.
+  angryLine: I don't feel like it.
 --- !u!4 &5583211196672629926
 Transform:
   m_ObjectHideFlags: 0
@@ -8475,15 +8475,15 @@ PrefabInstance:
       objectReference: {fileID: 1566746761}
     - target: {fileID: 1131196457020619718, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: calmLine
-      value: Maamaa!
+      value: Mom!
       objectReference: {fileID: 0}
     - target: {fileID: 1131196457020619718, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: angryLine
-      value: Madadamay nanaman ako pag nagalit si mama.
+      value: I'll get in trouble if Mom gets mad again.
       objectReference: {fileID: 0}
     - target: {fileID: 1131196457020619718, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: concernedLine
-      value: Tamad naman ni kuya
+      value: Big brother is so lazy.
       objectReference: {fileID: 0}
     - target: {fileID: 2955472342297103682, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: stuckTimeout
@@ -9103,7 +9103,7 @@ MonoBehaviour:
   badMoodBubbleInterval: 8
   badMoodBubbleChance: 50
   bubbleDuration: 3
-  badMoodLine: Katamad naman tulungan to
+  badMoodLine: I don't feel like helping right now.
 --- !u!1 &8917508650539123761 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3279296464216118212, guid: 22ec1fb15d66d5d438238e75a165db70, type: 3}

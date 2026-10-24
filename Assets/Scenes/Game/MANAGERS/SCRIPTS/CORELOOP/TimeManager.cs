@@ -52,6 +52,17 @@ public class TimeManager : MonoBehaviour
         return FormatClockTime(currentTime);
     }
 
+    public string GetClockPeriodLabel()
+    {
+        float progress = dayLength > 0f
+            ? Mathf.Clamp01(currentTime / dayLength)
+            : 0f;
+        int totalMinutes = Mathf.RoundToInt(
+            (DayStartHour + progress * DayHours) * 60f);
+        int hour24 = totalMinutes / 60;
+        return hour24 < 12 ? "AM" : "PM";
+    }
+
     public string FormatClockTime(float elapsedSeconds)
     {
         float progress = dayLength > 0f

@@ -45,14 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoodManager
   moodSlider: {fileID: 0}
-  startingMood: 30
-  concernedThreshold: 65
-  angryThreshold: 50.7
+  startingMood: 70
+  concernedThreshold: 60
+  angryThreshold: 40
   moodLossPerMissedChore: 20
   dailyMoodLoss: 20
   moodRecoveryPerCompletedChore: 10
   moodGainSprite: {fileID: 5951587013162271021, guid: 4ab192c131e22bd40bd4dab15b920f7d, type: 3}
   moodLossSprite: {fileID: -3151740070689166471, guid: 08c6851420614cd4d83e1ec64aa46e38, type: 3}
+  happyMoodHandleSprite: {fileID: 2969606046672856934, guid: 107ea15438e006b4c900379f3c3f6f7b, type: 3}
+  neutralMoodHandleSprite: {fileID: 7882799506682143018, guid: e19658964963cde4cb92eddc03fb63f7, type: 3}
+  sadMoodHandleSprite: {fileID: -6416144266904240849, guid: e19658964963cde4cb92eddc03fb63f7, type: 3}
 --- !u!1 &4084431142148791782
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,14 +110,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayManager
   currentDay: 1
+  doubleGameSpeed: 0
   washDishes: {fileID: 0}
   mopFloor: {fileID: 0}
   sweepDust: {fileID: 0}
   feedDog: {fileID: 0}
   cleanLeaves: {fileID: 0}
   throwTrash: {fileID: 0}
+  dailyAdditionalQuestRewardCoins: 5
+  dailyQuestSweepTimeLimit: 30
+  dailyQuestMopTimeLimit: 30
+  dailyQuestDishwashingTimeBeforeDeadline: 60
   garbageChore: {fileID: 0}
-  segregateWasteChore: {fileID: 0}
   transitionFade: {fileID: 0}
   daySummaryPanel: {fileID: 0}
   continueButton: {fileID: 0}
@@ -124,7 +131,34 @@ MonoBehaviour:
   summaryPointsText: {fileID: 0}
   transitionDuration: 1
   summaryLineDelay: 0.6
-  missedChoresGameOverThresholdByDay: 05000000050000000500000005000000050000000500000005000000
+  transitionCardHoldDuration: 1
+  dayWinCelebrationImage: {fileID: 0}
+  additionalDayWinCelebrationImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dayWinCelebrationFrames:
+  - {fileID: -1977660878, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: 70906326, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: -292971211, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: -1690378127, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: -1348504855, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: 1169489544, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: -1370267343, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: 123413015, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  dayWinCelebrationFramesPerSecond: 12
+  shopCameraMoveDuration: 1.5
+  shopDialogueDuration: 4
+  catCameraMoveDuration: 1
+  catCameraHoldDuration: 1.5
+  catCameraOrthographicSize: 2
+  dayOneCameraMoveDuration: 1
+  dayOneCameraOrthographicSize: 2.5
+  dayOneKitchenCameraOrthographicSize: 4.25
+  dayOneIntroFont: {fileID: 11400000, guid: 1cb780c78e6b6174b82d2efea0702b23, type: 2}
+  missedChoresGameOverThresholdByDay: 03000000030000000300000003000000030000000300000003000000
 --- !u!114 &9105449192020130211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,17 +215,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ab9aec46de3bb4c8d353a3ed73165a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EconomyManager
-  startingCoins: 5
+  startingCoins: 50
   startingPoints: 0
   coinsPerChorePoint: 1
   movementSpeedMultiplier: 1.25
   movementBoostDuration: 15
   extraTimeSeconds: 15
-  mopUpgradeBaseCost: 15
-  upgradedMopCleaningSpeedMultiplier: 5
-  broomUpgradeBaseCost: 15
-  upgradedBroomCleaningSpeedMultiplier: 5
-  catBaseCost: 10
+  mopUpgradeBaseCost: 50
+  upgradedMopCleaningSpeedMultiplier: 4
+  broomUpgradeBaseCost: 60
+  upgradedBroomCleaningSpeedMultiplier: 4
+  catBaseCost: 100
+  dishwashingLiquidBaseCost: 100
+  dishwashingLiquidScrubSpeedMultiplier: 2
 --- !u!114 &7273702467838881212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,14 +272,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameHUD
   dayText: {fileID: 0}
   timeText: {fileID: 0}
+  timePeriodText: {fileID: 0}
   choreListText: {fileID: 0}
   timeBar: {fileID: 0}
+  clockProgressSlider: {fileID: 0}
+  clockNearEndWarningSeconds: 60
+  clockProgressWarningColor: {r: 1, g: 0.2, b: 0.12, a: 0.7529412}
   clockFaceSprite: {fileID: 8581363780399802525, guid: 922b77a9796829c46979d96230d7063e, type: 3}
   clockAnchor: {fileID: 0}
   pointsText: {fileID: 0}
   coinsText: {fileID: 0}
   successRateText: {fileID: 0}
+  missedChoreText: {fileID: 0}
   coinSprite: {fileID: -3338749442709606003, guid: 0e67087d59961184282f29666ad62a46, type: 3}
+  dailyQuestPanel: {fileID: 0}
+  dailyQuestText: {fileID: 0}
+  dailyChallengeTitleText: {fileID: 0}
+  nearDeadlineWarningSeconds: 60
+  nearDeadlineColor: {r: 1, g: 0.35, b: 0.2, a: 1}
 --- !u!1 &5605998750176366943
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class DustSpot : Interactable
 {
+    private const string SweepingTutorialKey = "Broom";
+
     private SweepingMinigame sweepingMinigame;
     private SweepingManager sweepingManager;
+    private TutorialManager tutorialManager;
 
     private bool isCleaned = false;
 
@@ -48,14 +51,14 @@ public class DustSpot : Interactable
 
         if (!playerState.HasBroom)
         {
-            SpeechBubbleCanvas.Show(player.transform, "Pulutin mo muna ang walis!", 2f);
+            SpeechBubbleCanvas.Show(player.transform, "Pick up the broom first!", 2f);
             return;
         }
 
         PlayerEquipmentInventory inventory = player.GetComponent<PlayerEquipmentInventory>();
         if (inventory == null || inventory.SelectedEquipment != EquipmentType.Broom)
         {
-            SpeechBubbleCanvas.Show(player.transform, "I-equip muna ang walis bago magwalis.", 2f);
+            SpeechBubbleCanvas.Show(player.transform, "Equip the broom before sweeping.", 2f);
             return;
         }
 
@@ -65,11 +68,17 @@ public class DustSpot : Interactable
             return;
         }
 
-
         Debug.Log("Opening Sweeping Minigame");
 
+        if (tutorialManager == null)
+            tutorialManager = FindFirstObjectByType<TutorialManager>();
 
-        sweepingMinigame.StartSweeping(this);
+        bool showTutorial = tutorialManager == null
+            || !tutorialManager.HasLearned(SweepingTutorialKey);
+        sweepingMinigame.StartSweeping(
+            this,
+            showTutorial,
+            () => tutorialManager?.MarkAsLearned(SweepingTutorialKey));
     }
 
 
