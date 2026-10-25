@@ -13,7 +13,7 @@ public class SoundEffectManager : MonoBehaviour
     private AudioSource musicAudioSource;
     private SoundEffectLibrary soundEffectLibrary;
     [SerializeField] private Slider sfxSlider;
-    private float currentVolume = 1f;
+    private float currentVolume = .7f;
 
     private void Awake()
     {

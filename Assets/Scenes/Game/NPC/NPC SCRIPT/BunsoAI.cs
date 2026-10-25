@@ -52,6 +52,18 @@ public class BunsoAI : MonoBehaviour
     [SerializeField, Min(0f)] private float maximumWanderWait = 3f;
     [SerializeField, Min(0f)] private float dialogueDisplayDuration = 2f;
 
+    [Header("Sprite Animation")]
+    [SerializeField] private Sprite[] idleFrames = new Sprite[3];
+    [SerializeField, Min(0.01f)] private float idleFrameDuration = 0.25f;
+    [SerializeField] private Sprite moveUpSprite;
+    [SerializeField] private Sprite moveUpRightSprite;
+    [SerializeField] private Sprite moveRightSprite;
+    [SerializeField] private Sprite moveDownRightSprite;
+    [SerializeField] private Sprite moveDownSprite;
+    [SerializeField] private Sprite moveDownLeftSprite;
+    [SerializeField] private Sprite moveLeftSprite;
+    [SerializeField] private Sprite moveUpLeftSprite;
+
     [Header("Mood Bubble")]
     [SerializeField] private Transform topAnchor;
     [SerializeField] private GameObject moodBubblePrefab;
@@ -63,12 +75,16 @@ public class BunsoAI : MonoBehaviour
     private Rigidbody2D body;
     private Collider2D bodyCollider;
     private SpriteRenderer spriteRenderer;
+    private Sprite defaultSprite;
     private Transform player;
     private Vector2 homePosition;
     private Vector2 movementTarget;
+    private Vector2 previousAnimationPosition;
     private bool hasMovementTarget;
     private float nextWanderTime;
     private float nextActionTime;
+    private float idleFrameTimer;
+    private int currentIdleFrame;
     private bool actionInProgress;
     private readonly List<Chore> spawnedChores = new();
     private readonly List<GameObject> spawnedBadMoodObjects = new();
@@ -79,6 +95,8 @@ public class BunsoAI : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         bodyCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        defaultSprite = spriteRenderer != null ? spriteRenderer.sprite : null;
+        previousAnimationPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         homePosition = transform.position;
 
@@ -96,6 +114,8 @@ public class BunsoAI : MonoBehaviour
 
     private void Update()
     {
+        UpdateSpriteAnimation();
+
         if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
             return;
 
@@ -188,6 +208,91 @@ public class BunsoAI : MonoBehaviour
                 minimumWanderWait,
                 Mathf.Max(minimumWanderWait, maximumWanderWait));
         }
+    }
+
+    private void UpdateSpriteAnimation()
+    {
+        if (spriteRenderer == null)
+            return;
+
+        Vector2 currentPosition = transform.position;
+        Vector2 movement = currentPosition - previousAnimationPosition;
+        previousAnimationPosition = currentPosition;
+
+        if (movement.sqrMagnitude > 0.000001f)
+        {
+            idleFrameTimer = 0f;
+            Sprite movementSprite = GetMovementSprite(movement);
+            ApplySprite(movementSprite != null ? movementSprite : GetFallbackSprite());
+            return;
+        }
+
+        if (idleFrames != null && idleFrames.Length > 0)
+        {
+            float frameDuration = Mathf.Max(0.01f, idleFrameDuration);
+            idleFrameTimer += Time.deltaTime;
+            if (idleFrameTimer >= frameDuration)
+            {
+                idleFrameTimer %= frameDuration;
+                currentIdleFrame = (currentIdleFrame + 1) % idleFrames.Length;
+            }
+
+            Sprite idleSprite = idleFrames[currentIdleFrame];
+            ApplySprite(idleSprite != null ? idleSprite : GetFallbackSprite());
+            return;
+        }
+
+        ApplySprite(GetFallbackSprite());
+    }
+
+    private Sprite GetFallbackSprite()
+    {
+        if (defaultSprite != null)
+            return defaultSprite;
+
+        if (idleFrames == null)
+            return null;
+
+        foreach (Sprite idleFrame in idleFrames)
+        {
+            if (idleFrame != null)
+                return idleFrame;
+        }
+
+        return null;
+    }
+
+    private Sprite GetMovementSprite(Vector2 movement)
+    {
+        float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
+        if (angle < 0f)
+            angle += 360f;
+
+        switch (Mathf.RoundToInt(angle / 45f) % 8)
+        {
+            case 0:
+                return moveRightSprite;
+            case 1:
+                return moveUpRightSprite;
+            case 2:
+                return moveUpSprite;
+            case 3:
+                return moveUpLeftSprite;
+            case 4:
+                return moveLeftSprite;
+            case 5:
+                return moveDownLeftSprite;
+            case 6:
+                return moveDownSprite;
+            default:
+                return moveDownRightSprite;
+        }
+    }
+
+    private void ApplySprite(Sprite sprite)
+    {
+        if (sprite != null)
+            spriteRenderer.sprite = sprite;
     }
 
     private void BeginRewardDrop()

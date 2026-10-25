@@ -2295,7 +2295,7 @@ public class DayManager : MonoBehaviour
 
         SpeechBubbleCanvas.Show(
             shop.transform,
-            "You can buy better equipment here if you have enough coins.",
+            "You can buy better equipment here and furnitures if you have enough coins.",
             shopDialogueDuration,
             new Vector2(480f, 104f),
             18);

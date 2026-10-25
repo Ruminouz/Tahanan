@@ -21,6 +21,8 @@ public class VolumeSliderBinder : MonoBehaviour
 
     private void OnEnable()
     {
+        BringContainingCanvasChildToFront();
+
         if (bindToSoundEffects)
         {
             slider.SetValueWithoutNotify(SoundEffectManager.GetVolume());
@@ -42,6 +44,20 @@ public class VolumeSliderBinder : MonoBehaviour
         // Clear any stale listeners, then bind fresh to the current instance.
         slider.onValueChanged.RemoveListener(AudioManager.Instance.SetVolume);
         slider.onValueChanged.AddListener(AudioManager.Instance.SetVolume);
+    }
+
+    private void BringContainingCanvasChildToFront()
+    {
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas == null)
+            return;
+
+        Transform canvasChild = transform;
+        while (canvasChild.parent != null && canvasChild.parent != canvas.transform)
+            canvasChild = canvasChild.parent;
+
+        if (canvasChild.parent == canvas.transform)
+            canvasChild.SetAsLastSibling();
     }
 
     private void OnDisable()

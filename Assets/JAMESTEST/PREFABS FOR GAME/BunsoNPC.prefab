@@ -317,12 +317,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1859123079032103415}
   - component: {fileID: 4956656485973073925}
-  - component: {fileID: 9135919930907748146}
   - component: {fileID: 7659920050052078199}
   - component: {fileID: 2572911304479252736}
   - component: {fileID: 1215113636064767911}
   - component: {fileID: 8820234133482397915}
   - component: {fileID: 1066952022087837663}
+  - component: {fileID: 8291540184465680949}
+  - component: {fileID: 8349594070684393606}
+  - component: {fileID: 4723959233388605538}
   m_Layer: 7
   m_Name: BunsoNPC
   m_TagString: NPCS
@@ -338,9 +340,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8936545590720147186}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.38, y: -18.94, z: 0}
-  m_LocalScale: {x: 0.23674686, y: 0.23674686, z: 0.23674686}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4049634607692134718}
@@ -397,8 +399,8 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2538187851356308217, guid: a39006c95ca35a648a177286d6adb59b, type: 3}
-  m_Color: {r: 0.6039216, g: 0.5882353, b: 0.6156863, a: 1}
+  m_Sprite: {fileID: -2893189772044795099, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -407,52 +409,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!61 &9135919930907748146
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8936545590720147186}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 640
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.82, y: 3.33}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &7659920050052078199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,9 +498,9 @@ MonoBehaviour:
   waterBadMoodLine: Mop this up, big brother! Hahaha!
   segregateBadMoodLine: Put these away, big brother! Hahaha!
   garbageBagBadMoodLine: Throw this in the trash, big brother! Hahaha!
-  chocolateRewardLine: May chocolate ako para sa'yo!
-  chocolateConsumedLine: Mama! kinain ni kuya chocolate ko!
-  timeFreezerRewardLine: Eto, pampahinto ng oras!
+  chocolateRewardLine: I have chocolate for you mwehehe!
+  chocolateConsumedLine: Mama! brother ate my chocolate!
+  timeFreezerRewardLine: use this to free the time!
   possibleBoosts: 0000000001000000
   chocolatePrefab: {fileID: 2093951337509963342, guid: 86d7c508fe0eba54eb85686efa87b206, type: 3}
   timeFreezerPrefab: {fileID: 6014960946341728753, guid: c313d8be4311359489f1b34ed95ac3a8, type: 3}
@@ -565,6 +521,16 @@ MonoBehaviour:
   minimumWanderWait: 1
   maximumWanderWait: 3
   dialogueDisplayDuration: 2
+  idleFrames: []
+  idleFrameDuration: 0.25
+  moveUpSprite: {fileID: 0}
+  moveUpRightSprite: {fileID: 0}
+  moveRightSprite: {fileID: 0}
+  moveDownRightSprite: {fileID: 0}
+  moveDownSprite: {fileID: 0}
+  moveDownLeftSprite: {fileID: 0}
+  moveLeftSprite: {fileID: 0}
+  moveUpLeftSprite: {fileID: 0}
   topAnchor: {fileID: 4049634607692134718}
   moodBubblePrefab: {fileID: 0}
   bubbleDuration: 3
@@ -587,3 +553,79 @@ MonoBehaviour:
   calmLine: Mom!
   concernedLine: Big brother is so lazy.
   angryLine: I'll get in trouble if Mom gets mad again.
+--- !u!114 &8291540184465680949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8936545590720147186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
+  m_CategoryHash: 1.8625731e-11
+  m_labelHash: 1.7625519e-37
+  m_SpriteKey: 0
+  m_SpriteHash: 657323641
+--- !u!114 &8349594070684393606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8936545590720147186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 9a51fda7bf0d32042ac383e110d29014, type: 3}
+--- !u!61 &4723959233388605538
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8936545590720147186}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.24, y: 0.29}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.24, y: 0.29}
+  m_EdgeRadius: 0

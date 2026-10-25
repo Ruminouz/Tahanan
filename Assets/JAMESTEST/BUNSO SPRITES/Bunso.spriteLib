@@ -1,0 +1,210 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrarySourceAsset
+  m_Library:
+  - m_Name: Idle
+    m_Hash: 1008081451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: BunsoIdle_0
+      m_Hash: 514856249
+      m_Sprite: {fileID: -2893189772044795099, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2893189772044795099, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_1
+      m_Hash: 699868591
+      m_Sprite: {fileID: -5550579370104525822, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -5550579370104525822, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_2
+      m_Hash: 817787925
+      m_Sprite: {fileID: 9215259661558483601, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 9215259661558483601, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_3
+      m_Hash: 129582211
+      m_Sprite: {fileID: 6550109439670374296, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 6550109439670374296, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_4
+      m_Hash: 433967392
+      m_Sprite: {fileID: -3929583055617610256, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3929583055617610256, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_5
+      m_Hash: 786096566
+      m_Sprite: {fileID: 577379067084304097, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 577379067084304097, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_6
+      m_Hash: 936620044
+      m_Sprite: {fileID: 5330774933677919413, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 5330774933677919413, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_7
+      m_Hash: 13926554
+      m_Sprite: {fileID: 8419957101621499023, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 8419957101621499023, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_8
+      m_Hash: 275488011
+      m_Sprite: {fileID: -8376858773238449782, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -8376858773238449782, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_9
+      m_Hash: 661433757
+      m_Sprite: {fileID: -1333736414763220090, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1333736414763220090, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_10
+      m_Hash: 849073789
+      m_Sprite: {fileID: 980190731130255227, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 980190731130255227, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    - m_Name: BunsoIdle_11
+      m_Hash: 94168811
+      m_Sprite: {fileID: -1768387114151314267, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1768387114151314267, guid: 8de876f8d0efbe44ca9587aead10c75a, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 12
+  - m_Name: Walk
+    m_Hash: 765711723
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: BunsoWalk_0
+      m_Hash: 621991080
+      m_Sprite: {fileID: 1480541987914071866, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1480541987914071866, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_1
+      m_Hash: 303424574
+      m_Sprite: {fileID: -6592808782172459188, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -6592808782172459188, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_2
+      m_Hash: 186430852
+      m_Sprite: {fileID: -7834684151771768143, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -7834684151771768143, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_3
+      m_Hash: 1008436498
+      m_Sprite: {fileID: 587844297977671781, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 587844297977671781, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_4
+      m_Hash: 578752689
+      m_Sprite: {fileID: 545080113497284078, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 545080113497284078, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_5
+      m_Hash: 360194087
+      m_Sprite: {fileID: 5705235013888300529, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 5705235013888300529, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_6
+      m_Hash: 208761245
+      m_Sprite: {fileID: -7813073575124091526, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -7813073575124091526, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_7
+      m_Hash: 997605643
+      m_Sprite: {fileID: 8333473034308411998, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 8333473034308411998, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_8
+      m_Hash: 734616730
+      m_Sprite: {fileID: 8314724240330479141, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 8314724240330479141, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_9
+      m_Hash: 483290124
+      m_Sprite: {fileID: 2197007916012788413, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2197007916012788413, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_10
+      m_Hash: 896063342
+      m_Sprite: {fileID: 1185838053980233976, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1185838053980233976, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk_11
+      m_Hash: 40888312
+      m_Sprite: {fileID: 3340715604280293670, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 3340715604280293670, guid: e16bc448cd0d32c47b2fe64e72b793f3, type: 3}
+    - m_Name: BunsoWalk1_0
+      m_Hash: 207583085
+      m_Sprite: {fileID: -3908302480697494651, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3908302480697494651, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_1
+      m_Hash: 995641339
+      m_Sprite: {fileID: -6509080948709349596, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -6509080948709349596, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_2
+      m_Hash: 575739457
+      m_Sprite: {fileID: 845442515414870986, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 845442515414870986, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_3
+      m_Hash: 357967575
+      m_Sprite: {fileID: -3706864261140068264, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3706864261140068264, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_4
+      m_Hash: 187872116
+      m_Sprite: {fileID: -7686003269471392045, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -7686003269471392045, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_5
+      m_Hash: 1010140130
+      m_Sprite: {fileID: -1069471816796587836, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1069471816796587836, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_6
+      m_Hash: 624743000
+      m_Sprite: {fileID: -1033797802748447198, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1033797802748447198, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_7
+      m_Hash: 305914574
+      m_Sprite: {fileID: 8814514137801395781, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 8814514137801395781, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_8
+      m_Hash: 42270559
+      m_Sprite: {fileID: -3712784736477227309, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3712784736477227309, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_9
+      m_Hash: 897830857
+      m_Sprite: {fileID: -2876316907675860913, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2876316907675860913, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_10
+      m_Hash: 508538098
+      m_Sprite: {fileID: -2061786647479311141, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2061786647479311141, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    - m_Name: BunsoWalk1_11
+      m_Hash: 692624484
+      m_Sprite: {fileID: 1267370344538076920, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1267370344538076920, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 24
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 639285285991181343
+  m_Version: 1
