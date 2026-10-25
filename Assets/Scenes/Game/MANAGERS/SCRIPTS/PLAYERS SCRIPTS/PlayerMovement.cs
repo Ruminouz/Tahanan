@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 DailySpawnPosition => hasDailySpawnPoint
         ? dailySpawnPosition
         : transform.position;
+    public Vector2 CurrentMoveInput => moveInput;
     private bool playingFootsteps = false;
     public float footstepSpeed = 0.5f;
 

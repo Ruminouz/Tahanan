@@ -613,7 +613,7 @@ MonoBehaviour:
   bubbleDuration: 3
   angryBubbleInterval: 8
   approachSpeed: 2
-  spankApproachSpeed: 4
+  spankApproachSpeed: 6
   spankDistance: 0.8
   approachTimeout: 5
   spankApproachTimeout: 60

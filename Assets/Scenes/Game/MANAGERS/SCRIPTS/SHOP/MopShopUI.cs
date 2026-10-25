@@ -8,11 +8,7 @@ public class MopShopUI : MonoBehaviour
 {
     private static readonly string[] blockedFurnitureLayers =
     {
-        "FURNITURES",
-        "OUTSIDEMAP",
-        "DOORS",
-        "WALL COLLIDERS",
-        "NPCS"
+       
     };
     private const string FurniturePlacementInstructions =
         "HOLD RIGHT CLICK + DRAG TO MOVE THE CAMERA\n" +
@@ -40,6 +36,7 @@ public class MopShopUI : MonoBehaviour
     [SerializeField] private Sprite refrigeratorIcon;
     [SerializeField] private Sprite fanIcon;
     [SerializeField] private Sprite televisionIcon;
+    [SerializeField] private TMP_FontAsset tutorialFont;
 
     private EconomyManager economyManager;
     private ShopItemCardUI mopCard;
@@ -492,14 +489,16 @@ public class MopShopUI : MonoBehaviour
 
         furniturePlacementTutorialText =
             tutorialTextObject.GetComponent<TextMeshProUGUI>();
-        furniturePlacementTutorialText.font = TMP_Settings.defaultFontAsset;
-        furniturePlacementTutorialText.fontSize = 28f;
+        furniturePlacementTutorialText.font = tutorialFont != null
+            ? tutorialFont
+            : TMP_Settings.defaultFontAsset;
+        furniturePlacementTutorialText.fontSize = 32f;
         furniturePlacementTutorialText.fontStyle = FontStyles.Bold;
-        furniturePlacementTutorialText.color = new Color(1f, 0.9f, 0.45f, 1f);
+        furniturePlacementTutorialText.color = Color.white;
         furniturePlacementTutorialText.alignment = TextAlignmentOptions.Center;
         furniturePlacementTutorialText.raycastTarget = false;
-        furniturePlacementTutorialText.outlineWidth = 0.18f;
-        furniturePlacementTutorialText.outlineColor = new Color(0f, 0f, 0f, 0.9f);
+        furniturePlacementTutorialText.outlineWidth = 0.25f;
+        furniturePlacementTutorialText.outlineColor = Color.black;
         furniturePlacementTutorialText.text = FurniturePlacementInstructions;
 
         tutorialObject.transform.SetAsLastSibling();

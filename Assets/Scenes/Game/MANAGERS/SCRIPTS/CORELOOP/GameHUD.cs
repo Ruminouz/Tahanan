@@ -1230,7 +1230,6 @@ public class GameHUD : MonoBehaviour
             float secondsUntilDeadline = nextDeadline - timeManager.GetTime();
             if (showDeadline)
             {
-                pendingLine += " · " + timeManager.FormatClockTime(nextDeadline);
                 pendingLine += " · " + Mathf.CeilToInt(
                     Mathf.Max(0f, secondsUntilDeadline)) + "s left";
             }

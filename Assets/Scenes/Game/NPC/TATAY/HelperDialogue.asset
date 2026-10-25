@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e236d55e708ed3a44b78dba2401e20f8, type: 3}
   m_Name: HelperDialogue
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
-  npcName: HelperDialogue
-  npcPortrait: {fileID: 655666607, guid: 72143ab2aa9ca084fb44f34a55500642, type: 3}
+  npcName: Kuya Pedro
+  npcPortrait: {fileID: -5372555126961817669, guid: d8ad5c63d0361934c8959ad2cd23a985, type: 3}
   dialogueLines:
-  - ZZZZZZ
-  - ZZZZZZZZZ
-  - ZZZZZZZZZZ
+  - Dont worry ill help you
+  - when im in the mood
+  - just do the chores.
   autoProgressLines: 0101
   autoProgressDelay: 1.5
   typingSpeed: 0.05

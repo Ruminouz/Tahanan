@@ -3722,6 +3722,7 @@ MonoBehaviour:
   mopUpgradeIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
   catIcon: {fileID: -7232521027535748977, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
   dishwashingLiquidIcon: {fileID: 4398864269921876113, guid: 562166918a4224a40afc89f9f5583164, type: 3}
+  tutorialFont: {fileID: 11400000, guid: 1cb780c78e6b6174b82d2efea0702b23, type: 2}
 --- !u!114 &5407818560695111584
 MonoBehaviour:
   m_ObjectHideFlags: 0

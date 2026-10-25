@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 
 public class NPC : MonoBehaviour, IInteractable
 {
+    public static event Action DialogueStateChanged;
+
     public NPCDialogue dialogueData;
     public GameObject dialoguePanel;
     public TMP_Text dialogueText, nameText;
@@ -28,6 +30,21 @@ public class NPC : MonoBehaviour, IInteractable
     private float reprimandDialogueDuration;
 
     public bool IsDialogueActive => isDialogueActive;
+
+    public static bool IsAnyDialogueActive
+    {
+        get
+        {
+            NPC[] npcs = FindObjectsByType<NPC>(FindObjectsSortMode.None);
+            foreach (NPC npc in npcs)
+            {
+                if (npc != null && npc.IsDialogueActive)
+                    return true;
+            }
+
+            return false;
+        }
+    }
 
     public bool CanInteract()
     {
@@ -140,6 +157,7 @@ public class NPC : MonoBehaviour, IInteractable
             portraitImage.sprite = dialogueData.npcPortrait;
 
         dialoguePanel.SetActive(true);
+        DialogueStateChanged?.Invoke();
         PauseController.SetPause(true);
         StartCoroutine(TypeLine());
         return true;
@@ -172,6 +190,7 @@ public class NPC : MonoBehaviour, IInteractable
             portraitImage.sprite = speakerPortrait;
 
         dialoguePanel.SetActive(true);
+        DialogueStateChanged?.Invoke();
         PauseController.SetPause(true);
         StartCoroutine(TypeLine());
         StartCoroutine(AutoCloseReprimandDialogue(displayDuration));
@@ -212,6 +231,7 @@ public class NPC : MonoBehaviour, IInteractable
         if (portraitImage != null)
             portraitImage.sprite = dialogueData.npcPortrait;
         dialoguePanel.SetActive(true);
+        DialogueStateChanged?.Invoke();
         PauseController.SetPause(true);
 
         StartCoroutine(TypeLine());
@@ -343,6 +363,7 @@ public class NPC : MonoBehaviour, IInteractable
             dialogueText.SetText("");
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
+        DialogueStateChanged?.Invoke();
         PauseController.SetPause(false);
         Action<int> callback = choiceCallback;
         Action closedCallback = dialogueClosedCallback;

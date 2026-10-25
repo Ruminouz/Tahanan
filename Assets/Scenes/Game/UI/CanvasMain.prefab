@@ -8062,6 +8062,7 @@ MonoBehaviour:
   refrigeratorIcon: {fileID: 7675254332349527285, guid: 77956776220dd1c4b96053cbcc592daf, type: 3}
   fanIcon: {fileID: -6761235011545710227, guid: 77956776220dd1c4b96053cbcc592daf, type: 3}
   televisionIcon: {fileID: -977746110562946551, guid: 77956776220dd1c4b96053cbcc592daf, type: 3}
+  tutorialFont: {fileID: 11400000, guid: 1cb780c78e6b6174b82d2efea0702b23, type: 2}
 --- !u!114 &3846898025652169751
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,6 +28,14 @@ public class MapTransition : MonoBehaviour
         }
     }
 
+    public bool LeadsToAreaContaining(Vector2 position)
+    {
+        return mapBoundary != null &&
+            mapBoundary.enabled &&
+            mapBoundary.gameObject.activeInHierarchy &&
+            mapBoundary.OverlapPoint(position);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

@@ -20,6 +20,7 @@ public class HouseholdHelperAI : MonoBehaviour
     [SerializeField, Min(0.1f)] private float movementSpeed = 4f;
     [SerializeField, Min(0f)] private float playerApproachDistance = 1.2f;
     [SerializeField, Min(0.05f)] private float choreArrivalDistance = 0.35f;
+    [SerializeField, Min(0f)] private float choreStandOffDistance = 0.15f;
 
     [Header("Chore Work")]
     [SerializeField, Min(0f)] private float defaultChoreDuration = 15f;
@@ -33,6 +34,7 @@ public class HouseholdHelperAI : MonoBehaviour
     [SerializeField] private Sprite feedDogIcon;
     [SerializeField] private Sprite sweepingIcon;
     [SerializeField] private Sprite moppingIcon;
+    [SerializeField] private Sprite helperPortraitSprite;
     [SerializeField, Min(0.1f)] private float choreIconSize = 0.45f;
     [SerializeField, Min(0f)] private float choreIconOffset = 0.55f;
 
@@ -71,6 +73,7 @@ public class HouseholdHelperAI : MonoBehaviour
     private bool dialogueChoiceReceived;
 
     public bool IsHelping => helping;
+    public Sprite SummaryPortrait => helperPortraitSprite;
 
     private sealed class HelperTask
     {
@@ -594,12 +597,69 @@ public class HouseholdHelperAI : MonoBehaviour
 
         if (task.Chore != null)
         {
-            position = task.Chore.transform.position;
+            position = GetChoreStandPosition(task.Chore);
             return true;
         }
 
         position = Vector2.zero;
         return false;
+    }
+
+    private Vector2 GetChoreStandPosition(Chore chore)
+    {
+        Collider2D choreCollider = chore.GetComponent<Collider2D>();
+        if (choreCollider == null)
+            choreCollider = chore.GetComponentInChildren<Collider2D>();
+
+        if (choreCollider == null)
+            return chore.transform.position;
+
+        Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
+        Vector2 closestPoint = choreCollider.ClosestPoint(currentPosition);
+        Vector2 outwardDirection = currentPosition - closestPoint;
+
+        if (outwardDirection.sqrMagnitude <= 0.0001f)
+        {
+            Bounds bounds = choreCollider.bounds;
+            Vector2 offsetFromCenter = currentPosition - (Vector2)bounds.center;
+            float distanceToHorizontalEdge = bounds.extents.x - Mathf.Abs(offsetFromCenter.x);
+            float distanceToVerticalEdge = bounds.extents.y - Mathf.Abs(offsetFromCenter.y);
+
+            if (distanceToHorizontalEdge <= distanceToVerticalEdge)
+            {
+                outwardDirection = new Vector2(offsetFromCenter.x < 0f ? -1f : 1f, 0f);
+                closestPoint = new Vector2(
+                    bounds.center.x + outwardDirection.x * bounds.extents.x,
+                    Mathf.Clamp(currentPosition.y, bounds.min.y, bounds.max.y));
+            }
+            else
+            {
+                outwardDirection = new Vector2(0f, offsetFromCenter.y < 0f ? -1f : 1f);
+                closestPoint = new Vector2(
+                    Mathf.Clamp(currentPosition.x, bounds.min.x, bounds.max.x),
+                    bounds.center.y + outwardDirection.y * bounds.extents.y);
+            }
+        }
+        else
+        {
+            outwardDirection.Normalize();
+        }
+
+        Vector2 helperExtents = bodyCollider != null && bodyCollider.enabled
+            ? bodyCollider.bounds.extents
+            : Vector2.zero;
+        if (helperExtents == Vector2.zero)
+        {
+            SpriteRenderer helperRenderer = GetComponentInChildren<SpriteRenderer>();
+            if (helperRenderer != null)
+                helperExtents = helperRenderer.bounds.extents;
+        }
+
+        float helperExtent =
+            Mathf.Abs(outwardDirection.x) * helperExtents.x +
+            Mathf.Abs(outwardDirection.y) * helperExtents.y;
+
+        return closestPoint + outwardDirection * (helperExtent + choreStandOffDistance);
     }
 
     private bool IsTaskStillAvailable(HelperTask task)
@@ -646,7 +706,10 @@ public class HouseholdHelperAI : MonoBehaviour
             return;
 
         if (task.Chore == null && choreManager != null)
+        {
             choreManager.ApplyHelperMoodCost();
+            choreManager.MarkHelperCompletedTask(task.DisplayName);
+        }
 
         if (task.Chore != null && task.Chore.IsCompleted && choreManager != null)
             choreManager.MarkHelperCompleted(task.Chore);
@@ -783,10 +846,8 @@ public class HouseholdHelperAI : MonoBehaviour
 
             choreIconRenderer.sprite = icon;
             choreIconRenderer.enabled = true;
-            SpriteRenderer npcRenderer = GetComponent<SpriteRenderer>();
-            choreIconRenderer.sortingOrder = npcRenderer != null ? npcRenderer.sortingOrder + 1 : 1;
-            if (npcRenderer != null)
-                choreIconRenderer.sortingLayerID = npcRenderer.sortingLayerID;
+            choreIconRenderer.sortingLayerID = GetTopSortingLayerId();
+            choreIconRenderer.sortingOrder = short.MaxValue;
 
             float largestDimension = Mathf.Max(icon.bounds.size.x, icon.bounds.size.y);
             float scale = largestDimension > 0f ? choreIconSize / largestDimension : 1f;
@@ -795,11 +856,10 @@ public class HouseholdHelperAI : MonoBehaviour
         }
 
         Transform progressAnchor = bubbleAnchor != null ? bubbleAnchor : transform;
-        SpriteRenderer helperRenderer = GetComponent<SpriteRenderer>();
-        ShowChoreProgressBar(progressAnchor, helperRenderer);
+        ShowChoreProgressBar(progressAnchor);
     }
 
-    private void ShowChoreProgressBar(Transform anchor, SpriteRenderer npcRenderer)
+    private void ShowChoreProgressBar(Transform anchor)
     {
         if (choreProgressBarObject == null)
         {
@@ -853,9 +913,17 @@ public class HouseholdHelperAI : MonoBehaviour
         progressTransform.localRotation = Quaternion.identity;
 
         Canvas progressCanvas = choreProgressBarObject.GetComponent<Canvas>();
-        progressCanvas.sortingLayerID = npcRenderer != null ? npcRenderer.sortingLayerID : 0;
-        progressCanvas.sortingOrder = npcRenderer != null ? npcRenderer.sortingOrder + 2 : 2;
+        progressCanvas.sortingLayerID = GetTopSortingLayerId();
+        progressCanvas.sortingOrder = short.MaxValue - 1;
         choreProgressBarObject.SetActive(true);
+    }
+
+    private int GetTopSortingLayerId()
+    {
+        SortingLayer[] sortingLayers = SortingLayer.layers;
+        return sortingLayers.Length > 0
+            ? sortingLayers[sortingLayers.Length - 1].id
+            : 0;
     }
 
     private void SetChoreProgress(float progress)

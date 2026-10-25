@@ -290,6 +290,7 @@ MonoBehaviour:
   feedDogIcon: {fileID: 8547402250504553676, guid: ac7777586342a114cafe57a15162339a, type: 3}
   sweepingIcon: {fileID: 5046199188006953926, guid: a04a3cfae1220ae48b7e795f45516c65, type: 3}
   moppingIcon: {fileID: -5859998862993565099, guid: 3742b4ab35dc0ab4f8a4150593ce6d8f, type: 3}
+  helperPortraitSprite: {fileID: -5372555126961817669, guid: d8ad5c63d0361934c8959ad2cd23a985, type: 3}
   choreIconSize: 0.45
   choreIconOffset: 0.55
   bubbleAnchor: {fileID: 1042943640945524530}

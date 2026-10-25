@@ -9,6 +9,7 @@ public static class SpeechBubbleCanvas
     private const float VerticalPadding = 16f;
     private const float MinimumBubbleWidth = 120f;
     private const float MinimumBubbleHeight = 54f;
+    private const float MaximumBubbleWidth = 360f;
     private const float CanvasEdgePadding = 16f;
     private const float MinimumFontSize = 10f;
 
@@ -125,9 +126,12 @@ public static class SpeechBubbleCanvas
         Vector2 minimumSize,
         Vector2 canvasSize)
     {
-        float maxWidth = Mathf.Max(
+        float canvasMaxWidth = Mathf.Max(
             MinimumBubbleWidth,
             canvasSize.x - CanvasEdgePadding * 2f);
+        float maxWidth = Mathf.Min(
+            canvasMaxWidth,
+            MaximumBubbleWidth);
         float maxHeight = Mathf.Max(
             MinimumBubbleHeight,
             canvasSize.y - CanvasEdgePadding * 2f);

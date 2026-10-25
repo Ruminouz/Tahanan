@@ -8600,6 +8600,7 @@ MonoBehaviour:
   mopUpgradeIcon: {fileID: 6624784045345072037, guid: fce3f8765ee216e4392999c96de9d18f, type: 3}
   catIcon: {fileID: -7232521027535748977, guid: 44a4bd92e6564534889606dd7e56943b, type: 3}
   dishwashingLiquidIcon: {fileID: 5602735946673550502, guid: f3368231ab944aa4f9894d38b6df5e76, type: 3}
+  tutorialFont: {fileID: 11400000, guid: 1cb780c78e6b6174b82d2efea0702b23, type: 2}
 --- !u!114 &7598511902721512454
 MonoBehaviour:
   m_ObjectHideFlags: 0

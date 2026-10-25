@@ -22,7 +22,7 @@ public class MomAI : MonoBehaviour
     [SerializeField, Min(0f)] private float bubbleDuration = 3f;
     [SerializeField, Min(0f)] private float angryBubbleInterval = 8f;
     [SerializeField, Min(0.1f)] private float approachSpeed = 2f;
-    [SerializeField, Min(0.1f)] private float spankApproachSpeed = 4f;
+    [SerializeField, Min(0.1f)] private float spankApproachSpeed = 6f;
     [SerializeField, Min(0.1f)] private float spankDistance = 0.8f;
     [SerializeField, Min(0.1f)] private float approachTimeout = 5f;
     [SerializeField, Min(0.1f)] private float spankApproachTimeout = 15f;
@@ -46,7 +46,6 @@ public class MomAI : MonoBehaviour
     private WaterSpawner waterSpawner;
     private float nextAngryBubbleTime;
     private bool reprimanding;
-    private bool gameOverRequested;
     private readonly Queue<Chore> pendingMissedChores = new Queue<Chore>();
     private Collider2D bodyCollider;
     private Collider2D playerCollider;
@@ -107,6 +106,9 @@ public class MomAI : MonoBehaviour
         if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
             return;
 
+        if (dayManager != null && dayManager.HasReachedMissedChoreGameOverThreshold)
+            return;
+
         if (choreManager == null)
             SubscribeToChoreManager();
 
@@ -162,16 +164,10 @@ public class MomAI : MonoBehaviour
         if (chore != null && (!chore.IsMissed || chore.IsCompleted))
             return;
 
-        if (gameOverRequested)
+        if (dayManager != null && dayManager.HasReachedMissedChoreGameOverThreshold)
             return;
 
         pendingMissedChores.Enqueue(chore);
-
-        if (!gameOverRequested && dayManager != null &&
-            dayManager.HasReachedMissedChoreGameOverThreshold)
-        {
-            gameOverRequested = true;
-        }
 
         if (!reprimanding)
             StartCoroutine(ProcessReprimands());
@@ -186,10 +182,16 @@ public class MomAI : MonoBehaviour
 
         while (pendingMissedChores.Count > 0)
         {
+            if (dayManager != null && dayManager.HasReachedMissedChoreGameOverThreshold)
+            {
+                pendingMissedChores.Clear();
+                break;
+            }
+
             Chore missedChore = pendingMissedChores.Dequeue();
             yield return ApproachAndReprimand(missedChore);
 
-            if (gameOverRequested)
+            if (dayManager != null && dayManager.HasReachedMissedChoreGameOverThreshold)
             {
                 pendingMissedChores.Clear();
                 break;
@@ -200,9 +202,6 @@ public class MomAI : MonoBehaviour
         }
 
         reprimanding = false;
-
-        if (gameOverRequested && dayManager != null)
-            dayManager.TriggerGameOver();
     }
 
     private IEnumerator ApproachAndReprimand(Chore missedChore)
@@ -223,11 +222,17 @@ public class MomAI : MonoBehaviour
             if (waypointMover != null)
                 waypointMover.ResetWaypointRoute();
 
+            if (player != null)
+                DisableBodyColliderForApproach();
+
             float elapsed = 0f;
             float maxApproachTime = Mathf.Max(approachTimeout, spankApproachTimeout);
             chaseStuckTimer = 0f;
             Vector2 previousPosition = body != null ? body.position : (Vector2)transform.position;
-            while (player != null && !IsPlayerWithinSpankRange() && elapsed < maxApproachTime)
+            while (player != null &&
+                   !IsPlayerWithinSpankRange() &&
+                   elapsed < maxApproachTime &&
+                   (dayManager == null || !dayManager.HasReachedMissedChoreGameOverThreshold))
             {
                 if (MiniGameInteractionBlocker.IsAnyMiniGameActive)
                 {
@@ -268,10 +273,20 @@ public class MomAI : MonoBehaviour
                 previousPosition = actualPosition;
             }
 
+            RestoreBodyCollider();
+
             if (player != null && !IsPlayerWithinSpankRange())
+            {
+                if (dayManager != null && dayManager.HasReachedMissedChoreGameOverThreshold)
+                    yield break;
+
                 Debug.LogWarning(name + " could not reach the player; performing the missed-chore reprimand anyway.", this);
+            }
 
             StopMovementAnimation();
+
+            if (dayManager != null && dayManager.HasReachedMissedChoreGameOverThreshold)
+                yield break;
 
             NPC dialogue = FindFirstObjectByType<NPC>();
             if (dialogue != null)
@@ -300,6 +315,9 @@ public class MomAI : MonoBehaviour
                 Debug.LogWarning(name + " cannot display reprimand dialogue because no NPC dialogue component was found.", this);
                 ShowMoodDialogue();
             }
+
+            if (dayManager != null && dayManager.HasReachedMissedChoreGameOverThreshold)
+                yield break;
 
             SoundEffectManager.Play("Tsinelas");
             if (animator != null && !string.IsNullOrEmpty(spankTrigger))
@@ -341,6 +359,16 @@ public class MomAI : MonoBehaviour
         if (bodyCollider != null)
             bodyCollider.enabled = bodyColliderWasEnabled;
         restoreBodyColliderAfterReprimand = false;
+    }
+
+    private void DisableBodyColliderForApproach()
+    {
+        if (bodyCollider == null || restoreBodyColliderAfterReprimand)
+            return;
+
+        bodyColliderWasEnabled = bodyCollider.enabled;
+        restoreBodyColliderAfterReprimand = true;
+        bodyCollider.enabled = false;
     }
 
     private Vector2 GetUnblockedPursuitMovement(Vector2 currentPosition)

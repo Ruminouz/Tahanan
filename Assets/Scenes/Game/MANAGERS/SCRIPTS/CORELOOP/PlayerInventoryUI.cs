@@ -28,6 +28,8 @@ public class PlayerInventoryUI : MonoBehaviour
     private Image inventoryPanelBackground;
     private bool inventoryOpen;
     private bool miniGameActive;
+    private bool npcDialogueActive;
+    private bool hasStarted;
     private bool slotContentsInitialized;
     private bool tutorialInputEnabled = true;
     private bool hideHotbarForTutorial;
@@ -57,7 +59,18 @@ public class PlayerInventoryUI : MonoBehaviour
         ResolveEconomyManager();
 
         miniGameActive = MiniGameInteractionBlocker.IsAnyMiniGameActive;
+        npcDialogueActive = NPC.IsAnyDialogueActive;
+        hasStarted = true;
         Refresh();
+    }
+
+    private void OnEnable()
+    {
+        NPC.DialogueStateChanged += OnNpcDialogueStateChanged;
+        if (hasStarted)
+            OnNpcDialogueStateChanged();
+        else
+            npcDialogueActive = NPC.IsAnyDialogueActive;
     }
 
     private void Update()
@@ -96,6 +109,21 @@ public class PlayerInventoryUI : MonoBehaviour
             boostInventory.InventoryChanged -= Refresh;
         UnsubscribeEquipmentInventory();
         UnsubscribeEconomyManager();
+    }
+
+    private void OnDisable()
+    {
+        NPC.DialogueStateChanged -= OnNpcDialogueStateChanged;
+    }
+
+    private void OnNpcDialogueStateChanged()
+    {
+        bool isDialogueActive = NPC.IsAnyDialogueActive;
+        if (npcDialogueActive == isDialogueActive)
+            return;
+
+        npcDialogueActive = isDialogueActive;
+        Refresh();
     }
 
     private void ResolveEconomyManager()
@@ -216,6 +244,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
             bool isHotbarSlot = index == 0;
             bool slotIsVisible = !miniGameActive &&
+                !(isHotbarSlot && npcDialogueActive) &&
                 ((isHotbarSlot && !hideHotbarForTutorial) || inventoryOpen);
             slot.gameObject.SetActive(slotIsVisible);
 

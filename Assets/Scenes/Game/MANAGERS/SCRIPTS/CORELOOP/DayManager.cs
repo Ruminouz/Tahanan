@@ -13,6 +13,7 @@ public class DayManager : MonoBehaviour
     private const int FinalDay = 7;
     private const float EarliestChoreDeadlineFraction = 0.25f;
     private const float LatestChoreDeadlineFraction = 0.9f;
+    private static Sprite shopWaypointArrowSprite;
 
     public static DayManager Instance;
 
@@ -63,6 +64,11 @@ public class DayManager : MonoBehaviour
     [Header("Day 2 Introduction")]
     [SerializeField, Min(0.01f)] private float shopCameraMoveDuration = 1.5f;
     [SerializeField, Min(0f)] private float shopDialogueDuration = 4f;
+    [SerializeField, Min(0f)] private float shopDirectionsDuration = 7f;
+    [SerializeField, Min(0.25f)] private float shopWaypointArrowSpacing = 1.2f;
+    [SerializeField, Min(0.1f)] private float shopWaypointArrowScale = 0.65f;
+    [SerializeField, Min(0.1f)] private float shopWaypointReachDistance = 1.5f;
+    [SerializeField, Min(0.05f)] private float shopWaypointRefreshInterval = 0.2f;
     [SerializeField, Min(0.01f)] private float catCameraMoveDuration = 1f;
     [SerializeField, Min(0f)] private float catCameraHoldDuration = 1.5f;
     [SerializeField, Min(0.1f)] private float catCameraOrthographicSize = 2f;
@@ -72,6 +78,12 @@ public class DayManager : MonoBehaviour
     [SerializeField, Min(0.1f)] private float dayOneCameraOrthographicSize = 2.5f;
     [SerializeField, Min(0.1f)] private float dayOneKitchenCameraOrthographicSize = 4.25f;
     [SerializeField] private TMP_FontAsset dayOneIntroFont;
+
+    [Header("Family Story")]
+    [SerializeField] private Transform tricycle;
+    [SerializeField, Min(0.1f)] private float parentWalkSpeed = 2f;
+    [SerializeField, Min(0.05f)] private float parentWalkArrivalDistance = 0.2f;
+    [SerializeField, Min(0.1f)] private float parentWalkTimeout = 30f;
 
     [Header("Game Over")]
     [Tooltip("Maximum chores that may be missed before game over. Element 0 is Day 1 and element 6 is Day 7.")]
@@ -90,6 +102,8 @@ public class DayManager : MonoBehaviour
     private readonly List<Chore> dynamicChores = new List<Chore>();
     private readonly Dictionary<GameObject, bool> npcActiveStates =
         new Dictionary<GameObject, bool>();
+    private readonly Dictionary<GameObject, Vector3> parentHomePositions =
+        new Dictionary<GameObject, Vector3>();
     private bool dayFinished;
     private bool gameOver;
     private bool weekComplete;
@@ -108,6 +122,10 @@ public class DayManager : MonoBehaviour
     private bool dayOneFollowupIntroStarted;
     private bool dayOneWaterTutorialComplete;
     private bool dayOneKitchenIntroStarted;
+    private bool dayFourIntroInProgress;
+    private bool waitingForDayTwoShop;
+    private ShopTrigger dayTwoShopTrigger;
+    private GameObject dayTwoShopWaypoints;
     private GameObject dayOneIntroOverlay;
     private CinemachineCamera[] dayOneIntroCameras;
     private CinemachineBrain[] dayOneIntroBrains;
@@ -116,6 +134,15 @@ public class DayManager : MonoBehaviour
     private float dayOneIntroPreviousTimeScale = 1f;
     private float normalTimeScale = 1f;
     private bool doubleGameSpeedApplied;
+    private readonly List<SummaryChoreIcon> summaryChoreIcons =
+        new List<SummaryChoreIcon>();
+    private readonly List<Image> summaryChoreIconImages = new List<Image>();
+
+    private sealed class SummaryChoreIcon
+    {
+        public int CharacterIndex;
+        public Sprite Sprite;
+    }
 
     public int CurrentDay => currentDay;
     public string DailyAdditionalQuestName => dailyAdditionalQuestIsMopping
@@ -388,6 +415,7 @@ public class DayManager : MonoBehaviour
         AddNpcComponents<NPC>(sceneNpcs);
         AddNpcComponents<NPCSocialParticipant>(sceneNpcs);
         AddNpcComponents<MomAI>(sceneNpcs);
+        AddNpcComponents<TatayGameOverAI>(sceneNpcs);
         AddNpcComponents<BunsoAI>(sceneNpcs);
         AddNpcComponents<HouseholdHelperAI>(sceneNpcs);
         AddNpcComponents<CatInteraction>(sceneNpcs);
@@ -432,8 +460,329 @@ public class DayManager : MonoBehaviour
         npcActiveStates.Clear();
     }
 
+    private void RestoreParentNpcsForDeparture()
+    {
+        foreach (KeyValuePair<GameObject, bool> npcState in npcActiveStates)
+        {
+            if (npcState.Key != null && IsParentNpc(npcState.Key))
+                npcState.Key.SetActive(npcState.Value);
+        }
+
+        SetParentMoversEnabled(false);
+    }
+
+    private void RestoreSceneNpcsForCurrentDay()
+    {
+        foreach (KeyValuePair<GameObject, bool> npcState in npcActiveStates)
+        {
+            if (npcState.Key == null)
+                continue;
+
+            bool shouldBeActive = npcState.Value;
+            if (currentDay < 4 && IsParentNpc(npcState.Key))
+                shouldBeActive = false;
+
+            npcState.Key.SetActive(shouldBeActive);
+        }
+
+        npcActiveStates.Clear();
+        SetParentNpcsActive(currentDay >= 4);
+    }
+
+    private static HashSet<GameObject> GetParentNpcs()
+    {
+        HashSet<GameObject> parentNpcs = new HashSet<GameObject>();
+        AddNpcComponents<MomAI>(parentNpcs);
+        AddNpcComponents<TatayGameOverAI>(parentNpcs);
+
+        Transform[] sceneTransforms = FindObjectsByType<Transform>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        foreach (Transform sceneTransform in sceneTransforms)
+        {
+            if (sceneTransform == null ||
+                !sceneTransform.CompareTag("NPCS") ||
+                !IsParentNpc(sceneTransform.gameObject))
+                continue;
+
+            parentNpcs.Add(sceneTransform.gameObject);
+        }
+
+        NPCSocialParticipant[] participants =
+            FindObjectsByType<NPCSocialParticipant>(
+                FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
+        foreach (NPCSocialParticipant participant in participants)
+        {
+            if (participant == null ||
+                !IsParentName(participant.DisplayName))
+                continue;
+
+            Transform current = participant.transform;
+            while (current != null && !current.CompareTag("NPCS"))
+                current = current.parent;
+
+            parentNpcs.Add(current != null ? current.gameObject : participant.gameObject);
+        }
+
+        List<GameObject> nestedParentNpcs = new List<GameObject>();
+        foreach (GameObject parentNpc in parentNpcs)
+        {
+            for (Transform ancestor = parentNpc.transform.parent;
+                 ancestor != null;
+                 ancestor = ancestor.parent)
+            {
+                if (!parentNpcs.Contains(ancestor.gameObject))
+                    continue;
+
+                nestedParentNpcs.Add(parentNpc);
+                break;
+            }
+        }
+
+        foreach (GameObject nestedParentNpc in nestedParentNpcs)
+            parentNpcs.Remove(nestedParentNpc);
+
+        return parentNpcs;
+    }
+
+    private static bool IsParentName(string npcName)
+    {
+        return npcName.IndexOf("Nanay", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+            npcName.IndexOf("Tatay", System.StringComparison.OrdinalIgnoreCase) >= 0;
+    }
+
+    private static bool IsParentNpc(GameObject npc)
+    {
+        if (npc == null)
+            return false;
+
+        if (npc.GetComponentInChildren<MomAI>(true) != null ||
+            npc.GetComponentInChildren<TatayGameOverAI>(true) != null)
+            return true;
+
+        string npcName = npc.name;
+        NPCSocialParticipant[] participants =
+            npc.GetComponentsInChildren<NPCSocialParticipant>(true);
+        foreach (NPCSocialParticipant participant in participants)
+        {
+            if (participant == null)
+                continue;
+
+            if (IsParentName(participant.DisplayName))
+                return true;
+        }
+
+        return IsParentName(npcName);
+    }
+
+    private static void SetParentNpcsActive(bool active)
+    {
+        foreach (GameObject parentNpc in GetParentNpcs())
+        {
+            if (parentNpc != null)
+                parentNpc.SetActive(active);
+        }
+    }
+
+    private void CacheParentHomePositions()
+    {
+        parentHomePositions.Clear();
+        foreach (GameObject parentNpc in GetParentNpcs())
+        {
+            if (parentNpc != null)
+                parentHomePositions[parentNpc] = parentNpc.transform.position;
+        }
+    }
+
+    private bool ResolveTricycle()
+    {
+        if (tricycle != null)
+            return true;
+
+        Transform[] sceneTransforms = FindObjectsByType<Transform>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (Transform sceneTransform in sceneTransforms)
+        {
+            if (sceneTransform != null && sceneTransform.name == "Tricycle")
+            {
+                tricycle = sceneTransform;
+                return true;
+            }
+        }
+
+        Debug.LogWarning(
+            "The family introduction could not move the parents because no GameObject named 'Tricycle' exists in the scene.",
+            this);
+        return false;
+    }
+
+    private void SetTricycleVisibleForCurrentDay()
+    {
+        if (!ResolveTricycle())
+            return;
+
+        bool visibleToday = currentDay == 1;
+        if (tricycle.gameObject.activeSelf != visibleToday)
+            tricycle.gameObject.SetActive(visibleToday);
+    }
+
+    private IEnumerator WalkParentsToPositions(
+        Dictionary<GameObject, Vector3> destinations)
+    {
+        List<GameObject> parents = new List<GameObject>();
+        foreach (KeyValuePair<GameObject, Vector3> destination in destinations)
+        {
+            GameObject parentNpc = destination.Key;
+            if (parentNpc == null)
+                continue;
+
+            WaypointMover mover =
+                parentNpc.GetComponentInChildren<WaypointMover>(true);
+            if (mover == null)
+            {
+                Debug.LogWarning(
+                    "The parent NPC '" + parentNpc.name +
+                    "' could not walk because it has no WaypointMover.",
+                    parentNpc);
+                continue;
+            }
+
+            mover.SetMovementEnabled(false);
+            parents.Add(parentNpc);
+        }
+
+        float elapsed = 0f;
+        while (parents.Count > 0 && elapsed < parentWalkTimeout)
+        {
+            elapsed += Time.deltaTime;
+            for (int i = parents.Count - 1; i >= 0; i--)
+            {
+                GameObject parentNpc = parents[i];
+                if (parentNpc == null ||
+                    !destinations.TryGetValue(parentNpc, out Vector3 destination))
+                {
+                    parents.RemoveAt(i);
+                    continue;
+                }
+
+                WaypointMover mover =
+                    parentNpc.GetComponentInChildren<WaypointMover>(true);
+                if (mover == null ||
+                    mover.MoveTowards(
+                        destination,
+                        parentWalkSpeed,
+                        parentWalkArrivalDistance))
+                {
+                    SetParentWalkingAnimation(parentNpc, Vector2.zero);
+                    if (mover != null)
+                        mover.SetMovementEnabled(true);
+                    parents.RemoveAt(i);
+                }
+                else
+                {
+                    SetParentWalkingAnimation(
+                        parentNpc,
+                        (Vector2)(destination - parentNpc.transform.position));
+                }
+            }
+
+            yield return null;
+        }
+
+        foreach (GameObject parentNpc in parents)
+        {
+            if (parentNpc == null)
+                continue;
+
+            WaypointMover mover =
+                parentNpc.GetComponentInChildren<WaypointMover>(true);
+            SetParentWalkingAnimation(parentNpc, Vector2.zero);
+            if (mover != null)
+                mover.SetMovementEnabled(true);
+
+            Debug.LogWarning(
+                "The parent NPC '" + parentNpc.name +
+                "' did not reach its introduction destination before the walk timed out.",
+                parentNpc);
+        }
+    }
+
+    private static void SetParentWalkingAnimation(
+        GameObject parentNpc,
+        Vector2 movementDirection)
+    {
+        Animator animator = parentNpc.GetComponentInChildren<Animator>(true);
+        if (animator == null)
+            return;
+
+        bool isWalking = movementDirection.sqrMagnitude > 0.0001f;
+        Vector2 normalizedDirection = isWalking
+            ? movementDirection.normalized
+            : Vector2.zero;
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.name == "isWalking" &&
+                parameter.type == AnimatorControllerParameterType.Bool)
+            {
+                animator.SetBool(parameter.nameHash, isWalking);
+            }
+            else if (parameter.name == "InputX" &&
+                     parameter.type == AnimatorControllerParameterType.Float)
+            {
+                animator.SetFloat(parameter.nameHash, normalizedDirection.x);
+            }
+            else if (parameter.name == "InputY" &&
+                     parameter.type == AnimatorControllerParameterType.Float)
+            {
+                animator.SetFloat(parameter.nameHash, normalizedDirection.y);
+            }
+        }
+    }
+
+    private void SetParentMoversEnabled(bool enabled)
+    {
+        foreach (GameObject parentNpc in GetParentNpcs())
+        {
+            if (parentNpc == null)
+                continue;
+
+            WaypointMover mover =
+                parentNpc.GetComponentInChildren<WaypointMover>(true);
+            if (mover != null)
+                mover.SetMovementEnabled(enabled);
+        }
+    }
+
+    private Dictionary<GameObject, Vector3> GetParentEntrancePositions()
+    {
+        List<GameObject> parents = new List<GameObject>(GetParentNpcs());
+        parents.Sort((first, second) =>
+            string.Compare(first.name, second.name, System.StringComparison.Ordinal));
+
+        Dictionary<GameObject, Vector3> positions =
+            new Dictionary<GameObject, Vector3>();
+        for (int i = 0; i < parents.Count; i++)
+        {
+            GameObject parentNpc = parents[i];
+            if (parentNpc == null)
+                continue;
+
+            float horizontalOffset =
+                (i - (parents.Count - 1) * 0.5f) * parentWalkArrivalDistance * 1.5f;
+            positions[parentNpc] = tricycle.position +
+                Vector3.right * horizontalOffset;
+        }
+
+        return positions;
+    }
+
     private void Start()
     {
+        CacheParentHomePositions();
+        SetTricycleVisibleForCurrentDay();
         UpdateDay1Wall();
 
         if (currentDay == 1)
@@ -444,11 +793,19 @@ public class DayManager : MonoBehaviour
         }
         else if (currentDay == 2)
         {
+            SetParentNpcsActive(false);
             dayStartIntroInProgress = true;
             StartCoroutine(StartDayTwoWithIntroduction());
         }
+        else if (currentDay == 4)
+        {
+            SetParentNpcsActive(true);
+            dayStartIntroInProgress = true;
+            StartCoroutine(StartDayFourWithIntroduction());
+        }
         else
         {
+            SetParentNpcsActive(currentDay >= 4);
             StartDay();
         }
     }
@@ -456,6 +813,10 @@ public class DayManager : MonoBehaviour
     private void OnDestroy()
     {
         RestoreTimeScale();
+        if ((waitingForDayTwoShop || dayFourIntroInProgress) && timeManager != null)
+            timeManager.SetDayTimePaused(false);
+        if (dayTwoShopWaypoints != null)
+            Destroy(dayTwoShopWaypoints);
 
         if (continueButton != null)
             continueButton.onClick.RemoveListener(ContinueToNextDay);
@@ -463,6 +824,7 @@ public class DayManager : MonoBehaviour
         if (mainMenuButton != null)
             mainMenuButton.onClick.RemoveListener(ReturnToMainMenu);
 
+        RestoreSceneNpcs();
         ResumeDayOneIntro();
 
         if (dayOneIntroOverlay != null)
@@ -497,10 +859,7 @@ public class DayManager : MonoBehaviour
         ExpireChoresAtDeadline();
 
         if (HasReachedMissedChoreGameOverThreshold)
-        {
-            TriggerGameOver();
             return;
-        }
 
         if (timeManager != null && timeManager.GetRemainingTime() <= 0f)
         {
@@ -583,6 +942,9 @@ public class DayManager : MonoBehaviour
 
         dailyCoinsEarned = 0;
         ResetDayDependencies();
+        if (timeManager != null)
+            timeManager.SetDayTimePaused(currentDay == 2 && waitingForDayTwoShop);
+
         if (currentDay == 1)
             GrantDayOneTutorialBoosts();
         ResetAllChores();
@@ -1135,9 +1497,6 @@ public class DayManager : MonoBehaviour
         if (dayFinished)
             return;
 
-        dayFinished = true;
-        weekComplete = currentDay >= FinalDay;
-        Debug.Log("DAY " + currentDay + " COMPLETE!");
         MarkUnfinishedChoresAsMissed();
         if (waterSpawner != null)
         {
@@ -1147,7 +1506,12 @@ public class DayManager : MonoBehaviour
             waterSpawner.StopSpawning();
         }
 
-        gameOver |= HasReachedMissedChoreGameOverThreshold;
+        if (HasReachedMissedChoreGameOverThreshold && !gameOver)
+            return;
+
+        dayFinished = true;
+        weekComplete = currentDay >= FinalDay;
+        Debug.Log("DAY " + currentDay + " COMPLETE!");
         ShowDaySummary();
     }
 
@@ -1279,9 +1643,13 @@ public class DayManager : MonoBehaviour
 
     private IEnumerator RevealDaySummary(HouseholdMood endingMood)
     {
+        ClearSummaryChoreIcons();
+
         if (summaryChoresText != null)
         {
             StringBuilder summary = new StringBuilder();
+            HelperNPC helper = FindFirstObjectByType<HelperNPC>(
+                FindObjectsInactive.Include);
             summary.AppendLine("DAY " + currentDay + " COMPLETE");
             summary.AppendLine();
             summary.AppendLine("Chores finished:");
@@ -1296,44 +1664,89 @@ public class DayManager : MonoBehaviour
 
                     bool garbageWasNotSpawned = chore is GarbageChore garbageChore &&
                         !garbageChore.HasSpawnedBagToday;
+                    bool completedByHelper = chore.IsCompleted &&
+                        choreManager != null &&
+                        choreManager.WasCompletedByHelper(chore);
                     string choreStatus = chore.IsCompleted
-                        ? "COMPLETED"
+                        ? (completedByHelper ? "COMPLETED BY HELPER" : "COMPLETED")
                         : garbageWasNotSpawned
                             ? "NOT SPAWNED"
                             : chore.IsMissed
                                 ? "MISSED"
                                 : "INCOMPLETE";
                     string choreMarker = chore.IsCompleted ? "✓ " : "- ";
-                    summary.AppendLine(choreMarker + chore.ChoreName + " - " + choreStatus);
+                    string choreLine = choreMarker + chore.ChoreName + " - " + choreStatus;
+                    AddSummaryChoreIcon(
+                        summary,
+                        choreLine,
+                        completedByHelper && helper != null ? helper.SummaryPortrait : null);
+                    summary.AppendLine(choreLine);
                     summaryChoresText.text = summary.ToString();
+                    UpdateSummaryChoreIcons();
                     yield return new WaitForSecondsRealtime(summaryLineDelay);
                 }
             }
 
             if (waterSpawner != null && waterSpawner.MopTaskStarted)
             {
-                summary.AppendLine((waterSpawner.IsMoppingCompleted ? "✓ " : "- ")
+                bool completedByHelper = waterSpawner.IsMoppingCompleted &&
+                    choreManager != null &&
+                    choreManager.WasTaskCompletedByHelper("Mop Wet Floor");
+                string mopLine = (waterSpawner.IsMoppingCompleted ? "✓ " : "- ")
                     + "Mop Floor"
-                    + (waterSpawner.IsMoppingCompleted ? " - COMPLETED" : " - MISSED"));
+                    + (waterSpawner.IsMoppingCompleted
+                        ? (completedByHelper || WasChoreCompletedByHelper("mop")
+                            ? " - COMPLETED BY HELPER"
+                            : " - COMPLETED")
+                        : " - MISSED");
+                completedByHelper |= WasChoreCompletedByHelper("mop");
+                AddSummaryChoreIcon(
+                    summary,
+                    mopLine,
+                    completedByHelper && helper != null ? helper.SummaryPortrait : null);
+                summary.AppendLine(mopLine);
                 summaryChoresText.text = summary.ToString();
+                UpdateSummaryChoreIcons();
                 yield return new WaitForSecondsRealtime(summaryLineDelay);
             }
 
             if (sweepingManager != null)
             {
-                summary.AppendLine("Dust swept: "
+                bool completedByHelper =
+                    (choreManager != null &&
+                     choreManager.WasTaskCompletedByHelper("Sweep Dust")) ||
+                    WasChoreCompletedByHelper("sweep");
+                string sweepLine = "Dust swept: "
                     + sweepingManager.CleanedDustCount + "/"
-                    + sweepingManager.TotalDustSpawned);
+                    + sweepingManager.TotalDustSpawned
+                    + (completedByHelper ? " - COMPLETED BY HELPER" : string.Empty);
+                AddSummaryChoreIcon(
+                    summary,
+                    sweepLine,
+                    completedByHelper && helper != null ? helper.SummaryPortrait : null);
+                summary.AppendLine(sweepLine);
                 summaryChoresText.text = summary.ToString();
+                UpdateSummaryChoreIcons();
                 yield return new WaitForSecondsRealtime(summaryLineDelay);
             }
 
             if (waterSpawner != null)
             {
-                summary.AppendLine("Water mopped: "
+                bool completedByHelper = !waterSpawner.MopTaskStarted &&
+                    choreManager != null &&
+                    (choreManager.WasTaskCompletedByHelper("Mop Wet Floor") ||
+                     WasChoreCompletedByHelper("mop"));
+                string mopProgressLine = "Water mopped: "
                     + waterSpawner.CleanedWaterCount + "/"
-                    + waterSpawner.TotalWaterSpawned);
+                    + waterSpawner.TotalWaterSpawned
+                    + (completedByHelper ? " - COMPLETED BY HELPER" : string.Empty);
+                AddSummaryChoreIcon(
+                    summary,
+                    mopProgressLine,
+                    completedByHelper && helper != null ? helper.SummaryPortrait : null);
+                summary.AppendLine(mopProgressLine);
                 summaryChoresText.text = summary.ToString();
+                UpdateSummaryChoreIcons();
                 yield return new WaitForSecondsRealtime(summaryLineDelay);
             }
 
@@ -1382,6 +1795,114 @@ public class DayManager : MonoBehaviour
         }
     }
 
+    private void ClearSummaryChoreIcons()
+    {
+        summaryChoreIcons.Clear();
+        foreach (Image icon in summaryChoreIconImages)
+        {
+            if (icon != null)
+                icon.gameObject.SetActive(false);
+        }
+    }
+
+    private void AddSummaryChoreIcon(StringBuilder summary, string line, Sprite sprite)
+    {
+        if (sprite == null)
+            return;
+
+        summaryChoreIcons.Add(new SummaryChoreIcon
+        {
+            CharacterIndex = summary.Length + line.Length - 1,
+            Sprite = sprite
+        });
+    }
+
+    private bool WasChoreCompletedByHelper(string nameFragment)
+    {
+        if (choreManager == null || activeChores == null)
+            return false;
+
+        foreach (Chore chore in activeChores)
+        {
+            if (chore != null &&
+                chore.IsCompleted &&
+                choreManager.WasCompletedByHelper(chore) &&
+                (chore.ChoreName ?? string.Empty).IndexOf(
+                    nameFragment,
+                    System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void UpdateSummaryChoreIcons()
+    {
+        if (summaryChoresText == null)
+            return;
+
+        summaryChoresText.ForceMeshUpdate();
+        TMP_TextInfo textInfo = summaryChoresText.textInfo;
+
+        for (int i = 0; i < summaryChoreIcons.Count; i++)
+        {
+            if (i >= summaryChoreIconImages.Count)
+                summaryChoreIconImages.Add(CreateSummaryChoreIcon());
+
+            Image icon = summaryChoreIconImages[i];
+            SummaryChoreIcon summaryIcon = summaryChoreIcons[i];
+            int characterInfoIndex = -1;
+            for (int j = 0; j < textInfo.characterCount; j++)
+            {
+                if (textInfo.characterInfo[j].index == summaryIcon.CharacterIndex)
+                {
+                    characterInfoIndex = j;
+                    break;
+                }
+            }
+
+            if (characterInfoIndex < 0)
+            {
+                icon.gameObject.SetActive(false);
+                continue;
+            }
+
+            TMP_CharacterInfo character = textInfo.characterInfo[characterInfoIndex];
+            float iconSize = Mathf.Max(1f, summaryChoresText.fontSize * 1.2f);
+            RectTransform iconRect = icon.rectTransform;
+            iconRect.sizeDelta = new Vector2(iconSize, iconSize);
+            iconRect.anchoredPosition = new Vector2(
+                character.topRight.x + iconSize * 0.6f,
+                (character.topRight.y + character.bottomRight.y) * 0.5f);
+            icon.sprite = summaryIcon.Sprite;
+            icon.gameObject.SetActive(true);
+        }
+
+        for (int i = summaryChoreIcons.Count; i < summaryChoreIconImages.Count; i++)
+            summaryChoreIconImages[i].gameObject.SetActive(false);
+    }
+
+    private Image CreateSummaryChoreIcon()
+    {
+        GameObject iconObject = new GameObject(
+            "Helper Completed Chore Icon",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        iconObject.layer = summaryChoresText.gameObject.layer;
+        iconObject.transform.SetParent(summaryChoresText.transform, false);
+
+        RectTransform iconRect = iconObject.GetComponent<RectTransform>();
+        iconRect.anchorMin = new Vector2(0.5f, 0.5f);
+        iconRect.anchorMax = new Vector2(0.5f, 0.5f);
+        iconRect.pivot = new Vector2(0.5f, 0.5f);
+
+        Image icon = iconObject.GetComponent<Image>();
+        icon.preserveAspect = true;
+        icon.raycastTarget = false;
+        return icon;
+    }
+
     private void SubscribeToEconomy()
     {
         if (economyManager == null)
@@ -1410,6 +1931,7 @@ public class DayManager : MonoBehaviour
     private IEnumerator TransitionToNextDay()
     {
         yield return Fade(1f);
+        ClearSummaryChoreIcons();
         ResetAllChores();
 
         bool showTransitionCards = daySummaryPanel != null && summaryChoresText != null;
@@ -1527,9 +2049,18 @@ public class DayManager : MonoBehaviour
         yield return Fade(0f);
         if (currentDay == 2)
         {
-            RestoreSceneNpcs();
+            RestoreSceneNpcsForCurrentDay();
             yield return PlayDayTwoIntroduction();
         }
+        else if (currentDay == 4)
+        {
+            SetParentNpcsActive(true);
+            dayStartIntroInProgress = true;
+            yield return StartCoroutine(StartDayFourWithIntroduction());
+            transitionInProgress = false;
+            yield break;
+        }
+
         StartDay();
         transitionInProgress = false;
     }
@@ -1545,6 +2076,7 @@ public class DayManager : MonoBehaviour
             Debug.LogWarning(
                 "The Day 1 introduction was skipped because the player or MainCamera is missing.",
                 this);
+            RestoreSceneNpcsForCurrentDay();
             StartDay();
             dayStartIntroInProgress = false;
             yield break;
@@ -1577,8 +2109,54 @@ public class DayManager : MonoBehaviour
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
+            "A THREE-DAY BUSINESS TRIP",
+            "Nanay and Tatay need to leave for a three-day business trip. Ate, Kuya, and Bunso will look after the house until they come home.",
+            null,
+            1.5f);
+        if (ResolveTricycle())
+        {
+            RestoreParentNpcsForDeparture();
+            if (timeManager == null)
+                timeManager = FindFirstObjectByType<TimeManager>();
+            if (timeManager != null)
+                timeManager.SetDayTimePaused(true);
+
+            Vector3 departureFocus = tricycle.position;
+            float departureCameraSize = Mathf.Min(
+                originalOrthographicSize,
+                dayOneCameraOrthographicSize);
+
+            yield return MoveDayOneCameraTo(
+                mainCamera,
+                departureFocus,
+                departureCameraSize,
+                dayOneCameraMoveDuration);
+
+            Destroy(dayOneIntroOverlay);
+            dayOneIntroOverlay = null;
+            Time.timeScale = dayOneIntroPreviousTimeScale;
+            yield return WalkParentsToPositions(GetParentEntrancePositions());
+            Time.timeScale = 0f;
+            RestoreSceneNpcsForCurrentDay();
+            dayOneIntroOverlay = CreateDayOneIntroOverlay(out continuePrompt);
+            introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
+        }
+        else
+        {
+            RestoreSceneNpcsForCurrentDay();
+        }
+
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
             "WELCOME TO TAHANAN!",
             "In this game, you'll experience everyday life at home.");
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "MOVEMENT",
+            "Use W, A, S, and D to move up, left, down, and right around the house. Try each direction to continue.",
+            player);
         GameHUD hud = FindFirstObjectByType<GameHUD>();
         if (hud != null)
             hud.PulseChoreListForTutorial();
@@ -2029,6 +2607,8 @@ public class DayManager : MonoBehaviour
         float targetOrthographicSize,
         float duration)
     {
+        MapTransition.SetConfinerBoundaryAtPosition(focusPosition);
+
         if (dayOneIntroCameras == null || dayOneIntroCameras.Length == 0)
         {
             yield return MoveCameraTo(
@@ -2177,7 +2757,9 @@ public class DayManager : MonoBehaviour
         TMP_Text text,
         TMP_Text continuePrompt,
         string title,
-        string message)
+        string message,
+        PlayerMovement movementPracticePlayer = null,
+        float autoContinueDelay = -1f)
     {
         text.font = dayOneIntroFont;
         text.outlineWidth = 0.4f;
@@ -2226,15 +2808,75 @@ public class DayManager : MonoBehaviour
         if (skippedTyping)
             yield return null;
 
-        while (!WasDayOneIntroContinuePressed())
+        if (movementPracticePlayer != null)
+            yield return TestDayOneMovement(continuePrompt, movementPracticePlayer);
+
+        if (autoContinueDelay >= 0f)
         {
-            pulseElapsed += Time.unscaledDeltaTime;
-            float pulse = 0.5f + 0.5f * Mathf.Sin(pulseElapsed * Mathf.PI * 2f);
-            continuePrompt.rectTransform.localScale = originalScale * (1f + pulse * 0.12f);
-            yield return null;
+            continuePrompt.text = "Nanay and Tatay are getting ready to leave...";
+            yield return WaitForRealtime(autoContinueDelay);
+        }
+        else
+        {
+            while (!WasDayOneIntroContinuePressed())
+            {
+                pulseElapsed += Time.unscaledDeltaTime;
+                float pulse = 0.5f + 0.5f * Mathf.Sin(pulseElapsed * Mathf.PI * 2f);
+                continuePrompt.rectTransform.localScale = originalScale * (1f + pulse * 0.12f);
+                yield return null;
+            }
         }
 
         continuePrompt.rectTransform.localScale = originalScale;
+    }
+
+    private IEnumerator TestDayOneMovement(
+        TMP_Text continuePrompt,
+        PlayerMovement player)
+    {
+        bool testedUp = false;
+        bool testedLeft = false;
+        bool testedDown = false;
+        bool testedRight = false;
+        int directionsTested = -1;
+
+        SetDayOneCameraFollowTarget(player.transform);
+        Time.timeScale = dayOneIntroPreviousTimeScale;
+        player.SetMovementInputEnabled(true);
+
+        while (!testedUp || !testedLeft || !testedDown || !testedRight)
+        {
+            Keyboard keyboard = Keyboard.current;
+            Vector2 moveInput = player.CurrentMoveInput;
+            if (keyboard != null)
+            {
+                testedUp |= keyboard.wKey.isPressed && moveInput.y > 0.5f;
+                testedLeft |= keyboard.aKey.isPressed && moveInput.x < -0.5f;
+                testedDown |= keyboard.sKey.isPressed && moveInput.y < -0.5f;
+                testedRight |= keyboard.dKey.isPressed && moveInput.x > 0.5f;
+            }
+
+            int currentDirectionsTested =
+                (testedUp ? 1 : 0) +
+                (testedLeft ? 1 : 0) +
+                (testedDown ? 1 : 0) +
+                (testedRight ? 1 : 0);
+            if (currentDirectionsTested != directionsTested)
+            {
+                directionsTested = currentDirectionsTested;
+                continuePrompt.text =
+                    "Test W, A, S, and D to move in each direction (" +
+                    directionsTested +
+                    "/4)";
+            }
+
+            yield return null;
+        }
+
+        player.SetMovementInputEnabled(false);
+        SetDayOneCameraFollowTarget(null);
+        Time.timeScale = 0f;
+        continuePrompt.text = "Movement tested! Press Space or Esc to continue";
     }
 
     private static bool WasDayOneIntroContinuePressed()
@@ -2247,6 +2889,167 @@ public class DayManager : MonoBehaviour
     private IEnumerator StartDayTwoWithIntroduction()
     {
         yield return PlayDayTwoIntroduction();
+        StartDay();
+        dayStartIntroInProgress = false;
+    }
+
+    private IEnumerator StartDayFourWithIntroduction()
+    {
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        Camera mainCamera = Camera.main;
+        if (player == null || mainCamera == null)
+        {
+            Debug.LogWarning(
+                "The Day 4 introduction was skipped because the player or MainCamera is missing.",
+                this);
+            StartDay();
+            dayStartIntroInProgress = false;
+            yield break;
+        }
+
+        player.ResetToDailySpawn();
+        player.SetMovementInputEnabled(false);
+        PlayerInventoryUI inventoryUI = FindFirstObjectByType<PlayerInventoryUI>(
+            FindObjectsInactive.Include);
+        if (inventoryUI != null)
+            inventoryUI.SetTutorialInputEnabled(false);
+
+        dayFourIntroInProgress = true;
+        if (timeManager == null)
+            timeManager = FindFirstObjectByType<TimeManager>();
+        if (timeManager != null)
+            timeManager.SetDayTimePaused(true);
+        else
+            Debug.LogWarning(
+                "The Day 4 introduction could not pause the day clock because no TimeManager exists.",
+                this);
+
+        SetParentNpcsActive(true);
+        HashSet<GameObject> parentNpcs = GetParentNpcs();
+        if (parentNpcs.Count == 0)
+        {
+            Debug.LogWarning(
+                "The Day 4 introduction could not show the returning parents because no Nanay or Tatay NPC was found.",
+                this);
+        }
+
+        bool hasTricycle = ResolveTricycle();
+        Dictionary<GameObject, Vector3> returnDestinations =
+            new Dictionary<GameObject, Vector3>();
+        if (hasTricycle)
+        {
+            Dictionary<GameObject, Vector3> entrancePositions =
+                GetParentEntrancePositions();
+            foreach (GameObject parentNpc in parentNpcs)
+            {
+                if (parentNpc == null)
+                    continue;
+
+                WaypointMover mover =
+                    parentNpc.GetComponentInChildren<WaypointMover>(true);
+                if (mover != null)
+                    mover.SetMovementEnabled(false);
+
+                parentNpc.transform.position = entrancePositions[parentNpc];
+                if (parentHomePositions.TryGetValue(
+                        parentNpc,
+                        out Vector3 homePosition))
+                {
+                    returnDestinations[parentNpc] = homePosition;
+                }
+                else
+                {
+                    Debug.LogWarning(
+                        "The parent NPC '" + parentNpc.name +
+                        "' has no remembered home position for the Day 4 arrival.",
+                        parentNpc);
+                }
+            }
+        }
+
+        dayOneIntroCameras = FindObjectsByType<CinemachineCamera>(
+            FindObjectsSortMode.None);
+        float originalOrthographicSize = dayOneIntroCameras.Length > 0
+            ? dayOneIntroCameras[0].Lens.OrthographicSize
+            : mainCamera.orthographicSize;
+        SetDayOneCameraFollowTarget(null);
+
+        Vector3 arrivalFocus = tricycle != null
+            ? tricycle.position
+            : player.transform.position;
+        float arrivalCameraSize = hasTricycle
+            ? Mathf.Min(originalOrthographicSize, dayOneCameraOrthographicSize)
+            : originalOrthographicSize;
+        if (!hasTricycle && parentNpcs.Count > 0)
+        {
+            Vector3 familyPosition = Vector3.zero;
+            foreach (GameObject parentNpc in parentNpcs)
+                familyPosition += parentNpc.transform.position;
+            arrivalFocus = familyPosition / parentNpcs.Count;
+        }
+
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            arrivalFocus,
+            arrivalCameraSize,
+            dayOneCameraMoveDuration);
+
+        if (returnDestinations.Count > 0)
+        {
+            Vector3 familyHomePosition = Vector3.zero;
+            int familyMemberCount = 0;
+            foreach (KeyValuePair<GameObject, Vector3> destination in returnDestinations)
+            {
+                GameObject parentNpc = destination.Key;
+                if (parentNpc == null)
+                    continue;
+
+                parentNpc.transform.position = destination.Value;
+                familyHomePosition += destination.Value;
+                familyMemberCount++;
+
+                WaypointMover mover =
+                    parentNpc.GetComponentInChildren<WaypointMover>(true);
+                if (mover != null)
+                    mover.SetMovementEnabled(true);
+                SetParentWalkingAnimation(parentNpc, Vector2.zero);
+            }
+
+            if (familyMemberCount > 0)
+            {
+                familyHomePosition /= familyMemberCount;
+                yield return MoveDayOneCameraTo(
+                    mainCamera,
+                    familyHomePosition,
+                    Mathf.Min(originalOrthographicSize, dayOneCameraOrthographicSize),
+                    dayOneCameraMoveDuration);
+            }
+        }
+
+        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
+        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "NANAY AND TATAY ARE HOME!",
+            "After three days away, Nanay and Tatay have returned. Finish your chores efficiently and keep the house tidy, or Nanay might get upset.");
+
+        Destroy(dayOneIntroOverlay);
+        dayOneIntroOverlay = null;
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            player.transform.position,
+            originalOrthographicSize,
+            dayOneCameraMoveDuration);
+
+        SetDayOneCameraFollowTarget(player.transform);
+        player.SetMovementInputEnabled(true);
+        if (inventoryUI != null)
+            inventoryUI.SetTutorialInputEnabled(true);
+        if (timeManager != null)
+            timeManager.SetDayTimePaused(false);
+
+        dayFourIntroInProgress = false;
         StartDay();
         dayStartIntroInProgress = false;
     }
@@ -2336,7 +3139,280 @@ public class DayManager : MonoBehaviour
 
         if (cinematicCamera != null)
             cinematicCamera.Follow = player.transform;
+
+        MapTransition shopAreaTransition = FindShopAreaTransition(
+            player.transform.position,
+            shop.transform.position);
+        Vector2 initialWaypoint = shopAreaTransition != null
+            ? (Vector2)shopAreaTransition.transform.position
+            : (Vector2)shop.transform.position;
+        dayTwoShopTrigger = shop;
+        waitingForDayTwoShop = true;
+        dayTwoShopWaypoints = CreateShopWaypoints(player.transform, initialWaypoint);
+        if (dayTwoShopWaypoints != null)
+        {
+            StartCoroutine(GuidePlayerToShop(
+                dayTwoShopWaypoints,
+                player.transform,
+                shop,
+                shopAreaTransition));
+        }
+
+        string directionToShop = GetDirectionToShop(player.transform.position, initialWaypoint);
+        SpeechBubbleCanvas.Show(
+            player.transform,
+            "Follow the arrows " + directionToShop + " to the next area, then keep following them to the store. Move with WASD or the arrow keys, then press E at the shop.",
+            shopDirectionsDuration,
+            new Vector2(480f, 104f),
+            18);
         player.SetMovementInputEnabled(true);
+    }
+
+    public void OnDayTwoShopOpened(ShopTrigger shop)
+    {
+        if (!waitingForDayTwoShop || shop != dayTwoShopTrigger)
+            return;
+
+        waitingForDayTwoShop = false;
+        dayTwoShopTrigger = null;
+        if (timeManager != null)
+            timeManager.SetDayTimePaused(false);
+
+        if (dayTwoShopWaypoints != null)
+        {
+            Destroy(dayTwoShopWaypoints);
+            dayTwoShopWaypoints = null;
+        }
+    }
+
+    private static MapTransition FindShopAreaTransition(
+        Vector2 playerPosition,
+        Vector2 shopPosition)
+    {
+        MapTransition[] transitions = FindObjectsByType<MapTransition>(
+            FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None);
+        MapTransition nearestTransition = null;
+        float nearestDistance = float.PositiveInfinity;
+
+        foreach (MapTransition transition in transitions)
+        {
+            if (transition == null ||
+                !transition.isActiveAndEnabled ||
+                !transition.LeadsToAreaContaining(shopPosition) ||
+                transition.LeadsToAreaContaining(playerPosition))
+            {
+                continue;
+            }
+
+            float distance = ((Vector2)transition.transform.position - playerPosition).sqrMagnitude;
+            if (distance < nearestDistance)
+            {
+                nearestTransition = transition;
+                nearestDistance = distance;
+            }
+        }
+
+        return nearestTransition;
+    }
+
+    private GameObject CreateShopWaypoints(Transform player, Vector2 targetPosition)
+    {
+        var waypointRoot = new GameObject("Day 2 Shop Waypoints");
+        waypointRoot.transform.position = new Vector3(0f, 0f, player.position.z);
+        RebuildShopWaypoints(waypointRoot.transform, player, targetPosition);
+        return waypointRoot;
+    }
+
+    private void RebuildShopWaypoints(Transform waypointRoot, Transform player, Vector2 targetPosition)
+    {
+        for (int i = waypointRoot.childCount - 1; i >= 0; i--)
+            Destroy(waypointRoot.GetChild(i).gameObject);
+
+        Collider2D playerCollider = player.GetComponent<Collider2D>();
+        if (playerCollider == null)
+            playerCollider = player.GetComponentInChildren<Collider2D>();
+
+        List<Vector2> route = NPCNavigation2D.FindPath(
+            player.position,
+            targetPosition,
+            playerCollider,
+            ~0,
+            0.35f,
+            2f,
+            5000);
+        if (route.Count == 0)
+        {
+            Debug.LogWarning("No route was found for the Day 2 shop waypoints.", this);
+            return;
+        }
+
+        if (route.Count == 1)
+            route.Insert(0, player.position);
+        else
+            route[0] = player.position;
+
+        float routeLength = 0f;
+        for (int i = 1; i < route.Count; i++)
+            routeLength += Vector2.Distance(route[i - 1], route[i]);
+
+        if (routeLength <= Mathf.Epsilon)
+            return;
+
+        Sprite arrowSprite = GetShopWaypointArrowSprite();
+        float arrowSpacing = Mathf.Max(
+            0.25f,
+            Mathf.Min(shopWaypointArrowSpacing, routeLength / 4f));
+        float distanceUntilNextArrow = Mathf.Min(arrowSpacing, 0.6f);
+
+        for (int i = 1; i < route.Count; i++)
+        {
+            Vector2 segmentStart = route[i - 1];
+            Vector2 segment = route[i] - segmentStart;
+            float segmentLength = segment.magnitude;
+            if (segmentLength <= Mathf.Epsilon)
+                continue;
+
+            Vector2 direction = segment / segmentLength;
+            while (distanceUntilNextArrow <= segmentLength)
+            {
+                Vector2 arrowPosition = segmentStart + direction * distanceUntilNextArrow;
+                CreateShopWaypointArrow(
+                    waypointRoot,
+                    arrowSprite,
+                    arrowPosition,
+                    direction);
+                distanceUntilNextArrow += arrowSpacing;
+            }
+
+            distanceUntilNextArrow -= segmentLength;
+        }
+    }
+
+    private void CreateShopWaypointArrow(
+        Transform parent,
+        Sprite arrowSprite,
+        Vector2 position,
+        Vector2 direction)
+    {
+        GameObject arrowObject = new GameObject("Shop Direction Arrow");
+        arrowObject.transform.SetParent(parent, false);
+        arrowObject.transform.localPosition = new Vector3(position.x, position.y, 0f);
+        arrowObject.transform.rotation = Quaternion.Euler(
+            0f,
+            0f,
+            Vector2.SignedAngle(Vector2.right, direction));
+
+        SpriteRenderer outline = arrowObject.AddComponent<SpriteRenderer>();
+        outline.sprite = arrowSprite;
+        outline.color = new Color(0.45f, 0f, 0f, 0.9f);
+        outline.sortingLayerName = "Player";
+        outline.sortingOrder = 50;
+        outline.transform.localScale = Vector3.one * (shopWaypointArrowScale * 1.2f);
+
+        GameObject arrowFace = new GameObject("Arrow Face");
+        arrowFace.transform.SetParent(arrowObject.transform, false);
+        SpriteRenderer fill = arrowFace.AddComponent<SpriteRenderer>();
+        fill.sprite = arrowSprite;
+        fill.color = new Color(1f, 0.08f, 0.08f, 1f);
+        fill.sortingLayerName = "Player";
+        fill.sortingOrder = 51;
+        fill.transform.localScale = Vector3.one * 0.82f;
+        StartCoroutine(PulseShopWaypointArrow(arrowObject.transform));
+    }
+
+    private IEnumerator PulseShopWaypointArrow(Transform arrow)
+    {
+        Vector3 baseScale = arrow.localScale;
+        while (arrow != null)
+        {
+            float pulse = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 5f);
+            arrow.localScale = baseScale * (1f + pulse * 0.2f);
+            yield return null;
+        }
+    }
+
+    private static Sprite GetShopWaypointArrowSprite()
+    {
+        if (shopWaypointArrowSprite != null)
+            return shopWaypointArrowSprite;
+
+        const int textureSize = 32;
+        var texture = new Texture2D(textureSize, textureSize, TextureFormat.RGBA32, false)
+        {
+            name = "Day 2 Shop Waypoint Arrow",
+            filterMode = FilterMode.Point,
+            wrapMode = TextureWrapMode.Clamp
+        };
+        var pixels = new Color32[textureSize * textureSize];
+        int centerY = textureSize / 2;
+
+        for (int y = 0; y < textureSize; y++)
+        {
+            for (int x = 0; x < textureSize; x++)
+            {
+                bool shaft = x >= 3 && x <= 20 && Mathf.Abs(y - centerY) <= 3;
+                bool arrowHead = x >= 16 &&
+                    Mathf.Abs(y - centerY) <= textureSize - 1 - x;
+                if (shaft || arrowHead)
+                    pixels[y * textureSize + x] = new Color32(255, 255, 255, 255);
+            }
+        }
+
+        texture.SetPixels32(pixels);
+        texture.Apply();
+        shopWaypointArrowSprite = Sprite.Create(
+            texture,
+            new Rect(0f, 0f, textureSize, textureSize),
+            new Vector2(0.5f, 0.5f),
+            textureSize);
+        return shopWaypointArrowSprite;
+    }
+
+    private IEnumerator GuidePlayerToShop(
+        GameObject waypointRoot,
+        Transform player,
+        ShopTrigger shop,
+        MapTransition shopAreaTransition)
+    {
+        bool reachedShopArea = shopAreaTransition == null ||
+            shopAreaTransition.LeadsToAreaContaining(player.position);
+        while (waypointRoot != null &&
+               player != null &&
+               shop != null &&
+               Vector2.Distance(player.position, shop.transform.position) > shopWaypointReachDistance)
+        {
+            if (!reachedShopArea &&
+                shopAreaTransition.LeadsToAreaContaining(player.position))
+            {
+                reachedShopArea = true;
+                RebuildShopWaypoints(
+                    waypointRoot.transform,
+                    player,
+                    shop.transform.position);
+            }
+
+            yield return new WaitForSecondsRealtime(shopWaypointRefreshInterval);
+        }
+
+        if (waypointRoot != null)
+        {
+            Destroy(waypointRoot);
+            if (dayTwoShopWaypoints == waypointRoot)
+                dayTwoShopWaypoints = null;
+        }
+    }
+
+    private static string GetDirectionToShop(Vector3 playerPosition, Vector2 targetPosition)
+    {
+        Vector2 offset = targetPosition - (Vector2)playerPosition;
+        if (offset.sqrMagnitude < 0.01f)
+            return "nearby";
+
+        if (Mathf.Abs(offset.x) >= Mathf.Abs(offset.y))
+            return offset.x >= 0f ? "right" : "left";
+
+        return offset.y >= 0f ? "up" : "down";
     }
 
     private IEnumerator MoveCameraTo(
@@ -2458,6 +3534,8 @@ public class DayManager : MonoBehaviour
 
         CancelInvoke();
         currentDay++;
+        SetTricycleVisibleForCurrentDay();
+        SetParentNpcsActive(currentDay >= 4);
         UpdateDay1Wall();
 
         if (choreManager != null)

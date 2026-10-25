@@ -16,10 +16,12 @@ public class ShopTrigger : Interactable
         if (shopUI != null)
         {
             shopUI.OpenShop();
+            DayManager.Instance?.OnDayTwoShopOpened(this);
             return;
         }
 
         shopPanel.SetActive(true);
+        DayManager.Instance?.OnDayTwoShopOpened(this);
     }
 
     public void CloseShop()

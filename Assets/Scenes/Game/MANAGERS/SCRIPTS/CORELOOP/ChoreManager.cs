@@ -11,6 +11,8 @@ public class ChoreManager : MonoBehaviour
     public int totalPoints = 0;
 
     private readonly HashSet<Chore> helperCompletedChores = new HashSet<Chore>();
+    private readonly HashSet<string> helperCompletedTaskNames =
+        new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
     public int TotalChores => completedChores + missedChores;
 
@@ -27,6 +29,18 @@ public class ChoreManager : MonoBehaviour
     {
         if (chore != null)
             helperCompletedChores.Add(chore);
+    }
+
+    public bool WasTaskCompletedByHelper(string taskName)
+    {
+        return !string.IsNullOrWhiteSpace(taskName) &&
+            helperCompletedTaskNames.Contains(taskName);
+    }
+
+    public void MarkHelperCompletedTask(string taskName)
+    {
+        if (!string.IsNullOrWhiteSpace(taskName))
+            helperCompletedTaskNames.Add(taskName);
     }
 
 
@@ -159,6 +173,7 @@ public class ChoreManager : MonoBehaviour
         missedChores = 0;
         totalPoints = 0;
         helperCompletedChores.Clear();
+        helperCompletedTaskNames.Clear();
 
 
         Debug.Log(

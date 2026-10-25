@@ -19,6 +19,7 @@ public class TimeManager : MonoBehaviour
     private float currentTime;
     private float frozenTimeRemaining;
     private bool timeRunning = false;
+    private bool dayTimePaused;
     private SpriteRenderer[] outdoorSprites = new SpriteRenderer[0];
     private Color[] originalSpriteColors = new Color[0];
     private Tilemap[] outdoorTilemaps = new Tilemap[0];
@@ -92,6 +93,11 @@ public class TimeManager : MonoBehaviour
         timeRunning = true;
     }
 
+    public void SetDayTimePaused(bool paused)
+    {
+        dayTimePaused = paused;
+    }
+
     public bool FreezeTime(float seconds)
     {
         if (!timeRunning || seconds <= 0f)
@@ -113,11 +119,11 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
-        if (IsTimeFrozen)
+        if (!dayTimePaused && IsTimeFrozen)
         {
             frozenTimeRemaining = Mathf.Max(0f, frozenTimeRemaining - Time.deltaTime);
         }
-        else if (timeRunning)
+        else if (!dayTimePaused && timeRunning)
         {
             currentTime += Time.deltaTime;
 
@@ -271,6 +277,7 @@ public class TimeManager : MonoBehaviour
         currentTime = 0f;
         frozenTimeRemaining = 0f;
         timeRunning = true;
+        dayTimePaused = false;
 
         Debug.Log("Day timer reset and started.");
     }
@@ -282,6 +289,7 @@ public class TimeManager : MonoBehaviour
         currentTime = 0f;
         frozenTimeRemaining = 0f;
         timeRunning = true;
+        dayTimePaused = false;
 
         Debug.Log("New day timer started.");
     }
