@@ -2135,7 +2135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &920579950
 Transform:
   m_ObjectHideFlags: 0
@@ -2910,6 +2910,10 @@ PrefabInstance:
     - target: {fileID: 4175697617658743083, guid: 29b2a9ae00dcccc45b06e2538886b7e4, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175697617658743083, guid: 29b2a9ae00dcccc45b06e2538886b7e4, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5431495368277252425, guid: 29b2a9ae00dcccc45b06e2538886b7e4, type: 3}
       propertyPath: m_Sprite
@@ -4360,6 +4364,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ateDay7Win
       objectReference: {fileID: 0}
+    - target: {fileID: 6974713869853391270, guid: 383ca159d2766974d9de1689933333a4, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7741138700115099471, guid: 383ca159d2766974d9de1689933333a4, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 0.22
@@ -4623,6 +4631,10 @@ PrefabInstance:
     - target: {fileID: 8320336228349087483, guid: 9ae2bf92622d38e4cabe6abde10d771b, type: 3}
       propertyPath: m_Name
       value: TatayDay7Win
+      objectReference: {fileID: 0}
+    - target: {fileID: 8320336228349087483, guid: 9ae2bf92622d38e4cabe6abde10d771b, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8881561400485495847, guid: 9ae2bf92622d38e4cabe6abde10d771b, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -11333,7 +11345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6364266456788755897, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: startingCoins
-      value: 1000
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7273702467838881212, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: mopFloorTask
@@ -11353,7 +11365,7 @@ PrefabInstance:
       objectReference: {fileID: 82349145}
     - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: currentDay
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: throwTrash
@@ -16650,7 +16662,7 @@ GameObject:
   - component: {fileID: 8640413131933945258}
   m_Layer: 7
   m_Name: KuyaDay7Win
-  m_TagString: NPCS
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
