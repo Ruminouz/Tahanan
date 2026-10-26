@@ -87,6 +87,7 @@ public class DayManager : MonoBehaviour
 
     [Header("Family Story")]
     [SerializeField] private Transform tricycle;
+    [SerializeField] private Transform dayFourNanayArrivalSpawnPoint;
     [SerializeField, Min(0.1f)] private float parentWalkSpeed = 2f;
     [SerializeField, Min(0.05f)] private float parentWalkArrivalDistance = 0.2f;
     [SerializeField, Min(0.1f)] private float parentWalkTimeout = 30f;
@@ -580,6 +581,50 @@ public class DayManager : MonoBehaviour
             npcName.IndexOf("Tatay", System.StringComparison.OrdinalIgnoreCase) >= 0;
     }
 
+    private static bool IsTatayNpc(GameObject npc)
+    {
+        if (npc == null)
+            return false;
+
+        if (npc.name.IndexOf("Tatay", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            return true;
+
+        NPCSocialParticipant[] participants =
+            npc.GetComponentsInChildren<NPCSocialParticipant>(true);
+        foreach (NPCSocialParticipant participant in participants)
+        {
+            if (participant != null &&
+                participant.DisplayName.IndexOf(
+                    "Tatay",
+                    System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+        }
+
+        return false;
+    }
+
+    private static bool IsNanayNpc(GameObject npc)
+    {
+        if (npc == null)
+            return false;
+
+        if (npc.name.IndexOf("Nanay", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            return true;
+
+        NPCSocialParticipant[] participants =
+            npc.GetComponentsInChildren<NPCSocialParticipant>(true);
+        foreach (NPCSocialParticipant participant in participants)
+        {
+            if (participant != null &&
+                participant.DisplayName.IndexOf(
+                    "Nanay",
+                    System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+        }
+
+        return false;
+    }
+
     private static bool IsParentNpc(GameObject npc)
     {
         if (npc == null)
@@ -657,7 +702,8 @@ public class DayManager : MonoBehaviour
     }
 
     private IEnumerator WalkParentsToPositions(
-        Dictionary<GameObject, Vector3> destinations)
+        Dictionary<GameObject, Vector3> destinations,
+        Camera followCamera = null)
     {
         List<GameObject> parents = new List<GameObject>();
         foreach (KeyValuePair<GameObject, Vector3> destination in destinations)
@@ -716,6 +762,26 @@ public class DayManager : MonoBehaviour
                 }
             }
 
+            if (followCamera != null && destinations.Count > 0)
+            {
+                Vector3 familyPosition = Vector3.zero;
+                int familyMemberCount = 0;
+                foreach (GameObject parentNpc in destinations.Keys)
+                {
+                    if (parentNpc == null)
+                        continue;
+
+                    familyPosition += GetParentCharacterPosition(parentNpc);
+                    familyMemberCount++;
+                }
+
+                if (familyMemberCount > 0)
+                {
+                    familyPosition /= familyMemberCount;
+                    FollowIntroCamera(followCamera, familyPosition);
+                }
+            }
+
             yield return null;
         }
 
@@ -734,6 +800,43 @@ public class DayManager : MonoBehaviour
                 "The parent NPC '" + parentNpc.name +
                 "' did not reach its introduction destination before the walk timed out.",
                 parentNpc);
+        }
+    }
+
+    private void FollowIntroCamera(Camera mainCamera, Vector3 focusPosition)
+    {
+        float followStrength = 1f - Mathf.Exp(-5f * Time.unscaledDeltaTime);
+        if (dayOneIntroCameras == null || dayOneIntroCameras.Length == 0)
+        {
+            Vector3 cameraPosition = mainCamera.transform.position;
+            cameraPosition.x = Mathf.Lerp(
+                cameraPosition.x,
+                focusPosition.x,
+                followStrength);
+            cameraPosition.y = Mathf.Lerp(
+                cameraPosition.y,
+                focusPosition.y,
+                followStrength);
+            mainCamera.transform.position = cameraPosition;
+            return;
+        }
+
+        foreach (CinemachineCamera cameraRig in dayOneIntroCameras)
+        {
+            if (cameraRig == null)
+                continue;
+
+            Vector3 cameraPosition = cameraRig.transform.position;
+            cameraPosition.x = Mathf.Lerp(
+                cameraPosition.x,
+                focusPosition.x,
+                followStrength);
+            cameraPosition.y = Mathf.Lerp(
+                cameraPosition.y,
+                focusPosition.y,
+                followStrength);
+            cameraRig.transform.position = cameraPosition;
+            cameraRig.ForceCameraPosition(cameraPosition, cameraRig.transform.rotation);
         }
     }
 
@@ -803,7 +906,26 @@ public class DayManager : MonoBehaviour
                 Vector3.right * horizontalOffset;
         }
 
+        GameObject tatay = parents.Find(IsTatayNpc);
+        if (tatay != null && positions.TryGetValue(tatay, out Vector3 tatayPosition))
+        {
+            foreach (GameObject parentNpc in parents)
+            {
+                if (IsNanayNpc(parentNpc))
+                    positions[parentNpc] = tatayPosition;
+            }
+        }
+
         return positions;
+    }
+
+    private static Vector3 GetParentCharacterPosition(GameObject parentNpc)
+    {
+        if (parentNpc == null)
+            return Vector3.zero;
+
+        MomAI nanay = parentNpc.GetComponentInChildren<MomAI>(true);
+        return nanay != null ? nanay.transform.position : parentNpc.transform.position;
     }
 
     private void Start()
@@ -3116,8 +3238,9 @@ public class DayManager : MonoBehaviour
                 "The Day 4 introduction could not pause the day clock because no TimeManager exists.",
                 this);
 
-        SetParentNpcsActive(true);
         HashSet<GameObject> parentNpcs = GetParentNpcs();
+        SetParentNpcsActive(true);
+
         if (parentNpcs.Count == 0)
         {
             Debug.LogWarning(
@@ -3128,36 +3251,57 @@ public class DayManager : MonoBehaviour
         bool hasTricycle = ResolveTricycle();
         Dictionary<GameObject, Vector3> returnDestinations =
             new Dictionary<GameObject, Vector3>();
-        if (hasTricycle)
+        Dictionary<GameObject, Vector3> entrancePositions = hasTricycle
+            ? GetParentEntrancePositions()
+            : new Dictionary<GameObject, Vector3>();
+        if (dayFourNanayArrivalSpawnPoint != null)
         {
-            Dictionary<GameObject, Vector3> entrancePositions =
-                GetParentEntrancePositions();
             foreach (GameObject parentNpc in parentNpcs)
             {
-                if (parentNpc == null)
-                    continue;
-
-                WaypointMover mover =
-                    parentNpc.GetComponentInChildren<WaypointMover>(true);
-                if (mover != null)
-                    mover.SetMovementEnabled(false);
-
-                parentNpc.transform.position = entrancePositions[parentNpc];
-                if (parentHomePositions.TryGetValue(
-                        parentNpc,
-                        out Vector3 homePosition))
-                {
-                    returnDestinations[parentNpc] = homePosition;
-                }
-                else
-                {
-                    Debug.LogWarning(
-                        "The parent NPC '" + parentNpc.name +
-                        "' has no remembered home position for the Day 4 arrival.",
-                        parentNpc);
-                }
+                if (IsNanayNpc(parentNpc))
+                    entrancePositions[parentNpc] =
+                        dayFourNanayArrivalSpawnPoint.position;
             }
         }
+
+        foreach (GameObject parentNpc in parentNpcs)
+        {
+            if (parentNpc == null ||
+                !entrancePositions.TryGetValue(parentNpc, out Vector3 entrancePosition))
+                continue;
+
+            WaypointMover mover =
+                parentNpc.GetComponentInChildren<WaypointMover>(true);
+            if (mover != null)
+                mover.SetMovementEnabled(false);
+
+            if (IsNanayNpc(parentNpc) &&
+                dayFourNanayArrivalSpawnPoint != null)
+            {
+                Vector3 characterOffset =
+                    dayFourNanayArrivalSpawnPoint.position -
+                    GetParentCharacterPosition(parentNpc);
+                parentNpc.transform.position += characterOffset;
+            }
+            else
+            {
+                parentNpc.transform.position = entrancePosition;
+            }
+            if (parentHomePositions.TryGetValue(
+                    parentNpc,
+                    out Vector3 homePosition))
+            {
+                returnDestinations[parentNpc] = homePosition;
+            }
+            else
+            {
+                Debug.LogWarning(
+                    "The parent NPC '" + parentNpc.name +
+                    "' has no remembered home position for the Day 4 arrival.",
+                    parentNpc);
+            }
+        }
+        Physics2D.SyncTransforms();
 
         dayOneIntroCameras = FindObjectsByType<CinemachineCamera>(
             FindObjectsSortMode.None);
@@ -3172,12 +3316,21 @@ public class DayManager : MonoBehaviour
         float arrivalCameraSize = hasTricycle
             ? Mathf.Min(originalOrthographicSize, dayOneCameraOrthographicSize)
             : originalOrthographicSize;
-        if (!hasTricycle && parentNpcs.Count > 0)
+        if (parentNpcs.Count > 0)
         {
             Vector3 familyPosition = Vector3.zero;
+            int familyMemberCount = 0;
             foreach (GameObject parentNpc in parentNpcs)
-                familyPosition += parentNpc.transform.position;
-            arrivalFocus = familyPosition / parentNpcs.Count;
+            {
+                if (parentNpc == null)
+                    continue;
+
+                familyPosition += GetParentCharacterPosition(parentNpc);
+                familyMemberCount++;
+            }
+
+            if (familyMemberCount > 0)
+                arrivalFocus = familyPosition / familyMemberCount;
         }
 
         yield return MoveDayOneCameraTo(
@@ -3196,7 +3349,6 @@ public class DayManager : MonoBehaviour
                 if (parentNpc == null)
                     continue;
 
-                parentNpc.transform.position = destination.Value;
                 familyHomePosition += destination.Value;
                 familyMemberCount++;
 
@@ -3204,12 +3356,12 @@ public class DayManager : MonoBehaviour
                     parentNpc.GetComponentInChildren<WaypointMover>(true);
                 if (mover != null)
                     mover.SetMovementEnabled(true);
-                SetParentWalkingAnimation(parentNpc, Vector2.zero);
             }
 
             if (familyMemberCount > 0)
             {
                 familyHomePosition /= familyMemberCount;
+                yield return WalkParentsToPositions(returnDestinations, mainCamera);
                 yield return MoveDayOneCameraTo(
                     mainCamera,
                     familyHomePosition,

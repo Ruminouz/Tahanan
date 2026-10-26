@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e236d55e708ed3a44b78dba2401e20f8, type: 3}
   m_Name: NanayDialogue
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
-  npcName: Nanay Marites
+  npcName: Nanay
   npcPortrait: {fileID: 4723107735738678597, guid: 0351712955d2045418f041ac9295f42b, type: 3}
   dialogueLines:
   - My back hurts
