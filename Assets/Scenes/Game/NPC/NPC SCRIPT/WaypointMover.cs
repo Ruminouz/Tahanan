@@ -23,6 +23,7 @@ public class WaypointMover : MonoBehaviour
     private static readonly RaycastHit2D[] PathCastResults = new RaycastHit2D[32];
     private Transform[] waypoints;
     private Transform[] activeWaypoints;
+    private Transform cachedWaypointParent;
     private int currentWaypointIndex;
     private bool isWaiting;
     private bool movementEnabled = true;
@@ -39,6 +40,13 @@ public class WaypointMover : MonoBehaviour
     private static readonly RaycastHit2D[] ChorePathCastResults = new RaycastHit2D[32];
 
     public bool MovementEnabled => movementEnabled;
+    internal Transform CurrentWaypointParent => waypointParent;
+    internal Transform CurrentWaypointTarget =>
+        waypoints != null &&
+        currentWaypointIndex >= 0 &&
+        currentWaypointIndex < waypoints.Length
+            ? waypoints[currentWaypointIndex]
+            : null;
 
     public void SetMovementEnabled(bool enabled)
     {
@@ -223,14 +231,21 @@ public class WaypointMover : MonoBehaviour
         bodyCollider = GetComponent<Collider2D>();
         body = GetComponent<Rigidbody2D>();
 
-        if (waypointParent == null)
-            return;
-
-        CacheWaypoints();
+        if (waypointParent != null && waypoints == null)
+            CacheWaypoints();
     }
 
     private void CacheWaypoints()
     {
+        cachedWaypointParent = waypointParent;
+        if (waypointParent == null)
+        {
+            waypoints = null;
+            activeWaypoints = null;
+            currentWaypointIndex = 0;
+            return;
+        }
+
         var uniqueWaypoints = new List<Transform>(waypointParent.childCount);
         for (int i = 0; i < waypointParent.childCount; i++)
         {
@@ -276,11 +291,15 @@ public class WaypointMover : MonoBehaviour
 
         waypoints = uniqueWaypoints.ToArray();
         activeWaypoints = waypoints;
+        currentWaypointIndex = FindNearestUnclaimedWaypointIndex(
+            body != null ? body.position : (Vector2)transform.position);
     }
 
     private void OnEnable()
     {
         NPCMovement2D.Register(this);
+        if (waypointParent != null)
+            CacheWaypoints();
     }
 
     private void OnDisable()
@@ -290,6 +309,9 @@ public class WaypointMover : MonoBehaviour
 
     void Update()
     {
+        if (cachedWaypointParent != waypointParent)
+            CacheWaypoints();
+
         if (PauseController.IsGamePaused || isWaiting || !movementEnabled)
         {
             StopMovement();
@@ -319,10 +341,25 @@ public class WaypointMover : MonoBehaviour
         activeWaypoints = waypoints;
         if (activeWaypoints == null || activeWaypoints.Length == 0) return;
 
-        if (currentWaypointIndex >= activeWaypoints.Length)
-            currentWaypointIndex = 0;
+        if (currentWaypointIndex < 0 || currentWaypointIndex >= activeWaypoints.Length)
+        {
+            currentWaypointIndex = FindNearestUnclaimedWaypointIndex(
+                body != null ? body.position : (Vector2)transform.position);
+            if (currentWaypointIndex < 0)
+                return;
+        }
 
         Transform target = activeWaypoints[currentWaypointIndex];
+        if (NPCMovement2D.IsWaypointClaimed(this, target))
+        {
+            currentWaypointIndex = FindNearestUnclaimedWaypointIndex(
+                body != null ? body.position : (Vector2)transform.position);
+            if (currentWaypointIndex < 0)
+                return;
+
+            target = activeWaypoints[currentWaypointIndex];
+        }
+
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
         Vector2 navigationTarget = GetPathTarget(currentPosition, target.position);
         float step = moveSpeed * Time.deltaTime;
@@ -355,10 +392,49 @@ public class WaypointMover : MonoBehaviour
         {
             waitTimer = waitTime;
             if (loopWaypoints)
-                currentWaypointIndex = (currentWaypointIndex + 1) % activeWaypoints.Length;
+                currentWaypointIndex = FindNextUnclaimedWaypointIndex(currentWaypointIndex);
             else
-                currentWaypointIndex = Mathf.Min(currentWaypointIndex + 1, activeWaypoints.Length - 1);
+                currentWaypointIndex = FindNextUnclaimedWaypointIndex(
+                    currentWaypointIndex,
+                    false);
         }
+    }
+
+    private int FindNearestUnclaimedWaypointIndex(Vector2 position)
+    {
+        int nearestIndex = -1;
+        float nearestDistance = float.PositiveInfinity;
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            Transform waypoint = waypoints[i];
+            if (waypoint == null || NPCMovement2D.IsWaypointClaimed(this, waypoint))
+                continue;
+
+            float distance = ((Vector2)waypoint.position - position).sqrMagnitude;
+            if (distance < nearestDistance)
+            {
+                nearestIndex = i;
+                nearestDistance = distance;
+            }
+        }
+
+        return nearestIndex;
+    }
+
+    private int FindNextUnclaimedWaypointIndex(int previousIndex, bool loop = true)
+    {
+        int searchCount = loop ? waypoints.Length : waypoints.Length - previousIndex - 1;
+        for (int offset = 1; offset <= searchCount; offset++)
+        {
+            int index = loop
+                ? (previousIndex + offset) % waypoints.Length
+                : previousIndex + offset;
+            Transform waypoint = waypoints[index];
+            if (waypoint != null && !NPCMovement2D.IsWaypointClaimed(this, waypoint))
+                return index;
+        }
+
+        return loop ? -1 : previousIndex;
     }
 
     public Vector2 GetMovementTowards(Vector2 target, float speed)
@@ -441,14 +517,13 @@ public class WaypointMover : MonoBehaviour
         for (int i = 0; i < activeWaypoints.Length - 1; i++)
         {
             nextIndex = (nextIndex + 1) % activeWaypoints.Length;
-            if (HasClearPath(currentPosition, activeWaypoints[nextIndex].position))
+            if (!NPCMovement2D.IsWaypointClaimed(this, activeWaypoints[nextIndex]) &&
+                HasClearPath(currentPosition, activeWaypoints[nextIndex].position))
             {
                 currentWaypointIndex = nextIndex;
                 return;
             }
         }
-
-        currentWaypointIndex = (currentWaypointIndex + 1) % activeWaypoints.Length;
     }
 
     private bool HasClearPath(Vector2 currentPosition, Vector2 targetPosition)

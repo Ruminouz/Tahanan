@@ -28,6 +28,12 @@ public class HouseholdHelperAI : MonoBehaviour
     [SerializeField, Min(0f)] private float garbageSortingDuration = 20f;
     [SerializeField, Min(0f)] private float cleanLeavesDuration = 18f;
     [SerializeField, Min(0f)] private float feedDogDuration = 15f;
+
+    [Header("Chore Stand Zones")]
+    [SerializeField] private Transform dishwashingStandZone;
+    [SerializeField] private Transform feedDogStandZone;
+    [SerializeField] private Transform trashbinStandZone;
+
     [SerializeField] private Sprite dishwashingIcon;
     [SerializeField] private Sprite garbageSortingIcon;
     [SerializeField] private Sprite cleanLeavesIcon;
@@ -597,12 +603,27 @@ public class HouseholdHelperAI : MonoBehaviour
 
         if (task.Chore != null)
         {
-            position = GetChoreStandPosition(task.Chore);
+            Transform standZone = GetChoreStandZone(task.Chore);
+            position = standZone != null
+                ? (Vector2)standZone.position
+                : GetChoreStandPosition(task.Chore);
             return true;
         }
 
         position = Vector2.zero;
         return false;
+    }
+
+    private Transform GetChoreStandZone(Chore chore)
+    {
+        if (chore is DishwashingChore)
+            return dishwashingStandZone;
+        if (chore is FeedDogChore)
+            return feedDogStandZone;
+        if (chore is GarbageChore)
+            return trashbinStandZone;
+
+        return null;
     }
 
     private Vector2 GetChoreStandPosition(Chore chore)

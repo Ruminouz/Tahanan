@@ -7210,7 +7210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c173154abb763804dacff0d4f93e47d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  waypointParent: {fileID: 8744819498395073774}
+  waypointParent: {fileID: 0}
   moveSpeed: 2
   waitTime: 1
   loopWaypoints: 1
@@ -8192,7 +8192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c173154abb763804dacff0d4f93e47d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaypointMover
-  waypointParent: {fileID: 4339022707040469530}
+  waypointParent: {fileID: 0}
   moveSpeed: 2
   waitTime: 2
   loopWaypoints: 1
@@ -8492,7 +8492,7 @@ PrefabInstance:
     - target: {fileID: 2955472342297103682, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: waypointParent
       value: 
-      objectReference: {fileID: 1634247120}
+      objectReference: {fileID: 0}
     - target: {fileID: 4129807742957930677, guid: 106d4ca1bdc67ab45bdf1d83ad6231c2, type: 3}
       propertyPath: m_Name
       value: BunsoNPC

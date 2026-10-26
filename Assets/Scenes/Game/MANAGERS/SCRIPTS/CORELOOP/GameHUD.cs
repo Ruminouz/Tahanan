@@ -21,12 +21,12 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private TMP_Text choreListText;
     [SerializeField] private Slider timeBar;
     [Header("Clock Progress")]
-    [SerializeField, Tooltip("Optional slider that fills as the in-game day progresses.")]
+    [SerializeField, Tooltip("Slider that fills as the in-game day progresses.")]
     private Slider clockProgressSlider;
     [SerializeField, Min(0f)] private float clockNearEndWarningSeconds = 30f;
     [SerializeField] private Color clockProgressWarningColor = new Color(1f, 0.2f, 0.12f);
-    [SerializeField] private Sprite clockFaceSprite;
-    [SerializeField, Tooltip("Optional Canvas RectTransform used to control the clock's position and size.")]
+    [SerializeField, HideInInspector] private Sprite clockFaceSprite;
+    [SerializeField, Tooltip("Optional Canvas RectTransform used to position the time bar.")]
     private RectTransform clockAnchor;
     [SerializeField] private TMP_Text pointsText;
     [SerializeField] private TMP_Text coinsText;
@@ -50,6 +50,9 @@ public class GameHUD : MonoBehaviour
     private GameObject choreListCollapsedPanel;
     private GameObject dailyQuestCollapsedPanel;
     private Image choreListPanelBackground;
+    private Image choreListCollapsedPanelBackground;
+    private Color choreListPanelOriginalColor;
+    private Color choreListCollapsedPanelOriginalColor;
     private GameObject chorePanelDayLabel;
     private GameObject chorePanelTimeLabel;
     private bool choreListBackgroundWasEnabled;
@@ -62,16 +65,6 @@ public class GameHUD : MonoBehaviour
     private SegregateWasteMiniGame toyPickupMiniGame;
     private ChoreManager choreManager;
     private EconomyManager economyManager;
-    private RectTransform clockHand;
-    private RectTransform clockRoot;
-    private Vector3 clockRootOriginalScale = Vector3.one;
-    private bool clockVisibilityInitialized;
-    private bool clockWasActiveBeforeMiniGame;
-    private bool clockProgressWasActiveBeforeMiniGame;
-    private bool clockHiddenForMiniGame;
-    private Image clockFaceImage;
-    private Image clockHandImage;
-    private Image clockCenterImage;
     private Image clockProgressFillImage;
     private Color clockProgressDefaultColor = Color.white;
     private Canvas currencyCanvas;
@@ -121,14 +114,11 @@ public class GameHUD : MonoBehaviour
         currencyCanvas = coinsText != null
             ? coinsText.GetComponentInParent<Canvas>()
             : FindFirstObjectByType<Canvas>();
+        EnsureTimeBar();
         InitializeClockProgressSlider();
 
         ResolveChoreListText();
         ResolveDailyQuestPanel();
-        if (clockFaceSprite != null)
-            CreateClockDisplay();
-        CacheClockVisibility();
-
         SetupChoreListMinimizeButton();
         CreateCoinCounter();
         CreateMissedChoreCounter();
@@ -142,7 +132,8 @@ public class GameHUD : MonoBehaviour
 
     private void Update()
     {
-        UpdateMiniGameClockVisibility();
+        if (clockProgressSlider != null && !clockProgressSlider.gameObject.activeSelf)
+            clockProgressSlider.gameObject.SetActive(true);
         ResolveEconomyManager();
         UpdateCoinCounter();
         UpdateCoinPopups();
@@ -150,6 +141,7 @@ public class GameHUD : MonoBehaviour
             ResolveDailyQuestPanel();
         UpdateDailyQuestPanel();
         UpdateMissedChoreCounter();
+        UpdateChoreListFreezeEffect();
 
         if (timeManager == null || dayManager == null)
             return;
@@ -158,44 +150,6 @@ public class GameHUD : MonoBehaviour
         UpdateTime();
         UpdateChoreList();
         UpdateDailyStats();
-    }
-
-    private void CacheClockVisibility()
-    {
-        GameObject clockObject = clockAnchor != null
-            ? clockAnchor.gameObject
-            : clockRoot != null
-                ? clockRoot.gameObject
-                : null;
-        clockWasActiveBeforeMiniGame =
-            clockObject != null && clockObject.activeSelf;
-        clockProgressWasActiveBeforeMiniGame =
-            clockProgressSlider != null && clockProgressSlider.gameObject.activeSelf;
-        clockVisibilityInitialized = true;
-    }
-
-    private void UpdateMiniGameClockVisibility()
-    {
-        if (!clockVisibilityInitialized)
-            CacheClockVisibility();
-
-        bool hideClock = MiniGameInteractionBlocker.IsAnyMiniGameActive;
-        if (hideClock == clockHiddenForMiniGame)
-            return;
-
-        clockHiddenForMiniGame = hideClock;
-        GameObject clockObject = clockAnchor != null
-            ? clockAnchor.gameObject
-            : clockRoot != null
-                ? clockRoot.gameObject
-                : null;
-        if (clockObject != null)
-            clockObject.SetActive(!hideClock && clockWasActiveBeforeMiniGame);
-        if (clockProgressSlider != null)
-        {
-            clockProgressSlider.gameObject.SetActive(
-                !hideClock && clockProgressWasActiveBeforeMiniGame);
-        }
     }
 
     private void UpdateDay()
@@ -230,12 +184,6 @@ public class GameHUD : MonoBehaviour
                 ? Color.Lerp(clockProgressDefaultColor, clockProgressWarningColor, pulse)
                 : clockProgressDefaultColor;
 
-        if (clockHand != null)
-            clockHand.localRotation = Quaternion.Euler(
-                0f,
-                0f,
-                timeManager.GetClockHandRotation());
-
         if (timeText != null)
             timeText.text = "Time: " + timeManager.GetClockTimeLabel() +
                 (isTimeFrozen
@@ -245,30 +193,19 @@ public class GameHUD : MonoBehaviour
 
         if (timePeriodText != null)
             timePeriodText.text = timeManager.GetClockPeriodLabel();
+    }
 
-        if (clockFaceImage != null)
-        {
-            Color faceColor = isTimeFrozen
-                ? new Color(0.62f, 0.84f, 1f)
-                : Color.white;
-            clockFaceImage.color = isDayNearEnd
-                ? Color.Lerp(faceColor, clockProgressWarningColor, pulse)
-                : faceColor;
-        }
+    private void EnsureTimeBar()
+    {
+        if (clockProgressSlider == null)
+            clockProgressSlider = timeBar;
 
-        if (clockHandImage != null)
-            clockHandImage.color = isTimeFrozen
-                ? new Color(0.05f, 0.35f, 0.72f)
-                : new Color(0.12f, 0.08f, 0.04f);
+        if (clockProgressSlider == null)
+            clockProgressSlider = CreateTimeBar();
 
-        if (clockCenterImage != null)
-            clockCenterImage.color = isTimeFrozen
-                ? new Color(0.05f, 0.35f, 0.72f)
-                : new Color(0.08f, 0.06f, 0.03f);
-
-        if (clockRoot != null)
-            clockRoot.localScale = clockRootOriginalScale *
-                (isDayNearEnd ? 1f + pulse * 0.08f : 1f);
+        timeBar = clockProgressSlider;
+        if (clockProgressSlider != null)
+            clockProgressSlider.gameObject.SetActive(true);
     }
 
     private void InitializeClockProgressSlider()
@@ -277,6 +214,9 @@ public class GameHUD : MonoBehaviour
             return;
 
         clockProgressSlider.interactable = false;
+        clockProgressSlider.minValue = 0f;
+        clockProgressSlider.maxValue = 1f;
+        clockProgressSlider.wholeNumbers = false;
         clockProgressFillImage = clockProgressSlider.fillRect != null
             ? clockProgressSlider.fillRect.GetComponent<Image>()
             : null;
@@ -284,7 +224,7 @@ public class GameHUD : MonoBehaviour
             clockProgressDefaultColor = clockProgressFillImage.color;
     }
 
-    private void CreateClockDisplay()
+    private Slider CreateTimeBar()
     {
         Canvas canvas = clockAnchor != null
             ? clockAnchor.GetComponentInParent<Canvas>()
@@ -297,78 +237,95 @@ public class GameHUD : MonoBehaviour
         if (canvas == null)
         {
             Debug.LogWarning(
-                "Game clock could not be created because no Canvas was found.",
+                "The day time bar could not be created because no Canvas was found.",
                 this);
-            return;
+            return null;
         }
 
-        if (timeBar != null && timeBar != clockProgressSlider)
-            timeBar.gameObject.SetActive(false);
-
-        GameObject clockObject = new GameObject(
-            "Day Clock",
+        GameObject barObject = new GameObject(
+            "Day Time Bar",
             typeof(RectTransform),
             typeof(CanvasRenderer),
-            typeof(Image));
-        clockObject.layer = canvas.gameObject.layer;
-        RectTransform clockRect = clockObject.GetComponent<RectTransform>();
-        clockRoot = clockRect;
+            typeof(Image),
+            typeof(Slider));
+        barObject.layer = canvas.gameObject.layer;
+        RectTransform barRect = barObject.GetComponent<RectTransform>();
         if (clockAnchor != null)
         {
-            clockRect.SetParent(clockAnchor, false);
-            clockRect.anchorMin = Vector2.zero;
-            clockRect.anchorMax = Vector2.one;
-            clockRect.pivot = new Vector2(0.5f, 0.5f);
-            clockRect.sizeDelta = Vector2.zero;
+            barRect.SetParent(clockAnchor, false);
+            barRect.anchorMin = new Vector2(0.5f, 0.5f);
+            barRect.anchorMax = new Vector2(0.5f, 0.5f);
+            barRect.pivot = new Vector2(0.5f, 0.5f);
+            barRect.anchoredPosition = Vector2.zero;
+            barRect.sizeDelta = new Vector2(100f, 10f);
         }
         else
         {
-            clockRect.SetParent(canvas.transform, false);
-            clockRect.anchorMin = Vector2.one;
-            clockRect.anchorMax = Vector2.one;
-            clockRect.pivot = Vector2.one;
-            clockRect.anchoredPosition = new Vector2(-32f, -32f);
-            clockRect.sizeDelta = new Vector2(144f, 144f);
+            barRect.SetParent(canvas.transform, false);
+            barRect.anchorMin = new Vector2(0f, 1f);
+            barRect.anchorMax = new Vector2(0f, 1f);
+            barRect.pivot = new Vector2(0f, 1f);
+            barRect.anchoredPosition = new Vector2(32f, -32f);
+            barRect.sizeDelta = new Vector2(260f, 24f);
         }
-        clockRootOriginalScale = clockRoot.localScale;
 
-        clockFaceImage = clockObject.GetComponent<Image>();
-        clockFaceImage.sprite = clockFaceSprite;
-        clockFaceImage.preserveAspect = true;
-        clockFaceImage.raycastTarget = false;
-
-        GameObject handObject = new GameObject(
-            "Clock Hand",
+        Image background = barObject.GetComponent<Image>();
+        background.color = new Color(0.1f, 0.08f, 0.06f, 0.9f);
+        background.raycastTarget = false;
+        GameObject fillObject = new GameObject(
+            "Fill",
             typeof(RectTransform),
             typeof(CanvasRenderer),
             typeof(Image));
-        handObject.layer = canvas.gameObject.layer;
-        clockHand = handObject.GetComponent<RectTransform>();
-        clockHand.SetParent(clockRect, false);
-        clockHand.anchorMin = new Vector2(0.5f, 0.5f);
-        clockHand.anchorMax = new Vector2(0.5f, 0.5f);
-        clockHand.pivot = new Vector2(0.5f, 0f);
-        clockHand.anchoredPosition = Vector2.zero;
-        clockHand.sizeDelta = new Vector2(4f, 43f);
-        clockHandImage = handObject.GetComponent<Image>();
-        clockHandImage.color = new Color(0.12f, 0.08f, 0.04f);
-        clockHandImage.raycastTarget = false;
+        fillObject.layer = canvas.gameObject.layer;
+        RectTransform fillRect = fillObject.GetComponent<RectTransform>();
+        fillRect.SetParent(barRect, false);
+        fillRect.anchorMin = Vector2.zero;
+        fillRect.anchorMax = Vector2.one;
+        fillRect.offsetMin = new Vector2(2f, 2f);
+        fillRect.offsetMax = new Vector2(-2f, -2f);
+        Image fillImage = fillObject.GetComponent<Image>();
+        fillImage.color = new Color(0.95f, 0.68f, 0.24f);
+        fillImage.raycastTarget = false;
 
-        GameObject centerObject = new GameObject(
-            "Clock Center",
-            typeof(RectTransform),
-            typeof(CanvasRenderer),
-            typeof(Image));
-        centerObject.layer = canvas.gameObject.layer;
-        RectTransform centerRect = centerObject.GetComponent<RectTransform>();
-        centerRect.SetParent(clockRect, false);
-        centerRect.anchorMin = new Vector2(0.5f, 0.5f);
-        centerRect.anchorMax = new Vector2(0.5f, 0.5f);
-        centerRect.anchoredPosition = Vector2.zero;
-        centerRect.sizeDelta = new Vector2(8f, 8f);
-        clockCenterImage = centerObject.GetComponent<Image>();
-        clockCenterImage.color = new Color(0.08f, 0.06f, 0.03f);
-        clockCenterImage.raycastTarget = false;
+        Slider slider = barObject.GetComponent<Slider>();
+        slider.transition = Selectable.Transition.None;
+        slider.targetGraphic = background;
+        slider.fillRect = fillRect;
+        slider.direction = Slider.Direction.LeftToRight;
+        slider.interactable = false;
+        return slider;
+    }
+
+    private void UpdateChoreListFreezeEffect()
+    {
+        bool isTimeFrozen = timeManager != null && timeManager.IsTimeFrozen;
+        float tintAmount = isTimeFrozen
+            ? 0.25f + (0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 5f)) * 0.2f
+            : 0f;
+
+        ApplyChoreListFreezeTint(
+            choreListPanelBackground,
+            choreListPanelOriginalColor,
+            tintAmount);
+        ApplyChoreListFreezeTint(
+            choreListCollapsedPanelBackground,
+            choreListCollapsedPanelOriginalColor,
+            tintAmount);
+    }
+
+    private static void ApplyChoreListFreezeTint(
+        Image panelImage,
+        Color originalColor,
+        float tintAmount)
+    {
+        if (panelImage == null)
+            return;
+
+        Color freezeColor = new Color(0.45f, 0.82f, 1f, originalColor.a);
+        Color panelColor = Color.Lerp(originalColor, freezeColor, tintAmount);
+        panelColor.a = originalColor.a;
+        panelImage.color = panelColor;
     }
 
     private void UpdateChoreList()
@@ -605,6 +562,7 @@ public class GameHUD : MonoBehaviour
         choreListPanelBackground = choreListPanelRect.GetComponent<Image>();
         if (choreListPanelBackground == null)
             return;
+        choreListPanelOriginalColor = choreListPanelBackground.color;
 
         if (chorePanelDayLabel == null)
             chorePanelDayLabel = FindPanelObject(parent, "DayText");
@@ -639,11 +597,14 @@ public class GameHUD : MonoBehaviour
         collapsedRect.sizeDelta = collapsedSize;
         collapsedRect.SetAsLastSibling();
 
-        Image collapsedBackground = choreListCollapsedPanel.GetComponent<Image>();
-        collapsedBackground.sprite = choreListPanelBackground.sprite;
-        collapsedBackground.type = choreListPanelBackground.type;
-        collapsedBackground.color = choreListPanelBackground.color;
-        collapsedBackground.raycastTarget = false;
+        choreListCollapsedPanelBackground =
+            choreListCollapsedPanel.GetComponent<Image>();
+        choreListCollapsedPanelBackground.sprite = choreListPanelBackground.sprite;
+        choreListCollapsedPanelBackground.type = choreListPanelBackground.type;
+        choreListCollapsedPanelBackground.color = choreListPanelBackground.color;
+        choreListCollapsedPanelBackground.raycastTarget = false;
+        choreListCollapsedPanelOriginalColor =
+            choreListCollapsedPanelBackground.color;
 
         GameObject collapsedTitleObject = new GameObject(
             "Title",
@@ -735,6 +696,19 @@ public class GameHUD : MonoBehaviour
         }
 
         StartTutorialPulse(missedChoreText.rectTransform);
+    }
+
+    public void PulseTimeBarForTutorial()
+    {
+        if (clockProgressSlider == null)
+        {
+            Debug.LogWarning(
+                "Cannot highlight the day time bar because it is unavailable.",
+                this);
+            return;
+        }
+
+        StartTutorialPulse(clockProgressSlider.transform);
     }
 
     public void PulseDailyChallengeCardForTutorial()

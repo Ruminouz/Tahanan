@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c173154abb763804dacff0d4f93e47d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  waypointParent: {fileID: 8744819496529166046}
+  waypointParent: {fileID: 0}
   moveSpeed: 2
   waitTime: 1
   loopWaypoints: 1

@@ -2179,6 +2179,13 @@ public class DayManager : MonoBehaviour
             continuePrompt,
             "MISSED CHORES",
             "If you miss too many chores, the game will be over.");
+        if (hud != null)
+            hud.PulseTimeBarForTutorial();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "WATCH THE TIME",
+            "When this fills up, the day ends, so watch out.");
 
         Vector2 nearestDustPosition = Vector2.zero;
         bool hasDustSpot = sweepingManager != null &&

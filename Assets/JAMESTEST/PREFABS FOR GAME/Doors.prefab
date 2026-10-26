@@ -110,7 +110,7 @@ MonoBehaviour:
   - {fileID: -2986402827671718610, guid: 65a72b0ef63ff3c4f84d472ccba5546e, type: 3}
   triggerTags:
   - Player
-  - NPC
+  - NPCS
   soundCooldown: 0.15
 --- !u!61 &3945806478659707547
 BoxCollider2D:
@@ -268,7 +268,7 @@ MonoBehaviour:
   - {fileID: -2986402827671718610, guid: 65a72b0ef63ff3c4f84d472ccba5546e, type: 3}
   triggerTags:
   - Player
-  - NPC
+  - NPCS
   soundCooldown: 0.15
 --- !u!61 &3852862470208565620
 BoxCollider2D:
@@ -462,7 +462,7 @@ MonoBehaviour:
   - {fileID: -2986402827671718610, guid: 65a72b0ef63ff3c4f84d472ccba5546e, type: 3}
   triggerTags:
   - Player
-  - NPC
+  - NPCS
   soundCooldown: 0.15
 --- !u!61 &7383606146530514473
 BoxCollider2D:
@@ -620,7 +620,7 @@ MonoBehaviour:
   - {fileID: -2986402827671718610, guid: 65a72b0ef63ff3c4f84d472ccba5546e, type: 3}
   triggerTags:
   - Player
-  - NPC
+  - NPCS
   soundCooldown: 0.15
 --- !u!61 &6477726272368154442
 BoxCollider2D:
@@ -778,7 +778,7 @@ MonoBehaviour:
   - {fileID: -2986402827671718610, guid: 65a72b0ef63ff3c4f84d472ccba5546e, type: 3}
   triggerTags:
   - Player
-  - NPC
+  - NPCS
   soundCooldown: 0.15
 --- !u!61 &4972167574632596908
 BoxCollider2D:

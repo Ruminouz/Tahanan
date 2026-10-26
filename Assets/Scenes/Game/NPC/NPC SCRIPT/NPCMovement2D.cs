@@ -17,6 +17,21 @@ public static class NPCMovement2D
         Movers.Remove(mover);
     }
 
+    public static bool IsWaypointClaimed(WaypointMover mover, Transform waypoint)
+    {
+        foreach (WaypointMover other in Movers)
+        {
+            if (other == null || other == mover)
+                continue;
+
+            if (other.CurrentWaypointParent == mover.CurrentWaypointParent &&
+                other.CurrentWaypointTarget == waypoint)
+                return true;
+        }
+
+        return false;
+    }
+
     public static Vector2 GetSeparationMovement(
         WaypointMover mover,
         Vector2 position,
