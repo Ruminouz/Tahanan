@@ -55,6 +55,12 @@ public class DayManager : MonoBehaviour
     [SerializeField, Min(0f)] private float summaryLineDelay = 0.25f;
     [SerializeField, Min(0f)] private float transitionCardHoldDuration = 1f;
 
+    [Header("Week Ending")]
+    [SerializeField] private GameObject day7WinView;
+    [SerializeField, Min(0.01f)] private float weekEndingCameraMoveDuration = 1.5f;
+    [SerializeField, Min(0f)] private float weekEndingStoryDuration = 4f;
+    [SerializeField, Min(1f)] private float weekEndingCameraPadding = 1.25f;
+
     [Header("Day Win Celebration")]
     [SerializeField] private Image dayWinCelebrationImage;
     [SerializeField] private Image[] additionalDayWinCelebrationImages = new Image[6];
@@ -408,17 +414,25 @@ public class DayManager : MonoBehaviour
         }
     }
 
-    private void HideSceneNpcs()
+    private void HideSceneNpcs(Transform excludedRoot = null)
     {
         HashSet<GameObject> sceneNpcs = new HashSet<GameObject>(
             GameObject.FindGameObjectsWithTag("NPCS"));
-        AddNpcComponents<NPC>(sceneNpcs);
-        AddNpcComponents<NPCSocialParticipant>(sceneNpcs);
-        AddNpcComponents<MomAI>(sceneNpcs);
-        AddNpcComponents<TatayGameOverAI>(sceneNpcs);
-        AddNpcComponents<BunsoAI>(sceneNpcs);
-        AddNpcComponents<HouseholdHelperAI>(sceneNpcs);
-        AddNpcComponents<CatInteraction>(sceneNpcs);
+        if (excludedRoot != null)
+        {
+            sceneNpcs.RemoveWhere(npc =>
+                npc == null ||
+                npc.transform == excludedRoot ||
+                npc.transform.IsChildOf(excludedRoot));
+        }
+
+        AddNpcComponents<NPC>(sceneNpcs, excludedRoot);
+        AddNpcComponents<NPCSocialParticipant>(sceneNpcs, excludedRoot);
+        AddNpcComponents<MomAI>(sceneNpcs, excludedRoot);
+        AddNpcComponents<TatayGameOverAI>(sceneNpcs, excludedRoot);
+        AddNpcComponents<BunsoAI>(sceneNpcs, excludedRoot);
+        AddNpcComponents<HouseholdHelperAI>(sceneNpcs, excludedRoot);
+        AddNpcComponents<CatInteraction>(sceneNpcs, excludedRoot);
 
         foreach (GameObject npc in sceneNpcs)
         {
@@ -433,12 +447,25 @@ public class DayManager : MonoBehaviour
     private static void AddNpcComponents<T>(HashSet<GameObject> sceneNpcs)
         where T : Component
     {
+        AddNpcComponents<T>(sceneNpcs, null);
+    }
+
+    private static void AddNpcComponents<T>(
+        HashSet<GameObject> sceneNpcs,
+        Transform excludedRoot)
+        where T : Component
+    {
         T[] components = FindObjectsByType<T>(
             FindObjectsInactive.Include,
             FindObjectsSortMode.None);
         foreach (T component in components)
         {
             if (component == null)
+                continue;
+
+            if (excludedRoot != null &&
+                (component.transform == excludedRoot ||
+                 component.transform.IsChildOf(excludedRoot)))
                 continue;
 
             Transform current = component.transform;
@@ -1512,7 +1539,165 @@ public class DayManager : MonoBehaviour
         dayFinished = true;
         weekComplete = currentDay >= FinalDay;
         Debug.Log("DAY " + currentDay + " COMPLETE!");
+        if (weekComplete && !gameOver)
+            StartCoroutine(PlayWeekEnding());
+        else
+            ShowDaySummary();
+    }
+
+    private IEnumerator PlayWeekEnding()
+    {
+        if (day7WinView == null)
+        {
+            Transform[] sceneTransforms = FindObjectsByType<Transform>(
+                FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
+            foreach (Transform sceneTransform in sceneTransforms)
+            {
+                if (sceneTransform.name != "Day7winView")
+                    continue;
+
+                day7WinView = sceneTransform.gameObject;
+                break;
+            }
+        }
+
+        if (day7WinView == null)
+        {
+            Debug.LogWarning(
+                "The Day 7 ending view could not be found; showing the ending story without the family scene.",
+                this);
+        }
+        else
+        {
+            day7WinView.SetActive(true);
+        }
+        HideSceneNpcs(day7WinView != null ? day7WinView.transform : null);
+
+        if (timeManager == null)
+            timeManager = FindFirstObjectByType<TimeManager>();
+        if (timeManager != null)
+            timeManager.SetDayTimePaused(true);
+
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        if (player != null)
+            player.SetMovementInputEnabled(false);
+
+        if (day7WinView != null)
+            yield return FrameWeekEndingCamera(day7WinView.transform);
+
+        GameObject storyOverlay = CreateWeekEndingStoryOverlay();
+        yield return WaitForRealtime(weekEndingStoryDuration);
+        if (storyOverlay != null)
+            Destroy(storyOverlay);
+
         ShowDaySummary();
+    }
+
+    private IEnumerator FrameWeekEndingCamera(Transform endingView)
+    {
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            Debug.LogWarning(
+                "The Day 7 ending camera could not be moved because no MainCamera exists.",
+                this);
+            yield break;
+        }
+
+        Bounds viewBounds = new Bounds(endingView.position, Vector3.zero);
+        bool hasRendererBounds = false;
+        Renderer[] renderers = endingView.GetComponentsInChildren<Renderer>();
+        foreach (Renderer sceneRenderer in renderers)
+        {
+            if (sceneRenderer == null || !sceneRenderer.enabled ||
+                !sceneRenderer.gameObject.activeInHierarchy)
+                continue;
+
+            if (hasRendererBounds)
+                viewBounds.Encapsulate(sceneRenderer.bounds);
+            else
+            {
+                viewBounds = sceneRenderer.bounds;
+                hasRendererBounds = true;
+            }
+        }
+
+        float aspect = Mathf.Max(0.01f, mainCamera.aspect);
+        float targetOrthographicSize = hasRendererBounds
+            ? Mathf.Max(
+                viewBounds.extents.y,
+                viewBounds.extents.x / aspect) * weekEndingCameraPadding
+            : mainCamera.orthographicSize / weekEndingCameraPadding;
+        targetOrthographicSize = Mathf.Max(0.1f, targetOrthographicSize);
+        CinemachineConfiner2D[] cameraConfiners = FindObjectsByType<CinemachineConfiner2D>(
+            FindObjectsSortMode.None);
+        foreach (CinemachineConfiner2D cameraConfiner in cameraConfiners)
+            cameraConfiner.enabled = false;
+
+        dayOneIntroCameras = FindObjectsByType<CinemachineCamera>(
+            FindObjectsSortMode.None);
+        SetDayOneCameraFollowTarget(null);
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            viewBounds.center,
+            targetOrthographicSize,
+            weekEndingCameraMoveDuration);
+    }
+
+    private GameObject CreateWeekEndingStoryOverlay()
+    {
+        GameObject canvasObject = new GameObject(
+            "Week Ending Story",
+            typeof(RectTransform),
+            typeof(Canvas),
+            typeof(CanvasScaler),
+            typeof(GraphicRaycaster));
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 100;
+
+        CanvasScaler canvasScaler = canvasObject.GetComponent<CanvasScaler>();
+        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        canvasScaler.referenceResolution = new Vector2(1920f, 1080f);
+
+        GameObject panelObject = new GameObject(
+            "Story Panel",
+            typeof(RectTransform),
+            typeof(Image));
+        panelObject.transform.SetParent(canvasObject.transform, false);
+        RectTransform panelRect = panelObject.GetComponent<RectTransform>();
+        panelRect.anchorMin = new Vector2(0.05f, 0.04f);
+        panelRect.anchorMax = new Vector2(0.95f, 0.24f);
+        panelRect.offsetMin = Vector2.zero;
+        panelRect.offsetMax = Vector2.zero;
+
+        Image panelImage = panelObject.GetComponent<Image>();
+        panelImage.color = new Color(0f, 0f, 0f, 0.78f);
+        panelImage.raycastTarget = true;
+
+        GameObject textObject = new GameObject(
+            "Story Text",
+            typeof(RectTransform),
+            typeof(TextMeshProUGUI));
+        textObject.transform.SetParent(panelObject.transform, false);
+        RectTransform textRect = textObject.GetComponent<RectTransform>();
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = new Vector2(32f, 12f);
+        textRect.offsetMax = new Vector2(-32f, -12f);
+
+        TextMeshProUGUI storyText = textObject.GetComponent<TextMeshProUGUI>();
+        if (summaryChoresText != null)
+            storyText.font = summaryChoresText.font;
+        storyText.fontSize = 32f;
+        storyText.color = Color.white;
+        storyText.alignment = TextAlignmentOptions.Center;
+        storyText.text =
+            "The family is so happy, eating together.\n\n" +
+            "After a week of helping at home, you brought everyone closer.";
+
+        return canvasObject;
     }
 
     private bool HasPendingHudChores()

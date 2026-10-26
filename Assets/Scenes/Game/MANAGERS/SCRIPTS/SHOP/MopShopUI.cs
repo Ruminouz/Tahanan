@@ -547,7 +547,7 @@ public class MopShopUI : MonoBehaviour
 
         if (playerMovement != null)
         {
-            MapTransition.ReturnCameraToPlayer(playerMovement, playerMovement.transform.position);
+            MapTransition.ReturnCameraToPlayer(playerMovement);
             playerMovement.SetMovementInputEnabled(true);
         }
         playerMovement = null;
@@ -575,7 +575,7 @@ public class MopShopUI : MonoBehaviour
 
         if (playerMovement != null)
         {
-            MapTransition.ReturnCameraToPlayer(playerMovement, playerMovement.transform.position);
+            MapTransition.ReturnCameraToPlayer(playerMovement);
             playerMovement.SetMovementInputEnabled(true);
         }
         playerMovement = null;

@@ -4,6 +4,8 @@ using Unity.Cinemachine;
 
 public class MapTransition : MonoBehaviour
 {
+    private const float CameraTransitionDuration = 0.65f;
+
     [Header("Confiner Settings")]
     [SerializeField] private PolygonCollider2D mapBoundary;
     [SerializeField] private CinemachineConfiner2D confiner;
@@ -11,6 +13,9 @@ public class MapTransition : MonoBehaviour
     [Header("Transition Settings")]
     [SerializeField] private Direction direction;
     [SerializeField] private float positionOffset = 2.5f;
+
+    private static CinemachineCamera transitioningCamera;
+    private static Coroutine cameraTransition;
 
     private enum Direction
     {
@@ -58,15 +63,14 @@ public class MapTransition : MonoBehaviour
             confiner.InvalidateBoundingShapeCache();
         }
 
-        // 3. Force Cinemachine camera tracking state reset
+        // 3. Smoothly move the camera to the player's new position
         if (confiner != null && confiner.TryGetComponent<CinemachineCamera>(out var vcam))
         {
-            // Inform Cinemachine of the target warp so damping/positioning resets cleanly
-            vcam.OnTargetObjectWarped(player.transform, offset);
-            
-            // Force the camera GameObject itself to move immediately to the player's new position
-            vcam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, vcam.transform.position.z);
-            vcam.ForceCameraPosition(vcam.transform.position, vcam.transform.rotation);
+            Vector3 destination = vcam.transform.position;
+            destination.x = player.transform.position.x;
+            destination.y = player.transform.position.y;
+            vcam.Follow = null;
+            StartCameraTransition(vcam, destination, player.transform);
         }
     }
 
@@ -81,12 +85,11 @@ public class MapTransition : MonoBehaviour
         if (cameraRig == null)
             return;
 
-        cameraRig.Follow = null;
         Vector3 cameraPosition = cameraRig.transform.position;
         cameraPosition.x = destination.x;
         cameraPosition.y = destination.y;
-        cameraRig.transform.position = cameraPosition;
-        cameraRig.ForceCameraPosition(cameraPosition, cameraRig.transform.rotation);
+        cameraRig.Follow = null;
+        StartCameraTransition(cameraRig, cameraPosition);
     }
 
     public static void SetConfinerBoundaryAtPosition(Vector3 destination)
@@ -140,7 +143,7 @@ public class MapTransition : MonoBehaviour
         }
     }
 
-    public static void ReturnCameraToPlayer(PlayerMovement player, Vector3 previousPosition)
+    public static void ReturnCameraToPlayer(PlayerMovement player)
     {
         if (player == null)
             return;
@@ -151,14 +154,12 @@ public class MapTransition : MonoBehaviour
         if (cameraRig == null)
             return;
 
-        MoveCameraToPosition(destination);
-        cameraRig.Follow = player.transform;
-        cameraRig.OnTargetObjectWarped(player.transform, destination - previousPosition);
+        SetConfinerBoundaryAtPosition(destination);
         Vector3 cameraPosition = cameraRig.transform.position;
         cameraPosition.x = destination.x;
         cameraPosition.y = destination.y;
-        cameraRig.transform.position = cameraPosition;
-        cameraRig.ForceCameraPosition(cameraPosition, cameraRig.transform.rotation);
+        cameraRig.Follow = null;
+        StartCameraTransition(cameraRig, cameraPosition, player.transform);
     }
 
     public static void PanCamera(Vector3 worldOffset)
@@ -168,9 +169,85 @@ public class MapTransition : MonoBehaviour
         if (cameraRig == null)
             return;
 
+        CancelCameraTransition();
         Vector3 cameraPosition = cameraRig.transform.position + worldOffset;
         cameraRig.transform.position = cameraPosition;
         cameraRig.ForceCameraPosition(cameraPosition, cameraRig.transform.rotation);
+    }
+
+    private static void StartCameraTransition(
+        CinemachineCamera cameraRig,
+        Vector3 destination,
+        Transform followTarget = null)
+    {
+        CancelCameraTransition();
+        transitioningCamera = cameraRig;
+        cameraTransition = cameraRig.StartCoroutine(
+            SmoothCameraTransition(cameraRig, destination, followTarget));
+    }
+
+    private static void CancelCameraTransition()
+    {
+        if (cameraTransition == null || transitioningCamera == null)
+            return;
+
+        transitioningCamera.StopCoroutine(cameraTransition);
+
+        cameraTransition = null;
+        transitioningCamera = null;
+    }
+
+    private static IEnumerator SmoothCameraTransition(
+        CinemachineCamera cameraRig,
+        Vector3 destination,
+        Transform followTarget)
+    {
+        Vector3 startPosition = cameraRig.transform.position;
+        Vector3 targetStartPosition = followTarget != null
+            ? followTarget.position
+            : Vector3.zero;
+        float elapsed = 0f;
+
+        while (elapsed < CameraTransitionDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float progress = Mathf.Clamp01(elapsed / CameraTransitionDuration);
+            float easedProgress = progress * progress * (3f - 2f * progress);
+            Vector3 currentDestination = GetCurrentDestination(
+                destination,
+                followTarget,
+                targetStartPosition);
+            Vector3 position = Vector3.LerpUnclamped(
+                startPosition,
+                currentDestination,
+                easedProgress);
+            cameraRig.transform.position = position;
+            cameraRig.ForceCameraPosition(position, cameraRig.transform.rotation);
+            yield return null;
+        }
+
+        Vector3 finalPosition = GetCurrentDestination(
+            destination,
+            followTarget,
+            targetStartPosition);
+        cameraRig.transform.position = finalPosition;
+        cameraRig.ForceCameraPosition(finalPosition, cameraRig.transform.rotation);
+        if (followTarget != null)
+            cameraRig.Follow = followTarget;
+
+        cameraTransition = null;
+        transitioningCamera = null;
+    }
+
+    private static Vector3 GetCurrentDestination(
+        Vector3 destination,
+        Transform followTarget,
+        Vector3 targetStartPosition)
+    {
+        if (followTarget != null)
+            destination += followTarget.position - targetStartPosition;
+
+        return destination;
     }
 
     private Vector3 GetOffsetVector()
