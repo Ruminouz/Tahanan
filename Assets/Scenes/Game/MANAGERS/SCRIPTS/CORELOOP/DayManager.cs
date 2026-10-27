@@ -57,6 +57,8 @@ public class DayManager : MonoBehaviour
 
     [Header("Week Ending")]
     [SerializeField] private GameObject day7WinView;
+    [SerializeField, Tooltip("Optional panel sprite used for the successful Day 7 summary.")]
+    private Sprite weekCompleteSummaryPanelSprite;
     [SerializeField, Min(0.01f)] private float weekEndingCameraMoveDuration = 1.5f;
     [SerializeField, Min(0f)] private float weekEndingStoryDuration = 4f;
     [SerializeField, Min(1f)] private float weekEndingCameraPadding = 1.25f;
@@ -1904,6 +1906,9 @@ public class DayManager : MonoBehaviour
         if (daySummaryPanel != null)
             daySummaryPanel.SetActive(true);
 
+        if (weekComplete && !gameOver)
+            ApplyWeekCompleteSummaryPanelSprite();
+
         StopDayWinCelebration();
         if (gameOver)
             SoundEffectManager.Play("GameOver");
@@ -1946,6 +1951,28 @@ public class DayManager : MonoBehaviour
             StopCoroutine(summaryCoroutine);
 
         summaryCoroutine = StartCoroutine(RevealDaySummary(endingMood));
+    }
+
+    private void ApplyWeekCompleteSummaryPanelSprite()
+    {
+        if (weekCompleteSummaryPanelSprite == null)
+            return;
+
+        Image summaryPanelImage = daySummaryPanel != null
+            ? daySummaryPanel.GetComponent<Image>()
+            : null;
+        if (summaryPanelImage == null && summaryChoresText != null)
+            summaryPanelImage = summaryChoresText.GetComponentInParent<Image>();
+
+        if (summaryPanelImage == null)
+        {
+            Debug.LogWarning(
+                "The Day 7 summary sprite is assigned, but no summary panel Image could be found.",
+                this);
+            return;
+        }
+
+        summaryPanelImage.sprite = weekCompleteSummaryPanelSprite;
     }
 
     private IEnumerator RevealDaySummary(HouseholdMood endingMood)

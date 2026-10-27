@@ -11345,7 +11345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6364266456788755897, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: startingCoins
-      value: 60
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7273702467838881212, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: mopFloorTask
@@ -11379,6 +11379,10 @@ PrefabInstance:
       propertyPath: cleanLeaves
       value: 
       objectReference: {fileID: 457736494607859726}
+    - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
+      propertyPath: day7WinView
+      value: 
+      objectReference: {fileID: 920579949}
     - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: garbageChore
       value: 
@@ -11428,9 +11432,17 @@ PrefabInstance:
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
+      propertyPath: dayOneCameraOrthographicSize
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: dayFourNanayArrivalSpawnPoint
       value: 
       objectReference: {fileID: 635055616}
+    - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
+      propertyPath: weekCompleteSummaryPanelSprite
+      value: 
+      objectReference: {fileID: -8105967080731364249, guid: 559af859622ff1b47916f3a843b11f82, type: 3}
     - target: {fileID: 7484297517236702336, guid: 580bb99cb75f754408a22bde5a63d737, type: 3}
       propertyPath: 'additionalDayWinCelebrationImages.Array.data[0]'
       value: 
