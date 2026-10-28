@@ -164,6 +164,13 @@ MonoBehaviour:
   garbageChore: {fileID: 0}
   transitionFade: {fileID: 0}
   daySummaryPanel: {fileID: 0}
+  weekCompleteSummaryPanelFrames:
+  - {fileID: 6721772567095872686, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+  - {fileID: 1629354363, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+  - {fileID: 193294292, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+  - {fileID: -1924948944, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+  - {fileID: 258990869, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+  weekCompleteSummaryPanelFramesPerSecond: 5
   continueButton: {fileID: 0}
   mainMenuButton: {fileID: 0}
   summaryChoresText: {fileID: 0}

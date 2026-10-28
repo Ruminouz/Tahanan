@@ -656,7 +656,7 @@ PrefabInstance:
       objectReference: {fileID: 82349145}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: currentDay
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: throwTrash
@@ -691,8 +691,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4587453792251329934}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: debugInstantWin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: doubleGameSpeed
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: summaryLineDelay
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: summaryChoresText
@@ -710,6 +718,26 @@ PrefabInstance:
       propertyPath: dayFourNanayArrivalSpawnPoint
       value: 
       objectReference: {fileID: 635055616}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: 'weekCompleteSummaryPanelFrames.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6721772567095872686, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: 'weekCompleteSummaryPanelFrames.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1629354363, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: 'weekCompleteSummaryPanelFrames.Array.data[2]'
+      value: 
+      objectReference: {fileID: 193294292, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: 'weekCompleteSummaryPanelFrames.Array.data[3]'
+      value: 
+      objectReference: {fileID: -1924948944, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: 'weekCompleteSummaryPanelFrames.Array.data[4]'
+      value: 
+      objectReference: {fileID: 258990869, guid: 44d31d36858a6264b895f5107c2e6e87, type: 3}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: 'additionalDayWinCelebrationImages.Array.data[0]'
       value: 
@@ -2741,6 +2769,22 @@ PrefabInstance:
       propertyPath: sfxSlider
       value: 
       objectReference: {fileID: 146585530455847411}
+    - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
+      propertyPath: soundEffectGroups.Array.size
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
+      propertyPath: soundEffectGroups.Array.data[34].name
+      value: Family
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
+      propertyPath: soundEffectGroups.Array.data[34].audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
+      propertyPath: 'soundEffectGroups.Array.data[34].audioClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 11e57acdc0a06e342a8fecde5e6ffe54, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
+using Random = UnityEngine.Random;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +15,10 @@ public class DayManager : MonoBehaviour
     private const int FinalDay = 7;
     private const float EarliestChoreDeadlineFraction = 0.25f;
     private const float LatestChoreDeadlineFraction = 0.9f;
+    private static readonly Color WeekCompleteSummaryTextColor =
+        new Color32(46, 125, 50, 255);
+    private static readonly Color WeekCompleteSummaryOutlineColor =
+        new Color32(0, 0, 0, 255);
     private static Sprite shopWaypointArrowSprite;
 
     public static DayManager Instance;
@@ -23,6 +29,8 @@ public class DayManager : MonoBehaviour
     [Header("Debug")]
     [Tooltip("Doubles the speed of gameplay while enabled.")]
     [SerializeField] private bool doubleGameSpeed;
+    [Tooltip("Opens the day-win summary immediately without changing chore progress or score. One-shot.")]
+    [SerializeField] private bool debugInstantWin;
 
     [Header("Daily Chores")]
     [SerializeField] private Chore washDishes;
@@ -57,8 +65,9 @@ public class DayManager : MonoBehaviour
 
     [Header("Week Ending")]
     [SerializeField] private GameObject day7WinView;
-    [SerializeField, Tooltip("Optional panel sprite used for the successful Day 7 summary.")]
-    private Sprite weekCompleteSummaryPanelSprite;
+    [SerializeField, Tooltip("Frames used to animate the successful Day 7 summary panel.")]
+    private Sprite[] weekCompleteSummaryPanelFrames = new Sprite[5];
+    [SerializeField, Min(1f)] private float weekCompleteSummaryPanelFramesPerSecond = 5f;
     [SerializeField, Min(0.01f)] private float weekEndingCameraMoveDuration = 1.5f;
     [SerializeField, Min(0f)] private float weekEndingStoryDuration = 4f;
     [SerializeField, Min(1f)] private float weekEndingCameraPadding = 1.25f;
@@ -111,6 +120,10 @@ public class DayManager : MonoBehaviour
     private readonly List<Chore> dynamicChores = new List<Chore>();
     private readonly Dictionary<GameObject, bool> npcActiveStates =
         new Dictionary<GameObject, bool>();
+    private readonly Dictionary<Canvas, bool> weekEndingCanvasEnabledStates =
+        new Dictionary<Canvas, bool>();
+    private readonly Dictionary<GraphicRaycaster, bool> weekEndingRaycasterEnabledStates =
+        new Dictionary<GraphicRaycaster, bool>();
     private readonly Dictionary<GameObject, Vector3> parentHomePositions =
         new Dictionary<GameObject, Vector3>();
     private bool dayFinished;
@@ -226,6 +239,7 @@ public class DayManager : MonoBehaviour
         Instance = this;
         currentDay = Mathf.Clamp(currentDay, 1, FinalDay);
         normalTimeScale = Time.timeScale;
+        ResolveDaySummaryPanel();
         EnsureDayWinCelebrationImage();
         if (transitionFade != null)
         {
@@ -289,6 +303,16 @@ public class DayManager : MonoBehaviour
 
         foreach (Image image in additionalDayWinCelebrationImages)
             PrepareDayWinCelebrationImage(image);
+    }
+
+    private void ResolveDaySummaryPanel()
+    {
+        if (daySummaryPanel != null || summaryChoresText == null)
+            return;
+
+        Transform summaryParent = summaryChoresText.transform.parent;
+        if (summaryParent != null && summaryParent.GetComponent<Image>() != null)
+            daySummaryPanel = summaryParent.gameObject;
     }
 
     private void PrepareDayWinCelebrationImage(Image image)
@@ -995,6 +1019,22 @@ public class DayManager : MonoBehaviour
         if (dayFinished || transitionInProgress || dayStartIntroInProgress)
             return;
 
+        if (debugInstantWin)
+        {
+            debugInstantWin = false;
+            dayFinished = true;
+            weekComplete = currentDay >= FinalDay;
+            if (waterSpawner != null)
+                waterSpawner.StopSpawning();
+
+            Debug.Log("DEBUG: Instantly opening the Day " + currentDay + " win summary.", this);
+            if (weekComplete)
+                StartCoroutine(PlayWeekEnding());
+            else
+                ShowDaySummary();
+            return;
+        }
+
         if (currentDay == 1 &&
             dayOneWaterTutorialComplete &&
             !dayOneKitchenIntroStarted &&
@@ -1671,6 +1711,9 @@ public class DayManager : MonoBehaviour
 
     private IEnumerator PlayWeekEnding()
     {
+        CanvasGroup sceneFade = CreateWeekEndingSceneFade();
+        yield return FadeCanvasGroup(sceneFade, 1f, transitionDuration);
+
         if (day7WinView == null)
         {
             Transform[] sceneTransforms = FindObjectsByType<Transform>(
@@ -1686,6 +1729,8 @@ public class DayManager : MonoBehaviour
             }
         }
 
+        HideWeekEndingCanvasUI(sceneFade);
+
         if (day7WinView == null)
         {
             Debug.LogWarning(
@@ -1695,6 +1740,7 @@ public class DayManager : MonoBehaviour
         else
         {
             day7WinView.SetActive(true);
+            StartCoroutine(PlayFamilySoundAfterDelay());
         }
         HideSceneNpcs(day7WinView != null ? day7WinView.transform : null);
 
@@ -1710,12 +1756,210 @@ public class DayManager : MonoBehaviour
         if (day7WinView != null)
             yield return FrameWeekEndingCamera(day7WinView.transform);
 
-        GameObject storyOverlay = CreateWeekEndingStoryOverlay();
-        yield return WaitForRealtime(weekEndingStoryDuration);
-        if (storyOverlay != null)
-            Destroy(storyOverlay);
+        yield return FadeCanvasGroup(sceneFade, 0f, transitionDuration);
+        if (sceneFade != null)
+            Destroy(sceneFade.gameObject);
+
+        yield return WaitForRealtime(3f);
+
+        RestoreWeekEndingCanvasUI();
+        yield return ShowWeekCompleteIntro();
 
         ShowDaySummary();
+    }
+
+    private IEnumerator PlayFamilySoundAfterDelay()
+    {
+        yield return WaitForRealtime(2f);
+        SoundEffectManager.Play("Family");
+    }
+
+    private void HideWeekEndingCanvasUI(CanvasGroup sceneFade)
+    {
+        weekEndingCanvasEnabledStates.Clear();
+        weekEndingRaycasterEnabledStates.Clear();
+        Canvas[] canvases = FindObjectsByType<Canvas>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+
+        foreach (Canvas canvas in canvases)
+        {
+            if (canvas == null ||
+                (sceneFade != null && canvas.gameObject == sceneFade.gameObject) ||
+                (day7WinView != null &&
+                    (canvas.transform == day7WinView.transform ||
+                     canvas.transform.IsChildOf(day7WinView.transform))))
+                continue;
+
+            weekEndingCanvasEnabledStates.Add(canvas, canvas.enabled);
+            canvas.enabled = false;
+
+            GraphicRaycaster[] raycasters = canvas.GetComponents<GraphicRaycaster>();
+            foreach (GraphicRaycaster raycaster in raycasters)
+            {
+                if (raycaster == null)
+                    continue;
+
+                weekEndingRaycasterEnabledStates.Add(raycaster, raycaster.enabled);
+                raycaster.enabled = false;
+            }
+        }
+    }
+
+    private void RestoreWeekEndingCanvasUI()
+    {
+        foreach (KeyValuePair<Canvas, bool> canvasState in weekEndingCanvasEnabledStates)
+        {
+            if (canvasState.Key != null)
+                canvasState.Key.enabled = canvasState.Value;
+        }
+
+        foreach (KeyValuePair<GraphicRaycaster, bool> raycasterState in
+                 weekEndingRaycasterEnabledStates)
+        {
+            if (raycasterState.Key != null)
+                raycasterState.Key.enabled = raycasterState.Value;
+        }
+
+        weekEndingCanvasEnabledStates.Clear();
+        weekEndingRaycasterEnabledStates.Clear();
+    }
+
+    private IEnumerator ShowWeekCompleteIntro()
+    {
+        ResolveDaySummaryPanel();
+        if (daySummaryPanel == null)
+        {
+            Debug.LogWarning(
+                "The Day 7 summary panel could not be found; skipping the congratulations message.",
+                this);
+            yield break;
+        }
+
+        daySummaryPanel.SetActive(true);
+        CanvasGroup panelCanvasGroup = daySummaryPanel.GetComponent<CanvasGroup>();
+        if (panelCanvasGroup == null)
+            panelCanvasGroup = daySummaryPanel.AddComponent<CanvasGroup>();
+
+        if (summarySuccessRateText != null)
+            summarySuccessRateText.gameObject.SetActive(false);
+        if (summaryPointsText != null)
+            summaryPointsText.gameObject.SetActive(false);
+        if (continueButton != null)
+            continueButton.gameObject.SetActive(false);
+        if (mainMenuButton != null)
+            mainMenuButton.gameObject.SetActive(false);
+
+        panelCanvasGroup.alpha = 0f;
+        panelCanvasGroup.interactable = false;
+        panelCanvasGroup.blocksRaycasts = false;
+        StartWeekCompleteSummaryPanelAnimation();
+
+        if (summaryChoresText != null)
+        {
+            RectTransform textRect = summaryChoresText.rectTransform;
+            Vector2 originalAnchorMin = textRect.anchorMin;
+            Vector2 originalAnchorMax = textRect.anchorMax;
+            Vector2 originalAnchoredPosition = textRect.anchoredPosition;
+            Vector2 originalOffsetMin = textRect.offsetMin;
+            Vector2 originalOffsetMax = textRect.offsetMax;
+            Vector3 originalLocalScale = textRect.localScale;
+            TextAlignmentOptions originalAlignment = summaryChoresText.alignment;
+            float originalFontSize = summaryChoresText.fontSize;
+            bool originalAutoSizing = summaryChoresText.enableAutoSizing;
+            float originalFontSizeMin = summaryChoresText.fontSizeMin;
+            float originalFontSizeMax = summaryChoresText.fontSizeMax;
+            TextOverflowModes originalOverflowMode = summaryChoresText.overflowMode;
+
+            textRect.anchorMin = new Vector2(0.08f, 0.12f);
+            textRect.anchorMax = new Vector2(0.92f, 0.88f);
+            textRect.anchoredPosition = Vector2.zero;
+            textRect.offsetMin = Vector2.zero;
+            textRect.offsetMax = Vector2.zero;
+            textRect.localScale = Vector3.one;
+            summaryChoresText.alignment = TextAlignmentOptions.Center;
+            summaryChoresText.enableAutoSizing = true;
+            summaryChoresText.fontSizeMin = 18f;
+            summaryChoresText.fontSizeMax = 42f;
+            summaryChoresText.overflowMode = TextOverflowModes.Truncate;
+            summaryChoresText.text =
+                "<size=155%><b><color=#FFD66B>CONGRATULATIONS!</color></b></size>\n\n" +
+                "<color=#2E7D32>You completed the one-week challenge!\n\n" +
+                "Your hard work brought the family closer, and now you can " +
+                "celebrate a happier home together.</color>";
+
+            summaryChoresText.ForceMeshUpdate();
+            yield return FadeCanvasGroup(panelCanvasGroup, 1f, transitionDuration);
+            if (panelCanvasGroup != null)
+            {
+                panelCanvasGroup.interactable = true;
+                panelCanvasGroup.blocksRaycasts = true;
+            }
+            yield return WaitForRealtime(weekEndingStoryDuration);
+
+            textRect.anchorMin = originalAnchorMin;
+            textRect.anchorMax = originalAnchorMax;
+            textRect.anchoredPosition = originalAnchoredPosition;
+            textRect.offsetMin = originalOffsetMin;
+            textRect.offsetMax = originalOffsetMax;
+            textRect.localScale = originalLocalScale;
+            summaryChoresText.alignment = originalAlignment;
+            summaryChoresText.enableAutoSizing = originalAutoSizing;
+            summaryChoresText.fontSizeMin = originalFontSizeMin;
+            summaryChoresText.fontSizeMax = originalFontSizeMax;
+            summaryChoresText.overflowMode = originalOverflowMode;
+            summaryChoresText.fontSize = originalFontSize;
+            summaryChoresText.ForceMeshUpdate();
+        }
+        else
+        {
+            yield return FadeCanvasGroup(panelCanvasGroup, 1f, transitionDuration);
+            if (panelCanvasGroup != null)
+            {
+                panelCanvasGroup.interactable = true;
+                panelCanvasGroup.blocksRaycasts = true;
+            }
+            yield return WaitForRealtime(weekEndingStoryDuration);
+        }
+    }
+
+    private CanvasGroup CreateWeekEndingSceneFade()
+    {
+        GameObject canvasObject = new GameObject(
+            "Week Ending Scene Fade",
+            typeof(RectTransform),
+            typeof(Canvas),
+            typeof(CanvasGroup),
+            typeof(CanvasScaler),
+            typeof(GraphicRaycaster));
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 200;
+
+        CanvasScaler canvasScaler = canvasObject.GetComponent<CanvasScaler>();
+        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        canvasScaler.referenceResolution = new Vector2(1920f, 1080f);
+
+        GameObject imageObject = new GameObject(
+            "Fade",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        imageObject.transform.SetParent(canvasObject.transform, false);
+        RectTransform imageRect = imageObject.GetComponent<RectTransform>();
+        imageRect.anchorMin = Vector2.zero;
+        imageRect.anchorMax = Vector2.one;
+        imageRect.offsetMin = Vector2.zero;
+        imageRect.offsetMax = Vector2.zero;
+
+        Image fadeImage = imageObject.GetComponent<Image>();
+        fadeImage.color = Color.black;
+        fadeImage.raycastTarget = false;
+
+        CanvasGroup canvasGroup = canvasObject.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0f;
+        canvasGroup.blocksRaycasts = false;
+        return canvasGroup;
     }
 
     private IEnumerator FrameWeekEndingCamera(Transform endingView)
@@ -1767,61 +2011,6 @@ public class DayManager : MonoBehaviour
             viewBounds.center,
             targetOrthographicSize,
             weekEndingCameraMoveDuration);
-    }
-
-    private GameObject CreateWeekEndingStoryOverlay()
-    {
-        GameObject canvasObject = new GameObject(
-            "Week Ending Story",
-            typeof(RectTransform),
-            typeof(Canvas),
-            typeof(CanvasScaler),
-            typeof(GraphicRaycaster));
-        Canvas canvas = canvasObject.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 100;
-
-        CanvasScaler canvasScaler = canvasObject.GetComponent<CanvasScaler>();
-        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        canvasScaler.referenceResolution = new Vector2(1920f, 1080f);
-
-        GameObject panelObject = new GameObject(
-            "Story Panel",
-            typeof(RectTransform),
-            typeof(Image));
-        panelObject.transform.SetParent(canvasObject.transform, false);
-        RectTransform panelRect = panelObject.GetComponent<RectTransform>();
-        panelRect.anchorMin = new Vector2(0.05f, 0.04f);
-        panelRect.anchorMax = new Vector2(0.95f, 0.24f);
-        panelRect.offsetMin = Vector2.zero;
-        panelRect.offsetMax = Vector2.zero;
-
-        Image panelImage = panelObject.GetComponent<Image>();
-        panelImage.color = new Color(0f, 0f, 0f, 0.78f);
-        panelImage.raycastTarget = true;
-
-        GameObject textObject = new GameObject(
-            "Story Text",
-            typeof(RectTransform),
-            typeof(TextMeshProUGUI));
-        textObject.transform.SetParent(panelObject.transform, false);
-        RectTransform textRect = textObject.GetComponent<RectTransform>();
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = new Vector2(32f, 12f);
-        textRect.offsetMax = new Vector2(-32f, -12f);
-
-        TextMeshProUGUI storyText = textObject.GetComponent<TextMeshProUGUI>();
-        if (summaryChoresText != null)
-            storyText.font = summaryChoresText.font;
-        storyText.fontSize = 32f;
-        storyText.color = Color.white;
-        storyText.alignment = TextAlignmentOptions.Center;
-        storyText.text =
-            "The family is so happy, eating together.\n\n" +
-            "After a week of helping at home, you brought everyone closer.";
-
-        return canvasObject;
     }
 
     private bool HasPendingHudChores()
@@ -1901,13 +2090,49 @@ public class DayManager : MonoBehaviour
         }
     }
 
+    private static void SetWeekCompleteSummaryTextStyle(TMP_Text text)
+    {
+        text.color = WeekCompleteSummaryTextColor;
+
+        Material material = text.fontMaterial;
+        if (material.HasProperty("_OutlineColor") && material.HasProperty("_OutlineWidth"))
+        {
+            material.SetColor("_OutlineColor", WeekCompleteSummaryOutlineColor);
+            material.SetFloat("_OutlineWidth", 0.4f);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "The Day 7 summary font material does not support text outlines.",
+                text);
+        }
+    }
+
     private void ShowDaySummary()
     {
         if (daySummaryPanel != null)
             daySummaryPanel.SetActive(true);
 
         if (weekComplete && !gameOver)
-            ApplyWeekCompleteSummaryPanelSprite();
+        {
+            if (summaryChoresText != null)
+                SetWeekCompleteSummaryTextStyle(summaryChoresText);
+            if (summarySuccessRateText != null)
+                SetWeekCompleteSummaryTextStyle(summarySuccessRateText);
+            if (summaryPointsText != null)
+                SetWeekCompleteSummaryTextStyle(summaryPointsText);
+        }
+
+        if (weekComplete && !gameOver && daySummaryPanel != null)
+        {
+            CanvasGroup panelCanvasGroup = daySummaryPanel.GetComponent<CanvasGroup>();
+            if (panelCanvasGroup != null)
+            {
+                panelCanvasGroup.alpha = 1f;
+                panelCanvasGroup.interactable = true;
+                panelCanvasGroup.blocksRaycasts = true;
+            }
+        }
 
         StopDayWinCelebration();
         if (gameOver)
@@ -1925,13 +2150,17 @@ public class DayManager : MonoBehaviour
             : HouseholdMood.Concerned;
 
         if (summarySuccessRateText != null)
+        {
             summarySuccessRateText.text = "Success Rate: " + successRate.ToString("0") + "%";
+            summarySuccessRateText.gameObject.SetActive(true);
+        }
 
         if (summaryPointsText != null)
         {
             summaryPointsText.text = "Points Earned: " + totalPoints
                 + "\nCoins Earned: " + dailyCoinsEarned
                 + "\nFamily Mood: " + FormatMood(endingMood);
+            summaryPointsText.gameObject.SetActive(true);
         }
 
         summaryRevealComplete = false;
@@ -1953,9 +2182,22 @@ public class DayManager : MonoBehaviour
         summaryCoroutine = StartCoroutine(RevealDaySummary(endingMood));
     }
 
-    private void ApplyWeekCompleteSummaryPanelSprite()
+    private void StartWeekCompleteSummaryPanelAnimation()
     {
-        if (weekCompleteSummaryPanelSprite == null)
+        if (weekCompleteSummaryPanelFrames == null)
+            return;
+
+        bool hasFrame = false;
+        foreach (Sprite frame in weekCompleteSummaryPanelFrames)
+        {
+            if (frame == null)
+                continue;
+
+            hasFrame = true;
+            break;
+        }
+
+        if (!hasFrame)
             return;
 
         Image summaryPanelImage = daySummaryPanel != null
@@ -1967,12 +2209,28 @@ public class DayManager : MonoBehaviour
         if (summaryPanelImage == null)
         {
             Debug.LogWarning(
-                "The Day 7 summary sprite is assigned, but no summary panel Image could be found.",
+                "Day 7 summary panel frames are assigned, but no summary panel Image could be found.",
                 this);
             return;
         }
 
-        summaryPanelImage.sprite = weekCompleteSummaryPanelSprite;
+        StartCoroutine(PlayWeekCompleteSummaryPanel(summaryPanelImage));
+    }
+
+    private IEnumerator PlayWeekCompleteSummaryPanel(Image summaryPanelImage)
+    {
+        float frameDelay = 1f / Mathf.Max(1f, weekCompleteSummaryPanelFramesPerSecond);
+        while (summaryPanelImage != null)
+        {
+            foreach (Sprite frame in weekCompleteSummaryPanelFrames)
+            {
+                if (frame == null)
+                    continue;
+
+                summaryPanelImage.sprite = frame;
+                yield return new WaitForSecondsRealtime(frameDelay);
+            }
+        }
     }
 
     private IEnumerator RevealDaySummary(HouseholdMood endingMood)
@@ -2552,11 +2810,16 @@ public class DayManager : MonoBehaviour
                 this);
         }
 
+        GameObject dustSpotArrow = hasDustSpot
+            ? CreateDayOneSpotArrow(nearestDustPosition)
+            : null;
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
             "DUST PILES",
             "There are dust piles around the house. Let's start cleaning!");
+        if (dustSpotArrow != null)
+            Destroy(dustSpotArrow);
 
         Component broom = FindFirstObjectByType<BroomChore>();
         if (broom == null)
@@ -2614,12 +2877,16 @@ public class DayManager : MonoBehaviour
             player.GetComponent<PlayerEquipmentInventory>();
         if (broom != null)
         {
-            while (!dayFinished &&
-                (equipmentInventory == null ||
-                 !equipmentInventory.Owns(EquipmentType.Broom)))
-            {
-                yield return null;
-            }
+            GameObject broomWaypoints = CreateDayOneWaypoints(
+                player.transform,
+                broom.transform.position);
+            yield return GuidePlayerAlongDayOnePath(
+                broomWaypoints,
+                player.transform,
+                () => broom != null ? broom.transform.position : player.transform.position,
+                () => dayFinished ||
+                    (equipmentInventory != null &&
+                     equipmentInventory.Owns(EquipmentType.Broom)));
         }
 
         bool hasPickedUpBroom = equipmentInventory != null &&
@@ -2636,6 +2903,30 @@ public class DayManager : MonoBehaviour
                 mainCamera,
                 originalOrthographicSize,
                 inventoryUI));
+
+        if (!dayFinished &&
+            hasPickedUpBroom &&
+            sweepingManager != null &&
+            sweepingManager.RemainingDust > 0)
+        {
+            GameObject dustWaypoints = CreateDayOneWaypoints(
+                player.transform,
+                player.transform.position);
+            yield return GuidePlayerAlongDayOnePath(
+                dustWaypoints,
+                player.transform,
+                () => sweepingManager != null &&
+                    sweepingManager.TryGetNearestDustSpotPosition(
+                        player.transform.position,
+                        out Vector2 position)
+                            ? position
+                            : (Vector2)player.transform.position,
+                () => dayFinished ||
+                    sweepingManager == null ||
+                    sweepingManager.RemainingDust <= 0 ||
+                    (sweepDust != null &&
+                     (sweepDust.IsCompleted || sweepDust.IsMissed)));
+        }
     }
 
     private IEnumerator PlayDayOneInventoryTutorial(
@@ -2789,18 +3080,6 @@ public class DayManager : MonoBehaviour
         dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
         TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
 
-        yield return MoveDayOneCameraTo(
-            mainCamera,
-            waterSpawner.LastWaterSpawnPosition,
-            dayOneCameraOrthographicSize,
-            dayOneCameraMoveDuration);
-
-        yield return ShowDayOneIntroText(
-            introText,
-            continuePrompt,
-            "SPILLED WATER",
-            "There's water on the floor! Clean it up before someone slips.");
-
         MopChore mopEquipment = FindFirstObjectByType<MopChore>(
             FindObjectsInactive.Include);
         if (mopEquipment != null)
@@ -2824,6 +3103,21 @@ public class DayManager : MonoBehaviour
             "MOP",
             "Pick up and equip the mop to clean up the spill.");
 
+        yield return MoveDayOneCameraTo(
+            mainCamera,
+            waterSpawner.LastWaterSpawnPosition,
+            dayOneCameraOrthographicSize,
+            dayOneCameraMoveDuration);
+        GameObject waterSpotArrow = CreateDayOneSpotArrow(
+            waterSpawner.LastWaterSpawnPosition);
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "SPILLED WATER",
+            "There's water on the floor! Clean it up before someone slips.");
+        if (waterSpotArrow != null)
+            Destroy(waterSpotArrow);
+
         Destroy(dayOneIntroOverlay);
         dayOneIntroOverlay = null;
         yield return MoveDayOneCameraTo(
@@ -2835,7 +3129,45 @@ public class DayManager : MonoBehaviour
 
         player.SetMovementInputEnabled(true);
         ResumeDayOneIntro();
-        dayOneWaterTutorialComplete = true;
+
+        MoppingPlayerState moppingPlayerState =
+            player.GetComponent<MoppingPlayerState>();
+        if (mopEquipment != null &&
+            moppingPlayerState != null &&
+            !moppingPlayerState.HasMop)
+        {
+            GameObject mopWaypoints = CreateDayOneWaypoints(
+                player.transform,
+                mopEquipment.transform.position);
+            yield return GuidePlayerAlongDayOnePath(
+                mopWaypoints,
+                player.transform,
+                () => mopEquipment != null
+                    ? mopEquipment.transform.position
+                    : player.transform.position,
+                () => dayFinished ||
+                    moppingPlayerState == null ||
+                    moppingPlayerState.HasMop);
+        }
+
+        if (!dayFinished && !waterSpawner.IsMoppingCompleted)
+        {
+            GameObject waterWaypoints = CreateDayOneWaypoints(
+                player.transform,
+                waterSpawner.LastWaterSpawnPosition);
+            yield return GuidePlayerAlongDayOnePath(
+                waterWaypoints,
+                player.transform,
+                () => waterSpawner != null
+                    ? waterSpawner.LastWaterSpawnPosition
+                    : player.transform.position,
+                () => dayFinished ||
+                    waterSpawner == null ||
+                    waterSpawner.IsMoppingCompleted);
+        }
+
+        if (!dayFinished)
+            dayOneWaterTutorialComplete = true;
         dayStartIntroInProgress = false;
     }
 
@@ -2893,6 +3225,17 @@ public class DayManager : MonoBehaviour
 
         player.SetMovementInputEnabled(true);
         ResumeDayOneIntro();
+        GameObject kitchenWaypoints = CreateDayOneWaypoints(
+            player.transform,
+            kitchenFocusPosition);
+        yield return GuidePlayerAlongDayOnePath(
+            kitchenWaypoints,
+            player.transform,
+            () => kitchenFocusPosition,
+            () => dayFinished ||
+                dishes == null ||
+                Vector2.Distance(player.transform.position, kitchenFocusPosition) <=
+                    shopWaypointReachDistance);
         dayStartIntroInProgress = false;
     }
 
@@ -3098,6 +3441,76 @@ public class DayManager : MonoBehaviour
         continuePrompt.raycastTarget = false;
 
         return canvasObject;
+    }
+
+    private GameObject CreateDayOneSpotArrow(Vector3 spotPosition)
+    {
+        GameObject arrowRoot = new GameObject("Day 1 Spot Arrow");
+        arrowRoot.transform.position = new Vector3(0f, 0f, spotPosition.z);
+
+        Vector2 arrowPosition = (Vector2)spotPosition +
+            Vector2.up * (shopWaypointArrowScale * 0.6f);
+        CreateShopWaypointArrow(
+            arrowRoot.transform,
+            GetShopWaypointArrowSprite(),
+            arrowPosition,
+            Vector2.down,
+            true);
+        return arrowRoot;
+    }
+
+    private GameObject CreateDayOneWaypoints(
+        Transform player,
+        Vector2 targetPosition)
+    {
+        GameObject waypointRoot = new GameObject("Day 1 Tutorial Waypoints");
+        waypointRoot.transform.position = new Vector3(
+            0f,
+            0f,
+            player.position.z);
+        RebuildWaypointPath(
+            waypointRoot.transform,
+            player,
+            targetPosition,
+            false,
+            true);
+        return waypointRoot;
+    }
+
+    private IEnumerator GuidePlayerAlongDayOnePath(
+        GameObject waypointRoot,
+        Transform player,
+        Func<Vector2> getTargetPosition,
+        Func<bool> isComplete)
+    {
+        float refreshInterval = Mathf.Max(0.05f, shopWaypointRefreshInterval);
+        float rebuildDistance = Mathf.Max(0.5f, shopWaypointArrowSpacing * 0.75f);
+        Vector2 previousPlayerPosition = player.position;
+        Vector2 previousTargetPosition = getTargetPosition();
+        while (waypointRoot != null &&
+               player != null &&
+               !dayFinished &&
+               !isComplete())
+        {
+            Vector2 targetPosition = getTargetPosition();
+            if (Vector2.Distance(player.position, previousPlayerPosition) >= rebuildDistance ||
+                Vector2.Distance(targetPosition, previousTargetPosition) >= 0.5f)
+            {
+                RebuildWaypointPath(
+                    waypointRoot.transform,
+                    player,
+                    targetPosition,
+                    false,
+                    true);
+                previousPlayerPosition = player.position;
+                previousTargetPosition = targetPosition;
+            }
+
+            yield return new WaitForSecondsRealtime(refreshInterval);
+        }
+
+        if (waypointRoot != null)
+            Destroy(waypointRoot);
     }
 
     private IEnumerator ShowDayOneIntroText(
@@ -3597,11 +4010,16 @@ public class DayManager : MonoBehaviour
     {
         var waypointRoot = new GameObject("Day 2 Shop Waypoints");
         waypointRoot.transform.position = new Vector3(0f, 0f, player.position.z);
-        RebuildShopWaypoints(waypointRoot.transform, player, targetPosition);
+        RebuildWaypointPath(waypointRoot.transform, player, targetPosition);
         return waypointRoot;
     }
 
-    private void RebuildShopWaypoints(Transform waypointRoot, Transform player, Vector2 targetPosition)
+    private void RebuildWaypointPath(
+        Transform waypointRoot,
+        Transform player,
+        Vector2 targetPosition,
+        bool warnIfNoRoute = true,
+        bool dayOneStyle = false)
     {
         for (int i = waypointRoot.childCount - 1; i >= 0; i--)
             Destroy(waypointRoot.GetChild(i).gameObject);
@@ -3620,7 +4038,8 @@ public class DayManager : MonoBehaviour
             5000);
         if (route.Count == 0)
         {
-            Debug.LogWarning("No route was found for the Day 2 shop waypoints.", this);
+            if (warnIfNoRoute)
+                Debug.LogWarning("No waypoint route was found.", this);
             return;
         }
 
@@ -3637,9 +4056,12 @@ public class DayManager : MonoBehaviour
             return;
 
         Sprite arrowSprite = GetShopWaypointArrowSprite();
+        float desiredArrowSpacing = dayOneStyle
+            ? Mathf.Min(shopWaypointArrowSpacing, 0.65f)
+            : shopWaypointArrowSpacing;
         float arrowSpacing = Mathf.Max(
             0.25f,
-            Mathf.Min(shopWaypointArrowSpacing, routeLength / 4f));
+            Mathf.Min(desiredArrowSpacing, routeLength / 4f));
         float distanceUntilNextArrow = Mathf.Min(arrowSpacing, 0.6f);
 
         for (int i = 1; i < route.Count; i++)
@@ -3658,7 +4080,8 @@ public class DayManager : MonoBehaviour
                     waypointRoot,
                     arrowSprite,
                     arrowPosition,
-                    direction);
+                    direction,
+                    dayOneStyle);
                 distanceUntilNextArrow += arrowSpacing;
             }
 
@@ -3670,9 +4093,10 @@ public class DayManager : MonoBehaviour
         Transform parent,
         Sprite arrowSprite,
         Vector2 position,
-        Vector2 direction)
+        Vector2 direction,
+        bool dayOneStyle = false)
     {
-        GameObject arrowObject = new GameObject("Shop Direction Arrow");
+        GameObject arrowObject = new GameObject("Waypoint Arrow");
         arrowObject.transform.SetParent(parent, false);
         arrowObject.transform.localPosition = new Vector3(position.x, position.y, 0f);
         arrowObject.transform.rotation = Quaternion.Euler(
@@ -3682,7 +4106,9 @@ public class DayManager : MonoBehaviour
 
         SpriteRenderer outline = arrowObject.AddComponent<SpriteRenderer>();
         outline.sprite = arrowSprite;
-        outline.color = new Color(0.45f, 0f, 0f, 0.9f);
+        outline.color = dayOneStyle
+            ? new Color(0.48f, 0.78f, 0.56f, 0.95f)
+            : new Color(0.45f, 0f, 0f, 0.9f);
         outline.sortingLayerName = "Player";
         outline.sortingOrder = 50;
         outline.transform.localScale = Vector3.one * (shopWaypointArrowScale * 1.2f);
@@ -3691,11 +4117,39 @@ public class DayManager : MonoBehaviour
         arrowFace.transform.SetParent(arrowObject.transform, false);
         SpriteRenderer fill = arrowFace.AddComponent<SpriteRenderer>();
         fill.sprite = arrowSprite;
-        fill.color = new Color(1f, 0.08f, 0.08f, 1f);
+        fill.color = dayOneStyle
+            ? new Color(0.94f, 1f, 0.95f, 1f)
+            : new Color(1f, 0.08f, 0.08f, 1f);
         fill.sortingLayerName = "Player";
         fill.sortingOrder = 51;
         fill.transform.localScale = Vector3.one * 0.82f;
-        StartCoroutine(PulseShopWaypointArrow(arrowObject.transform));
+        if (dayOneStyle)
+            StartCoroutine(AnimateDayOneWaypointArrow(
+                arrowObject.transform,
+                fill.transform));
+        else
+            StartCoroutine(PulseShopWaypointArrow(arrowObject.transform));
+    }
+
+    private IEnumerator AnimateDayOneWaypointArrow(
+        Transform arrow,
+        Transform arrowFace)
+    {
+        Vector3 baseScale = arrow.localScale;
+        Vector3 basePosition = arrow.localPosition;
+        Vector3 baseFaceScale = arrowFace.localScale;
+        float phase = Mathf.Repeat(arrow.GetInstanceID() * 0.173f, Mathf.PI * 2f);
+        while (arrow != null && arrowFace != null)
+        {
+            float wave = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 2.4f + phase);
+            float smoothWave = wave * wave * (3f - 2f * wave);
+            arrow.localScale = baseScale * (1f + smoothWave * 0.07f);
+            arrow.localPosition = basePosition +
+                Vector3.up * (smoothWave * 0.04f);
+            arrowFace.localScale = baseFaceScale *
+                (0.94f + smoothWave * 0.04f);
+            yield return null;
+        }
     }
 
     private IEnumerator PulseShopWaypointArrow(Transform arrow)
@@ -3717,8 +4171,8 @@ public class DayManager : MonoBehaviour
         const int textureSize = 32;
         var texture = new Texture2D(textureSize, textureSize, TextureFormat.RGBA32, false)
         {
-            name = "Day 2 Shop Waypoint Arrow",
-            filterMode = FilterMode.Point,
+            name = "Waypoint Arrow",
+            filterMode = FilterMode.Bilinear,
             wrapMode = TextureWrapMode.Clamp
         };
         var pixels = new Color32[textureSize * textureSize];
@@ -3763,7 +4217,7 @@ public class DayManager : MonoBehaviour
                 shopAreaTransition.LeadsToAreaContaining(player.position))
             {
                 reachedShopArea = true;
-                RebuildShopWaypoints(
+                RebuildWaypointPath(
                     waypointRoot.transform,
                     player,
                     shop.transform.position);
@@ -3878,6 +4332,30 @@ public class DayManager : MonoBehaviour
 
         transitionFade.alpha = targetAlpha;
         transitionFade.blocksRaycasts = targetAlpha > 0f;
+    }
+
+    private static IEnumerator FadeCanvasGroup(
+        CanvasGroup canvasGroup,
+        float targetAlpha,
+        float duration)
+    {
+        if (canvasGroup == null)
+            yield break;
+
+        float startAlpha = canvasGroup.alpha;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            if (canvasGroup == null)
+                yield break;
+
+            elapsed += Time.unscaledDeltaTime;
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
+            yield return null;
+        }
+
+        if (canvasGroup != null)
+            canvasGroup.alpha = targetAlpha;
     }
 
     private void MarkUnfinishedChoresAsMissed()
