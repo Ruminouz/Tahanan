@@ -16,6 +16,7 @@ public class PlayerInventoryUI : MonoBehaviour
     [SerializeField] private Sprite mopSprite;
     [SerializeField] private Sprite upgradedMopSprite;
     [SerializeField] private Sprite garbageBagSprite;
+    [SerializeField] private TMP_FontAsset daydreamFont;
 
     private BunsoBoostInventory boostInventory;
     private PlayerEquipmentInventory equipmentInventory;
@@ -24,9 +25,12 @@ public class PlayerInventoryUI : MonoBehaviour
     private readonly List<Image> itemIcons = new();
     private readonly List<TMP_Text> itemQuantities = new();
     private readonly List<TMP_Text> itemNames = new();
+    private readonly List<TMP_Text> equippedMarkers = new();
     [SerializeField] private RectTransform inventoryPanel;
     private Image inventoryPanelBackground;
+    private CanvasGroup inventoryPanelCanvasGroup;
     private bool inventoryOpen;
+    private bool inventoryPanelEnabled;
     private bool miniGameActive;
     private bool npcDialogueActive;
     private bool hasStarted;
@@ -56,6 +60,7 @@ public class PlayerInventoryUI : MonoBehaviour
         ResolveInventoryPanel();
         SetInventoryPanelVisible(false);
         ResolvePlayerInventories();
+        UpdateInventoryPanelAvailability();
         ResolveEconomyManager();
 
         miniGameActive = MiniGameInteractionBlocker.IsAnyMiniGameActive;
@@ -89,7 +94,7 @@ public class PlayerInventoryUI : MonoBehaviour
         if (miniGameStateChanged)
             Refresh();
 
-        if (!tutorialInputEnabled || Keyboard.current == null)
+        if (!inventoryPanelEnabled || !tutorialInputEnabled || Keyboard.current == null)
             return;
 
         if (Keyboard.current.qKey.wasPressedThisFrame)
@@ -174,8 +179,26 @@ public class PlayerInventoryUI : MonoBehaviour
         UnsubscribeEquipmentInventory();
         equipmentInventory = currentInventory;
         if (equipmentInventory != null)
-            equipmentInventory.InventoryChanged += Refresh;
+            equipmentInventory.InventoryChanged += OnEquipmentInventoryChanged;
+        UpdateInventoryPanelAvailability();
         Refresh();
+    }
+
+    private void OnEquipmentInventoryChanged()
+    {
+        UpdateInventoryPanelAvailability();
+        Refresh();
+    }
+
+    private void UpdateInventoryPanelAvailability()
+    {
+        bool hasPickedUpBroom = equipmentInventory != null &&
+            equipmentInventory.Owns(EquipmentType.Broom);
+        bool isDayOne = DayManager.Instance != null &&
+            DayManager.Instance.CurrentDay == 1;
+        bool shouldEnableInventory = !isDayOne || hasPickedUpBroom;
+        if (inventoryPanelEnabled != shouldEnableInventory)
+            SetInventoryPanelEnabled(shouldEnableInventory);
     }
 
     private void ResolvePlayerInventories()
@@ -205,7 +228,7 @@ public class PlayerInventoryUI : MonoBehaviour
     private void UnsubscribeEquipmentInventory()
     {
         if (equipmentInventory != null)
-            equipmentInventory.InventoryChanged -= Refresh;
+            equipmentInventory.InventoryChanged -= OnEquipmentInventoryChanged;
     }
 
     private void Refresh()
@@ -268,6 +291,16 @@ public class PlayerInventoryUI : MonoBehaviour
             itemNames[index].text = (inventoryOpen || index == 0) && hasItem
                 ? GetDisplayName(displayedItem)
                 : string.Empty;
+            bool hasPickedUpBroom = equipmentInventory != null &&
+                equipmentInventory.Owns(EquipmentType.Broom);
+            bool isEquippedItem = hasPickedUpBroom &&
+                hasItem &&
+                equipmentInventory != null &&
+                (displayedItem.isEquipment
+                    ? equipmentInventory.SelectedEquipment == displayedItem.equipment
+                    : equipmentInventory.SelectedBoost == displayedItem.boost);
+            equippedMarkers[index].gameObject.SetActive(isEquippedItem);
+            equippedMarkers[index].text = isEquippedItem ? "Q" : string.Empty;
 
             Button button = slot.GetComponent<Button>();
             if (button == null)
@@ -347,7 +380,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void ToggleInventoryPanel()
     {
-        if (inventoryPanel == null)
+        if (!inventoryPanelEnabled || inventoryPanel == null)
             return;
 
         SetInventoryPanelVisible(!inventoryOpen);
@@ -368,6 +401,23 @@ public class PlayerInventoryUI : MonoBehaviour
     public void SetTutorialInputEnabled(bool enabled)
     {
         tutorialInputEnabled = enabled;
+    }
+
+    public void SetInventoryPanelEnabled(bool enabled)
+    {
+        if (inventoryPanel == null)
+            ResolveInventoryPanel();
+
+        inventoryPanelEnabled = enabled;
+        if (inventoryPanelCanvasGroup != null)
+        {
+            inventoryPanelCanvasGroup.alpha = enabled ? 1f : 0f;
+            inventoryPanelCanvasGroup.interactable = enabled;
+            inventoryPanelCanvasGroup.blocksRaycasts = enabled;
+        }
+        if (!enabled)
+            SetInventoryPanelVisible(false);
+        Refresh();
     }
 
     public void SetHotbarHiddenForTutorial(bool hidden)
@@ -476,6 +526,12 @@ public class PlayerInventoryUI : MonoBehaviour
 
         inventoryPanel = panelTransform as RectTransform;
         inventoryPanelBackground = panelTransform.GetComponent<Image>();
+        inventoryPanelCanvasGroup = panelTransform.GetComponent<CanvasGroup>();
+        if (inventoryPanelCanvasGroup == null)
+            inventoryPanelCanvasGroup = panelTransform.gameObject.AddComponent<CanvasGroup>();
+        inventoryPanelCanvasGroup.alpha = inventoryPanelEnabled ? 1f : 0f;
+        inventoryPanelCanvasGroup.interactable = inventoryPanelEnabled;
+        inventoryPanelCanvasGroup.blocksRaycasts = inventoryPanelEnabled;
         ResolvePreplacedSlots(panelTransform);
     }
 
@@ -528,6 +584,7 @@ public class PlayerInventoryUI : MonoBehaviour
                 itemIcons.Add(null);
                 itemQuantities.Add(null);
                 itemNames.Add(null);
+                equippedMarkers.Add(null);
                 continue;
             }
 
@@ -564,6 +621,20 @@ public class PlayerInventoryUI : MonoBehaviour
                 Vector2.zero,
                 TextAlignmentOptions.Center);
             itemNames.Add(itemName);
+
+            TMP_Text equippedMarker = CreateSlotText(
+                slot.transform,
+                "EquippedMarker",
+                12f,
+                FontStyles.Bold,
+                new Vector2(0.68f, 0.7f),
+                new Vector2(0.96f, 0.98f),
+                new Vector2(-2f, -2f),
+                TextAlignmentOptions.TopRight);
+            if (daydreamFont != null)
+                equippedMarker.font = daydreamFont;
+            equippedMarker.gameObject.SetActive(false);
+            equippedMarkers.Add(equippedMarker);
 
             if (index == 0)
             {

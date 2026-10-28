@@ -145,7 +145,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ELECTRIC FAN
+      name: ELECTRIC FAN 32X64
       rect:
         serializedVersion: 2
         x: 5
@@ -233,7 +233,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32x64_4
+      name: WaterDispenser32x64
       rect:
         serializedVersion: 2
         x: 134
@@ -255,7 +255,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REF
+      name: REF 32X64
       rect:
         serializedVersion: 2
         x: 163
@@ -521,13 +521,13 @@ TextureImporter:
       32x64_15: 4608485559649699314
       32x64_2: -4193108679235231357
       32x64_3: 5058580073597513288
-      32x64_4: 8093977583470538754
       32x64_6: -7619860267159691794
       32x64_7: 3481155974658233349
       32x64_8: 4487942648206638616
       32x64_9: -8331649228029515197
-      ELECTRIC FAN: -7633436457568251685
-      REF: 5249675182367359287
+      ELECTRIC FAN 32X64: -7633436457568251685
+      REF 32X64: 5249675182367359287
+      WaterDispenser32x64: 8093977583470538754
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

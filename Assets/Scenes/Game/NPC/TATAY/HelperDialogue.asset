@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e236d55e708ed3a44b78dba2401e20f8, type: 3}
   m_Name: HelperDialogue
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
-  npcName: Kuya Pedro
+  npcName: Kuya
   npcPortrait: {fileID: -5372555126961817669, guid: d8ad5c63d0361934c8959ad2cd23a985, type: 3}
   dialogueLines:
   - Dont worry ill help you

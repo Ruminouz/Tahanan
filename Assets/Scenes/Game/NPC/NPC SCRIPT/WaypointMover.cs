@@ -15,6 +15,7 @@ public class WaypointMover : MonoBehaviour
     [SerializeField, Min(0f)] private float collisionPadding = 0.02f;
     [SerializeField, Min(0.05f)] private float stuckTimeout = 0.2f;
     [SerializeField, Min(0f)] private float minimumProgress = 0.001f;
+    [SerializeField, Min(0.1f)] private float waypointTimeout = 2f;
     [SerializeField, Min(0.1f)] private float navigationCellSize = 0.35f;
     [SerializeField, Min(0f)] private float navigationBoundsPadding = 2f;
     [SerializeField, Min(64)] private int navigationMaxNodes = 5000;
@@ -30,6 +31,8 @@ public class WaypointMover : MonoBehaviour
     private Collider2D bodyCollider;
     private Rigidbody2D body;
     private float stuckTimer;
+    private float waypointTravelTimer;
+    private Transform timedWaypoint;
     private float waitTimer;
     private List<Vector2> currentPath;
     private int currentPathIndex;
@@ -238,6 +241,8 @@ public class WaypointMover : MonoBehaviour
     private void CacheWaypoints()
     {
         cachedWaypointParent = waypointParent;
+        timedWaypoint = null;
+        waypointTravelTimer = 0f;
         if (waypointParent == null)
         {
             waypoints = null;
@@ -361,6 +366,23 @@ public class WaypointMover : MonoBehaviour
         }
 
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
+        if (timedWaypoint != target)
+        {
+            timedWaypoint = target;
+            waypointTravelTimer = 0f;
+        }
+
+        if (Vector2.Distance(currentPosition, target.position) >= 0.1f)
+        {
+            waypointTravelTimer += Time.deltaTime;
+            if (waypointTravelTimer >= waypointTimeout)
+            {
+                waypointTravelTimer = 0f;
+                SelectAlternativeWaypoint(currentPosition);
+                return;
+            }
+        }
+
         Vector2 navigationTarget = GetPathTarget(currentPosition, target.position);
         float step = moveSpeed * Time.deltaTime;
         Vector2 movement = Vector2.ClampMagnitude(navigationTarget - currentPosition, step);
@@ -390,6 +412,8 @@ public class WaypointMover : MonoBehaviour
 
         if (Vector2.Distance(currentPosition + safeMovement, target.position) < 0.1f)
         {
+            timedWaypoint = null;
+            waypointTravelTimer = 0f;
             waitTimer = waitTime;
             if (loopWaypoints)
                 currentWaypointIndex = FindNextUnclaimedWaypointIndex(currentWaypointIndex);
@@ -517,12 +541,29 @@ public class WaypointMover : MonoBehaviour
         for (int i = 0; i < activeWaypoints.Length - 1; i++)
         {
             nextIndex = (nextIndex + 1) % activeWaypoints.Length;
-            if (!NPCMovement2D.IsWaypointClaimed(this, activeWaypoints[nextIndex]) &&
+            if (activeWaypoints[nextIndex] != null &&
+                !NPCMovement2D.IsWaypointClaimed(this, activeWaypoints[nextIndex]) &&
                 HasClearPath(currentPosition, activeWaypoints[nextIndex].position))
             {
                 currentWaypointIndex = nextIndex;
+                timedWaypoint = null;
+                waypointTravelTimer = 0f;
                 return;
             }
+        }
+
+        nextIndex = currentWaypointIndex;
+        for (int i = 0; i < activeWaypoints.Length - 1; i++)
+        {
+            nextIndex = (nextIndex + 1) % activeWaypoints.Length;
+            if (activeWaypoints[nextIndex] == null ||
+                NPCMovement2D.IsWaypointClaimed(this, activeWaypoints[nextIndex]))
+                continue;
+
+            currentWaypointIndex = nextIndex;
+            timedWaypoint = null;
+            waypointTravelTimer = 0f;
+            return;
         }
     }
 

@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 
 public class GameHUD : MonoBehaviour
 {
-    private static Sprite minimizeButtonSprite;
     private const string CompletedChoreColor = "#4CAF50";
     private const string DailyChallengeTitle = "DAILY CHALLENGE";
     private const string ToyPickupDisplayName = "Toys";
@@ -33,6 +32,7 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private TMP_Text successRateText;
     [SerializeField] private TMP_Text missedChoreText;
     [SerializeField] private Sprite coinSprite;
+    [SerializeField] private Sprite minimizeButtonIcon;
     [SerializeField] private GameObject dailyQuestPanel;
     [SerializeField] private TMP_Text dailyQuestText;
     [SerializeField, Tooltip("Assign the dedicated title text for the daily challenge card.")]
@@ -630,7 +630,8 @@ public class GameHUD : MonoBehaviour
             "ChoreListMinimizeButton",
             choreListPanelRect,
             choreListText,
-            new Vector2(-8f, -8f));
+            new Vector2(-8f, -8f),
+            true);
         RectTransform minimizeButtonRect = minimizeButton.GetComponent<RectTransform>();
         minimizeButtonRect.anchorMin = new Vector2(1f, 1f);
         minimizeButtonRect.anchorMax = new Vector2(1f, 1f);
@@ -642,7 +643,8 @@ public class GameHUD : MonoBehaviour
             "ChoreListRestoreButton",
             choreListCollapsedPanel.transform,
             choreListText,
-            new Vector2(-8f, -8f));
+            new Vector2(-8f, -8f),
+            false);
         RectTransform restoreButtonRect = restoreButton.GetComponent<RectTransform>();
         restoreButtonRect.anchorMin = new Vector2(1f, 1f);
         restoreButtonRect.anchorMax = new Vector2(1f, 1f);
@@ -867,7 +869,8 @@ public class GameHUD : MonoBehaviour
                 "DailyChallengeMinimizeButton",
                 dailyQuestPanel.transform,
                 dailyQuestText,
-                new Vector2(-22f, -20f));
+                new Vector2(-22f, -20f),
+                true);
         }
 
         RectTransform buttonRect = button.GetComponent<RectTransform>();
@@ -875,20 +878,11 @@ public class GameHUD : MonoBehaviour
         buttonRect.anchorMax = new Vector2(1f, 1f);
         buttonRect.pivot = new Vector2(1f, 1f);
         buttonRect.anchoredPosition = new Vector2(-8f, -8f);
-        buttonRect.sizeDelta = new Vector2(36f, 32f);
+        buttonRect.sizeDelta = new Vector2(36f, 36f);
         button.transform.SetAsLastSibling();
 
-        Image buttonBackground = button.GetComponent<Image>();
-        if (buttonBackground != null)
-        {
-            buttonBackground.sprite = GetMinimizeButtonSprite();
-            buttonBackground.type = Image.Type.Simple;
-            buttonBackground.color = new Color(0.07f, 0.12f, 0.14f, 0.96f);
-            buttonBackground.raycastTarget = true;
-            button.targetGraphic = buttonBackground;
-        }
-
         EnsureMinimizeButtonLabel(button, dailyQuestText);
+        ApplyMinimizeButtonAppearance(button, true);
 
         button.onClick.AddListener(ToggleDailyQuestMinimized);
         dailyQuestMinimizeButton = button;
@@ -897,7 +891,8 @@ public class GameHUD : MonoBehaviour
             "DailyChallengeRestoreButton",
             dailyQuestCollapsedPanel.transform,
             dailyQuestText,
-            new Vector2(-8f, -8f));
+            new Vector2(-8f, -8f),
+            false);
         RectTransform restoreButtonRect = restoreButton.GetComponent<RectTransform>();
         restoreButtonRect.anchorMin = new Vector2(1f, 1f);
         restoreButtonRect.anchorMax = new Vector2(1f, 1f);
@@ -943,7 +938,8 @@ public class GameHUD : MonoBehaviour
         string objectName,
         Transform parent,
         TMP_Text sourceText,
-        Vector2 anchoredPosition)
+        Vector2 anchoredPosition,
+        bool showMinimizeIcon)
     {
         GameObject buttonObject = new GameObject(
             objectName,
@@ -961,14 +957,7 @@ public class GameHUD : MonoBehaviour
         buttonRect.anchoredPosition = anchoredPosition;
         buttonRect.sizeDelta = new Vector2(36f, 32f);
 
-        Image background = buttonObject.GetComponent<Image>();
-        background.sprite = GetMinimizeButtonSprite();
-        background.type = Image.Type.Simple;
-        background.color = new Color(0.07f, 0.12f, 0.14f, 0.96f);
-        background.raycastTarget = true;
-
         Button button = buttonObject.GetComponent<Button>();
-        button.targetGraphic = background;
         button.transition = Selectable.Transition.ColorTint;
         button.colors = new ColorBlock
         {
@@ -1004,18 +993,39 @@ public class GameHUD : MonoBehaviour
         label.alignment = TextAlignmentOptions.Center;
         label.raycastTarget = false;
 
+        ApplyMinimizeButtonAppearance(button, showMinimizeIcon);
         return button;
     }
 
-    private static Sprite GetMinimizeButtonSprite()
+    private void ApplyMinimizeButtonAppearance(Button button, bool showMinimizeIcon)
     {
-        if (minimizeButtonSprite == null)
-            minimizeButtonSprite = Sprite.Create(
-                Texture2D.whiteTexture,
-                new Rect(0f, 0f, 1f, 1f),
-                new Vector2(0.5f, 0.5f));
+        if (button == null)
+            return;
 
-        return minimizeButtonSprite;
+        bool useIcon = showMinimizeIcon && minimizeButtonIcon != null;
+        Image background = button.GetComponent<Image>();
+        if (background != null)
+        {
+            background.sprite = useIcon ? minimizeButtonIcon : null;
+            background.type = Image.Type.Simple;
+            background.color = useIcon
+                ? Color.white
+                : new Color(0.07f, 0.12f, 0.14f, 0.96f);
+            background.preserveAspect = useIcon;
+            background.raycastTarget = true;
+            button.targetGraphic = background;
+        }
+
+        SetMinimizeButtonLabelsVisible(button, !useIcon);
+    }
+
+    private static void SetMinimizeButtonLabelsVisible(Button button, bool visible)
+    {
+        foreach (TMP_Text label in button.GetComponentsInChildren<TMP_Text>(true))
+            label.gameObject.SetActive(visible);
+
+        foreach (Text label in button.GetComponentsInChildren<Text>(true))
+            label.gameObject.SetActive(visible);
     }
 
     private void ToggleChoreListMinimized()

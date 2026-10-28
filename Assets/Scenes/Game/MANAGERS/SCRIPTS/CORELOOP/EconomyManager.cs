@@ -12,7 +12,10 @@ public enum FurnitureType
 {
     Refrigerator,
     Fan,
-    Television
+    Television,
+    Plant,
+    KitchenStove,
+    WaterDispenser
 }
 
 public class EconomyManager : MonoBehaviour
@@ -38,7 +41,7 @@ public class EconomyManager : MonoBehaviour
     [SerializeField, Min(0f)] private float upgradedBroomCleaningSpeedMultiplier = 1.35f;
 
     [Header("Shop - Cat")]
-    [SerializeField, Min(1)] private int catBaseCost = 10;
+    [SerializeField, Min(1)] private int catBaseCost = 50;
 
     [Header("Shop - Dishwashing Liquid")]
     [SerializeField, Min(1)] private int dishwashingLiquidBaseCost = 10;
@@ -54,7 +57,7 @@ public class EconomyManager : MonoBehaviour
     private int broomUpgradeLevel;
     private bool catPurchased;
     private bool dishwashingLiquidPurchased;
-    private readonly bool[] purchasedFurniture = new bool[3];
+    private readonly bool[] purchasedFurniture = new bool[6];
     private Sprite dishwashingLiquidSprite;
 
     public event Action<int> CoinsChanged;

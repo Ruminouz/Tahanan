@@ -2424,6 +2424,7 @@ public class DayManager : MonoBehaviour
         if (inventoryUI != null)
         {
             inventoryUI.SetTutorialInputEnabled(false);
+            inventoryUI.SetInventoryPanelEnabled(false);
             inventoryUI.SetHotbarHiddenForTutorial(true);
         }
 
@@ -2621,10 +2622,15 @@ public class DayManager : MonoBehaviour
             }
         }
 
-        if (inventoryUI != null)
+        bool hasPickedUpBroom = equipmentInventory != null &&
+            equipmentInventory.Owns(EquipmentType.Broom);
+        if (inventoryUI != null && hasPickedUpBroom)
+        {
             inventoryUI.SetHotbarHiddenForTutorial(false);
+            inventoryUI.SetInventoryPanelEnabled(true);
+        }
 
-        if (!dayFinished && broom != null)
+        if (!dayFinished && broom != null && hasPickedUpBroom)
             yield return StartCoroutine(PlayDayOneInventoryTutorial(
                 player,
                 mainCamera,
@@ -3905,6 +3911,13 @@ public class DayManager : MonoBehaviour
 
         CancelInvoke();
         currentDay++;
+        PlayerInventoryUI inventoryUI = FindFirstObjectByType<PlayerInventoryUI>(
+            FindObjectsInactive.Include);
+        if (inventoryUI != null)
+        {
+            inventoryUI.SetHotbarHiddenForTutorial(false);
+            inventoryUI.SetInventoryPanelEnabled(true);
+        }
         SetTricycleVisibleForCurrentDay();
         SetParentNpcsActive(currentDay >= 4);
         UpdateDay1Wall();

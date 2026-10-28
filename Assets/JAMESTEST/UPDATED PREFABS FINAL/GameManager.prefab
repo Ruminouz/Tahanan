@@ -1,0 +1,353 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &469116954499055212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3666320383883182850}
+  - component: {fileID: 4732073296971121104}
+  m_Layer: 0
+  m_Name: MoodManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3666320383883182850
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469116954499055212}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 357.4538, y: 153.33508, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4413036804622954436}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4732073296971121104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469116954499055212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb2ebbd4331288547b757c6a173db3d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoodManager
+  moodSlider: {fileID: 0}
+  startingMood: 70
+  concernedThreshold: 60
+  angryThreshold: 40
+  moodLossPerMissedChore: 20
+  dailyMoodLoss: 20
+  moodRecoveryPerCompletedChore: 10
+  moodGainSprite: {fileID: 5951587013162271021, guid: 4ab192c131e22bd40bd4dab15b920f7d, type: 3}
+  moodLossSprite: {fileID: -3151740070689166471, guid: 08c6851420614cd4d83e1ec64aa46e38, type: 3}
+  happyMoodHandleSprite: {fileID: 2969606046672856934, guid: 107ea15438e006b4c900379f3c3f6f7b, type: 3}
+  neutralMoodHandleSprite: {fileID: 7882799506682143018, guid: e19658964963cde4cb92eddc03fb63f7, type: 3}
+  sadMoodHandleSprite: {fileID: -6416144266904240849, guid: e19658964963cde4cb92eddc03fb63f7, type: 3}
+--- !u!1 &627009933519309659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4413036804622954436}
+  - component: {fileID: 2652793749689163662}
+  - component: {fileID: 8603163861997664852}
+  - component: {fileID: 5928839024215074631}
+  - component: {fileID: 8356661815421721620}
+  - component: {fileID: 2403700317180938695}
+  - component: {fileID: 3837303944311375323}
+  - component: {fileID: 4864050994245055325}
+  - component: {fileID: 8256040273234417462}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4413036804622954436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.56688, y: -15.75378, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5965336563439866359}
+  - {fileID: 3666320383883182850}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2652793749689163662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b33e59b2e0d71498e5369b5271faaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DayManager
+  currentDay: 1
+  day1Wall: {fileID: 0}
+  doubleGameSpeed: 0
+  washDishes: {fileID: 0}
+  mopFloor: {fileID: 0}
+  sweepDust: {fileID: 0}
+  feedDog: {fileID: 0}
+  cleanLeaves: {fileID: 0}
+  throwTrash: {fileID: 0}
+  dailyAdditionalQuestRewardCoins: 5
+  dailyQuestSweepTimeLimit: 30
+  dailyQuestMopTimeLimit: 30
+  dailyQuestDishwashingTimeBeforeDeadline: 60
+  garbageChore: {fileID: 0}
+  transitionFade: {fileID: 0}
+  daySummaryPanel: {fileID: 0}
+  continueButton: {fileID: 0}
+  mainMenuButton: {fileID: 0}
+  summaryChoresText: {fileID: 0}
+  summarySuccessRateText: {fileID: 0}
+  summaryPointsText: {fileID: 0}
+  transitionDuration: 1
+  summaryLineDelay: 0.6
+  transitionCardHoldDuration: 1
+  day7WinView: {fileID: 0}
+  weekCompleteSummaryPanelSprite: {fileID: -8105967080731364249, guid: 559af859622ff1b47916f3a843b11f82, type: 3}
+  weekEndingCameraMoveDuration: 1.5
+  weekEndingStoryDuration: 6
+  weekEndingCameraPadding: 1.25
+  dayWinCelebrationImage: {fileID: 0}
+  additionalDayWinCelebrationImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dayWinCelebrationFrames:
+  - {fileID: -1977660878, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: 70906326, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: -292971211, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: -1690378127, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: -1348504855, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: 1169489544, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: -1370267343, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  - {fileID: 123413015, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
+  dayWinCelebrationFramesPerSecond: 12
+  shopCameraMoveDuration: 1.5
+  shopDialogueDuration: 4
+  shopDirectionsDuration: 7
+  shopWaypointArrowSpacing: 1.2
+  shopWaypointArrowScale: 0.65
+  shopWaypointReachDistance: 1.5
+  shopWaypointRefreshInterval: 0.2
+  catCameraMoveDuration: 1
+  catCameraHoldDuration: 1.5
+  catCameraOrthographicSize: 2
+  dayOneCameraMoveDuration: 1
+  dayOneCameraOrthographicSize: 3
+  dayOneKitchenCameraOrthographicSize: 4.25
+  dayOneIntroFont: {fileID: 11400000, guid: 1cb780c78e6b6174b82d2efea0702b23, type: 2}
+  tricycle: {fileID: 0}
+  dayFourNanayArrivalSpawnPoint: {fileID: 0}
+  parentWalkSpeed: 1.7
+  parentWalkArrivalDistance: 0.2
+  parentWalkTimeout: 3
+  missedChoresGameOverThresholdByDay: 03000000030000000300000003000000030000000300000003000000
+--- !u!114 &8603163861997664852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ddf5492c1f8ed44682d0adfe325acce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
+--- !u!114 &5928839024215074631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3425151329f10524184ff8341a917f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimeManager
+  dayLength: 250
+  morningTint: {r: 1, g: 0.96, b: 0.88, a: 1}
+  afternoonTint: {r: 1, g: 1, b: 1, a: 1}
+  eveningTint: {r: 0.6320754, g: 0.4372633, b: 0.25342646, a: 1}
+  nightTint: {r: 0.15459237, g: 0.15844083, b: 0.16981131, a: 1}
+--- !u!114 &8356661815421721620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fb7b26d641d36844a9dd9abf861fb59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChoreManager
+  completedChores: 0
+  missedChores: 0
+  totalPoints: 0
+--- !u!114 &2403700317180938695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab9aec46de3bb4c8d353a3ed73165a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EconomyManager
+  startingCoins: 60
+  startingPoints: 0
+  coinsPerChorePoint: 1
+  movementSpeedMultiplier: 1.25
+  movementBoostDuration: 15
+  extraTimeSeconds: 15
+  mopUpgradeBaseCost: 50
+  upgradedMopCleaningSpeedMultiplier: 4
+  broomUpgradeBaseCost: 60
+  upgradedBroomCleaningSpeedMultiplier: 4
+  catBaseCost: 50
+  dishwashingLiquidBaseCost: 100
+  dishwashingLiquidScrubSpeedMultiplier: 2
+  furnitureBaseCost: 10
+--- !u!114 &3837303944311375323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d31099eb7db000344b183c4ec02acfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SuddenTaskManager
+  suddenTaskPanel: {fileID: 0}
+  mopFloorTask: {fileID: 0}
+--- !u!114 &4864050994245055325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f6d2b3852625a428ddf62cce91ef96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChoreTutorial
+  tutorialPanel: {fileID: 0}
+  titleText: {fileID: 0}
+  stepsText: {fileID: 0}
+  continueButton: {fileID: 0}
+--- !u!114 &8256040273234417462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627009933519309659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43bb2a8d240574746839cf6c654d065c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameHUD
+  dayText: {fileID: 0}
+  timeText: {fileID: 0}
+  timePeriodText: {fileID: 0}
+  choreListText: {fileID: 0}
+  timeBar: {fileID: 0}
+  clockProgressSlider: {fileID: 0}
+  clockNearEndWarningSeconds: 60
+  clockProgressWarningColor: {r: 1, g: 0.2, b: 0.12, a: 0.7529412}
+  clockFaceSprite: {fileID: 0}
+  clockAnchor: {fileID: 0}
+  pointsText: {fileID: 0}
+  coinsText: {fileID: 0}
+  successRateText: {fileID: 0}
+  missedChoreText: {fileID: 0}
+  coinSprite: {fileID: -3338749442709606003, guid: 0e67087d59961184282f29666ad62a46, type: 3}
+  dailyQuestPanel: {fileID: 0}
+  dailyQuestText: {fileID: 0}
+  dailyChallengeTitleText: {fileID: 0}
+  nearDeadlineWarningSeconds: 60
+  nearDeadlineColor: {r: 1, g: 0.35, b: 0.2, a: 1}
+--- !u!1 &2168382957703997963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5965336563439866359}
+  - component: {fileID: 1038476962577756159}
+  m_Layer: 0
+  m_Name: MopUpgradedManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5965336563439866359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2168382957703997963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4413036804622954436}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1038476962577756159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2168382957703997963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877659d0796326e438c0fef87fa82ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MopUpgradeManager

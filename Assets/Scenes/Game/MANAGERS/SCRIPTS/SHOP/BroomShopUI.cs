@@ -183,6 +183,11 @@ public class BroomShopUI : MonoBehaviour
 
     private void Refresh()
     {
+        ShopItemCardUI.SetCoinBalance(
+            transform,
+            economyManager != null ? "COINS  " + economyManager.Coins : "COINS  --");
+        ShopItemCardUI.RefreshShopLayout(transform);
+
         SubscribeToBoostInventory();
         if (economyManager == null)
         {

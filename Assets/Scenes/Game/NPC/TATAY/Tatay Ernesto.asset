@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e236d55e708ed3a44b78dba2401e20f8, type: 3}
   m_Name: Tatay Ernesto
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
-  npcName: Tatay Ernesto
+  npcName: Tatay
   npcPortrait: {fileID: -1115590447224545075, guid: 21871e5ff0f9ba4458c8cdcb5e3feaf3, type: 3}
   dialogueLines:
   - Help your siblings

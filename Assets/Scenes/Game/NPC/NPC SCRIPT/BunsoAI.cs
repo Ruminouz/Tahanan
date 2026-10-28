@@ -6,7 +6,6 @@ public class BunsoAI : MonoBehaviour
 {
     private enum BadMoodChoreType
     {
-        Dust,
         WaterArea,
         Segregate,
         GarbageBag
@@ -15,7 +14,6 @@ public class BunsoAI : MonoBehaviour
     [Header("Mood")]
     [SerializeField, Min(0f)] private float actionInterval = 12f;
     [SerializeField, Range(0f, 100f)] private float actionChance = 60f;
-    [SerializeField] private string dustBadMoodLine = "Sweep this up, big brother! Hahaha!";
     [SerializeField] private string waterBadMoodLine = "Mop this up, big brother! Hahaha!";
     [SerializeField] private string segregateBadMoodLine = "Put these away, big brother! Hahaha!";
     [SerializeField] private string garbageBagBadMoodLine = "Throw this in the trash, big brother! Hahaha!";
@@ -35,7 +33,6 @@ public class BunsoAI : MonoBehaviour
     [SerializeField, Min(0)] private int[] maximumBadMoodChoresByDay =
         { 0, 2, 3, 3, 4, 4, 5 };
     [SerializeField] private SegregateWasteChore segregateWastePrefab;
-    [SerializeField] private DustSpot dustSpotPrefab;
     [SerializeField] private WetArea wetAreaPrefab;
     [SerializeField] private GarbageBag garbageBagPrefab;
     [SerializeField, Min(0f)] private float choreLifetime = 120f;
@@ -381,16 +378,12 @@ public class BunsoAI : MonoBehaviour
             segregateWastePrefab = FindFirstObjectByType<SegregateWasteChore>(
                 FindObjectsInactive.Include);
 
-        BadMoodChoreType choreType = (BadMoodChoreType)Random.Range(0, 4);
+        BadMoodChoreType choreType = (BadMoodChoreType)Random.Range(0, 3);
         string dialogue;
         System.Func<bool> spawnChore;
 
         switch (choreType)
         {
-            case BadMoodChoreType.Dust:
-                dialogue = dustBadMoodLine;
-                spawnChore = SpawnDustSpot;
-                break;
             case BadMoodChoreType.WaterArea:
                 dialogue = waterBadMoodLine;
                 spawnChore = SpawnWetArea;
@@ -547,27 +540,6 @@ public class BunsoAI : MonoBehaviour
             actionInProgress = false;
             hasMovementTarget = false;
         }
-    }
-
-    private bool SpawnDustSpot()
-    {
-        SweepingMinigame minigame = FindFirstObjectByType<SweepingMinigame>(
-            FindObjectsInactive.Include);
-        SweepingManager manager = FindFirstObjectByType<SweepingManager>(
-            FindObjectsInactive.Include);
-        if (dustSpotPrefab == null || minigame == null)
-        {
-            Debug.LogWarning("Bunso cannot spawn a dust spot because its prefab or sweeping minigame is missing.", this);
-            return false;
-        }
-
-        DustSpot dustSpot = Instantiate(dustSpotPrefab, transform.position, Quaternion.identity);
-        if (manager != null)
-            manager.RegisterExternalDust(dustSpot, minigame);
-        else
-            dustSpot.SetSweepingMinigame(minigame);
-        TrackSpawnedObject(dustSpot.gameObject);
-        return true;
     }
 
     private bool SpawnWetArea()

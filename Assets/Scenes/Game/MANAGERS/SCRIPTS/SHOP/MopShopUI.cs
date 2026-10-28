@@ -3,13 +3,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Unity.Cinemachine;
 
 public class MopShopUI : MonoBehaviour
 {
     private static readonly string[] blockedFurnitureLayers =
     {
-       
+       "FURNITURES",
+       "Outdoor",
+        "NPCS"
+        
     };
+    private const float FurniturePlacementGridSize = 0.5f;
     private const string FurniturePlacementInstructions =
         "HOLD RIGHT CLICK + DRAG TO MOVE THE CAMERA\n" +
         "LEFT CLICK TO PLACE  |  ESC TO CANCEL";
@@ -36,6 +41,9 @@ public class MopShopUI : MonoBehaviour
     [SerializeField] private Sprite refrigeratorIcon;
     [SerializeField] private Sprite fanIcon;
     [SerializeField] private Sprite televisionIcon;
+    [SerializeField] private Sprite plantIcon;
+    [SerializeField] private Sprite kitchenStoveIcon;
+    [SerializeField] private Sprite waterDispenserIcon;
     [SerializeField] private TMP_FontAsset tutorialFont;
 
     private EconomyManager economyManager;
@@ -45,6 +53,9 @@ public class MopShopUI : MonoBehaviour
     private ShopItemCardUI refrigeratorCard;
     private ShopItemCardUI fanCard;
     private ShopItemCardUI televisionCard;
+    private ShopItemCardUI plantCard;
+    private ShopItemCardUI kitchenStoveCard;
+    private ShopItemCardUI waterDispenserCard;
     private GameObject furniturePlacementObject;
     private SpriteRenderer furniturePlacementRenderer;
     private FurnitureType furnitureBeingPlaced;
@@ -59,6 +70,13 @@ public class MopShopUI : MonoBehaviour
     private TMP_Text furniturePlacementTutorialText;
     private bool furniturePlacementValid;
     private bool showingInvalidPlacementMessage;
+    private Coroutine catHighlightRoutine;
+    private CinemachineCamera catHighlightCameraRig;
+    private Camera catHighlightMainCamera;
+    private PlayerMovement catHighlightPlayer;
+    private Vector3 catHighlightOriginalCameraPosition;
+    private float catHighlightOriginalOrthographicSize;
+    private bool catHighlightActive;
 
     private void OnEnable()
     {
@@ -115,7 +133,7 @@ public class MopShopUI : MonoBehaviour
             1,
             fanIcon,
             "Fan",
-            "Click to place anywhere in the house. Esc cancels. +10 mood.",
+            "Click to place anywhere in the house. +10 mood.",
             () => BuyFurniture(FurnitureType.Fan, fanIcon),
             true);
         televisionCard = ShopItemCardUI.GetOrCreate(
@@ -124,8 +142,35 @@ public class MopShopUI : MonoBehaviour
             2,
             televisionIcon,
             "Television",
-            "Click to place anywhere in the house. Esc cancels. +10 mood.",
+            "Click to place anywhere in the house. +10 mood.",
             () => BuyFurniture(FurnitureType.Television, televisionIcon),
+            true);
+        plantCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "Plant",
+            3,
+            plantIcon,
+            "Plant",
+            "Click to place anywhere in the house. +10 mood.",
+            () => BuyFurniture(FurnitureType.Plant, plantIcon),
+            true);
+        kitchenStoveCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "KitchenStove",
+            4,
+            kitchenStoveIcon,
+            "Kitchen Stove",
+            "Click to place anywhere in the house. +10 mood.",
+            () => BuyFurniture(FurnitureType.KitchenStove, kitchenStoveIcon),
+            true);
+        waterDispenserCard = ShopItemCardUI.GetOrCreate(
+            transform,
+            "WaterDispenser",
+            5,
+            waterDispenserIcon,
+            "Water Dispenser",
+            "Click to place anywhere in the house. +10 mood.",
+            () => BuyFurniture(FurnitureType.WaterDispenser, waterDispenserIcon),
             true);
 
         Refresh();
@@ -139,6 +184,8 @@ public class MopShopUI : MonoBehaviour
 
     private void OnDisable()
     {
+        CancelCatHighlight();
+
         if (economyManager != null)
         {
             economyManager.CoinsChanged -= OnEconomyChanged;
@@ -234,12 +281,138 @@ public class MopShopUI : MonoBehaviour
             return;
 
         Transform spawnPoint = catSpawnPoint != null ? catSpawnPoint : transform;
+        GameObject purchasedCat;
         if (catPrefab.scene.IsValid())
+        {
             catPrefab.SetActive(true);
+            purchasedCat = catPrefab;
+        }
         else
-            Instantiate(catPrefab, spawnPoint.position, spawnPoint.rotation);
+            purchasedCat = Instantiate(catPrefab, spawnPoint.position, spawnPoint.rotation);
 
         Refresh();
+        if (purchasedCat != null)
+            HighlightPurchasedCat(purchasedCat.transform);
+    }
+
+    private void HighlightPurchasedCat(Transform cat)
+    {
+        catHighlightCameraRig = FindFirstObjectByType<CinemachineCamera>(
+            FindObjectsInactive.Include);
+        catHighlightMainCamera = Camera.main;
+        if (catHighlightCameraRig == null && catHighlightMainCamera == null)
+        {
+            Debug.LogWarning(
+                "The cat was purchased, but its camera highlight could not start because no camera was found.",
+                this);
+            return;
+        }
+
+        Transform cameraTransform = catHighlightCameraRig != null
+            ? catHighlightCameraRig.transform
+            : catHighlightMainCamera.transform;
+        catHighlightOriginalCameraPosition = cameraTransform.position;
+        catHighlightOriginalOrthographicSize = catHighlightCameraRig != null
+            ? catHighlightCameraRig.Lens.OrthographicSize
+            : catHighlightMainCamera.orthographicSize;
+        catHighlightPlayer = FindFirstObjectByType<PlayerMovement>();
+        catHighlightActive = true;
+
+        SetShopVisible(false);
+        MapTransition.SetConfinerBoundaryAtPosition(cat.position);
+        MapTransition.MoveCameraToPosition(cat.position);
+        catHighlightRoutine = StartCoroutine(ShowCatHighlight());
+    }
+
+    private System.Collections.IEnumerator ShowCatHighlight()
+    {
+        float targetOrthographicSize = Mathf.Min(
+            catHighlightOriginalOrthographicSize,
+            2f);
+        yield return AnimateCatCameraZoom(targetOrthographicSize, 0.65f);
+
+        float highlightDuration = 2f;
+        float elapsed = 0f;
+        while (elapsed < highlightDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        ReturnCameraAfterCatHighlight();
+        yield return AnimateCatCameraZoom(catHighlightOriginalOrthographicSize, 0.65f);
+
+        SetShopVisible(true);
+        catHighlightActive = false;
+        catHighlightRoutine = null;
+        catHighlightCameraRig = null;
+        catHighlightMainCamera = null;
+        catHighlightPlayer = null;
+    }
+
+    private System.Collections.IEnumerator AnimateCatCameraZoom(float targetSize, float duration)
+    {
+        float startSize = GetCatHighlightOrthographicSize();
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float progress = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / duration));
+            SetCatHighlightOrthographicSize(Mathf.Lerp(startSize, targetSize, progress));
+            yield return null;
+        }
+
+        SetCatHighlightOrthographicSize(targetSize);
+    }
+
+    private float GetCatHighlightOrthographicSize()
+    {
+        return catHighlightCameraRig != null
+            ? catHighlightCameraRig.Lens.OrthographicSize
+            : catHighlightMainCamera != null
+                ? catHighlightMainCamera.orthographicSize
+                : catHighlightOriginalOrthographicSize;
+    }
+
+    private void SetCatHighlightOrthographicSize(float orthographicSize)
+    {
+        if (catHighlightCameraRig != null)
+        {
+            LensSettings lens = catHighlightCameraRig.Lens;
+            lens.OrthographicSize = orthographicSize;
+            catHighlightCameraRig.Lens = lens;
+        }
+        else if (catHighlightMainCamera != null)
+        {
+            catHighlightMainCamera.orthographicSize = orthographicSize;
+        }
+    }
+
+    private void ReturnCameraAfterCatHighlight()
+    {
+        if (catHighlightPlayer != null)
+            MapTransition.ReturnCameraToPlayer(catHighlightPlayer);
+        else
+            MapTransition.MoveCameraToPosition(catHighlightOriginalCameraPosition);
+    }
+
+    private void CancelCatHighlight()
+    {
+        if (catHighlightRoutine != null)
+        {
+            StopCoroutine(catHighlightRoutine);
+            catHighlightRoutine = null;
+        }
+
+        if (!catHighlightActive)
+            return;
+
+        SetCatHighlightOrthographicSize(catHighlightOriginalOrthographicSize);
+        ReturnCameraAfterCatHighlight();
+        catHighlightActive = false;
+        catHighlightCameraRig = null;
+        catHighlightMainCamera = null;
+        catHighlightPlayer = null;
     }
 
     public void BuyDishwashingLiquid()
@@ -350,10 +523,7 @@ public class MopShopUI : MonoBehaviour
             return;
         }
 
-        furniturePlacementObject.transform.position = new Vector3(
-            Mathf.Floor(worldPosition.x) + 0.5f,
-            Mathf.Floor(worldPosition.y) + 0.5f,
-            0f);
+        MoveFurniturePlacement(worldPosition);
 
         furniturePlacementValid = IsFurniturePlacementValid();
         furniturePlacementRenderer.color = furniturePlacementValid
@@ -378,6 +548,19 @@ public class MopShopUI : MonoBehaviour
                 showingInvalidPlacementMessage = true;
             }
         }
+    }
+
+    private void MoveFurniturePlacement(Vector3 worldPosition)
+    {
+        Transform placementTransform = furniturePlacementObject.transform;
+        Vector3 snappedCenter = new Vector3(
+            Mathf.Round(worldPosition.x / FurniturePlacementGridSize) * FurniturePlacementGridSize,
+            Mathf.Round(worldPosition.y / FurniturePlacementGridSize) * FurniturePlacementGridSize,
+            0f);
+        Vector3 spriteCenterOffset =
+            placementTransform.TransformVector(furniturePlacementRenderer.sprite.bounds.center);
+
+        placementTransform.position = snappedCenter - spriteCenterOffset;
     }
 
     private bool IsFurniturePlacementValid()
@@ -558,7 +741,22 @@ public class MopShopUI : MonoBehaviour
         else
             Debug.LogWarning("Furniture was placed, but no MoodManager was found to award its mood bonus.", this);
 
+        ShowNpcHeartBubbles();
         Refresh();
+    }
+
+    private void ShowNpcHeartBubbles()
+    {
+        WaypointMover[] npcs = FindObjectsByType<WaypointMover>(FindObjectsSortMode.None);
+        foreach (WaypointMover npc in npcs)
+        {
+            if (npc == null)
+                continue;
+
+            NPCSocialParticipant participant = npc.GetComponent<NPCSocialParticipant>();
+            Transform anchor = participant != null ? participant.SpeechAnchor : npc.transform;
+            SpeechBubbleCanvas.Show(anchor, "♥", 2f);
+        }
     }
 
     private void CancelFurniturePlacement(bool refundPurchase)
@@ -624,6 +822,9 @@ public class MopShopUI : MonoBehaviour
         RefreshFurnitureCard(refrigeratorCard, FurnitureType.Refrigerator, refrigeratorIcon);
         RefreshFurnitureCard(fanCard, FurnitureType.Fan, fanIcon);
         RefreshFurnitureCard(televisionCard, FurnitureType.Television, televisionIcon);
+        RefreshFurnitureCard(plantCard, FurnitureType.Plant, plantIcon);
+        RefreshFurnitureCard(kitchenStoveCard, FurnitureType.KitchenStove, kitchenStoveIcon);
+        RefreshFurnitureCard(waterDispenserCard, FurnitureType.WaterDispenser, waterDispenserIcon);
     }
 
     private void RefreshFurnitureCard(ShopItemCardUI card, FurnitureType furniture, Sprite icon)
@@ -673,6 +874,15 @@ public class MopShopUI : MonoBehaviour
 
             if (televisionCard != null)
                 televisionCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
+            if (plantCard != null)
+                plantCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
+            if (kitchenStoveCard != null)
+                kitchenStoveCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
+
+            if (waterDispenserCard != null)
+                waterDispenserCard.SetPurchaseState("Shop unavailable", "UNAVAILABLE", false);
 
             return;
         }

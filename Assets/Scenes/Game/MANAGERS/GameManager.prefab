@@ -190,7 +190,7 @@ MonoBehaviour:
   upgradedMopCleaningSpeedMultiplier: 5
   broomUpgradeBaseCost: 10
   upgradedBroomCleaningSpeedMultiplier: 5
-  catBaseCost: 10
+  catBaseCost: 50
 --- !u!114 &1432158800708567070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +243,7 @@ MonoBehaviour:
   coinsText: {fileID: 0}
   successRateText: {fileID: 0}
   coinSprite: {fileID: -3338749442709606003, guid: 0e67087d59961184282f29666ad62a46, type: 3}
+  minimizeButtonIcon: {fileID: 8000682628159011477, guid: c6da1d7da1da99f43bfb10b93a2ac5e7, type: 3}
 --- !u!1 &4638821258728949021
 GameObject:
   m_ObjectHideFlags: 0

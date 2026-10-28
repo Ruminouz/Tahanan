@@ -106,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TELEVISION
+      name: TELEVISION 64X64
       rect:
         serializedVersion: 2
         x: 8
@@ -189,7 +189,7 @@ TextureImporter:
     nameFileIdTable:
       64X64 ASSETS_1: -6492705433303670568
       64X64 ASSETS_2: 4210913973795349247
-      TELEVISION: -7408639652564144004
+      TELEVISION 64X64: -7408639652564144004
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

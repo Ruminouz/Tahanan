@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e236d55e708ed3a44b78dba2401e20f8, type: 3}
   m_Name: BunsoDialogue
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
-  npcName: Ate Nene
+  npcName: Ate
   npcPortrait: {fileID: -6200866246214697211, guid: a39006c95ca35a648a177286d6adb59b, type: 3}
   dialogueLines:
   - Just do the chores on time

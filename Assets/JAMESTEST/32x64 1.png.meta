@@ -321,7 +321,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 32x64_8
+      name: KitchenStove32X64
       rect:
         serializedVersion: 2
         x: 262
@@ -526,8 +526,8 @@ TextureImporter:
       32x64_5: 5249675182367359287
       32x64_6: -7619860267159691794
       32x64_7: 3481155974658233349
-      32x64_8: 4487942648206638616
       32x64_9: -8331649228029515197
+      KitchenStove32X64: 4487942648206638616
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
