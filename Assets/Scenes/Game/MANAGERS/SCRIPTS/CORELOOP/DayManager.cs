@@ -4011,6 +4011,15 @@ public class DayManager : MonoBehaviour
         StartCoroutine(PlayDayTwoPikoIntroduction());
     }
 
+    public void OnDayTwoPikoInteracted()
+    {
+        if (dayTwoPikoWaypoints == null)
+            return;
+
+        Destroy(dayTwoPikoWaypoints);
+        dayTwoPikoWaypoints = null;
+    }
+
     private IEnumerator WaitForDayTwoShopToClose(ShopTrigger shop)
     {
         yield return null;

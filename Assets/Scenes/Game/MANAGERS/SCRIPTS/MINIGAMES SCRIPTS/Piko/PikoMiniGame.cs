@@ -138,6 +138,8 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
         if (!CanInteract())
             return;
 
+        DayManager.Instance?.OnDayTwoPikoInteracted();
+
         player = FindFirstObjectByType<PlayerMovement>();
         if (player == null)
         {
