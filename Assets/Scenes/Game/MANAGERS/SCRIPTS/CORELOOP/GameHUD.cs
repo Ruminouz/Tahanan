@@ -743,6 +743,7 @@ public class GameHUD : MonoBehaviour
                 tutorialPulseTarget.localScale = tutorialPulseOriginalScale;
         }
 
+        SoundEffectManager.Play("Intro");
         tutorialPulseTarget = target;
         tutorialPulseOriginalScale = target.localScale;
         tutorialPulseCoroutine = StartCoroutine(PulseTutorialTarget(target));
