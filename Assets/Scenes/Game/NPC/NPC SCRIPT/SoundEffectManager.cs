@@ -11,6 +11,7 @@ public class SoundEffectManager : MonoBehaviour
     private AudioSource voiceAudioSource;
     private AudioSource faucetAudioSource;
     private AudioSource musicAudioSource;
+    private AudioSource writingAudioSource;
     private SoundEffectLibrary soundEffectLibrary;
     [SerializeField] private Slider sfxSlider;
     private float currentVolume = .7f;
@@ -59,6 +60,15 @@ public class SoundEffectManager : MonoBehaviour
                     return;
                 }
 
+                if (soundName == "Write")
+                {
+                    AudioSource source = Instance.GetWritingAudioSource();
+                    source.loop = false;
+                    source.clip = audioClip;
+                    source.Play();
+                    return;
+                }
+
                 if (randomPitch && Instance.randomPitchAudioSource != null)
                 {
                     Instance.randomPitchAudioSource.pitch = Random.Range(0.8f, 1.2f);
@@ -87,6 +97,14 @@ public class SoundEffectManager : MonoBehaviour
         {
             Instance.faucetAudioSource.Stop();
         }
+
+        if (soundName == "Write" &&
+            Instance != null &&
+            Instance.writingAudioSource != null)
+        {
+            Instance.writingAudioSource.Stop();
+            Instance.writingAudioSource.loop = false;
+        }
     }
 
     public static void PlayLoop(string soundName)
@@ -97,6 +115,18 @@ public class SoundEffectManager : MonoBehaviour
         AudioClip audioClip = Instance.soundEffectLibrary.GetRandomClip(soundName);
         if (audioClip == null)
             return;
+
+        if (soundName == "Write")
+        {
+            AudioSource writingSource = Instance.GetWritingAudioSource();
+            if (writingSource.isPlaying && writingSource.clip == audioClip)
+                return;
+
+            writingSource.clip = audioClip;
+            writingSource.loop = true;
+            writingSource.Play();
+            return;
+        }
 
         AudioSource source = Instance.GetMusicAudioSource();
         if (source.isPlaying && source.clip == audioClip)
@@ -145,6 +175,25 @@ public class SoundEffectManager : MonoBehaviour
         }
 
         return faucetAudioSource;
+    }
+
+    private AudioSource GetWritingAudioSource()
+    {
+        if (writingAudioSource != null)
+            return writingAudioSource;
+
+        writingAudioSource = gameObject.AddComponent<AudioSource>();
+        writingAudioSource.playOnAwake = false;
+        writingAudioSource.spatialBlend = 0f;
+        if (audioSource != null)
+        {
+            writingAudioSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+            writingAudioSource.volume = audioSource.volume;
+            writingAudioSource.mute = audioSource.mute;
+            writingAudioSource.priority = audioSource.priority;
+        }
+
+        return writingAudioSource;
     }
 
     public static void PlayVoice(AudioClip audioClip, float pitch = 1f)
@@ -201,6 +250,7 @@ public class SoundEffectManager : MonoBehaviour
         if (voiceAudioSource != null) voiceAudioSource.volume = volume;
         if (faucetAudioSource != null) faucetAudioSource.volume = volume;
         if (musicAudioSource != null) musicAudioSource.volume = volume;
+        if (writingAudioSource != null) writingAudioSource.volume = volume;
     }
 
     public void OnValueChanged()

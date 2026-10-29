@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float CurrentMoveSpeed =>
         moveSpeed * speedMultiplier * temporarySpeedMultiplier * temporarySlowMultiplier;
+    public bool IsMovementInputEnabled => movementInputEnabled;
     public Vector3 DailySpawnPosition => hasDailySpawnPoint
         ? dailySpawnPosition
         : transform.position;

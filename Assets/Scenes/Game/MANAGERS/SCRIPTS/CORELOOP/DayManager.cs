@@ -80,7 +80,6 @@ public class DayManager : MonoBehaviour
 
     [Header("Day 2 Introduction")]
     [SerializeField, Min(0.01f)] private float shopCameraMoveDuration = 1.5f;
-    [SerializeField, Min(0f)] private float shopDialogueDuration = 4f;
     [SerializeField, Min(0f)] private float shopDirectionsDuration = 7f;
     [SerializeField, Min(0.25f)] private float shopWaypointArrowSpacing = 1.2f;
     [SerializeField, Min(0.1f)] private float shopWaypointArrowScale = 0.65f;
@@ -120,9 +119,9 @@ public class DayManager : MonoBehaviour
     private readonly List<Chore> dynamicChores = new List<Chore>();
     private readonly Dictionary<GameObject, bool> npcActiveStates =
         new Dictionary<GameObject, bool>();
-    private readonly Dictionary<Canvas, bool> weekEndingCanvasEnabledStates =
+    private readonly Dictionary<Canvas, bool> temporarilyHiddenCanvasEnabledStates =
         new Dictionary<Canvas, bool>();
-    private readonly Dictionary<GraphicRaycaster, bool> weekEndingRaycasterEnabledStates =
+    private readonly Dictionary<GraphicRaycaster, bool> temporarilyHiddenRaycasterEnabledStates =
         new Dictionary<GraphicRaycaster, bool>();
     private readonly Dictionary<GameObject, Vector3> parentHomePositions =
         new Dictionary<GameObject, Vector3>();
@@ -146,8 +145,12 @@ public class DayManager : MonoBehaviour
     private bool dayOneKitchenIntroStarted;
     private bool dayFourIntroInProgress;
     private bool waitingForDayTwoShop;
+    private bool dayTwoPikoIntroductionPending;
+    private bool dayTwoPikoIntroductionInProgress;
+    private bool dayTwoPikoIntroductionStarted;
     private ShopTrigger dayTwoShopTrigger;
     private GameObject dayTwoShopWaypoints;
+    private GameObject dayTwoPikoWaypoints;
     private GameObject dayOneIntroOverlay;
     private CinemachineCamera[] dayOneIntroCameras;
     private CinemachineBrain[] dayOneIntroBrains;
@@ -988,10 +991,15 @@ public class DayManager : MonoBehaviour
     private void OnDestroy()
     {
         RestoreTimeScale();
-        if ((waitingForDayTwoShop || dayFourIntroInProgress) && timeManager != null)
+        if ((waitingForDayTwoShop ||
+             dayTwoPikoIntroductionInProgress ||
+             dayFourIntroInProgress) &&
+            timeManager != null)
             timeManager.SetDayTimePaused(false);
         if (dayTwoShopWaypoints != null)
             Destroy(dayTwoShopWaypoints);
+        if (dayTwoPikoWaypoints != null)
+            Destroy(dayTwoPikoWaypoints);
 
         if (continueButton != null)
             continueButton.onClick.RemoveListener(ContinueToNextDay);
@@ -1000,6 +1008,7 @@ public class DayManager : MonoBehaviour
             mainMenuButton.onClick.RemoveListener(ReturnToMainMenu);
 
         RestoreSceneNpcs();
+        RestoreTemporarilyHiddenCanvasUI();
         ResumeDayOneIntro();
 
         if (dayOneIntroOverlay != null)
@@ -1729,7 +1738,7 @@ public class DayManager : MonoBehaviour
             }
         }
 
-        HideWeekEndingCanvasUI(sceneFade);
+        HideOtherCanvasUI(sceneFade, day7WinView != null ? day7WinView.transform : null);
 
         if (day7WinView == null)
         {
@@ -1762,7 +1771,7 @@ public class DayManager : MonoBehaviour
 
         yield return WaitForRealtime(3f);
 
-        RestoreWeekEndingCanvasUI();
+        RestoreTemporarilyHiddenCanvasUI();
         yield return ShowWeekCompleteIntro();
 
         ShowDaySummary();
@@ -1774,10 +1783,10 @@ public class DayManager : MonoBehaviour
         SoundEffectManager.Play("Family");
     }
 
-    private void HideWeekEndingCanvasUI(CanvasGroup sceneFade)
+    private void HideOtherCanvasUI(CanvasGroup overlay, Transform excludedRoot)
     {
-        weekEndingCanvasEnabledStates.Clear();
-        weekEndingRaycasterEnabledStates.Clear();
+        temporarilyHiddenCanvasEnabledStates.Clear();
+        temporarilyHiddenRaycasterEnabledStates.Clear();
         Canvas[] canvases = FindObjectsByType<Canvas>(
             FindObjectsInactive.Include,
             FindObjectsSortMode.None);
@@ -1785,13 +1794,13 @@ public class DayManager : MonoBehaviour
         foreach (Canvas canvas in canvases)
         {
             if (canvas == null ||
-                (sceneFade != null && canvas.gameObject == sceneFade.gameObject) ||
-                (day7WinView != null &&
-                    (canvas.transform == day7WinView.transform ||
-                     canvas.transform.IsChildOf(day7WinView.transform))))
+                (overlay != null && canvas.gameObject == overlay.gameObject) ||
+                (excludedRoot != null &&
+                    (canvas.transform == excludedRoot ||
+                     canvas.transform.IsChildOf(excludedRoot))))
                 continue;
 
-            weekEndingCanvasEnabledStates.Add(canvas, canvas.enabled);
+            temporarilyHiddenCanvasEnabledStates.Add(canvas, canvas.enabled);
             canvas.enabled = false;
 
             GraphicRaycaster[] raycasters = canvas.GetComponents<GraphicRaycaster>();
@@ -1800,29 +1809,29 @@ public class DayManager : MonoBehaviour
                 if (raycaster == null)
                     continue;
 
-                weekEndingRaycasterEnabledStates.Add(raycaster, raycaster.enabled);
+                temporarilyHiddenRaycasterEnabledStates.Add(raycaster, raycaster.enabled);
                 raycaster.enabled = false;
             }
         }
     }
 
-    private void RestoreWeekEndingCanvasUI()
+    private void RestoreTemporarilyHiddenCanvasUI()
     {
-        foreach (KeyValuePair<Canvas, bool> canvasState in weekEndingCanvasEnabledStates)
+        foreach (KeyValuePair<Canvas, bool> canvasState in temporarilyHiddenCanvasEnabledStates)
         {
             if (canvasState.Key != null)
                 canvasState.Key.enabled = canvasState.Value;
         }
 
         foreach (KeyValuePair<GraphicRaycaster, bool> raycasterState in
-                 weekEndingRaycasterEnabledStates)
+                 temporarilyHiddenRaycasterEnabledStates)
         {
             if (raycasterState.Key != null)
                 raycasterState.Key.enabled = raycasterState.Value;
         }
 
-        weekEndingCanvasEnabledStates.Clear();
-        weekEndingRaycasterEnabledStates.Clear();
+        temporarilyHiddenCanvasEnabledStates.Clear();
+        temporarilyHiddenRaycasterEnabledStates.Clear();
     }
 
     private IEnumerator ShowWeekCompleteIntro()
@@ -3539,6 +3548,9 @@ public class DayManager : MonoBehaviour
         bool skippedTyping = false;
         const float wordRevealInterval = 0.16f;
 
+        if (text.textInfo.wordCount > 0)
+            SoundEffectManager.PlayLoop("Write");
+
         while (wordIndex < text.textInfo.wordCount)
         {
             if (WasDayOneIntroContinuePressed())
@@ -3564,6 +3576,7 @@ public class DayManager : MonoBehaviour
             yield return null;
         }
 
+        SoundEffectManager.Stop("Write");
         text.maxVisibleCharacters = text.textInfo.characterCount;
         if (skippedTyping)
             yield return null;
@@ -3877,6 +3890,7 @@ public class DayManager : MonoBehaviour
         if (cinematicCamera != null)
             cinematicCamera.Follow = null;
 
+        HideOtherCanvasUI(null, null);
         MapTransition.SetConfinerBoundaryAtPosition(shop.transform.position);
         yield return MoveCameraTo(
             cameraRig,
@@ -3886,13 +3900,15 @@ public class DayManager : MonoBehaviour
             originalOrthographicSize,
             shopCameraMoveDuration);
 
-        SpeechBubbleCanvas.Show(
-            shop.transform,
-            "You can buy better equipment here and furnitures if you have enough coins.",
-            shopDialogueDuration,
-            new Vector2(480f, 104f),
-            18);
-        yield return WaitForRealtime(shopDialogueDuration);
+        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
+        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "THE SHOP",
+            "Visit the shop to buy or upgrade equipment and furniture using the coins you earn.");
+        Destroy(dayOneIntroOverlay);
+        dayOneIntroOverlay = null;
 
         if (economyManager != null && economyManager.HasPurchasedCat)
         {
@@ -3927,6 +3943,8 @@ public class DayManager : MonoBehaviour
             originalOrthographicSize,
             shopCameraMoveDuration);
 
+        RestoreTemporarilyHiddenCanvasUI();
+
         if (cinematicCamera != null)
             cinematicCamera.Follow = player.transform;
 
@@ -3960,11 +3978,19 @@ public class DayManager : MonoBehaviour
 
     public void OnDayTwoShopOpened(ShopTrigger shop)
     {
-        if (!waitingForDayTwoShop || shop != dayTwoShopTrigger)
+        if (currentDay != 2 ||
+            dayTwoPikoIntroductionPending ||
+            dayTwoPikoIntroductionStarted)
             return;
 
-        waitingForDayTwoShop = false;
-        dayTwoShopTrigger = null;
+        if (waitingForDayTwoShop)
+        {
+            waitingForDayTwoShop = false;
+            dayTwoShopTrigger = null;
+        }
+
+        dayTwoPikoIntroductionPending = true;
+        StartCoroutine(WaitForDayTwoShopToClose(shop));
         if (timeManager != null)
             timeManager.SetDayTimePaused(false);
 
@@ -3973,6 +3999,140 @@ public class DayManager : MonoBehaviour
             Destroy(dayTwoShopWaypoints);
             dayTwoShopWaypoints = null;
         }
+    }
+
+    public void OnDayTwoShopClosed()
+    {
+        if (currentDay != 2 || dayTwoPikoIntroductionStarted)
+            return;
+
+        dayTwoPikoIntroductionPending = false;
+        dayTwoPikoIntroductionStarted = true;
+        StartCoroutine(PlayDayTwoPikoIntroduction());
+    }
+
+    private IEnumerator WaitForDayTwoShopToClose(ShopTrigger shop)
+    {
+        yield return null;
+        while (dayTwoPikoIntroductionPending &&
+               shop != null &&
+               shop.IsShopOpen)
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+        }
+
+        if (dayTwoPikoIntroductionPending)
+            OnDayTwoShopClosed();
+    }
+
+    private IEnumerator PlayDayTwoPikoIntroduction()
+    {
+        PikoMiniGame piko = FindFirstObjectByType<PikoMiniGame>(
+            FindObjectsInactive.Include);
+        Transform pikoBoard = piko != null
+            ? piko.transform
+            : FindPikoBoardTransform();
+        PlayerMovement player = FindFirstObjectByType<PlayerMovement>();
+        if (pikoBoard == null)
+        {
+            Debug.LogWarning(
+                "The Piko introduction was skipped because no Piko board exists in the scene.",
+                this);
+            yield break;
+        }
+
+        if (piko == null)
+        {
+            Debug.LogWarning(
+                "The Piko board was found, but it has no PikoMiniGame component.",
+                this);
+        }
+
+        if (player == null)
+        {
+            Debug.LogWarning(
+                "The Piko introduction was skipped because the player is missing.",
+                this);
+            yield break;
+        }
+
+        if (timeManager == null)
+            timeManager = FindFirstObjectByType<TimeManager>();
+        if (timeManager == null)
+        {
+            Debug.LogWarning(
+                "The Piko introduction could not pause the day clock because no TimeManager exists.",
+                this);
+        }
+        else
+        {
+            timeManager.SetDayTimePaused(true);
+        }
+
+        dayTwoPikoIntroductionInProgress = true;
+        player.SetMovementInputEnabled(false);
+        HideOtherCanvasUI(null, null);
+        yield return MapTransition.MoveCameraToPositionAndWait(pikoBoard.position);
+
+        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
+        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
+        yield return ShowDayOneIntroText(
+            introText,
+            continuePrompt,
+            "PIKO",
+            "Take turns tossing the pamato and hopping from square 1 to 10. Don't miss a square; the first to finish wins. Your opponent is Ate, and you can play twice each day. Press E at the board to start.");
+        Destroy(dayOneIntroOverlay);
+        dayOneIntroOverlay = null;
+
+        MapTransition pikoAreaTransition = FindShopAreaTransition(
+            player.transform.position,
+            pikoBoard.position);
+        Vector2 initialWaypoint = pikoAreaTransition != null
+            ? (Vector2)pikoAreaTransition.transform.position
+            : (Vector2)pikoBoard.position;
+        dayTwoPikoWaypoints = CreateShopWaypoints(
+            player.transform,
+            initialWaypoint,
+            true);
+
+        yield return MapTransition.MoveCameraToPositionAndWait(
+            player.transform.position,
+            player.transform);
+
+        RestoreTemporarilyHiddenCanvasUI();
+        player.SetMovementInputEnabled(true);
+        if (dayTwoPikoWaypoints != null)
+        {
+            StartCoroutine(GuidePlayerToPiko(
+                dayTwoPikoWaypoints,
+                player.transform,
+                pikoBoard,
+                pikoAreaTransition));
+        }
+        if (timeManager != null)
+            timeManager.SetDayTimePaused(false);
+
+        dayTwoPikoIntroductionInProgress = false;
+    }
+
+    private static Transform FindPikoBoardTransform()
+    {
+        SpriteRenderer[] renderers = FindObjectsByType<SpriteRenderer>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (SpriteRenderer spriteRenderer in renderers)
+        {
+            if (spriteRenderer != null &&
+                string.Equals(
+                    spriteRenderer.gameObject.name,
+                    "piko_0",
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                return spriteRenderer.transform;
+            }
+        }
+
+        return null;
     }
 
     private static MapTransition FindShopAreaTransition(
@@ -4006,11 +4166,20 @@ public class DayManager : MonoBehaviour
         return nearestTransition;
     }
 
-    private GameObject CreateShopWaypoints(Transform player, Vector2 targetPosition)
+    private GameObject CreateShopWaypoints(
+        Transform player,
+        Vector2 targetPosition,
+        bool allowDirectFallback = false)
     {
         var waypointRoot = new GameObject("Day 2 Shop Waypoints");
         waypointRoot.transform.position = new Vector3(0f, 0f, player.position.z);
-        RebuildWaypointPath(waypointRoot.transform, player, targetPosition);
+        RebuildWaypointPath(
+            waypointRoot.transform,
+            player,
+            targetPosition,
+            true,
+            false,
+            allowDirectFallback);
         return waypointRoot;
     }
 
@@ -4019,7 +4188,8 @@ public class DayManager : MonoBehaviour
         Transform player,
         Vector2 targetPosition,
         bool warnIfNoRoute = true,
-        bool dayOneStyle = false)
+        bool dayOneStyle = false,
+        bool allowDirectFallback = false)
     {
         for (int i = waypointRoot.childCount - 1; i >= 0; i--)
             Destroy(waypointRoot.GetChild(i).gameObject);
@@ -4038,9 +4208,17 @@ public class DayManager : MonoBehaviour
             5000);
         if (route.Count == 0)
         {
-            if (warnIfNoRoute)
-                Debug.LogWarning("No waypoint route was found.", this);
-            return;
+            if (allowDirectFallback)
+            {
+                route.Add(player.position);
+                route.Add(targetPosition);
+            }
+            else
+            {
+                if (warnIfNoRoute)
+                    Debug.LogWarning("No waypoint route was found.", this);
+                return;
+            }
         }
 
         if (route.Count == 1)
@@ -4231,6 +4409,44 @@ public class DayManager : MonoBehaviour
             Destroy(waypointRoot);
             if (dayTwoShopWaypoints == waypointRoot)
                 dayTwoShopWaypoints = null;
+        }
+    }
+
+    private IEnumerator GuidePlayerToPiko(
+        GameObject waypointRoot,
+        Transform player,
+        Transform pikoBoard,
+        MapTransition pikoAreaTransition)
+    {
+        bool reachedPikoArea = pikoAreaTransition == null ||
+            pikoAreaTransition.LeadsToAreaContaining(player.position);
+        while (waypointRoot != null &&
+               player != null &&
+               pikoBoard != null &&
+               Vector2.Distance(player.position, pikoBoard.position) >
+                   shopWaypointReachDistance)
+        {
+            if (!reachedPikoArea &&
+                pikoAreaTransition.LeadsToAreaContaining(player.position))
+            {
+                reachedPikoArea = true;
+                RebuildWaypointPath(
+                    waypointRoot.transform,
+                    player,
+                    pikoBoard.position,
+                    true,
+                    false,
+                    true);
+            }
+
+            yield return new WaitForSecondsRealtime(shopWaypointRefreshInterval);
+        }
+
+        if (waypointRoot != null)
+        {
+            Destroy(waypointRoot);
+            if (dayTwoPikoWaypoints == waypointRoot)
+                dayTwoPikoWaypoints = null;
         }
     }
 

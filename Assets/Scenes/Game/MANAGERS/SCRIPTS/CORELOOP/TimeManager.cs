@@ -35,6 +35,7 @@ public class TimeManager : MonoBehaviour
 
     public float DayLength => dayLength;
     public bool IsTimeFrozen => frozenTimeRemaining > 0f;
+    public bool IsDayTimePaused => dayTimePaused;
     public float FreezeTimeRemaining => frozenTimeRemaining;
     public DayPhase CurrentDayPhase => GetDayPhase(GetDayProgress());
 

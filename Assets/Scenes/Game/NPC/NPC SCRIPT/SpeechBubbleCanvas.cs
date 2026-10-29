@@ -46,6 +46,65 @@ public static class SpeechBubbleCanvas
             return null;
         }
 
+        return ShowOnCanvas(anchor, message, duration, bubbleSize, fontSize, canvas, worldCamera);
+    }
+
+    public static GameObject ShowOnIsolatedOverlay(
+        Transform anchor,
+        string message,
+        float duration,
+        Vector2 bubbleSize,
+        int fontSize)
+    {
+        if (anchor == null || string.IsNullOrWhiteSpace(message))
+            return null;
+
+        Camera worldCamera = Camera.main;
+        if (worldCamera == null)
+        {
+            Debug.LogWarning(
+                "Speech bubbles require a camera tagged MainCamera.");
+            return null;
+        }
+
+        GameObject canvasObject = new GameObject(
+            "Speech Bubble Overlay",
+            typeof(RectTransform),
+            typeof(Canvas),
+            typeof(CanvasScaler));
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 100;
+
+        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+
+        GameObject bubble = ShowOnCanvas(
+            anchor,
+            message,
+            duration,
+            bubbleSize,
+            fontSize,
+            canvas,
+            worldCamera,
+            true);
+        if (bubble == null)
+            Object.Destroy(canvasObject);
+
+        return bubble;
+    }
+
+    private static GameObject ShowOnCanvas(
+        Transform anchor,
+        string message,
+        float duration,
+        Vector2 bubbleSize,
+        int fontSize,
+        Canvas canvas,
+        Camera worldCamera,
+        bool destroyCanvasOnExpiry = false)
+    {
         RectTransform canvasRect = canvas.transform as RectTransform;
         if (canvasRect == null)
             return null;
@@ -90,7 +149,7 @@ public static class SpeechBubbleCanvas
         textRect.anchoredPosition = Vector2.zero;
 
         ScreenSpaceBubbleFollower follower = bubble.AddComponent<ScreenSpaceBubbleFollower>();
-        follower.Initialize(anchor, canvas, worldCamera, duration);
+        follower.Initialize(anchor, canvas, worldCamera, duration, destroyCanvasOnExpiry);
         return bubble;
     }
 

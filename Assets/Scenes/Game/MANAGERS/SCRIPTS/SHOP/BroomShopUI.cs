@@ -74,6 +74,8 @@ public class BroomShopUI : MonoBehaviour
 
     private void OnDisable()
     {
+        DayManager.Instance?.OnDayTwoShopClosed();
+
         if (economyManager != null)
         {
             economyManager.CoinsChanged -= OnEconomyChanged;

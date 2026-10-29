@@ -8,17 +8,20 @@ public class ScreenSpaceBubbleFollower : MonoBehaviour
     private float expiresAt;
     private RectTransform bubbleRect;
     private RectTransform canvasRect;
+    private bool destroyCanvasOnExpiry;
 
     public void Initialize(
         Transform target,
         Canvas targetCanvas,
         Camera targetCamera,
-        float duration)
+        float duration,
+        bool destroyCanvasWhenExpired = false)
     {
         anchor = target;
         canvas = targetCanvas;
         worldCamera = targetCamera;
         expiresAt = Time.time + Mathf.Max(0.1f, duration);
+        destroyCanvasOnExpiry = destroyCanvasWhenExpired;
         bubbleRect = transform as RectTransform;
         canvasRect = canvas.transform as RectTransform;
         UpdatePosition();
@@ -29,7 +32,7 @@ public class ScreenSpaceBubbleFollower : MonoBehaviour
         if (anchor == null || canvas == null || worldCamera == null ||
             canvasRect == null || Time.time >= expiresAt)
         {
-            Destroy(gameObject);
+            DestroyBubble();
             return;
         }
 
@@ -68,5 +71,13 @@ public class ScreenSpaceBubbleFollower : MonoBehaviour
             -halfCanvas.y + halfBubble.y,
             halfCanvas.y - halfBubble.y);
         bubbleRect.anchoredPosition = localPosition;
+    }
+
+    private void DestroyBubble()
+    {
+        if (destroyCanvasOnExpiry && canvas != null)
+            Destroy(canvas.gameObject);
+        else
+            Destroy(gameObject);
     }
 }

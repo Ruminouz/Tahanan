@@ -80,8 +80,7 @@ public class MapTransition : MonoBehaviour
 
         SetConfinerBoundaryAtPosition(destination);
 
-        CinemachineCamera cameraRig = FindFirstObjectByType<CinemachineCamera>(
-            FindObjectsInactive.Include);
+        CinemachineCamera cameraRig = FindCameraRig();
         if (cameraRig == null)
             return;
 
@@ -92,12 +91,36 @@ public class MapTransition : MonoBehaviour
         StartCameraTransition(cameraRig, cameraPosition);
     }
 
+    public static IEnumerator MoveCameraToPositionAndWait(
+        Vector3 destination,
+        Transform followTarget = null)
+    {
+        Physics2D.SyncTransforms();
+        SetConfinerBoundaryAtPosition(destination);
+
+        CinemachineCamera cameraRig = FindCameraRig();
+        if (cameraRig == null)
+        {
+            Debug.LogWarning(
+                "The camera could not move because no active Cinemachine camera was found.");
+            yield break;
+        }
+
+        Vector3 cameraPosition = cameraRig.transform.position;
+        cameraPosition.x = destination.x;
+        cameraPosition.y = destination.y;
+        cameraRig.Follow = null;
+        StartCameraTransition(cameraRig, cameraPosition, followTarget);
+
+        while (cameraTransition != null && transitioningCamera == cameraRig)
+            yield return null;
+    }
+
     public static void SetConfinerBoundaryAtPosition(Vector3 destination)
     {
         Physics2D.SyncTransforms();
 
-        CinemachineCamera cameraRig = FindFirstObjectByType<CinemachineCamera>(
-            FindObjectsInactive.Include);
+        CinemachineCamera cameraRig = FindCameraRig();
         if (cameraRig == null)
             return;
 
@@ -149,8 +172,7 @@ public class MapTransition : MonoBehaviour
             return;
 
         Vector3 destination = player.transform.position;
-        CinemachineCamera cameraRig = FindFirstObjectByType<CinemachineCamera>(
-            FindObjectsInactive.Include);
+        CinemachineCamera cameraRig = FindCameraRig();
         if (cameraRig == null)
             return;
 
@@ -164,8 +186,7 @@ public class MapTransition : MonoBehaviour
 
     public static void PanCamera(Vector3 worldOffset)
     {
-        CinemachineCamera cameraRig = FindFirstObjectByType<CinemachineCamera>(
-            FindObjectsInactive.Include);
+        CinemachineCamera cameraRig = FindCameraRig();
         if (cameraRig == null)
             return;
 
@@ -173,6 +194,19 @@ public class MapTransition : MonoBehaviour
         Vector3 cameraPosition = cameraRig.transform.position + worldOffset;
         cameraRig.transform.position = cameraPosition;
         cameraRig.ForceCameraPosition(cameraPosition, cameraRig.transform.rotation);
+    }
+
+    private static CinemachineCamera FindCameraRig()
+    {
+        CinemachineCamera[] cameras = FindObjectsByType<CinemachineCamera>(
+            FindObjectsSortMode.None);
+        foreach (CinemachineCamera cameraRig in cameras)
+        {
+            if (cameraRig != null && cameraRig.isActiveAndEnabled)
+                return cameraRig;
+        }
+
+        return null;
     }
 
     private static void StartCameraTransition(

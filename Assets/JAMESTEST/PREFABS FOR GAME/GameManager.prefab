@@ -150,7 +150,6 @@ MonoBehaviour:
   - {fileID: 123413015, guid: a7f3f81d85bc31d44b4027d472bc7e00, type: 3}
   dayWinCelebrationFramesPerSecond: 12
   shopCameraMoveDuration: 1.5
-  shopDialogueDuration: 4
   catCameraMoveDuration: 1
   catCameraHoldDuration: 1.5
   catCameraOrthographicSize: 2

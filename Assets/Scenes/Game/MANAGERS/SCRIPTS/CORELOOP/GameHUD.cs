@@ -878,7 +878,7 @@ public class GameHUD : MonoBehaviour
         buttonRect.anchorMax = new Vector2(1f, 1f);
         buttonRect.pivot = new Vector2(1f, 1f);
         buttonRect.anchoredPosition = new Vector2(-8f, -8f);
-        buttonRect.sizeDelta = new Vector2(36f, 36f);
+        buttonRect.sizeDelta = new Vector2(48f, 48f);
         button.transform.SetAsLastSibling();
 
         EnsureMinimizeButtonLabel(button, dailyQuestText);
@@ -955,7 +955,9 @@ public class GameHUD : MonoBehaviour
         buttonRect.anchorMax = new Vector2(0.5f, 0.5f);
         buttonRect.pivot = new Vector2(0.5f, 0.5f);
         buttonRect.anchoredPosition = anchoredPosition;
-        buttonRect.sizeDelta = new Vector2(36f, 32f);
+        buttonRect.sizeDelta = showMinimizeIcon
+            ? new Vector2(48f, 48f)
+            : new Vector2(36f, 32f);
 
         Button button = buttonObject.GetComponent<Button>();
         button.transition = Selectable.Transition.ColorTint;
@@ -1006,14 +1008,47 @@ public class GameHUD : MonoBehaviour
         Image background = button.GetComponent<Image>();
         if (background != null)
         {
-            background.sprite = useIcon ? minimizeButtonIcon : null;
+            background.sprite = null;
             background.type = Image.Type.Simple;
             background.color = useIcon
-                ? Color.white
+                ? Color.clear
                 : new Color(0.07f, 0.12f, 0.14f, 0.96f);
-            background.preserveAspect = useIcon;
             background.raycastTarget = true;
             button.targetGraphic = background;
+        }
+
+        button.transition = Selectable.Transition.None;
+
+        Transform iconTransform = button.transform.Find("Icon");
+        Image icon = iconTransform != null
+            ? iconTransform.GetComponent<Image>()
+            : null;
+        if (useIcon && icon == null)
+        {
+            GameObject iconObject = new GameObject(
+                "Icon",
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(Image));
+            iconObject.layer = button.gameObject.layer;
+            iconObject.transform.SetParent(button.transform, false);
+            iconTransform = iconObject.transform;
+            icon = iconObject.GetComponent<Image>();
+        }
+
+        if (icon != null)
+        {
+            icon.sprite = useIcon ? minimizeButtonIcon : null;
+            icon.color = Color.white;
+            icon.preserveAspect = true;
+            icon.raycastTarget = false;
+            RectTransform iconRect = icon.rectTransform;
+            iconRect.anchorMin = Vector2.zero;
+            iconRect.anchorMax = Vector2.one;
+            iconRect.offsetMin = new Vector2(4f, 4f);
+            iconRect.offsetMax = new Vector2(-4f, -4f);
+            icon.gameObject.SetActive(useIcon);
+            iconTransform.SetAsLastSibling();
         }
 
         SetMinimizeButtonLabelsVisible(button, !useIcon);

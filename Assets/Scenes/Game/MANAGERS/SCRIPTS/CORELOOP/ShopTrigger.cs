@@ -4,6 +4,8 @@ public class ShopTrigger : Interactable
 {
     [SerializeField] private GameObject shopPanel;
 
+    public bool IsShopOpen => shopPanel != null && shopPanel.activeSelf;
+
     public override void Interact()
     {
         if (shopPanel == null)
@@ -28,5 +30,7 @@ public class ShopTrigger : Interactable
     {
         if (shopPanel != null)
             shopPanel.SetActive(false);
+
+        DayManager.Instance?.OnDayTwoShopClosed();
     }
 }

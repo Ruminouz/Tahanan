@@ -185,6 +185,7 @@ public class MopShopUI : MonoBehaviour
     private void OnDisable()
     {
         CancelCatHighlight();
+        DayManager.Instance?.OnDayTwoShopClosed();
 
         if (economyManager != null)
         {
@@ -743,6 +744,7 @@ public class MopShopUI : MonoBehaviour
 
         ShowNpcHeartBubbles();
         Refresh();
+        DayManager.Instance?.OnDayTwoShopClosed();
     }
 
     private void ShowNpcHeartBubbles()

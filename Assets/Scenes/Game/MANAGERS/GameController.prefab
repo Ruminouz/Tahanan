@@ -134,6 +134,12 @@ MonoBehaviour:
   - name: Family
     audioClips:
     - {fileID: 8300000, guid: 11e57acdc0a06e342a8fecde5e6ffe54, type: 3}
+  - name: Write
+    audioClips:
+    - {fileID: 8300000, guid: 328cbf207811d5c4ebbbae623b22c26a, type: 3}
+  - name: Jump
+    audioClips:
+    - {fileID: 8300000, guid: c1fdf194479a0824f9e812aba597fc48, type: 3}
   - name: GameOver
     audioClips:
     - {fileID: 8300000, guid: 6aa380f4ad6cebb4ba1afc379c6eb30b, type: 3}
