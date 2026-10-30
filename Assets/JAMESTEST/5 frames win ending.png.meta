@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 0.001
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 1
+      name: 5 frames win ending_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 322
+        width: 320
         height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -113,21 +113,21 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: eac07ba4988884d50800000000000000
-      internalID: 6721772567095872686
+      spriteID: e8afb16f39575cf428b0ebf3e2521056
+      internalID: 1393946537
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2
+      name: 5 frames win ending_1
       rect:
         serializedVersion: 2
         x: 320
         y: 0
-        width: 323
+        width: 320
         height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -137,19 +137,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d0f82b6be920054f99ef00b3bdac9b5
-      internalID: 1629354363
+      spriteID: e10aa5878cb4bd249a682ab3cc8576cd
+      internalID: 6594207
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3
+      name: 5 frames win ending_2
       rect:
         serializedVersion: 2
         x: 640
         y: 0
-        width: 323
+        width: 320
         height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -159,19 +159,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eae92488474a9e544b4923fb2e962134
-      internalID: 193294292
+      spriteID: 8e30f148761a8df47bdc5b537edfbbdd
+      internalID: 592086563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4
+      name: 5 frames win ending_3
       rect:
         serializedVersion: 2
         x: 960
         y: 0
-        width: 323
+        width: 320
         height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -181,14 +181,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2178876a3ad0b984fad312342eb8ed32
-      internalID: -1924948944
+      spriteID: e8feab138576ee045956b1fe54638e70
+      internalID: 643590626
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5
+      name: 5 frames win ending_4
       rect:
         serializedVersion: 2
         x: 1280
@@ -203,8 +203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6e8bb81137ad9a4fa127698b18ff766
-      internalID: 258990869
+      spriteID: 903e17c8191497b4f94dce3f2cc1fb5d
+      internalID: -1539493043
       vertices: []
       indices: 
       edges: []
@@ -221,13 +221,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":320.0,"y":180.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      1: 6721772567095872686
-      2: 1629354363
-      3: 193294292
-      4: -1924948944
-      5: 258990869
+      5 frames win ending_0: 1393946537
+      5 frames win ending_1: 6594207
+      5 frames win ending_2: 592086563
+      5 frames win ending_3: 643590626
+      5 frames win ending_4: -1539493043
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

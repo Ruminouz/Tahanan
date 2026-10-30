@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 1652628696285098201}
   - component: {fileID: 7099000527141503415}
   - component: {fileID: 7250776330180996245}
+  - component: {fileID: 1470016393667523743}
   m_Layer: 7
   m_Name: Ate
   m_TagString: NPCS
@@ -340,9 +341,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9045426668256226764}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.38, y: -18.94, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 144751472672116067}
@@ -399,7 +400,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -6509080948709349596, guid: 193287c8abafbf245a931f13eb24ed44, type: 3}
+  m_Sprite: {fileID: 953823443802271197, guid: 643d4a5f37b553d41b0ff79a137fdff9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -495,12 +496,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BunsoAI
   actionInterval: 30
   actionChance: 60.9
-  dustBadMoodLine: Sweep this up, big brother! Hahaha!
   waterBadMoodLine: Mop this up, big brother! Hahaha!
-  segregateBadMoodLine: Put these away, big brother! Hahaha!
+  segregateBadMoodLine: Pick up these toys!
   garbageBagBadMoodLine: Throw this in the trash, big brother! Hahaha!
   chocolateRewardLine: I have chocolate for you mwehehe!
-  chocolateConsumedLine: Mama! brother ate my chocolate!
+  chocolateConsumedLine: Mom! brother ate my chocolate!
   timeFreezerRewardLine: use this to free the time!
   possibleBoosts: 0000000001000000
   chocolatePrefab: {fileID: 2093951337509963342, guid: 86d7c508fe0eba54eb85686efa87b206, type: 3}
@@ -508,8 +508,7 @@ MonoBehaviour:
   rewardDropGap: 0.15
   maximumBadMoodChoresByDay: 00000000020000000200000002000000020000000200000002000000
   segregateWastePrefab: {fileID: 0}
-  dustSpotPrefab: {fileID: 6552050211545809342, guid: 10c7e0e6b72a2f24aab7c74fa974ab65, type: 3}
-  wetAreaPrefab: {fileID: 6995687946688838214, guid: 22f1d286bcd5f4c4c80aedbe6bb2e753, type: 3}
+  wetAreaPrefab: {fileID: 0}
   garbageBagPrefab: {fileID: 0}
   choreLifetime: 120
   moveSpeed: 1.25
@@ -566,10 +565,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
-  m_CategoryHash: 1.8625731e-11
-  m_labelHash: 0.0033001888
+  m_CategoryHash: 0.009161512
+  m_labelHash: 1.0798508e-15
   m_SpriteKey: 0
-  m_SpriteHash: 505042554
+  m_SpriteHash: 775642942
 --- !u!114 &7099000527141503415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,7 +582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 9a51fda7bf0d32042ac383e110d29014, type: 3}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 0a77dcb3320512c4cb9496bbabc485a4, type: 3}
 --- !u!61 &7250776330180996245
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -618,15 +617,37 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.003624469, y: -0.03986931}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.24, y: 0.29}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.24, y: 0.29}
+  m_Size: {x: 0.59519774, y: 0.70318985}
   m_EdgeRadius: 0
+--- !u!95 &1470016393667523743
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045426668256226764}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d3cea8fbe076cdf47a94fe0e8bc22db4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
