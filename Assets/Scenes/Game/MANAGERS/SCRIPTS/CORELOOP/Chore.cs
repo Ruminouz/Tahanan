@@ -160,6 +160,12 @@ public class Chore : Interactable
             manager.CompleteChore(this, points, earlyBonusPoints);
         }
 
+        DayManager dayManager = DayManager.Instance != null
+            ? DayManager.Instance
+            : FindFirstObjectByType<DayManager>();
+        if (dayManager != null)
+            dayManager.NotifyChoreCompleted();
+
         Debug.Log(
             choreName 
             + " completed!"

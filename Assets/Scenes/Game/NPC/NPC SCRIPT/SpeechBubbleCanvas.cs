@@ -95,6 +95,55 @@ public static class SpeechBubbleCanvas
         return bubble;
     }
 
+    public static GameObject ShowSpriteOnIsolatedOverlay(
+        Transform anchor,
+        Sprite sprite,
+        float duration,
+        Vector2 imageSize)
+    {
+        if (anchor == null || sprite == null)
+            return null;
+
+        Camera worldCamera = Camera.main;
+        if (worldCamera == null)
+        {
+            Debug.LogWarning(
+                "Sprite speech bubbles require a camera tagged MainCamera.");
+            return null;
+        }
+
+        GameObject canvasObject = new GameObject(
+            "Speech Bubble Image Overlay",
+            typeof(RectTransform),
+            typeof(Canvas),
+            typeof(CanvasScaler));
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 100;
+
+        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+
+        GameObject imageObject = new GameObject(
+            "Speech Bubble Image",
+            typeof(RectTransform),
+            typeof(Image));
+        RectTransform imageRect = imageObject.GetComponent<RectTransform>();
+        imageRect.SetParent(canvas.transform, false);
+        imageRect.sizeDelta = imageSize;
+
+        Image image = imageObject.GetComponent<Image>();
+        image.sprite = sprite;
+        image.preserveAspect = true;
+        image.raycastTarget = false;
+
+        ScreenSpaceBubbleFollower follower =
+            imageObject.AddComponent<ScreenSpaceBubbleFollower>();
+        follower.Initialize(anchor, canvas, worldCamera, duration, true);
+        return canvasObject;
+    }
+
     private static GameObject ShowOnCanvas(
         Transform anchor,
         string message,

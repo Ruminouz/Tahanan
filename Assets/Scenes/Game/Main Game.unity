@@ -7128,6 +7128,7 @@ MonoBehaviour:
   dialogueText: {fileID: 4945669384047519556}
   nameText: {fileID: 6378264604612575136}
   portraitImage: {fileID: 6397008764148728232}
+  resizeDialoguePanelToFitText: 1
 --- !u!1 &740420132455083845
 GameObject:
   m_ObjectHideFlags: 0

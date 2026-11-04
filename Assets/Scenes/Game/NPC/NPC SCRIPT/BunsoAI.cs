@@ -72,6 +72,7 @@ public class BunsoAI : MonoBehaviour
     private Rigidbody2D body;
     private Collider2D bodyCollider;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private Sprite defaultSprite;
     private Transform player;
     private Vector2 homePosition;
@@ -92,6 +93,7 @@ public class BunsoAI : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         bodyCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        animator = GetComponentInChildren<Animator>();
         defaultSprite = spriteRenderer != null ? spriteRenderer.sprite : null;
         previousAnimationPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -210,6 +212,11 @@ public class BunsoAI : MonoBehaviour
     private void UpdateSpriteAnimation()
     {
         if (spriteRenderer == null)
+            return;
+
+        if (animator != null &&
+            animator.isActiveAndEnabled &&
+            animator.runtimeAnimatorController != null)
             return;
 
         Vector2 currentPosition = transform.position;

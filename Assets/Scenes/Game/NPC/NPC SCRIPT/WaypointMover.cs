@@ -564,8 +564,6 @@ public class WaypointMover : MonoBehaviour
 
         {
 
-            animator.SetBool("isWalking", false);
-
             StopMovement();
 
             stuckTimer = 0f;
@@ -594,6 +592,10 @@ public class WaypointMover : MonoBehaviour
 
     {
 
+        if (animator != null)
+
+            animator.SetBool("isWalking", false);
+
         Rigidbody2D body = GetComponent<Rigidbody2D>();
 
         if (body != null)
@@ -608,19 +610,29 @@ public class WaypointMover : MonoBehaviour
 
         activeWaypoints = waypoints;
 
-        if (activeWaypoints == null || activeWaypoints.Length == 0) return;
+        if (activeWaypoints == null || activeWaypoints.Length == 0)
+        {
+            StopMovement();
+            return;
+        }
 
         if (currentWaypointIndex < 0 || currentWaypointIndex >= activeWaypoints.Length)
         {
             currentWaypointIndex = FindNearestUnclaimedWaypointIndex(
                 body != null ? body.position : (Vector2)transform.position);
             if (currentWaypointIndex < 0)
+            {
+                StopMovement();
                 return;
+            }
         }
 
         Transform target = activeWaypoints[currentWaypointIndex];
         if (target == null)
+        {
+            StopMovement();
             return;
+        }
 
         if (NPCMovement2D.IsWaypointClaimed(this, target))
 
@@ -631,20 +643,17 @@ public class WaypointMover : MonoBehaviour
                 body != null ? body.position : (Vector2)transform.position);
 
             if (currentWaypointIndex < 0)
-
+            {
+                StopMovement();
                 return;
+            }
 
             target = activeWaypoints[currentWaypointIndex];
             if (target == null)
+            {
+                StopMovement();
                 return;
-        }
-
-        Vector2 direction = (target.position - transform.position).normalized;
-        if (animator != null)
-        {
-            animator.SetFloat("InputX", direction.x);
-            animator.SetFloat("InputY", direction.y);
-            animator.SetBool("isWalking", direction.magnitude > 0f);
+            }
         }
 
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
@@ -698,6 +707,18 @@ public class WaypointMover : MonoBehaviour
             obstacleLayers,
 
             collisionPadding);
+
+        if (animator != null)
+        {
+            if (safeMovement.sqrMagnitude > 0.0001f)
+            {
+                Vector2 direction = safeMovement.normalized;
+                animator.SetFloat("InputX", direction.x);
+                animator.SetFloat("InputY", direction.y);
+            }
+
+            animator.SetBool("isWalking", safeMovement.sqrMagnitude > 0.0001f);
+        }
 
         float previousDistance = Vector2.Distance(currentPosition, navigationTarget);
 
@@ -855,9 +876,21 @@ public class WaypointMover : MonoBehaviour
 
     {
 
+        return MoveTowards(target, speed, arriveDistance, out _);
+
+    }
+
+    public bool MoveTowards(
+        Vector2 target,
+        float speed,
+        float arriveDistance,
+        out Vector2 movement)
+
+    {
+
         Vector2 currentPosition = body != null ? body.position : (Vector2)transform.position;
 
-        Vector2 movement = GetMovementTowards(target, speed);
+        movement = GetMovementTowards(target, speed);
 
         if (body != null)
 

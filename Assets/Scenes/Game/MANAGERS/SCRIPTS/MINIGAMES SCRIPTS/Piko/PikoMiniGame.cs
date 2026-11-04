@@ -26,6 +26,25 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
         public int sortingOrder;
     }
 
+    private struct AnimatorFloatState
+    {
+        public Animator animator;
+        public int parameterHash;
+        public float value;
+    }
+
+    private static readonly int InputXHash = Animator.StringToHash("InputX");
+    private static readonly int InputYHash = Animator.StringToHash("InputY");
+    private static readonly int LastInputXHash = Animator.StringToHash("LastInputX");
+    private static readonly int LastInputYHash = Animator.StringToHash("LastInputY");
+    private static readonly int[] DirectionParameterHashes =
+    {
+        InputXHash,
+        InputYHash,
+        LastInputXHash,
+        LastInputYHash
+    };
+
     private static readonly float[] SquareHeights =
     {
         0.09f, 0.21f, 0.33f, 0.45f, 0.45f,
@@ -59,7 +78,6 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
     private Transform previousCameraFollow;
     private Vector3 previousCameraPosition;
     private float previousCameraSize;
-    private float previousTimeScale;
     private float previousPlayerAnimatorSpeed;
     private float previousAteAnimatorSpeed;
     private AnimatorUpdateMode previousPlayerAnimatorUpdateMode;
@@ -68,6 +86,8 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
     private Vector3 previousAteScale;
     private SpriteSortingState[] playerSortingStates;
     private SpriteSortingState[] ateSortingStates;
+    private AnimatorFloatState[] playerDirectionStates;
+    private AnimatorFloatState[] ateDirectionStates;
     private Vector3 playerStartPosition;
     private Vector3 ateStartPosition;
     private bool previousDayTimePaused;
@@ -229,6 +249,8 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
         previousPlayerBodySimulated = playerBody != null && playerBody.simulated;
         previousPlayerAnimatorEnabled = playerAnimator != null && playerAnimator.enabled;
         previousAteAnimatorEnabled = ateAnimator != null && ateAnimator.enabled;
+        playerDirectionStates = CaptureDirectionParameters(playerAnimator);
+        ateDirectionStates = CaptureDirectionParameters(ateAnimator);
         previousPlayerAnimatorSpeed = playerAnimator != null ? playerAnimator.speed : 1f;
         previousAteAnimatorSpeed = ateAnimator != null ? ateAnimator.speed : 1f;
         previousPlayerAnimatorUpdateMode = playerAnimator != null
@@ -249,10 +271,8 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
             timeManager.SetDayTimePaused(true);
         }
 
-        previousTimeScale = Time.timeScale;
-        ownsGamePause = !PauseController.IsGamePaused;
-        if (ownsGamePause)
-            PauseController.SetPause(true);
+        ownsGamePause = true;
+        PauseController.SetPause(this, true);
 
         sessionActive = true;
         resultReady = false;
@@ -438,6 +458,8 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
         Vector3 start = contestant.position;
         Vector3 destination = GetContestantPosition(contestant, square, sideOffset);
         SoundEffectManager.Play("Jump");
+        Vector2 direction = (destination - start).normalized;
+        SetAnimationDirection(animator, direction);
         SetWalking(animator, true);
 
         float elapsed = 0f;
@@ -574,6 +596,70 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
             return;
 
         animator.SetBool("isWalking", walking);
+    }
+
+    private static AnimatorFloatState[] CaptureDirectionParameters(Animator animator)
+    {
+        if (animator == null)
+            return Array.Empty<AnimatorFloatState>();
+
+        AnimatorControllerParameter[] parameters = animator.parameters;
+        AnimatorFloatState[] states = new AnimatorFloatState[DirectionParameterHashes.Length];
+        int stateCount = 0;
+        foreach (int parameterHash in DirectionParameterHashes)
+        {
+            foreach (AnimatorControllerParameter parameter in parameters)
+            {
+                if (parameter.nameHash != parameterHash ||
+                    parameter.type != AnimatorControllerParameterType.Float)
+                    continue;
+
+                states[stateCount++] = new AnimatorFloatState
+                {
+                    animator = animator,
+                    parameterHash = parameterHash,
+                    value = animator.GetFloat(parameterHash)
+                };
+                break;
+            }
+        }
+
+        if (stateCount == states.Length)
+            return states;
+
+        Array.Resize(ref states, stateCount);
+        return states;
+    }
+
+    private static void SetAnimationDirection(Animator animator, Vector2 direction)
+    {
+        if (animator == null || direction.sqrMagnitude <= 0.0001f)
+            return;
+
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.type != AnimatorControllerParameterType.Float)
+                continue;
+
+            if (parameter.nameHash == InputXHash ||
+                parameter.nameHash == LastInputXHash)
+                animator.SetFloat(parameter.nameHash, direction.x);
+            else if (parameter.nameHash == InputYHash ||
+                     parameter.nameHash == LastInputYHash)
+                animator.SetFloat(parameter.nameHash, direction.y);
+        }
+    }
+
+    private static void RestoreDirectionParameters(AnimatorFloatState[] states)
+    {
+        if (states == null)
+            return;
+
+        foreach (AnimatorFloatState state in states)
+        {
+            if (state.animator != null)
+                state.animator.SetFloat(state.parameterHash, state.value);
+        }
     }
 
     private static SpriteSortingState[] SetActorSorting(
@@ -861,9 +947,7 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
             timeManager.SetDayTimePaused(previousDayTimePaused);
 
         if (ownsGamePause && PauseController.IsGamePaused)
-            PauseController.SetPause(false);
-        else if (ownsGamePause && Time.timeScale == 0f)
-            Time.timeScale = previousTimeScale;
+            PauseController.SetPause(this, false);
 
         ownsGamePause = false;
         if (sessionBlocker != null)
@@ -935,6 +1019,10 @@ public class PikoMiniGame : MonoBehaviour, IInteractable
             previousAteAnimatorEnabled,
             previousAteAnimatorSpeed,
             previousAteAnimatorUpdateMode);
+        RestoreDirectionParameters(playerDirectionStates);
+        RestoreDirectionParameters(ateDirectionStates);
+        playerDirectionStates = null;
+        ateDirectionStates = null;
         if (player != null)
             player.SetMovementInputEnabled(previousPlayerMovementInputEnabled);
 

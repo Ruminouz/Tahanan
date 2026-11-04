@@ -3,9 +3,30 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
+    [SerializeField] private LoadingScreenController loadingScreen;
+
+    private void Awake()
+    {
+        if (loadingScreen != null)
+        {
+            loadingScreen.gameObject.SetActive(false);
+        }
+    }
+
+    private void Start()
+    {
+        ButtonSoundEffects.AttachToAllButtons();
+    }
+
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        if (loadingScreen == null)
+        {
+            Debug.LogError("Loading screen is not assigned on the SceneManager.", this);
+            return;
+        }
+
+        loadingScreen.LoadScene(1);
     }
 
     public void ReturnToMainMenu()

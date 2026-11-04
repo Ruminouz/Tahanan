@@ -16,7 +16,7 @@ public class DayManager : MonoBehaviour
     private const float EarliestChoreDeadlineFraction = 0.25f;
     private const float LatestChoreDeadlineFraction = 0.9f;
     private static readonly Color WeekCompleteSummaryTextColor =
-        new Color32(46, 125, 50, 255);
+        new Color32(255, 255, 255, 255);
     private static readonly Color WeekCompleteSummaryOutlineColor =
         new Color32(0, 0, 0, 255);
     private static Sprite shopWaypointArrowSprite;
@@ -140,6 +140,7 @@ public class DayManager : MonoBehaviour
     private bool summaryRevealComplete;
     private bool transitionInProgress;
     private bool dayStartIntroInProgress;
+    private GameObject dayOneDepartureBubbleOverlay;
     private bool dayOneFollowupIntroStarted;
     private bool dayOneWaterTutorialComplete;
     private bool dayOneKitchenIntroStarted;
@@ -209,6 +210,23 @@ public class DayManager : MonoBehaviour
     public int MissedChoreGameOverThreshold => GetMissedChoreGameOverThreshold();
     public bool HasReachedMissedChoreGameOverThreshold => choreManager != null &&
         choreManager.missedChores >= GetMissedChoreGameOverThreshold();
+    public bool AreAllActiveChoresResolved => AllActiveChoresResolved();
+    public bool IsReadyToFinishDay => !dayFinished &&
+        !transitionInProgress &&
+        !dayStartIntroInProgress &&
+        !HasReachedMissedChoreGameOverThreshold &&
+        !HasPendingHudChores();
+
+    public void NotifyChoreCompleted()
+    {
+        if (dayFinished ||
+            transitionInProgress ||
+            !AllActiveChoresResolved() ||
+            HasPendingHudChores())
+            return;
+
+        FinishDay();
+    }
 
     public bool CanRegisterBunsoBadMoodChoreDrop(int dailyMaximum)
     {
@@ -772,11 +790,14 @@ public class DayManager : MonoBehaviour
 
                 WaypointMover mover =
                     parentNpc.GetComponentInChildren<WaypointMover>(true);
-                if (mover == null ||
+                Vector2 movement = Vector2.zero;
+                bool arrived = mover == null ||
                     mover.MoveTowards(
                         destination,
                         parentWalkSpeed,
-                        parentWalkArrivalDistance))
+                        parentWalkArrivalDistance,
+                        out movement);
+                if (arrived)
                 {
                     SetParentWalkingAnimation(parentNpc, Vector2.zero);
                     if (mover != null)
@@ -785,9 +806,7 @@ public class DayManager : MonoBehaviour
                 }
                 else
                 {
-                    SetParentWalkingAnimation(
-                        parentNpc,
-                        (Vector2)(destination - parentNpc.transform.position));
+                    SetParentWalkingAnimation(parentNpc, movement);
                 }
             }
 
@@ -881,6 +900,28 @@ public class DayManager : MonoBehaviour
         Vector2 normalizedDirection = isWalking
             ? movementDirection.normalized
             : Vector2.zero;
+        if (isWalking)
+        {
+            float angle = Mathf.Atan2(
+                normalizedDirection.y,
+                normalizedDirection.x) * Mathf.Rad2Deg;
+            if (angle < 0f)
+                angle += 360f;
+
+            int octant = Mathf.RoundToInt(angle / 45f) % 8;
+            normalizedDirection = octant switch
+            {
+                0 => Vector2.right,
+                1 => Vector2.one,
+                2 => Vector2.up,
+                3 => new Vector2(-1f, 1f),
+                4 => Vector2.left,
+                5 => new Vector2(-1f, -1f),
+                6 => Vector2.down,
+                _ => new Vector2(1f, -1f)
+            };
+        }
+
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
             if (parameter.name == "isWalking" &&
@@ -891,12 +932,20 @@ public class DayManager : MonoBehaviour
             else if (parameter.name == "InputX" &&
                      parameter.type == AnimatorControllerParameterType.Float)
             {
-                animator.SetFloat(parameter.nameHash, normalizedDirection.x);
+                animator.SetFloat(
+                    parameter.nameHash,
+                    normalizedDirection.x,
+                    0.1f,
+                    Time.deltaTime);
             }
             else if (parameter.name == "InputY" &&
                      parameter.type == AnimatorControllerParameterType.Float)
             {
-                animator.SetFloat(parameter.nameHash, normalizedDirection.y);
+                animator.SetFloat(
+                    parameter.nameHash,
+                    normalizedDirection.y,
+                    0.1f,
+                    Time.deltaTime);
             }
         }
     }
@@ -1014,6 +1063,9 @@ public class DayManager : MonoBehaviour
         if (dayOneIntroOverlay != null)
             Destroy(dayOneIntroOverlay);
 
+        if (dayOneDepartureBubbleOverlay != null)
+            Destroy(dayOneDepartureBubbleOverlay);
+
         if (economyManager != null)
             economyManager.CoinsEarned -= HandleCoinsEarned;
 
@@ -1097,7 +1149,7 @@ public class DayManager : MonoBehaviour
         if (doubleGameSpeed)
         {
             normalTimeScale = Time.timeScale;
-            Time.timeScale = normalTimeScale * 2f;
+            PauseController.SetTimeScale(normalTimeScale * 2f);
             doubleGameSpeedApplied = true;
         }
         else
@@ -1111,7 +1163,7 @@ public class DayManager : MonoBehaviour
         if (!doubleGameSpeedApplied)
             return;
 
-        Time.timeScale = normalTimeScale;
+        PauseController.SetTimeScale(normalTimeScale);
         doubleGameSpeedApplied = false;
     }
 
@@ -1866,6 +1918,8 @@ public class DayManager : MonoBehaviour
 
         if (summaryChoresText != null)
         {
+            SetWeekCompleteSummaryTextStyle(summaryChoresText);
+
             RectTransform textRect = summaryChoresText.rectTransform;
             Vector2 originalAnchorMin = textRect.anchorMin;
             Vector2 originalAnchorMax = textRect.anchorMax;
@@ -1893,7 +1947,7 @@ public class DayManager : MonoBehaviour
             summaryChoresText.overflowMode = TextOverflowModes.Truncate;
             summaryChoresText.text =
                 "<size=155%><b><color=#FFD66B>CONGRATULATIONS!</color></b></size>\n\n" +
-                "<color=#2E7D32>You completed the one-week challenge!\n\n" +
+                "<color=#FFFFFF>You completed the one-week challenge!\n\n" +
                 "Your hard work brought the family closer, and now you can " +
                 "celebrate a happier home together.</color>";
 
@@ -2548,6 +2602,7 @@ public class DayManager : MonoBehaviour
         Transform originalSummaryTextParent = null;
         int originalSummaryTextSiblingIndex = -1;
         Vector3 originalSummaryTextLocalScale = Vector3.one;
+        bool originalSummaryTextWasActive = false;
         Vector2 originalAnchorMin = Vector2.zero;
         Vector2 originalAnchorMax = Vector2.zero;
         Vector2 originalAnchoredPosition = Vector2.zero;
@@ -2574,6 +2629,7 @@ public class DayManager : MonoBehaviour
             originalSummaryTextParent = summaryTextRect.parent;
             originalSummaryTextSiblingIndex = summaryTextRect.GetSiblingIndex();
             originalSummaryTextLocalScale = summaryTextRect.localScale;
+            originalSummaryTextWasActive = summaryTextRect.gameObject.activeSelf;
             originalAnchorMin = summaryTextRect.anchorMin;
             originalAnchorMax = summaryTextRect.anchorMax;
             originalAnchoredPosition = summaryTextRect.anchoredPosition;
@@ -2605,18 +2661,33 @@ public class DayManager : MonoBehaviour
 
             yield return Fade(1f);
             StartNextDay();
-            summaryChoresText.text =
-                "<size=125%><b>DAY " + currentDay +
-                "</b></size>\n\nA fresh morning begins.";
-            SoundEffectManager.Play("Good Morning");
-            yield return Fade(0f);
-            yield return WaitForRealtime(transitionCardHoldDuration);
-            yield return Fade(1f);
+            LoadingScreenController loadingScreen = FindFirstObjectByType<LoadingScreenController>(
+                FindObjectsInactive.Include);
+            if (loadingScreen != null)
+            {
+                summaryTextRect.gameObject.SetActive(false);
+                daySummaryPanel.SetActive(false);
+                yield return loadingScreen.ShowForDayTransition();
+            }
+            else
+            {
+                summaryChoresText.text =
+                    "<size=125%><b>DAY " + currentDay +
+                    "</b></size>\n\nA fresh morning begins.";
+                SoundEffectManager.Play("Good Morning");
+                yield return Fade(0f);
+                yield return WaitForRealtime(transitionCardHoldDuration);
+                yield return Fade(1f);
+            }
         }
         else
         {
             yield return new WaitForSecondsRealtime(1f);
             StartNextDay();
+            LoadingScreenController loadingScreen = FindFirstObjectByType<LoadingScreenController>(
+                FindObjectsInactive.Include);
+            if (loadingScreen != null)
+                yield return loadingScreen.ShowForDayTransition();
         }
 
         if (daySummaryPanel != null)
@@ -2639,6 +2710,7 @@ public class DayManager : MonoBehaviour
             summaryTextRect.localScale = originalSummaryTextLocalScale;
             summaryChoresText.alignment = originalAlignment;
             summaryChoresText.fontSize = originalFontSize;
+            summaryTextRect.gameObject.SetActive(originalSummaryTextWasActive);
 
             for (int i = 0; i < summaryDetails.Length; i++)
             {
@@ -2664,6 +2736,43 @@ public class DayManager : MonoBehaviour
 
         StartDay();
         transitionInProgress = false;
+    }
+
+    private GameObject CreateDayOneDepartureBubble()
+    {
+        Sprite[] workBubbles = Resources.LoadAll<Sprite>("DayOneWorkBubble");
+        if (workBubbles.Length == 0 || workBubbles[0] == null)
+        {
+            Debug.LogWarning(
+                "The Day 1 departure bubble sprite could not be loaded from Resources/DayOneWorkBubble.",
+                this);
+            return null;
+        }
+
+        MomAI nanay = null;
+        foreach (GameObject parentNpc in GetParentNpcs())
+        {
+            if (!IsNanayNpc(parentNpc))
+                continue;
+
+            nanay = parentNpc.GetComponentInChildren<MomAI>(true);
+            if (nanay != null)
+                break;
+        }
+
+        if (nanay == null)
+        {
+            Debug.LogWarning(
+                "The Day 1 departure bubble was skipped because Nanay could not be found.",
+                this);
+            return null;
+        }
+
+        return SpeechBubbleCanvas.ShowSpriteOnIsolatedOverlay(
+            nanay.BubbleAnchor,
+            workBubbles[0],
+            parentWalkTimeout + 1f,
+            new Vector2(340f, 262f));
     }
 
     private IEnumerator StartDayOneWithIntroduction()
@@ -2736,9 +2845,16 @@ public class DayManager : MonoBehaviour
 
             Destroy(dayOneIntroOverlay);
             dayOneIntroOverlay = null;
-            Time.timeScale = dayOneIntroPreviousTimeScale;
+            PauseController.SetTimeScale(dayOneIntroPreviousTimeScale);
+            dayOneDepartureBubbleOverlay = CreateDayOneDepartureBubble();
             yield return WalkParentsToPositions(GetParentEntrancePositions());
-            Time.timeScale = 0f;
+            if (dayOneDepartureBubbleOverlay != null)
+            {
+                Destroy(dayOneDepartureBubbleOverlay);
+                dayOneDepartureBubbleOverlay = null;
+            }
+
+            PauseController.SetTimeScale(0f);
             RestoreSceneNpcsForCurrentDay();
             dayOneIntroOverlay = CreateDayOneIntroOverlay(out continuePrompt);
             introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
@@ -3263,7 +3379,7 @@ public class DayManager : MonoBehaviour
         }
 
         dayOneIntroPausedTime = true;
-        Time.timeScale = 0f;
+        PauseController.SetTimeScale(0f);
     }
 
     private void ResumeDayOneIntro()
@@ -3281,7 +3397,7 @@ public class DayManager : MonoBehaviour
             }
         }
 
-        Time.timeScale = dayOneIntroPreviousTimeScale;
+        PauseController.SetTimeScale(dayOneIntroPreviousTimeScale);
         dayOneIntroPausedTime = false;
         dayOneIntroBrains = null;
         dayOneIntroBrainPreviousIgnoreTimeScale = null;
@@ -3540,7 +3656,7 @@ public class DayManager : MonoBehaviour
         continuePrompt.font = dayOneIntroFont;
         continuePrompt.outlineWidth = 0.4f;
         continuePrompt.outlineColor = Color.black;
-        continuePrompt.text = "Press Space or Esc to continue";
+        continuePrompt.text = "Press Space to continue";
         Vector3 originalScale = continuePrompt.rectTransform.localScale;
         float revealElapsed = 0f;
         float pulseElapsed = 0f;
@@ -3614,7 +3730,7 @@ public class DayManager : MonoBehaviour
         int directionsTested = -1;
 
         SetDayOneCameraFollowTarget(player.transform);
-        Time.timeScale = dayOneIntroPreviousTimeScale;
+        PauseController.SetTimeScale(dayOneIntroPreviousTimeScale);
         player.SetMovementInputEnabled(true);
 
         while (!testedUp || !testedLeft || !testedDown || !testedRight)
@@ -3648,15 +3764,14 @@ public class DayManager : MonoBehaviour
 
         player.SetMovementInputEnabled(false);
         SetDayOneCameraFollowTarget(null);
-        Time.timeScale = 0f;
-        continuePrompt.text = "Movement tested! Press Space or Esc to continue";
+        PauseController.SetTimeScale(0f);
+        continuePrompt.text = "Movement tested! Press Space to continue";
     }
 
     private static bool WasDayOneIntroContinuePressed()
     {
-        return (Keyboard.current != null &&
-                (Keyboard.current.spaceKey.wasPressedThisFrame ||
-                 Keyboard.current.escapeKey.wasPressedThisFrame));
+        return Keyboard.current != null &&
+            Keyboard.current.spaceKey.wasPressedThisFrame;
     }
 
     private IEnumerator StartDayTwoWithIntroduction()
@@ -4538,6 +4653,7 @@ public class DayManager : MonoBehaviour
         if (!gameOver && !weekComplete)
             return;
 
+        LoadingScreenController.DestroyPersistentInstance();
         SceneManager.LoadScene(0);
     }
 

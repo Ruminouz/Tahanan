@@ -58,6 +58,8 @@ public class MomAI : MonoBehaviour
     private Color normalSpriteColor = Color.white;
     private bool hasNormalSpriteColor;
 
+    public Transform BubbleAnchor => bubbleAnchor != null ? bubbleAnchor : transform;
+
     private void Awake()
     {
         moodManager = MoodManager.Instance != null
@@ -325,7 +327,7 @@ public class MomAI : MonoBehaviour
 
             if (slipperPrefab != null)
             {
-                Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
+                Transform anchor = BubbleAnchor;
                 Vector3 spawnPosition = player != null ? player.position : anchor.position;
                 Destroy(Instantiate(slipperPrefab, spawnPosition, anchor.rotation), 1.5f);
             }
@@ -449,9 +451,7 @@ public class MomAI : MonoBehaviour
 
     private void ShowMoodDialogue()
     {
-        Transform anchor = bubbleAnchor != null ? bubbleAnchor : transform;
-        string line = GetMoodLine();
-        SpeechBubbleCanvas.Show(anchor, line, bubbleDuration);
+        SpeechBubbleCanvas.Show(BubbleAnchor, GetMoodLine(), bubbleDuration);
     }
 
     private string GetMissedChoreLine(Chore chore)

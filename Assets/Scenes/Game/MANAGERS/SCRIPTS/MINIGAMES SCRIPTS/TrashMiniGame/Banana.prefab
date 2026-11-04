@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -396380415256652099, guid: 265d43a8f47e7104c994e57eb3c1da10, type: 3}
+  m_Sprite: {fileID: -9182177788924653191, guid: 72a4ad59a93cc584f99e032af154bbb6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -115,5 +115,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d5adcd78a926a41b711e783a52aca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingTrash
-  fallSpeed: 100
-  bottomLimit: -500

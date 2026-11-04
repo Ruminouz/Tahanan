@@ -1527,13 +1527,14 @@ private void ResetSponge()
 
 
     // COMPLETE CHORE
+    DayManager resolvedDayManager = dayManager != null
+        ? dayManager
+        : (DayManager.Instance != null
+            ? DayManager.Instance
+            : FindFirstObjectByType<DayManager>());
+
     if(currentChore != null)
     {
-        DayManager resolvedDayManager = dayManager != null
-            ? dayManager
-            : (DayManager.Instance != null
-                ? DayManager.Instance
-                : FindFirstObjectByType<DayManager>());
         if (resolvedDayManager != null)
         {
             resolvedDayManager.ResolveDailyAdditionalQuest(
@@ -1550,12 +1551,20 @@ private void ResetSponge()
 
     if (panel != null)
     {
-        resultCoroutine = StartCoroutine(ClosePanelAfterResult());
+        if (resolvedDayManager != null &&
+            (resolvedDayManager.IsReadyToFinishDay ||
+             resolvedDayManager.AreAllActiveChoresResolved))
+        {
+            ClosePanel();
+        }
+        else
+        {
+            resultCoroutine = StartCoroutine(ClosePanelAfterResult());
+        }
     }
     else
     {
-        DestroyTutorialPrompt();
-        currentChore = null;
+        ClosePanel();
     }
 
 }
@@ -1563,6 +1572,11 @@ private void ResetSponge()
 private IEnumerator ClosePanelAfterResult()
 {
     yield return new WaitForSecondsRealtime(ResultDisplayDuration);
+    ClosePanel();
+}
+
+private void ClosePanel()
+{
     DestroyTutorialPrompt();
 
     if (panel != null)

@@ -6,6 +6,8 @@ public class SoundEffectManager : MonoBehaviour
     private const string VolumePrefsKey = "SFXVolume";
     private static SoundEffectManager Instance;
 
+    [SerializeField] private bool persistBetweenScenes = true;
+
     private AudioSource audioSource;
     private AudioSource randomPitchAudioSource;
     private AudioSource voiceAudioSource;
@@ -18,21 +20,37 @@ public class SoundEffectManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            AudioSource[] audioSources = GetComponents<AudioSource>();
-            audioSource = GetOrAddAudioSource(audioSources, 0);
-            randomPitchAudioSource = GetOrAddAudioSource(audioSources, 1);
-            voiceAudioSource = GetOrAddAudioSource(audioSources, 2);
-            soundEffectLibrary = GetComponent<SoundEffectLibrary>();
-            DontDestroyOnLoad(gameObject);
-            currentVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(VolumePrefsKey, currentVolume));
-            ApplyVolume(currentVolume);
+            if (Instance.gameObject.scene == gameObject.scene)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Destroy(Instance.gameObject);
         }
-        else
+
+        Instance = this;
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        audioSource = GetOrAddAudioSource(audioSources, 0);
+        randomPitchAudioSource = GetOrAddAudioSource(audioSources, 1);
+        voiceAudioSource = GetOrAddAudioSource(audioSources, 2);
+        soundEffectLibrary = GetComponent<SoundEffectLibrary>();
+        if (persistBetweenScenes)
         {
-            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
+        }
+
+        currentVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(VolumePrefsKey, currentVolume));
+        ApplyVolume(currentVolume);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
         }
     }
 

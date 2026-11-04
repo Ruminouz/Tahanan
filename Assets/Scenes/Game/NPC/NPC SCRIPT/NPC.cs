@@ -15,6 +15,7 @@ public class NPC : MonoBehaviour, IInteractable
     public GameObject dialoguePanel;
     public TMP_Text dialogueText, nameText;
     public Image portraitImage;
+    [SerializeField] private bool resizeDialoguePanelToFitText;
 
     private int dialogueIndex;
     private bool isTyping, isDialogueActive;
@@ -28,6 +29,16 @@ public class NPC : MonoBehaviour, IInteractable
     private bool dialogueTextAutoSizing;
     private float dialogueTextFontSize;
     private float reprimandDialogueDuration;
+    private RectTransform dialoguePanelRect;
+    private RectTransform dialogueTextRect;
+    private RectTransform dialogueNameRect;
+    private RectTransform dialoguePortraitRect;
+    private Vector2 originalDialoguePanelSize;
+    private Vector2 originalDialoguePanelPosition;
+    private Vector2 originalDialogueTextSize;
+    private Vector2 originalDialogueNamePosition;
+    private Vector2 originalDialoguePortraitPosition;
+    private bool dialogueLayoutCached;
 
     public bool IsDialogueActive => isDialogueActive;
 
@@ -156,9 +167,10 @@ public class NPC : MonoBehaviour, IInteractable
         if (portraitImage != null && dialogueData != null)
             portraitImage.sprite = dialogueData.npcPortrait;
 
+        PrepareDialoguePanelLayout();
         dialoguePanel.SetActive(true);
         DialogueStateChanged?.Invoke();
-        PauseController.SetPause(true);
+        PauseController.SetPause(this, true);
         StartCoroutine(TypeLine());
         return true;
     }
@@ -189,9 +201,10 @@ public class NPC : MonoBehaviour, IInteractable
         if (portraitImage != null && speakerPortrait != null)
             portraitImage.sprite = speakerPortrait;
 
+        PrepareDialoguePanelLayout();
         dialoguePanel.SetActive(true);
         DialogueStateChanged?.Invoke();
-        PauseController.SetPause(true);
+        PauseController.SetPause(this, true);
         StartCoroutine(TypeLine());
         StartCoroutine(AutoCloseReprimandDialogue(displayDuration));
         return true;
@@ -230,9 +243,10 @@ public class NPC : MonoBehaviour, IInteractable
         nameText.SetText(dialogueData.npcName);
         if (portraitImage != null)
             portraitImage.sprite = dialogueData.npcPortrait;
+        PrepareDialoguePanelLayout();
         dialoguePanel.SetActive(true);
         DialogueStateChanged?.Invoke();
-        PauseController.SetPause(true);
+        PauseController.SetPause(this, true);
 
         StartCoroutine(TypeLine());
     }
@@ -247,6 +261,7 @@ public class NPC : MonoBehaviour, IInteractable
             StopAllCoroutines();
             SoundEffectManager.StopVoice(); // Stop audio if player skips typing
             dialogueText.SetText(activeDialogueLines[dialogueIndex]);
+            ResizeDialoguePanelToText();
             isTyping = false;
             if (dialogueClosedCallback != null)
                 StartCoroutine(AutoCloseReprimandDialogue(reprimandDialogueDuration));
@@ -269,11 +284,13 @@ public class NPC : MonoBehaviour, IInteractable
 {
     isTyping = true;
     dialogueText.SetText("");
+       ResizeDialoguePanelToText();
 
-       string line = activeDialogueLines[dialogueIndex];
-       foreach (char letter in line)
-       {
-           dialogueText.text += letter;
+          string line = activeDialogueLines[dialogueIndex];
+          foreach (char letter in line)
+          {
+              dialogueText.text += letter;
+              ResizeDialoguePanelToText();
 
            if (letter != ' ' && dialogueData != null && dialogueData.voiceSound != null)
            {
@@ -317,7 +334,111 @@ public class NPC : MonoBehaviour, IInteractable
         dialogueText.fontSizeMin = 12f;
         dialogueText.fontSizeMax = Mathf.Min(dialogueTextFontSize, 22f);
         dialogueText.SetText(choicesText.ToString());
+        float choiceFontSize = dialogueText.enableAutoSizing
+            ? dialogueText.fontSizeMax
+            : dialogueText.fontSize;
+        float minimumChoiceTextHeight =
+            (activeChoices.Length + 2) * choiceFontSize * 1.15f;
+        ResizeDialoguePanelToText(minimumChoiceTextHeight);
         waitingForChoice = true;
+    }
+
+    private void PrepareDialoguePanelLayout()
+    {
+        if (!resizeDialoguePanelToFitText)
+            return;
+
+        if (!dialogueLayoutCached)
+        {
+            dialoguePanelRect = dialoguePanel.GetComponent<RectTransform>();
+            dialogueTextRect = dialogueText.rectTransform;
+            if (dialoguePanelRect == null || dialogueTextRect == null)
+                return;
+
+            dialogueNameRect = nameText != null &&
+                nameText.rectTransform.IsChildOf(dialoguePanelRect)
+                    ? nameText.rectTransform
+                    : null;
+            dialoguePortraitRect = portraitImage != null &&
+                portraitImage.rectTransform.IsChildOf(dialoguePanelRect)
+                    ? portraitImage.rectTransform
+                    : null;
+            originalDialoguePanelSize = dialoguePanelRect.sizeDelta;
+            originalDialoguePanelPosition = dialoguePanelRect.anchoredPosition;
+            originalDialogueTextSize = dialogueTextRect.sizeDelta;
+            if (dialogueNameRect != null)
+                originalDialogueNamePosition = dialogueNameRect.anchoredPosition;
+            if (dialoguePortraitRect != null)
+                originalDialoguePortraitPosition = dialoguePortraitRect.anchoredPosition;
+            dialogueLayoutCached = true;
+        }
+
+        ResetDialoguePanelLayout();
+    }
+
+    private void ResizeDialoguePanelToText(float minimumTextHeight = 0f)
+    {
+        if (!resizeDialoguePanelToFitText || !dialogueLayoutCached ||
+            dialogueText == null || dialoguePanelRect == null || dialogueTextRect == null)
+            return;
+
+        dialogueText.ForceMeshUpdate();
+        float preferredTextHeight = dialogueText.GetPreferredValues(
+            dialogueText.text,
+            originalDialogueTextSize.x,
+            0f).y;
+        float textHeight = Mathf.Max(
+            originalDialogueTextSize.y,
+            preferredTextHeight + 24f,
+            minimumTextHeight);
+        float extraHeight = textHeight - originalDialogueTextSize.y;
+
+        RectTransform canvasRect = dialoguePanelRect.parent as RectTransform;
+        if (canvasRect != null)
+        {
+            float maximumPanelHeight = Mathf.Max(
+                originalDialoguePanelSize.y,
+                canvasRect.rect.height - 32f);
+            extraHeight = Mathf.Min(
+                extraHeight,
+                maximumPanelHeight - originalDialoguePanelSize.y);
+        }
+
+        dialogueTextRect.sizeDelta = new Vector2(
+            originalDialogueTextSize.x,
+            originalDialogueTextSize.y + extraHeight);
+        dialoguePanelRect.sizeDelta = new Vector2(
+            originalDialoguePanelSize.x,
+            originalDialoguePanelSize.y + extraHeight);
+        dialoguePanelRect.anchoredPosition = new Vector2(
+            originalDialoguePanelPosition.x,
+            originalDialoguePanelPosition.y + extraHeight * 0.5f);
+        if (dialogueNameRect != null)
+        {
+            dialogueNameRect.anchoredPosition = new Vector2(
+                originalDialogueNamePosition.x,
+                originalDialogueNamePosition.y + extraHeight * 0.5f);
+        }
+        if (dialoguePortraitRect != null)
+        {
+            dialoguePortraitRect.anchoredPosition = new Vector2(
+                originalDialoguePortraitPosition.x,
+                originalDialoguePortraitPosition.y + extraHeight * 0.5f);
+        }
+    }
+
+    private void ResetDialoguePanelLayout()
+    {
+        if (!dialogueLayoutCached || dialoguePanelRect == null || dialogueTextRect == null)
+            return;
+
+        dialoguePanelRect.sizeDelta = originalDialoguePanelSize;
+        dialoguePanelRect.anchoredPosition = originalDialoguePanelPosition;
+        dialogueTextRect.sizeDelta = originalDialogueTextSize;
+        if (dialogueNameRect != null)
+            dialogueNameRect.anchoredPosition = originalDialogueNamePosition;
+        if (dialoguePortraitRect != null)
+            dialoguePortraitRect.anchoredPosition = originalDialoguePortraitPosition;
     }
 
     private void FinishChoice(int choiceIndex)
@@ -356,6 +477,7 @@ public class NPC : MonoBehaviour, IInteractable
             dialogueText.enableAutoSizing = dialogueTextAutoSizing;
             dialogueText.fontSize = dialogueTextFontSize;
         }
+        ResetDialoguePanelLayout();
         restoreDialogueTextSizing = false;
         activeDialogueLines = null;
         activeChoices = Array.Empty<string>();
@@ -364,12 +486,18 @@ public class NPC : MonoBehaviour, IInteractable
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
         DialogueStateChanged?.Invoke();
-        PauseController.SetPause(false);
+        PauseController.SetPause(this, false);
         Action<int> callback = choiceCallback;
         Action closedCallback = dialogueClosedCallback;
         choiceCallback = null;
         dialogueClosedCallback = null;
         callback?.Invoke(-1);
         closedCallback?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        ResetDialoguePanelLayout();
+        PauseController.SetPause(this, false);
     }
 }

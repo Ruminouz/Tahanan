@@ -3,29 +3,45 @@ using UnityEngine.InputSystem;
 
 public class MenuController : MonoBehaviour
 {
-    public GameObject menuCanvas;
+    [SerializeField] private GameObject menuCanvas;
 
-    void Start()
+    private void Start()
     {
+        if (menuCanvas == null)
+        {
+            Debug.LogError("MenuController requires a menu canvas to toggle.", this);
+            enabled = false;
+            return;
+        }
+
         menuCanvas.SetActive(false);
+        SyncPauseState();
     }
 
-    void Update()
+    private void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame)
         {
-        if (!menuCanvas.activeSelf && PauseController.IsGamePaused)
-        {
-             return;
-        }
             bool showMenu = !menuCanvas.activeSelf;
             menuCanvas.SetActive(showMenu);
             if (showMenu)
-            {
                 menuCanvas.transform.SetAsLastSibling();
-            }
-
-            PauseController.SetPause(menuCanvas.activeSelf);
         }
+
+        SyncPauseState();
+    }
+
+    private void SyncPauseState()
+    {
+        PauseController.SetPause(this, menuCanvas != null && menuCanvas.activeSelf);
+    }
+
+    private void OnDisable()
+    {
+        if (menuCanvas != null)
+            menuCanvas.SetActive(false);
+
+        SyncPauseState();
     }
 }
