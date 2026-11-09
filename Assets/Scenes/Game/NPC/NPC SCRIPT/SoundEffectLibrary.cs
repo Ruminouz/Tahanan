@@ -22,15 +22,22 @@ public class SoundEffectLibrary : MonoBehaviour
 
     public AudioClip GetRandomClip(string name)
     {
-        if (soundDictionary.ContainsKey(name))
+        if (!soundDictionary.TryGetValue(name, out List<AudioClip> audioClips))
         {
-            List<AudioClip> audioClips = soundDictionary[name];
-            if (audioClips.Count > 0)
-            {
-                return audioClips[UnityEngine.Random.Range(0, audioClips.Count)];
-            }
+            string alternateName = name == "Vaccum"
+                ? "Vacuum"
+                : name == "Vacuum"
+                    ? "Vaccum"
+                    : null;
+            if (alternateName == null ||
+                !soundDictionary.TryGetValue(alternateName, out audioClips))
+                return null;
         }
-        return null;
+
+        if (audioClips == null || audioClips.Count == 0)
+            return null;
+
+        return audioClips[UnityEngine.Random.Range(0, audioClips.Count)];
     }
 
     [System.Serializable]

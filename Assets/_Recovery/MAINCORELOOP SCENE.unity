@@ -980,6 +980,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4657523576016209568, guid: fd999870f3fd95143a02997299f26556, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657523576016209568, guid: fd999870f3fd95143a02997299f26556, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -736112421
+      objectReference: {fileID: 0}
     - target: {fileID: 8223056829653910684, guid: fd999870f3fd95143a02997299f26556, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1083,6 +1091,14 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2403700317180938695, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: startingCoins
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403700317180938695, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: furnitureBaseCost
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403700317180938695, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: dishwashingLiquidBaseCost
       value: 50
       objectReference: {fileID: 0}
@@ -1104,7 +1120,7 @@ PrefabInstance:
       objectReference: {fileID: 82349145}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: currentDay
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: throwTrash
@@ -1144,7 +1160,7 @@ PrefabInstance:
       objectReference: {fileID: 6670970777243311502}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: debugInstantWin
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: doubleGameSpeed
@@ -3560,7 +3576,7 @@ PrefabInstance:
       objectReference: {fileID: 4358164746828189859}
     - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
       propertyPath: soundEffectGroups.Array.size
-      value: 40
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
       propertyPath: soundEffectGroups.Array.data[34].name
@@ -3585,6 +3601,10 @@ PrefabInstance:
     - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
       propertyPath: soundEffectGroups.Array.data[39].name
       value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
+      propertyPath: soundEffectGroups.Array.data[40].name
+      value: Vaccum
       objectReference: {fileID: 0}
     - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
       propertyPath: soundEffectGroups.Array.data[29].audioClips.Array.size
@@ -3615,6 +3635,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
+      propertyPath: soundEffectGroups.Array.data[40].audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
       propertyPath: 'soundEffectGroups.Array.data[29].audioClips.Array.data[0]'
       value: 
       objectReference: {fileID: 8300000, guid: fbb86bb14c28e2f45b257d77e51660b7, type: 3}
@@ -3642,6 +3666,10 @@ PrefabInstance:
       propertyPath: 'soundEffectGroups.Array.data[39].audioClips.Array.data[0]'
       value: 
       objectReference: {fileID: 8300000, guid: 9d60582d05171ff4eb5598b25f4d67be, type: 3}
+    - target: {fileID: 4688317922437190615, guid: 9905caec5e66ac04e8905431c4966668, type: 3}
+      propertyPath: 'soundEffectGroups.Array.data[40].audioClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7fcd4a5590bff1b4ab9b008d8b1a21ca, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

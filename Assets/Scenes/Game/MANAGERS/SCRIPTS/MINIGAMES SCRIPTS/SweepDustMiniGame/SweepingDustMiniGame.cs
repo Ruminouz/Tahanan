@@ -109,6 +109,7 @@ public class SweepingMinigame : MonoBehaviour
 
     private void ResetSweeping()
     {
+        StopVacuumSound();
         currentDustSpot = null;
         progress = 0f;
         isSweeping = false;
@@ -259,6 +260,17 @@ public class SweepingMinigame : MonoBehaviour
     {
         mouseIsDown = false;
         currentStrokeDistance = 0f;
+        StopVacuumSound();
+    }
+
+    private void OnDisable()
+    {
+        StopVacuumSound();
+    }
+
+    private void StopVacuumSound()
+    {
+        SoundEffectManager.Stop("Vaccum");
     }
 
     private void ApplyDifficulty()
@@ -425,6 +437,8 @@ public class SweepingMinigame : MonoBehaviour
         {
             mouseIsDown = true;
             lastMousePosition = Mouse.current.position.ReadValue();
+            if (isVacuumUpgrade)
+                SoundEffectManager.PlayLoop("Vaccum");
 
             if (waitingForTutorialHold)
             {
@@ -442,6 +456,7 @@ public class SweepingMinigame : MonoBehaviour
         if (releaseThisFrame)
         {
             mouseIsDown = false;
+            StopVacuumSound();
         }
 
         UpdateSweepAreaMotion();
@@ -474,9 +489,9 @@ public class SweepingMinigame : MonoBehaviour
         if (insideArea && validSweepStroke && currentMomentum >= minimumSweepSpeed)
         {
             float timeSinceLastSweepSfx = Time.time - lastSweepSfxTime;
-            if (timeSinceLastSweepSfx >= SweepSfxCooldown)
+            if (!isVacuumUpgrade && timeSinceLastSweepSfx >= SweepSfxCooldown)
             {
-                SoundEffectManager.Play(isVacuumUpgrade ? "Vacuum" : "Sweep");
+                SoundEffectManager.Play("Sweep");
                 lastSweepSfxTime = Time.time;
             }
         }
@@ -853,6 +868,7 @@ public class SweepingMinigame : MonoBehaviour
     {
         isSweeping = false;
         mouseIsDown = false;
+        StopVacuumSound();
         SoundEffectManager.Play("ChoreFinished");
 
         if (progressBar != null)

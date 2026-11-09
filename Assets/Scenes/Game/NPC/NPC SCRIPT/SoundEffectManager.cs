@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class SoundEffectManager : MonoBehaviour
 {
     private const string VolumePrefsKey = "SFXVolume";
+    private const float VacuumIntroSkipSeconds = 1.2f;
     private static SoundEffectManager Instance;
 
     [SerializeField] private bool persistBetweenScenes = true;
@@ -14,6 +15,7 @@ public class SoundEffectManager : MonoBehaviour
     private AudioSource faucetAudioSource;
     private AudioSource musicAudioSource;
     private AudioSource writingAudioSource;
+    private AudioSource vacuumAudioSource;
     private SoundEffectLibrary soundEffectLibrary;
     [SerializeField] private Slider sfxSlider;
     private float currentVolume = .7f;
@@ -116,6 +118,13 @@ public class SoundEffectManager : MonoBehaviour
             Instance.faucetAudioSource.Stop();
         }
 
+        if (IsVacuumSound(soundName) &&
+            Instance != null &&
+            Instance.vacuumAudioSource != null)
+        {
+            Instance.vacuumAudioSource.Stop();
+        }
+
         if (soundName == "Write" &&
             Instance != null &&
             Instance.writingAudioSource != null)
@@ -146,6 +155,22 @@ public class SoundEffectManager : MonoBehaviour
             return;
         }
 
+        if (IsVacuumSound(soundName))
+        {
+            AudioSource vacuumSource = Instance.GetVacuumAudioSource();
+            if (vacuumSource.isPlaying && vacuumSource.clip == audioClip)
+                return;
+
+            vacuumSource.clip = audioClip;
+            vacuumSource.loop = true;
+            vacuumSource.timeSamples = Mathf.Clamp(
+                Mathf.RoundToInt(VacuumIntroSkipSeconds * audioClip.frequency),
+                0,
+                audioClip.samples - 1);
+            vacuumSource.Play();
+            return;
+        }
+
         AudioSource source = Instance.GetMusicAudioSource();
         if (source.isPlaying && source.clip == audioClip)
             return;
@@ -153,6 +178,31 @@ public class SoundEffectManager : MonoBehaviour
         source.clip = audioClip;
         source.loop = true;
         source.Play();
+    }
+
+    private static bool IsVacuumSound(string soundName)
+    {
+        return soundName == "Vacuum" || soundName == "Vaccum";
+    }
+
+    private AudioSource GetVacuumAudioSource()
+    {
+        if (vacuumAudioSource != null)
+            return vacuumAudioSource;
+
+        vacuumAudioSource = gameObject.AddComponent<AudioSource>();
+        vacuumAudioSource.playOnAwake = false;
+        vacuumAudioSource.loop = true;
+        vacuumAudioSource.spatialBlend = 0f;
+        if (audioSource != null)
+        {
+            vacuumAudioSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+            vacuumAudioSource.volume = audioSource.volume;
+            vacuumAudioSource.mute = audioSource.mute;
+            vacuumAudioSource.priority = audioSource.priority;
+        }
+
+        return vacuumAudioSource;
     }
 
     private AudioSource GetMusicAudioSource()
@@ -269,6 +319,7 @@ public class SoundEffectManager : MonoBehaviour
         if (faucetAudioSource != null) faucetAudioSource.volume = volume;
         if (musicAudioSource != null) musicAudioSource.volume = volume;
         if (writingAudioSource != null) writingAudioSource.volume = volume;
+        if (vacuumAudioSource != null) vacuumAudioSource.volume = volume;
     }
 
     public void OnValueChanged()
