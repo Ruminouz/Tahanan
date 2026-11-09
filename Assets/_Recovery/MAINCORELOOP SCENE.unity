@@ -988,6 +988,14 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -736112421
       objectReference: {fileID: 0}
+    - target: {fileID: 7568781112396913343, guid: fd999870f3fd95143a02997299f26556, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7568781112396913343, guid: fd999870f3fd95143a02997299f26556, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -736112421
+      objectReference: {fileID: 0}
     - target: {fileID: 8223056829653910684, guid: fd999870f3fd95143a02997299f26556, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2418,6 +2426,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2019462584722472274, guid: 71d85ba3a8afd7e4b98b00a844b09be6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2019462584722472274, guid: 71d85ba3a8afd7e4b98b00a844b09be6, type: 3}
       propertyPath: m_SortOrder
       value: 0
       objectReference: {fileID: 0}
@@ -3022,6 +3034,10 @@ PrefabInstance:
       propertyPath: tutorial
       value: 
       objectReference: {fileID: 6822216205266641286}
+    - target: {fileID: 637064360967937451, guid: 5b2c9fd5aeac5df419d676a97c031615, type: 3}
+      propertyPath: enableAnts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 709802980605218014, guid: 5b2c9fd5aeac5df419d676a97c031615, type: 3}
       propertyPath: m_Text
       value: continue
