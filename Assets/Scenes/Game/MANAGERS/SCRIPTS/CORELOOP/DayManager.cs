@@ -95,6 +95,14 @@ public class DayManager : MonoBehaviour
     [SerializeField, Min(0.1f)] private float dayOneKitchenCameraOrthographicSize = 4.25f;
     [SerializeField] private TMP_FontAsset dayOneIntroFont;
 
+    [Header("Day 1 Opening Story")]
+    [SerializeField] private Sprite[] openingStoryScene1Frames;
+    [SerializeField] private Sprite[] openingStoryScene2Frames;
+    [SerializeField] private Sprite[] openingStoryScene3Frames;
+    [SerializeField] private Sprite[] openingStoryScene4Frames;
+    [SerializeField, Min(0.1f)] private float openingStoryFrameDuration = 1.2f;
+    [SerializeField, Min(0.01f)] private float openingStoryFrameFadeDuration = 0.35f;
+
     [Header("Family Story")]
     [SerializeField] private Transform tricycle;
     [SerializeField] private Transform dayFourNanayArrivalSpawnPoint;
@@ -2813,10 +2821,12 @@ public class DayManager : MonoBehaviour
         SetDayOneCameraFollowTarget(null);
 
         SetupDay1();
-        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
-        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
         PauseDayOneIntro();
 
+        yield return PlayDayOneOpeningStory();
+
+        dayOneIntroOverlay = CreateDayOneIntroOverlay(out TMP_Text continuePrompt);
+        TMP_Text introText = dayOneIntroOverlay.GetComponentInChildren<TMP_Text>();
         yield return ShowDayOneIntroText(
             introText,
             continuePrompt,
@@ -3486,6 +3496,234 @@ public class DayManager : MonoBehaviour
         }
     }
 
+    private IEnumerator PlayDayOneOpeningStory()
+    {
+        Sprite[][] scenes =
+        {
+            openingStoryScene1Frames,
+            openingStoryScene2Frames,
+            openingStoryScene3Frames,
+            openingStoryScene4Frames
+        };
+        string[] narration =
+        {
+            "In a small provincial home, a family begins another ordinary day. Among them is Bunso, the youngest child, who loves playing and enjoying his free time.",
+            "He mostly spends his time playing outside, whether it's playing marbles or even piko.",
+            "However, his excitement often distracts him from his household responsibilities, leaving his older siblings to do most of the work.",
+            "To help him develop a sense of responsibility, Nanay and Tatay announce a Seven-Day Household Challenge, where he must complete daily chores and learn the importance of contributing to the family's responsibilities."
+        };
+
+        bool hasFrames = false;
+        for (int i = 0; i < scenes.Length; i++)
+        {
+            if (scenes[i] != null && scenes[i].Length > 0)
+            {
+                hasFrames = true;
+                break;
+            }
+        }
+
+        if (!hasFrames)
+        {
+            Debug.LogWarning(
+                "The Day 1 opening story was skipped because no story frames are assigned.",
+                this);
+            yield break;
+        }
+
+        dayOneIntroOverlay = CreateDayOneOpeningStoryOverlay(
+            out Image frameImage,
+            out TMP_Text narrationText,
+            out CanvasGroup storyContentCanvasGroup);
+        CanvasGroup screenCanvasGroup =
+            dayOneIntroOverlay.GetComponent<CanvasGroup>();
+        yield return FadeDayOneOpeningStoryCanvas(screenCanvasGroup, 1f);
+
+        for (int sceneIndex = 0; sceneIndex < scenes.Length; sceneIndex++)
+        {
+            Sprite[] frames = scenes[sceneIndex];
+            if (frames == null || frames.Length == 0)
+            {
+                Debug.LogWarning(
+                    "Day 1 opening story scene " + (sceneIndex + 1) +
+                    " was skipped because no frames are assigned.",
+                    this);
+                continue;
+            }
+
+            narrationText.text = narration[sceneIndex];
+            storyContentCanvasGroup.alpha = 0f;
+            bool sceneHasVisibleFrame = false;
+            foreach (Sprite frame in frames)
+            {
+                if (frame == null)
+                {
+                    Debug.LogWarning(
+                        "A Day 1 opening story frame is missing in scene " +
+                        (sceneIndex + 1) + ".",
+                        this);
+                    continue;
+                }
+
+                frameImage.sprite = frame;
+                if (!sceneHasVisibleFrame)
+                {
+                    sceneHasVisibleFrame = true;
+                    frameImage.color = Color.white;
+                    yield return FadeDayOneOpeningStoryCanvas(
+                        storyContentCanvasGroup,
+                        1f);
+                }
+
+                yield return new WaitForSecondsRealtime(openingStoryFrameDuration);
+            }
+
+            if (sceneHasVisibleFrame)
+                yield return FadeDayOneOpeningStoryCanvas(
+                    storyContentCanvasGroup,
+                    0f);
+        }
+
+        if (dayOneIntroOverlay != null)
+        {
+            yield return FadeDayOneOpeningStoryCanvas(screenCanvasGroup, 0f);
+            Destroy(dayOneIntroOverlay);
+            dayOneIntroOverlay = null;
+        }
+    }
+
+    private GameObject CreateDayOneOpeningStoryOverlay(
+        out Image frameImage,
+        out TMP_Text narrationText,
+        out CanvasGroup storyContentCanvasGroup)
+    {
+        GameObject canvasObject = new GameObject(
+            "Day 1 Opening Story Overlay",
+            typeof(RectTransform),
+            typeof(Canvas),
+            typeof(CanvasScaler),
+            typeof(GraphicRaycaster),
+            typeof(CanvasGroup));
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = 100;
+
+        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.matchWidthOrHeight = 0.5f;
+        canvasObject.GetComponent<CanvasGroup>().alpha = 0f;
+
+        GameObject storyContentObject = new GameObject(
+            "Story Content",
+            typeof(RectTransform),
+            typeof(CanvasGroup));
+        RectTransform storyContentRect =
+            storyContentObject.GetComponent<RectTransform>();
+        storyContentRect.SetParent(canvasObject.transform, false);
+        storyContentRect.anchorMin = Vector2.zero;
+        storyContentRect.anchorMax = Vector2.one;
+        storyContentRect.offsetMin = Vector2.zero;
+        storyContentRect.offsetMax = Vector2.zero;
+        storyContentCanvasGroup = storyContentObject.GetComponent<CanvasGroup>();
+        storyContentCanvasGroup.alpha = 0f;
+
+        GameObject backgroundObject = new GameObject(
+            "Story Background",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        RectTransform backgroundRect = backgroundObject.GetComponent<RectTransform>();
+        backgroundRect.SetParent(canvasObject.transform, false);
+        backgroundRect.anchorMin = Vector2.zero;
+        backgroundRect.anchorMax = Vector2.one;
+        backgroundRect.offsetMin = Vector2.zero;
+        backgroundRect.offsetMax = Vector2.zero;
+        backgroundRect.SetAsFirstSibling();
+        Image backgroundImage = backgroundObject.GetComponent<Image>();
+        backgroundImage.color = Color.black;
+        backgroundImage.raycastTarget = false;
+
+        GameObject frameObject = new GameObject(
+            "Story Frame",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        RectTransform frameRect = frameObject.GetComponent<RectTransform>();
+        frameRect.SetParent(storyContentRect, false);
+        frameRect.anchorMin = Vector2.zero;
+        frameRect.anchorMax = Vector2.one;
+        frameRect.offsetMin = Vector2.zero;
+        frameRect.offsetMax = Vector2.zero;
+        frameImage = frameObject.GetComponent<Image>();
+        frameImage.preserveAspect = true;
+        frameImage.color = Color.white;
+        frameImage.raycastTarget = false;
+
+        GameObject narrationPanelObject = new GameObject(
+            "Narration Background",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(Image));
+        RectTransform narrationPanelRect =
+            narrationPanelObject.GetComponent<RectTransform>();
+        narrationPanelRect.SetParent(storyContentRect, false);
+        narrationPanelRect.anchorMin = new Vector2(0f, 0f);
+        narrationPanelRect.anchorMax = new Vector2(1f, 0.28f);
+        narrationPanelRect.offsetMin = Vector2.zero;
+        narrationPanelRect.offsetMax = Vector2.zero;
+        Image narrationPanelImage = narrationPanelObject.GetComponent<Image>();
+        narrationPanelImage.color = new Color(0f, 0f, 0f, 0.48f);
+        narrationPanelImage.raycastTarget = false;
+
+        GameObject narrationTextObject = new GameObject(
+            "Story Narration",
+            typeof(RectTransform),
+            typeof(CanvasRenderer),
+            typeof(TextMeshProUGUI));
+        RectTransform narrationTextRect =
+            narrationTextObject.GetComponent<RectTransform>();
+        narrationTextRect.SetParent(narrationPanelRect, false);
+        narrationTextRect.anchorMin = Vector2.zero;
+        narrationTextRect.anchorMax = Vector2.one;
+        narrationTextRect.offsetMin = new Vector2(72f, 36f);
+        narrationTextRect.offsetMax = new Vector2(-72f, -36f);
+        narrationText = narrationTextObject.GetComponent<TextMeshProUGUI>();
+        narrationText.font = dayOneIntroFont != null
+            ? dayOneIntroFont
+            : TMP_Settings.defaultFontAsset;
+        narrationText.fontSize = 40f;
+        narrationText.enableAutoSizing = true;
+        narrationText.fontSizeMin = 28f;
+        narrationText.fontSizeMax = 40f;
+        narrationText.color = Color.white;
+        narrationText.alignment = TextAlignmentOptions.Center;
+        narrationText.outlineWidth = 0.5f;
+        narrationText.outlineColor = Color.black;
+        narrationText.raycastTarget = false;
+
+        return canvasObject;
+    }
+
+    private IEnumerator FadeDayOneOpeningStoryCanvas(
+        CanvasGroup canvasGroup,
+        float targetAlpha)
+    {
+        float startAlpha = canvasGroup.alpha;
+        float duration = Mathf.Max(0.01f, openingStoryFrameFadeDuration);
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            canvasGroup.alpha =
+                Mathf.Lerp(startAlpha, targetAlpha, Mathf.Clamp01(elapsed / duration));
+            yield return null;
+        }
+
+        canvasGroup.alpha = targetAlpha;
+    }
+
     private static GameObject CreateDayOneIntroOverlay(out TMP_Text continuePrompt)
     {
         GameObject canvasObject = new GameObject(
@@ -3517,7 +3755,7 @@ public class DayManager : MonoBehaviour
         panelRect.anchoredPosition = new Vector2(0f, 180f);
         panelRect.sizeDelta = new Vector2(1200f, 440f);
         Image panelImage = panelObject.GetComponent<Image>();
-        panelImage.color = new Color(0.04f, 0.04f, 0.04f, 0f);
+        panelImage.color = new Color(0f, 0f, 0f, 0.4f);
         panelImage.raycastTarget = false;
 
         GameObject textObject = new GameObject(
@@ -3647,14 +3885,14 @@ public class DayManager : MonoBehaviour
         float autoContinueDelay = -1f)
     {
         text.font = dayOneIntroFont;
-        text.outlineWidth = 0.4f;
+        text.outlineWidth = 0.5f;
         text.outlineColor = Color.black;
         text.text = "<b>" + title + "</b>\n\n" + message;
         text.ForceMeshUpdate();
         text.maxVisibleCharacters = 0;
 
         continuePrompt.font = dayOneIntroFont;
-        continuePrompt.outlineWidth = 0.4f;
+        continuePrompt.outlineWidth = 0.5f;
         continuePrompt.outlineColor = Color.black;
         continuePrompt.text = "Press Space to continue";
         Vector3 originalScale = continuePrompt.rectTransform.localScale;

@@ -1195,9 +1195,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4832732418936951515}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: openingStoryFrameDuration
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: dayFourNanayArrivalSpawnPoint
       value: 
       objectReference: {fileID: 635055616}
+    - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
+      propertyPath: openingStoryFrameFadeDuration
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 2652793749689163662, guid: 8346780ca7790a34e97fe3ec3fb7e116, type: 3}
       propertyPath: weekCompleteSummaryPanelFrames.Array.size
       value: 6

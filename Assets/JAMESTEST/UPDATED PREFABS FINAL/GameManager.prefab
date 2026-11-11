@@ -168,6 +168,27 @@ MonoBehaviour:
   dayOneCameraOrthographicSize: 3
   dayOneKitchenCameraOrthographicSize: 4.25
   dayOneIntroFont: {fileID: 11400000, guid: 1cb780c78e6b6174b82d2efea0702b23, type: 2}
+  openingStoryScene1Frames:
+  - {fileID: 8368367960902641989, guid: 3930032d04900714195d0cdb82e6910f, type: 3}
+  - {fileID: 1080326236, guid: 3930032d04900714195d0cdb82e6910f, type: 3}
+  - {fileID: -265582297, guid: 3930032d04900714195d0cdb82e6910f, type: 3}
+  openingStoryScene2Frames:
+  - {fileID: -8335487991199011040, guid: 1efd37caa5aa65f4b9bbbaf33aa06f62, type: 3}
+  - {fileID: -1258465568, guid: 1efd37caa5aa65f4b9bbbaf33aa06f62, type: 3}
+  - {fileID: 1099747050, guid: 1efd37caa5aa65f4b9bbbaf33aa06f62, type: 3}
+  - {fileID: 1386287074, guid: 1efd37caa5aa65f4b9bbbaf33aa06f62, type: 3}
+  openingStoryScene3Frames:
+  - {fileID: -1785496528769180479, guid: c8b68b931ab0e114c986aed6bc3a3bd3, type: 3}
+  - {fileID: -1385235679, guid: c8b68b931ab0e114c986aed6bc3a3bd3, type: 3}
+  - {fileID: -2005489154, guid: c8b68b931ab0e114c986aed6bc3a3bd3, type: 3}
+  - {fileID: 1314613478, guid: c8b68b931ab0e114c986aed6bc3a3bd3, type: 3}
+  openingStoryScene4Frames:
+  - {fileID: 5765058135602283011, guid: 25c2c217276556143a1d2e2993065e0a, type: 3}
+  - {fileID: -1764877097, guid: 25c2c217276556143a1d2e2993065e0a, type: 3}
+  - {fileID: 190767967, guid: 25c2c217276556143a1d2e2993065e0a, type: 3}
+  - {fileID: 732427496, guid: 25c2c217276556143a1d2e2993065e0a, type: 3}
+  openingStoryFrameDuration: 1.2
+  openingStoryFrameFadeDuration: 0.35
   tricycle: {fileID: 0}
   dayFourNanayArrivalSpawnPoint: {fileID: 0}
   parentWalkSpeed: 1.7
